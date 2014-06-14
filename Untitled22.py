@@ -1,20 +1,23 @@
 from Tkinter import *
-from Bar import *
+
 
 root = Tk()
 
-index=500
-def a(rect,canvas):
-    global index
-    rect.setHeight(index)
-    index=index-1
-    canvas.after(10,a,rect,canvas)
     
 
-canvas = Canvas(root, width=1000, height=1000,bg="red")
+canvas = Canvas(root, width=1000, height=1000,bg="white")
 canvas.pack()
 
-rect=Bar(canvas,10,500,50,0,"blue")
-canvas.after(10,a,rect,canvas)
+a = [-150,0,0,125,0,50,150,50,150,-50,0,-50,0,-125]
+b = [-175,50,0,50,0,125,150,0,0,-125,0,-50,-175,-50]
+points=[]
+for x in a:
+    points.append(x+300)
 
+
+
+
+z=canvas.create_polygon(a, outline='red',fill='green', width=2)
+canvas.pack(fill=BOTH, expand=1)
+canvas.scale( z , 0 , 0 , 0.5 , 0.5)
 root.mainloop()
