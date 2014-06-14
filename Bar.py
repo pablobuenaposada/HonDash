@@ -2,7 +2,7 @@ class Bar:
     
     def __init__(self,canvas,x,y,width,height,color):
         self.canvas = canvas
-        self.idBar = self.canvas.create_rectangle(x,y,x+width,y+height,fill=color);
+        self.idBar = self.canvas.create_rectangle(x,y,x+width,y+height,fill=color,outline=color);
 
 
     def setHeight(self,newHeight):
