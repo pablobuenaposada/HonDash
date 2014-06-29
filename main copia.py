@@ -5,12 +5,20 @@ from Bar import *
 from Circle import *
 from Arrow import *
 from Gforce import *
+from adxl345 import ADXL345
+
+adxl345 = ADXL345()
 
 winWidth=700
 winHeight=700
 speedFontSize=int(0.09*winHeight)
 circleFontSize=int(0.05*winHeight)
 
+def set(canvas,g):
+    axes = adxl345.getAxes(True)
+    g.setGforce(axes['x'],axes['y'])
+    canvas.after(5,set,canvas,g)
+    None
 
 root = Tk()
 canvas = Canvas(root,width=winWidth,height=winHeight,bg="white")
@@ -38,4 +46,10 @@ arrowRight=Arrow(canvas,(winWidth/3)*2,winHeight/4,0.15,"green","right")
 
 g = Gforce(canvas,(winWidth/4)*3,(winHeight/4)*3,125,2,1,"gray",4,"red")
 
+canvas.after(10,set,canvas,g)
+
 root.mainloop()
+
+
+
+    
