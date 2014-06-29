@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Tkinter import *
 from Rpm import *
 from Text import *
