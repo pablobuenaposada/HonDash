@@ -9,7 +9,5 @@ class Text:
 
         self.id=canvas.create_text(x,y,text=text,font=self.font+" "+str(self.size)+" "+self.weight,fill=self.color)
 
-    def setText(self,size):
-        self.size=size
-
-        self.canvas.itemconfig(self.id,font=self.font+self.weight)
+    def setText(self,text):
+        self.canvas.itemconfig(self.id,text=text)
