@@ -6,13 +6,14 @@ from Circle import *
 from Arrow import *
 from Gforce import *
 
-winWidth=700
-winHeight=700
+root = Tk()
+winWidth=root.winfo_screenwidth()
+winHeight=root.winfo_screenheight()
 speedFontSize=int(0.09*winHeight)
 circleFontSize=int(0.05*winHeight)
 
 
-root = Tk()
+
 canvas = Canvas(root,width=winWidth,height=winHeight,bg="white")
 canvas.pack()
 
