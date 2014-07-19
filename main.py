@@ -5,6 +5,7 @@ from Bar import *
 from Circle import *
 from Arrow import *
 from Gforce import *
+from PIL import ImageTk,Image
 
 root = Tk()
 winWidth=root.winfo_screenwidth()
@@ -13,9 +14,15 @@ speedFontSize=int(0.09*winHeight)
 circleFontSize=int(0.05*winHeight)
 
 
-
 canvas = Canvas(root,width=winWidth,height=winHeight,bg="white")
 canvas.pack()
+
+gif1  = ImageTk.PhotoImage(Image.open("c.png"))
+
+# put gif image on canvas
+# pic's upper left corner (NW) on the canvas is at x=50 y=10
+canvas.create_image(50, 10, image = gif1, anchor = "nw")
+
 
 
 rpm = Rpm(canvas,winWidth/2,winHeight/4,winWidth/1.25,winHeight/4,50,"yellow","yellow",20,140,0,10000)
