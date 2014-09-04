@@ -1,3 +1,5 @@
+from SerialPort import *
+
 class CromeQD2:
 
     ECT_CROME14 = 0x1D

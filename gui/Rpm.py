@@ -16,7 +16,7 @@ class Rpm:
         self.canvas.create_line(x,z,x,y)
         
         
-    def setFill(self,valueFill):
+    def setRpm(self,valueFill):
         if valueFill > self.maxValue:
            valueFill = self.maxValue
         elif valueFill < self.minValue:

@@ -1,11 +1,13 @@
 from Tkinter import *
-from Rpm import *
-from Text import *
-from Bar import *
-from Circle import *
-from Arrow import *
-from Gforce import *
+from gui.Rpm import Rpm
+from gui.Text import *
+from gui.Bar import *
+from gui.Circle import *
+from gui.Arrow import *
+from gui.Gforce import *
 from PIL import ImageTk,Image
+from controller.Controller import *
+from devices.CromeQD2 import *
 
 root = Tk()
 winWidth=root.winfo_screenwidth()
@@ -17,11 +19,11 @@ circleFontSize=int(0.05*winHeight)
 canvas = Canvas(root,width=winWidth,height=winHeight,bg="white")
 canvas.pack()
 
-gif1  = ImageTk.PhotoImage(Image.open("c.png"))
+#gif1  = ImageTk.PhotoImage(Image.open("c.png"))
 
 # put gif image on canvas
 # pic's upper left corner (NW) on the canvas is at x=50 y=10
-canvas.create_image(50, 10, image = gif1, anchor = "nw")
+#canvas.create_image(50, 10, image = gif1, anchor = "nw")
 
 
 
@@ -46,4 +48,11 @@ arrowRight=Arrow(canvas,(winWidth/3)*2,winHeight/4,0.15,"green","right")
 
 g = Gforce(canvas,(winWidth/4)*3,(winHeight/4)*3,125,2,1,"gray",4,"red")
 
+serial = CromeQD2()
+
+
+canvas.after(10,updateRpm,serial,rpm)
+
+
 root.mainloop()
+

@@ -13,7 +13,7 @@ class Circle:
         self.idValue = Text(canvas,x,y,"Helvetica",fontSize,"bold","black","80")
         self.idText = Text(canvas,x,y+(diameter/4.5),"Helvetica",int(0.371*fontSize),"bold","black",text) 
 
-    def setFill(self,degreesFill):
+    def setValue(self,degreesFill):
         if degreesFill > self.maxValue:
            degreesFill = self.maxValue
         elif degreesFill < self.minValue:
