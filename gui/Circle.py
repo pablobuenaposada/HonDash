@@ -22,8 +22,8 @@ class Circle:
         degrees = (((degreesFill - self.minValue) * (self.rangeDegrees - 0)) / (self.maxValue - self.minValue)) + 0
         
         self.canvas.itemconfig(self.idCircle, extent=-degrees)
-        self.canvas.itemconfig(self.idValue, text = degreesFill)
-    
+        self.idValue.setText(degreesFill)
+        
     
 
     

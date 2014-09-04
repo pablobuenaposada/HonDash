@@ -6,11 +6,11 @@ class MCP3208:
         self.spi = spidev.SpiDev()
         self.spi.open(0,0)
 
-    def getADC(channel):
+    def getADC(self,channel):
         raw = self.spi.xfer2([4 | 2 |(channel>>2), (channel &3) << 6,0])
-        adc_out = ((r[1]&15) << 8) + r[2]
+        adc_out = ((raw[1]&15) << 8) + raw[2]
         return adc_out
 
-    def getVoltage(channel):
+    def getVoltage(self,channel):
         adc = getADC(channel)
         return adc * 5.0 / 4096
