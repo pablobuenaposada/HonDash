@@ -12,22 +12,24 @@ class Bar:
         self.maxValue = maxValue
         self.idBar = self.canvas.create_rectangle(x,y,x+self.maxWidth,y+self.maxHeight,fill=color,outline=color)
 
-    def setHeight(self,value):
-        
+    def setHeight(self,value):        
         if value > self.maxValue:
             value = self.maxValue
         elif value < self.minValue:
             value = self.minValue
 
         newHeight = (((value - self.minValue) * (self.maxHeight - self.minHeight)) / (self.maxValue - self.minValue)) + self.minHeight
-        newHeight = self.y+newHeight
+        newHeight = self.y + newHeight
         actualDimension = self.canvas.coords(self.idBar)
         self.canvas.coords(self.idBar,actualDimension[0],newHeight,actualDimension[2],actualDimension[3])
 
+    def setWidth(self,value):
+        if value > self.maxValue:
+            value = self.maxValue
+        elif value < self.minValue:
+            value = self.minValue
 
-        
-    def setWidth(self,newWidth):
+        newWidth = (((value - self.minValue) * (self.maxWidth - self.minWidth)) / (self.maxValue - self.minValue)) + self.minWidth
+        newWidth = self.x+newWidth    
         actualDimension = self.canvas.coords(self.idBar)
         self.canvas.coords(self.idBar,actualDimension[0],actualDimension[1],newWidth,actualDimension[3])
-
-

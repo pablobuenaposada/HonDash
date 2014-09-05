@@ -14,13 +14,16 @@ def updateAnalog(canvas,mcp3208,channel,circle):
     circle.setValue(mcp3208.getADC(channel))    
     canvas.after(10,updateAnalog,canvas,mcp3208,channel,circle)
 
-def updateAll(canvas,mcp3208,serial,rpm,speed,temp1,temp2,temp3,temp4,throttle,clutch,brake):
+def updateAll(canvas,mcp3208,serial,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake):
     rpm.setRpm(serial.getRpm())
     speed.setText(serial.getVss())
-    temp1.setValue(mcp3208.getADC(7)) 
-    temp2.setValue(mcp3208.getADC(6)) 
-    temp3.setValue(mcp3208.getADC(5))
+    oilTemp.setValue(mcp3208.getADC(7)) 
+    oilPressure.setValue(mcp3208.getADC(6))
+    fuel.setWidth(mcp3208.getADC(7))
+    h2o.setValue(mcp3208.getADC(5))
+    h2oEcu.setValue(int(serial.getEct()))
+    battery.setValue(round(serial.getBattery(),1))
     throttle.setHeight(mcp3208.getADC(8))
     clutch.setHeight(mcp3208.getADC(4))
     brake.setHeight(mcp3208.getADC(3))
-    canvas.after(10,updateAll,canvas,mcp3208,serial,rpm,speed,temp1,temp2,temp3,temp4,throttle,clutch,brake)
+    canvas.after(10,updateAll,canvas,mcp3208,serial,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake)
