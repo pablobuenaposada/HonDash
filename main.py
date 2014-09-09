@@ -1,5 +1,5 @@
 from Tkinter import *
-from gui.Rpm import Rpm
+from gui.Rpm import *
 from gui.Text import *
 from gui.Bar import *
 from gui.Circle import *
@@ -22,8 +22,8 @@ canvas.pack()
 
 #init graphics
 rpm = Rpm(canvas,winWidth/2,winHeight/4,winWidth/1.25,winHeight/4,50,"orange","yellow",20,140,0,10000)
-speed = Text(canvas,winWidth/2,winHeight/4,"Helvetica",speedFontSize,"bold italic","black","137")
-mileage = Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","black","162.372 KM")
+speed = Text(canvas,winWidth/2,winHeight/4,"Helvetica",speedFontSize,"bold italic","black","","137")
+mileage = Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","black","","162.372 KM")
 fuel = Bar(canvas,(winWidth/2)-200,(winHeight/8)*3,0,400,0,20,0,4096,"#efbbff")
 clutch = Bar(canvas,winWidth-92,winHeight,30,30,0,150,0,200,"blue")
 brake=Bar(canvas,winWidth-61,winHeight,30,30,0,150,0,200,"red")
@@ -36,13 +36,16 @@ battery = Circle(canvas,(winWidth/4)*2,(winHeight/4)*3,100,25,240,300,0,15,200,3
 arrowLeft=Arrow(canvas,(winWidth/3)*1,winHeight/4,0.15,"green","left")
 arrowRight=Arrow(canvas,(winWidth/3)*2,winHeight/4,0.15,"green","right")
 g = Gforce(canvas,(winWidth/4)*3,(winHeight/4)*3,125,2,1,"gray",4,"red")
+runTime = Text(canvas,winWidth/2,(winHeight/10)*9,"Helvetica",13,"bold ","black","Run Time ","00:00:00")
 
 #init devices
+controller = Controller()
 serial = CromeQD2()
 mcp3208 = MCP3208()
 
+
 #update graphics
-canvas.after(10,updateAll,canvas,mcp3208,serial,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake)
+canvas.after(10,controller.updateAll,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime)
 
 #main loop
 root.mainloop()

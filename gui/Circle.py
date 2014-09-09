@@ -15,8 +15,8 @@ class Circle:
         self.maxColor = maxColor
         self.idCircle = self.canvas.create_arc(x-(diameter/2),y-(diameter/2),x+(diameter/2),y+(diameter/2),style="arc", start=self.startDegrees, extent=-self.rangeDegrees,fill="",outline=normalColor,width=width)
         
-        self.idValue = Text(canvas,x,y,"Helvetica",fontSize,"bold","black","80")
-        self.idText = Text(canvas,x,y+(diameter/4.5),"Helvetica",int(0.371*fontSize),"bold","black",text) 
+        self.idValue = Text(canvas,x,y,"Helvetica",fontSize,"bold","black","","80")
+        self.idText = Text(canvas,x,y+(diameter/4.5),"Helvetica",int(0.371*fontSize),"bold","black","",text) 
 
     def setValue(self,value):
         if value > self.maxValue:
