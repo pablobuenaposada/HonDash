@@ -2,7 +2,7 @@ from Text import *
 
 class Circle:
     
-    def __init__(self,canvas,x,y,diameter,width,startDegrees,rangeDegrees,minValue,maxValue,minWrnValue,maxWrnValue,minColor,normalColor,maxColor,fontSize,text):
+    def __init__(self,canvas,x,y,diameter,width,startDegrees,rangeDegrees,minValue,maxValue,minWrnValue,maxWrnValue,minColor,normalColor,maxColor,fontSize,textSize,text):
         self.canvas = canvas
         self.minValue=minValue
         self.maxValue=maxValue
@@ -16,7 +16,7 @@ class Circle:
         self.idCircle = self.canvas.create_arc(x-(diameter/2),y-(diameter/2),x+(diameter/2),y+(diameter/2),style="arc", start=self.startDegrees, extent=-self.rangeDegrees,fill="",outline=normalColor,width=width)
         
         self.idValue = Text(canvas,x,y,"Helvetica",fontSize,"bold","black","","80")
-        self.idText = Text(canvas,x,y+(diameter/4.5),"Helvetica",int(0.371*fontSize),"bold","black","",text) 
+        self.idText = Text(canvas,x,y+(diameter/4.5),"Helvetica",textSize,"bold","black","",text) 
 
     def setValue(self,value):
         if value > self.maxValue:

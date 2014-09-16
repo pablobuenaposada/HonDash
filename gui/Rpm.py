@@ -11,8 +11,6 @@ class Rpm:
         self.barWidth=barWidth
         self.canvas.create_arc(x-(width/2),y-(height/2),x+(width/2),y+(height/2),style="arc",outline=backColor,fill="",extent=self.totalDegrees,start=self.offsetDegrees,width=self.barWidth)        
         self.idRpm = self.canvas.create_arc(x-(width/2),y-(height/2),x+(width/2),y+(height/2),style="arc",outline=color,fill="",extent=0,start=self.offsetDegrees,width=self.barWidth)
-        z=height*math.sqrt(1-((0**2)/(width**2)))
-        self.canvas.create_line(x,z,x,y)
         
     def setRpm(self,valueFill):
         if valueFill > self.maxValue:
