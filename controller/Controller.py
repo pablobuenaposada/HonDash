@@ -7,21 +7,21 @@ class Controller:
         self.endRecord = -1
         self.timer = Time()
     
-    def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime):
+    def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp):
         rpm.setRpm(serial.getRpm())
-        speed.setText(137)#serial.getVss())
+        speed.setText(737)#serial.getVss())
         oilTemp.setValue(mcp3208.getADC(7)) 
-        oilPressure.setValue(56)#mcp3208.getADC(6))
+        oilPressure.setValue(5000)#mcp3208.getADC(6))
         fuel.setWidth(mcp3208.getADC(7))
         h2o.setValue(5000)#mcp3208.getADC(5))
-        h2oEcu.setValue(int(serial.getEct()))
-        battery.setValue(round(serial.getBattery(),1))
+        h2oEcu.setText(int(serial.getEct()))
+        battery.setText("12.5")#round(serial.getBattery(),1))
         throttle.setHeight(mcp3208.getADC(8))
         clutch.setHeight(mcp3208.getADC(4))
         brake.setHeight(mcp3208.getADC(3))
         time = self.timer.getTime()
         runTime.setText(self.timer.getTimeString())
-        canvas.after(10,controller.updateAll,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime)
+        canvas.after(10,controller.updateAll,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp)
 
     def checkSpeedRecord(self,speed):
         now = self.timer.getTime()
