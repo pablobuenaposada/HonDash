@@ -9,7 +9,7 @@ class Controller:
     
     def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp):
         rpm.setRpm(serial.getRpm())
-        speed.setText(737)#serial.getVss())
+        speed.setText(739)#serial.getVss())
         oilTemp.setValue(mcp3208.getADC(7)) 
         oilPressure.setValue(5000)#mcp3208.getADC(6))
         fuel.setWidth(mcp3208.getADC(7))
