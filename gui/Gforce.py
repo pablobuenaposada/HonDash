@@ -3,7 +3,7 @@ import math
 
 class Gforce:
     
-    def __init__(self,canvas,x,y,diameter,maxG,outlineWidth,outlineColor,lineWidth,lineColor):
+    def __init__(self,canvas,x,y,diameter,maxG,outlineWidth,outlineColor,lineWidth,lineColor,textColor):
         self.x=x
         self.y=y
         self.diameter=diameter
@@ -11,7 +11,7 @@ class Gforce:
         self.canvas = canvas
         self.idGauge=self.canvas.create_oval(x-(diameter/2),y-(diameter/2),x+(diameter/2),y+(diameter/2),outline=outlineColor, width=outlineWidth)
         self.idLine=self.canvas.create_line(x,y,x,y+(diameter/2),fill=lineColor,width=lineWidth)
-        self.text = Text(canvas,x+(diameter/2.6),y+(diameter/2.1),"Helvetica",int(diameter*0.09),"bold","black","","","1.0 G") 
+        self.text = Text(canvas,x+(diameter/2.6),y+(diameter/2.1),"Helvetica",int(diameter*0.09),"bold",textColor,"","","1.0 G") 
 
     
     def setGforce(self,xForce,yForce):       

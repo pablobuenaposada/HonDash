@@ -1,8 +1,8 @@
 class Bar:
     
-    def __init__(self,canvas,x,y,minWidth,maxWidth,minHeight,maxHeight,minValue,maxValue,color):
-        self.x=x
-        self.y=y
+    def __init__(self,canvas,x,y,minWidth,maxWidth,minHeight,maxHeight,minValue,maxValue,color,backgroundColor):
+        self.x = x
+        self.y = y
         self.canvas = canvas
         self.minWidth = minWidth
         self.maxWidth = maxWidth
@@ -10,6 +10,7 @@ class Bar:
         self.maxHeight = -maxHeight
         self.minValue = minValue
         self.maxValue = maxValue
+        self.idBackgroundBar = self.canvas.create_rectangle(x,y,x+self.maxWidth,y+self.maxHeight,fill=backgroundColor,outline=backgroundColor)
         self.idBar = self.canvas.create_rectangle(x,y,x+self.maxWidth,y+self.maxHeight,fill=color,outline=color)
 
     def setHeight(self,value):        
