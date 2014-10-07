@@ -9,6 +9,7 @@ from gui.Gforce import *
 from controller.Controller import *
 from devices.CromeQD2 import *
 from devices.MCP3208 import *
+from devices.Digital import *
 
 #ratio constants
 root = Tk()
@@ -48,7 +49,6 @@ oilPressure = Circle(canvas,(winWidth/8)*3,(winHeight/32)*18,225,60,240,300,0,25
 h2o = Circle(canvas,(winWidth/8)*5,(winHeight/32)*18,225,60,240,300,0,255,200,3000,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","H2O T","gray30")
 g = Gforce(canvas,(winWidth/8)*7,(winHeight/32)*18,285,2,1,"gray",4,"red","white")
 
-
 arrowLeft = Arrow(canvas,(winWidth/3)*1,winHeight/4,0.25,"green","left")
 arrowRight = Arrow(canvas,(winWidth/3)*2,winHeight/4,0.25,"green","right")
 
@@ -66,9 +66,16 @@ mapp = Text(canvas,(winWidth/7)*1,(winHeight/64)*64,"Helvetica",30,"bold italic"
 controller = Controller()
 serial = CromeQD2()
 mcp3208 = MCP3208()
+digital = Digital()
+digital.setInput(27)
+
+def f1(channel):
+    arrowLeft.setFill(digital.getValue(27))
+    
+digital.addEvent(27,f1)
 
 #update graphics
-canvas.after(10,controller.updateAll,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp)
+canvas.after(10,controller.updateAll,canvas,mcp3208,serial,controller,digital,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight)
 
 #main loop
 root.mainloop()
