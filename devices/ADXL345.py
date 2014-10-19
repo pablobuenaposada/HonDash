@@ -43,14 +43,18 @@ class ADXL345():
     address = None
 
     def __init__(self,xOffset,yOffset,zOffset):        
-        self.xOffset=xOffset
-	self.yOffset=yOffset
-	self.zOffset=zOffset
+        try:
+	    self.xOffset=xOffset
+	    self.yOffset=yOffset
+	    self.zOffset=zOffset
 
-	self.address = 0x53
-        self.setBandwidthRate(BW_RATE_100HZ)
-        self.setRange(RANGE_2G)
-        self.enableMeasurement()
+	    self.address = 0x53
+            self.setBandwidthRate(BW_RATE_100HZ)
+            self.setRange(RANGE_2G)
+            self.enableMeasurement()
+	
+	except:
+	    pass
 
     def enableMeasurement(self):
         bus.write_byte_data(self.address, POWER_CTL, MEASURE)

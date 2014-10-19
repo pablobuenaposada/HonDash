@@ -40,7 +40,7 @@ class CromeQD2:
 
     def getIat(self):
         iatRaw = self.serialPort.getByte(IAT_CROME14)
-        return calcTempInCelsius(iatRaw)
+        return self.calcTempInCelsius(iatRaw)
 
     def getEct(self):
         ectRaw = self.serialPort.getByte(ECT_CROME14)
@@ -49,7 +49,7 @@ class CromeQD2:
     def getTps(self):
         tpsRaw = self.serialPort.getByte(TPS_CROME14)
         tpsRaw = (0.4716  * tpsRaw) - 11.3184
-        return constrain(tpsRaw, 0, 100)
+        return tpsRaw
 
     def getO2(self):
         o2Raw = self.serialPort.getByte(O2_CROME14)
@@ -59,7 +59,7 @@ class CromeQD2:
         vssRaw = self.serialPort.getByte(VSS_CROME14)
         return vssRaw
 
-    def getMap():
+    def getMap(self):
         mapRaw = self.serialPort.getByte(MAP_CROME14)
         return (1764/255)*mapRaw
 
@@ -74,8 +74,8 @@ class CromeQD2:
         return (0.25 * ignRaw) - 6
 
     def getDutyCycle(self):
-        rpm = getRpm()
-        inj = getInj()
+        rpm = self.getRpm()
+        inj = self.getInj()
         return (rpm * inj) / 1200
 
     def getVtec(self):
