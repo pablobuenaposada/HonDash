@@ -11,7 +11,7 @@ from devices.CromeQD2 import *
 from devices.MCP3208 import *
 from devices.DigitalInput import *
 from devices.ADXL345 import *
-from gui.Image import *
+from gui.Icon import *
 import sys
 
 fsock = open('error.log', 'w')
@@ -37,27 +37,27 @@ circleTextSize = 25
 canvas = Canvas(root,width=winWidth,height=winHeight,bg="black")
 canvas.pack()
 
-a = Image(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",750,650)
-b = Image(canvas,"/home/pi/Desktop/HonDash/images/lights.png",850,650)
-c = Image(canvas,"/home/pi/Desktop/HonDash/images/rear.png",950,650)
-d = Image(canvas,"/home/pi/Desktop/HonDash/images/battery.png",750,750)
-e = Image(canvas,"/home/pi/Desktop/HonDash/images/handbrake.png",850,750)
-f = Image(canvas,"/home/pi/Desktop/HonDash/images/oil.png",950,750)
+a = Icon(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",750,650,100,100,True)
+b = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",850,650,100,100,True)
+c = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",950,650,100,100,True)
+d = Icon(canvas,"/home/pi/Desktop/HonDash/images/battery.png",750,750,100,100,True)
+e = Icon(canvas,"/home/pi/Desktop/HonDash/images/handbrake.png",850,750,100,100,True)
+f = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",950,750,100,100,True)
 
 #init graphics
 rpm = Rpm(canvas,winWidth/2,(winHeight/4.0)+10,winWidth/1.00,winHeight/2.75,100,"#ffa500","yellow",20,140,0,10000)
 speed = Text(canvas,(winWidth/2)-15,winHeight/4,"Helvetica",speedFontSize,"bold italic","white","","","137")
 speedUnit = Text(canvas,(winWidth/4)*2.5,(winHeight/4)+43,"Helvetica",20,"bold italic","white","","","km/h")
 mileage = 1 #Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","white","","","162.372 KM")
-fuel = Bar(canvas,(winWidth/2)-200,((winHeight/16)*5.75)+3,0,400,0,25,0,4096,"#efbbff","DeepPink4")
+fuel = Bar(canvas,(winWidth/2)-200,((winHeight/16)*5.75)+3,0,400,0,25,0,100,"#efbbff","DeepPink4")
 #canvas.create_text(winWidth/2,50,text="1926",font="Helvetica 70 bold",fill="#ee9b02",stipple='gray25')
 
 clutch = Bar(canvas,winWidth-182,winHeight,60,60,0,200,0,200,"blue","midnight blue")
 brake = Bar(canvas,winWidth-121,winHeight,60,60,0,200,2100,2400,"red","firebrick4")
 throttle = Bar(canvas,winWidth-60,winHeight,60,60,0,200,0,100,"green","dark green")
 
-oilTemp = Circle(canvas,(winWidth/8)*1,(winHeight/32)*18,225,60,240,300,0,255,200,3000,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","OIL T","gray30")
-oilPressure = Circle(canvas,(winWidth/8)*3,(winHeight/32)*18,225,60,240,300,0,255,200,3000,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","OIL P","gray30")
+oilTemp = Circle(canvas,(winWidth/8)*1,(winHeight/32)*18,225,60,240,300,0,150,80,120,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","OIL T","gray30")
+oilPressure = Circle(canvas,(winWidth/8)*3,(winHeight/32)*18,225,60,240,300,0,8,3,6,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","OIL P","gray30")
 h2o = Circle(canvas,(winWidth/8)*5,(winHeight/32)*18,225,60,240,300,0,255,200,3000,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","H2O T","gray30")
 g = Gforce(canvas,(winWidth/8)*7,(winHeight/32)*18,283,2,2,"gray",6,"red","white")
 
