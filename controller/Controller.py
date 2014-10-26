@@ -35,7 +35,7 @@ class Controller:
 	#iat.setText(int(serial.getIat()))
 	#inj.setText(serial.getInj())
 	#duty.setText(serial.getDutyCycle())
-	speed.setText(self.adc2fuel(mcp3208.getADC(3)))#serial.getVss())
+	speed.setText(serial.getVss())
         oilTemp.setValue(self.adc2oiltemp(mcp3208.getADC(7))) 
         oilPressure.setValue(self.adc2oilpress(mcp3208.getADC(5)))
         fuel.setWidth(self.adc2fuel(mcp3208.getADC(3)))

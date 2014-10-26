@@ -1,6 +1,6 @@
 class Arrow:
 
-     def __init__(self,canvas,x,y,scale,color,way):
+     def __init__(self,canvas,x,y,scale,color,way,init):
         if way == "left": points = [-150,0,0,125,0,50,150,50,150,-50,0,-50,0,-125]
         else: points = [-150,50,0,50,0,125,150,0,0,-125,0,-50,-150,-50]
 	
@@ -18,6 +18,7 @@ class Arrow:
 
         self.id = canvas.create_polygon(points,fill=color)
         canvas.delete(deleteId)
+	self.setFill(init)
         
      def setFill(self,status):
 	if status == False:

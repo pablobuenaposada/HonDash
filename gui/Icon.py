@@ -9,9 +9,10 @@ class Icon:
 	self.image = self.image.resize((width,height), Image.ANTIALIAS)
 	self.image = ImageTk.PhotoImage(self.image)
 	self.id = self.canvas.create_image(x,y,image=self.image)
+	self.setHidden(state)
 
     def setHidden(self,boolean):
 	if boolean == True:
-	    self.canvas.itemconfig(self.id, state='hidden')
+	    self.canvas.itemconfig(self.id, state='normal')
 	else:
-	    self.canvas.itemconfig(self.id, state='normal')	
+	    self.canvas.itemconfig(self.id, state='hidden')	

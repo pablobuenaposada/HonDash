@@ -29,6 +29,7 @@ root.config(cursor='none')
 
 winWidth=root.winfo_screenwidth()
 winHeight=root.winfo_screenheight()
+
 speedFontSize = 120
 circleValueSize = 60
 circleTextSize = 25
@@ -37,45 +38,45 @@ circleTextSize = 25
 canvas = Canvas(root,width=winWidth,height=winHeight,bg="black")
 canvas.pack()
 
-a = Icon(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",750,650,100,100,True)
-b = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",850,650,100,100,True)
-c = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",950,650,100,100,True)
-d = Icon(canvas,"/home/pi/Desktop/HonDash/images/battery.png",750,750,100,100,True)
-e = Icon(canvas,"/home/pi/Desktop/HonDash/images/handbrake.png",850,750,100,100,True)
-f = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",950,750,100,100,True)
+fuelIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",1220,256,45,50,False)
+lightsIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",375,270,83,51,False)
+trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",125,270,84,48,False)
+#handbrakeIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/handbrake.png",850,750,109,88,True)
+oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",250,270,109,41,False)
 
 #init graphics
 rpm = Rpm(canvas,winWidth/2,(winHeight/4.0)+10,winWidth/1.00,winHeight/2.75,100,"#ffa500","yellow",20,140,0,10000)
 speed = Text(canvas,(winWidth/2)-15,winHeight/4,"Helvetica",speedFontSize,"bold italic","white","","","137")
-speedUnit = Text(canvas,(winWidth/4)*2.5,(winHeight/4)+43,"Helvetica",20,"bold italic","white","","","km/h")
+speedUnit = Text(canvas,800,243,"Helvetica",20,"bold italic","white","","","km/h")
 mileage = 1 #Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","white","","","162.372 KM")
-fuel = Bar(canvas,(winWidth/2)-200,((winHeight/16)*5.75)+3,0,400,0,25,0,100,"#efbbff","DeepPink4")
-#canvas.create_text(winWidth/2,50,text="1926",font="Helvetica 70 bold",fill="#ee9b02",stipple='gray25')
+fuel = Bar(canvas,923,280,0,250,0,50,0,100,"#efbbff","DeepPink4")
+fuelText = Text(canvas,1050,256,"Helvetica",30,"bold italic","#a10f62","","%","100") 
 
-clutch = Bar(canvas,winWidth-182,winHeight,60,60,0,200,0,200,"blue","midnight blue")
-brake = Bar(canvas,winWidth-121,winHeight,60,60,0,200,2100,2400,"red","firebrick4")
-throttle = Bar(canvas,winWidth-60,winHeight,60,60,0,200,0,100,"green","dark green")
+#pedals
+clutch = Bar(canvas,1100,798,60,60,0,200,0,200,"blue","midnight blue")
+brake = Bar(canvas,1159,798,60,60,0,200,2100,2400,"red","firebrick4")
+throttle = Bar(canvas,1220,798,60,60,0,200,0,100,"green","dark green")
 
+#circles
 oilTemp = Circle(canvas,(winWidth/8)*1,(winHeight/32)*18,225,60,240,300,0,150,80,120,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","OIL T","gray30")
 oilPressure = Circle(canvas,(winWidth/8)*3,(winHeight/32)*18,225,60,240,300,0,8,3,6,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","OIL P","gray30")
 h2o = Circle(canvas,(winWidth/8)*5,(winHeight/32)*18,225,60,240,300,0,255,200,3000,"blue","#28cfbc","red",circleValueSize,circleTextSize,"white","H2O T","gray30")
 g = Gforce(canvas,(winWidth/8)*7,(winHeight/32)*18,283,2,2,"gray",6,"red","white")
 
-arrowLeft = Arrow(canvas,(winWidth/3)*1,winHeight/4,0.25,"green","left")
-arrowRight = Arrow(canvas,(winWidth/3)*2,winHeight/4,0.25,"green","right")
+#turn lights
+arrowLeft = Arrow(canvas,426,200,0.25,"green","left",False)
+arrowRight = Arrow(canvas,852,200,0.25,"green","right",False)
 
-runTime = Text(canvas,(winWidth/7)*3,(winHeight/64)*64,"Helvetica",30,"bold italic","white","Run ","","00:00:00")
-h2oEcu = Text(canvas,(winWidth/7)*3,(winHeight/64)*52,"Helvetica",30,"bold italic","white","H2O: ","cº","44")
-inj = Text(canvas,(winWidth/7)*3,(winHeight/64)*56,"Helvetica",30,"bold italic","white","INJ: ","ms","4")
-duty = Text(canvas,(winWidth/7)*3,(winHeight/64)*60,"Helvetica",30,"bold italic","white","DTY: ","ms","4")
-vtec = 1#Text(canvas,(winWidth/7)*3,(winHeight/64)*64,"Helvetica",30,"bold italic","white","VTC: ","","off")
-battery = Text(canvas,(winWidth/7)*1,(winHeight/64)*52,"Helvetica",30,"bold italic","white","BAT: ","v","12.4")
-iat = Text(canvas,(winWidth/7)*1,(winHeight/64)*56,"Helvetica",30,"bold italic","white","ITK: ","cº","44")
-ign = Text(canvas,(winWidth/7)*1,(winHeight/64)*60,"Helvetica",30,"bold italic","white","IGN: ","º","30")
-mapp = Text(canvas,(winWidth/7)*1,(winHeight/64)*64,"Helvetica",30,"bold italic","white","MAP: ","mBar","433")
-
-def f1(channel):
-    arrowLeft.setFill(digital.getValue(27))
+#info
+runTime = Text(canvas,244,215,"Helvetica",30,"bold italic","white","Run ","","00:00:00")
+h2oEcu = Text(canvas,510,624,"Helvetica",30,"bold italic","white","H2O: ","cº","44")
+inj = Text(canvas,495,672,"Helvetica",30,"bold italic","white","INJ: ","ms","4")
+duty = Text(canvas,500,720,"Helvetica",30,"bold italic","white","DTY: ","ms","4")
+vtec = Text(canvas,480,768,"Helvetica",30,"bold italic","white","VTC: ","","off")
+battery = Text(canvas,150,624,"Helvetica",30,"bold italic","white","BAT: ","v","12.4")
+iat = Text(canvas,130,672,"Helvetica",30,"bold italic","white","IAT: ","cº","44")
+ign = Text(canvas,120,720,"Helvetica",30,"bold italic","white","IGN: ","º","30")
+mapp = Text(canvas,182,768,"Helvetica",30,"bold italic","white","MAP: ","mBar","433")
 
 #init devices
 serial = CromeQD2()
