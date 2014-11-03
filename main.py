@@ -39,7 +39,7 @@ canvas = Canvas(root,width=winWidth,height=winHeight,bg="black")
 canvas.pack()
 
 fuelIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",1220,256,45,50,False)
-lightsIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",375,270,83,51,False)
+highBeamIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",375,270,83,51,False)
 trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",125,270,84,48,False)
 #handbrakeIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/handbrake.png",850,750,109,88,True)
 oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",250,270,109,41,False)
@@ -82,12 +82,19 @@ mapp = Text(canvas,182,768,"Helvetica",30,"bold italic","white","MAP: ","mBar","
 serial = CromeQD2()
 mcp3208 = MCP3208()
 controller = Controller()
-digital27 = DigitalInput(27,controller.f2)    
-controller.things2control(digital27,arrowLeft)
+
+digital4 = DigitalInput(4,controller.callbackFuelIcon)
+digital17 = DigitalInput(17,controller.callbackHighBeamIcon)
+digital22 = DigitalInput(22,controller.callbackOilIcon)
+digital23 = DigitalInput(23,controller.callbackLights)
+digital24 = DigitalInput(24,controller.callbackArrowRight)
+digital25 = DigitalInput(25,controller.callbackArrowLeft)
+digital27 = DigitalInput(27,controller.callbackTrunkIcon)    
+controller.things2control(digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon)
 accelerometer = ADXL345(0.6,0.5,0)
 
 #update graphics
-canvas.after(10,controller.updateAll,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight,accelerometer,g)
+canvas.after(10,controller.updateAll,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight,accelerometer,g,fuelText)
 
 #main loop
 root.mainloop()
