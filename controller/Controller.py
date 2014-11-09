@@ -1,4 +1,5 @@
 from devices.Time import *
+import numpy
 
 class Controller:
     
@@ -6,6 +7,9 @@ class Controller:
         self.startRecord = -1
         self.endRecord = -1
         self.timer = Time()
+	self.fuelCounter = 0
+	self.fuelAverage = []
+	self.fuelCounterMax = 100
 
     def adc2fuel(self,adc):
         volts = (adc/4096.000)*4.80
@@ -20,7 +24,7 @@ class Controller:
 	volts = (adc/4096.000)*4.80
 	return round(7.671035919*pow(10,-2)*pow(volts,7)-1.077184901*pow(volts,6)+6.295494139*pow(volts,5)-19.62567902*pow(volts,4)+35.08161116*pow(volts,3)-35.51613665*pow(volts,2)+19.52857924*volts-4.551671147,1)
 
-    def things2control(self,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon):
+    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o):
 	self.digital4 = digital4
 	self.digital17 = digital17
 	self.digital22 = digital22
@@ -34,29 +38,73 @@ class Controller:
 	self.highBeamIcon = highBeamIcon
 	self.trunkIcon = trunkIcon
 	self.oilIcon = oilIcon
+	self.canvas = canvas
+	self.speed = speed
+	self.speedUnit = speedUnit
+	self.h2oEcu = h2oEcu
+	self.battery = battery
+	self.runTime = runTime
+	self.inj = inj
+	self.duty = duty
+	self.vtec = vtec
+	self.iat = iat
+	self.ign = ign
+	self.mapp = mapp
+	self.oilTemp = oilTemp
+	self.oilPressure = oilPressure
+	self.h2o = h2o
 
-
-    def callbackArrowLeft(self,channel):
+    def callbackDigital25(self,channel):
     	self.arrowLeft.setFill(self.digital25.getValue())
 
-    def callbackArrowRight(self,channel):
+    def callbackDigital24(self,channel):
 	self.arrowRight.setFill(self.digital24.getValue())
 
-    def callbackFuelIcon(self,channel):
+    def callbackDigital4(self,channel):
 	self.fuelIcon.setHidden(self.digital4.getValue())
 
-    def callbackHighBeamIcon(self,channel):
+    def callbackDigital17(self,channel):
 	self.highBeamIcon.setHidden(self.digital17.getValue())
 
-    def callbackTrunkIcon(self,channel):
+    def callbackDigital27(self,channel):
 	self.trunkIcon.setHidden(self.digital27.getValue())    
 
-    def callbackOilIcon(self,channel):
+    def callbackDigital22(self,channel):
 	self.oilIcon.setHidden(self.digital22.getValue())
 
-    def callbackLights(self,channel):
-	print "aaaaaaaa"
-	pass
+    def callbackDigital23(self,channel):
+	if (self.digital23.getValue()):
+	    self.canvas.configure(bg="black")
+	    self.speed.setColor("white")
+	    self.speedUnit.setColor("white")
+            self.h2oEcu.setColor("white")
+            self.battery.setColor("white")
+            self.runTime.setColor("white")
+            self.inj.setColor("white")
+            self.duty.setColor("white")
+            self.vtec.setColor("white")
+            self.iat.setColor("white")
+            self.ign.setColor("white")
+            self.mapp.setColor("white")
+	    self.oilTemp.setTextColor("white")
+	    self.oilPressure.setTextColor("white")
+	    self.h2o.setTextColor("white")
+	else:
+	    self.canvas.configure(bg="white")
+	    self.speed.setColor("black")
+	    self.speed.setColor("black")
+            self.h2oEcu.setColor("black")
+            self.battery.setColor("black")
+            self.runTime.setColor("black")
+            self.inj.setColor("black")
+            self.duty.setColor("black")
+            self.vtec.setColor("black")
+            self.iat.setColor("black")
+            self.ign.setColor("black")
+            self.mapp.setColor("black")
+	    self.oilTemp.setTextColor("black")
+            self.oilPressure.setTextColor("black")
+            self.h2o.setTextColor("black")
 
     def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight,accelerometer,g,fuelText):
 
@@ -69,16 +117,23 @@ class Controller:
 	speed.setText(serial.getVss())
         oilTemp.setValue(self.adc2oiltemp(mcp3208.getADC(7))) 
         oilPressure.setValue(self.adc2oilpress(mcp3208.getADC(5)))
-        fuel.setWidth(self.adc2fuel(mcp3208.getADC(3)))
-	fuelText.setText(self.adc2fuel(mcp3208.getADC(3)))
-        h2o.setValue(mcp3208.getADC(4))
+	if self.fuelCounter < self.fuelCounterMax:
+	    self.fuelAverage.append(self.adc2fuel(mcp3208.getADC(3)))
+	    self.fuelCounter = self.fuelCounter + 1
+	else:	    
+	    self.fuelAverage = numpy.median(self.fuelAverage)
+            fuel.setWidth(int(self.fuelAverage))
+	    fuelText.setText(int(self.fuelAverage))
+	    self.fuelAverage = []
+	    self.fuelCounter = 0
+	h2o.setValue(mcp3208.getADC(4))
         h2oEcu.setText(int(serial.getEct()))
         battery.setText(round(serial.getBattery(),1))
         throttle.setHeight(serial.getTps())
-        clutch.setHeight(mcp3208.getADC(1))
+        clutch.setHeight(0)#mcp3208.getADC(1))
 	if(serial.getVtec()): vtec.setText("on")
 	else: vtec.setText("off")
-        #brake.setHeight(mcp3208.getADC(7))
+        brake.setHeight(0)#mcp3208.getADC(7))
         time = self.timer.getTime()
         runTime.setText(self.timer.getTimeString())
 	#axes = accelerometer.getAxes(True)

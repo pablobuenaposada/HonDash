@@ -34,6 +34,8 @@ class Circle:
         self.canvas.itemconfig(self.idCircle, outline=color)
         self.idValue.setText(value)
         
-    
+    def setTextColor(self,color):
+	self.idValue.setColor(color)
+	self.idText.setColor(color)   
 
     

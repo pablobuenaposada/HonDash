@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-
+from controller.Controller import *
 class DigitalInput:
 
     def __init__(self,pin,callback):

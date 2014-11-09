@@ -13,3 +13,6 @@ class Text:
 
     def setText(self,text):
         self.canvas.itemconfig(self.id,text=self.prefix+str(text)+self.suffix)
+
+    def setColor(self,color):
+	self.canvas.itemconfig(self.id,fill=color)
