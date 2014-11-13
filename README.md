@@ -32,7 +32,7 @@ HonDash is an open source racing dash developed for Honda engines using a raspbe
 
 
 ####Schematics
-<a href="url"><img src="https://raw.github.com/pablobuenaposada/HonDash/master/mierdaca/logo/hondash.png" align="left" height="48" width="48" ></a>
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/schematics/main12.png" align="left" height="48" width="48">
 
 
 ####Photos
