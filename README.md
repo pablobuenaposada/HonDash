@@ -42,6 +42,10 @@ PCB
 
 <a href="https://raw.githubusercontent.com/pablobuenaposada/HonDash/master/docs/photos/pcb.png"><img src="https://raw.githubusercontent.com/pablobuenaposada/HonDash/master/docs/photos/pcb.png" align="" height="400" width=""></a>
 
+<a href="https://raw.githubusercontent.com/pablobuenaposada/HonDash/master/docs/photos/pcbMounted.jpg"><img src="https://raw.githubusercontent.com/pablobuenaposada/HonDash/master/docs/photos/pcbMounted.jpg" align="" height="400" width=""></a>
+
+
+
 Complete system
 
 <a href="https://raw.githubusercontent.com/pablobuenaposada/HonDash/master/docs/photos/outside.JPG"><img src="https://raw.githubusercontent.com/pablobuenaposada/HonDash/master/docs/photos/outside.JPG" align="" height="" width="700"></a>
