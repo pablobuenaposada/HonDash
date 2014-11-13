@@ -1,15 +1,15 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/mierdaca/logo/hondash.png)
 
-What's HonDash?
+####What's HonDash?
 HonDash is an open source racing dash developed for Honda engines using a raspberry pi board.
 
-What do I need?
+####What do I need?
 -Raspberry PI model B
 -HonDash board
 -HDMI or RCA screen
 -Crome OBD1 chipped ECU with quickdatalogging plugin enabled
 
-Features
+####Features
 -8 analog inputs at max 5v (for temperature and pressure sensors)
 -7 digital inputs(12v)/outputs(3.3v) 
 -1 serial port
@@ -27,15 +27,15 @@ Features
 -Other OBD1 systems like Hondata S300/Ectune/Neptune. 
 -Fully configurable by XML
 
-Schematics
+####Schematics
 
-Photos
+####Photos
 
 PCB
 
 Complete system
 
-Videos
+####Videos
 First test
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
