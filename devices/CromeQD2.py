@@ -18,16 +18,23 @@ INJLOW_CROME14 = 0x17
 INJHIGH_CROME14 = 0x18
 KNOCK_CROME14 = 0x1A
 BATT_CROME14 = 0x1F
+GEAR_B1_CROME14 = 0x01
+GEAR_B2_CROME14 = 0x02
+GEAR_B3_CROME14 = 0x4F
 
 class CromeQD2:   
 
     def calcTempInCelsius(self,raw):
-        raw = raw / 51
+        raw = raw / 51.
         raw = (0.1423*pow(raw,6)) - (2.4938*pow(raw,5))  + (17.837*pow(raw,4)) - (68.698*pow(raw,3)) + (154.69*pow(raw,2)) - (232.75*raw) + 284.24
-        return ((raw - 32)*5)/9
+        return ((raw - 32.)*5.)/9.
 
     def __init__(self):
         self.serialPort = SerialPort()
+
+    def getGear(self):
+        gearRaw = self.serialPort.getByteFromThree(GEAR_B1_CROME14,GEAR_B2_CROME14,GEAR_B3_CROME14)
+        return gearRaw
 
     def getRpm(self):
         rpmLowRaw=self.serialPort.getByte(RPMLOW_CROME14)
@@ -44,7 +51,7 @@ class CromeQD2:
 
     def getEct(self):
         ectRaw = self.serialPort.getByte(ECT_CROME14)
-        return self.calcTempInCelsius(ectRaw)
+	return self.calcTempInCelsius(ectRaw)
 
     def getTps(self):
         tpsRaw = self.serialPort.getByte(TPS_CROME14)

@@ -21,7 +21,7 @@ class Bar:
 
         newHeight = (((value - self.minValue) * (self.maxHeight - self.minHeight)) / (self.maxValue - self.minValue)) + self.minHeight
         newHeight = self.y + newHeight
-        actualDimension = self.canvas.coords(self.idBar)
+	actualDimension = self.canvas.coords(self.idBar)
         self.canvas.coords(self.idBar,actualDimension[0],newHeight,actualDimension[2],actualDimension[3])
 
     def setWidth(self,value):

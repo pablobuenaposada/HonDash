@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from controller.Controller import *
+
 class DigitalInput:
 
     def __init__(self,pin,callback):
@@ -12,4 +12,4 @@ class DigitalInput:
     def getValue(self):
 	if GPIO.input(self.pin) == 1: return False
 	else: return True	
-    
+   
