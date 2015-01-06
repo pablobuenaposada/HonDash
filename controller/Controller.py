@@ -66,8 +66,8 @@ class Controller:
 
     def callbackDigital23(self,channel):
 	if (self.digital23.getValue()):
-	    self.wallpaper.setHidden(True)
-	    #self.canvas.configure(bg=Global.ONBgColor)
+	    #self.wallpaper.setHidden(True)
+	    self.canvas.configure(bg=Global.ONBgColor)
 	    self.speed.setColor(Global.ONtextColor)
 	    self.speedUnit.setColor(Global.ONtextColor)
             self.h2oEcu.setColor(Global.ONtextColor)
@@ -85,8 +85,8 @@ class Controller:
 	    self.fuelText.setTextColor(Global.ONtextColor)
 	    
 	else:
-	    self.wallpaper.setHidden(False)
-	    #self.canvas.configure(bg=Global.OFFBgColor)
+	    #self.wallpaper.setHidden(False)
+	    self.canvas.configure(bg=Global.OFFBgColor)
 	    self.speed.setColor(Global.OFFtextColor)
 	    self.speedUnit.setColor(Global.OFFtextColor)
             self.h2oEcu.setColor(Global.OFFtextColor)
@@ -103,6 +103,10 @@ class Controller:
             self.h2o.setTextColor(Global.OFFtextColor)
 	    self.fuelText.setTextColor(Global.OFFtextColor)
 
+    def adc2fuel(self,adc):
+        volts = (adc/4096.000)*4.80
+        return (int)(-7.348540077*pow(10,-1)*pow(volts,2)-32.27276861*volts+109.170896)     
+
     def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight,accelerometer,g,fuelText,gear):
 
 	gear.setText(serial.getGear())
@@ -115,7 +119,7 @@ class Controller:
 	speed.setText(serial.getVss())
         oilTemp.updateValue()
         oilPressure.updateValue()
-	'''if self.fuelCounter < self.fuelCounterMax:
+	if self.fuelCounter < self.fuelCounterMax:
 	    self.fuelAverage.append(self.adc2fuel(mcp3208.getADC(3)))
 	    self.fuelCounter = self.fuelCounter + 1
 	else:	    
@@ -123,7 +127,7 @@ class Controller:
             fuel.setWidth(int(self.fuelAverage))
 	    fuelText.setText(int(self.fuelAverage))
 	    self.fuelAverage = []
-	    self.fuelCounter = 0'''
+	    self.fuelCounter = 0
 	h2o.updateValue()
         h2oEcu.setText(int(serial.getEct()))
         battery.setText(round(serial.getBattery(),1))

@@ -1,13 +1,13 @@
 class Global:
 
     #gui colors
-    OFFBgColor = "black"
+    OFFBgColor = "white"
     OFFrpmColor = "yellow"
-    OFFshadeColor = "gray30"
-    OFFtextColor = "white"
-    OFFthrottleBgColor = "#004800"
-    OFFclutchBgColor = "#000048"
-    OFFbrakeBgColor = "#480000"
+    OFFshadeColor = "gray95"
+    OFFtextColor = "black"
+    OFFthrottleBgColor = "#b8ffb8"
+    OFFclutchBgColor = "#b8b8ff"
+    OFFbrakeBgColor = "#ffb8b8"
     
     ONBgColor = "black"
     ONrpmColor = "yellow"
