@@ -5,7 +5,7 @@ class SerialPort:
 
     def __init__(self):
         try:
-            self.serialPort = Serial('/dev/ttyAMA0',38400,timeout=1)
+            self.serialPort = Serial('/dev/ttyAMA0',38400,timeout=0.01)
         except:
             pass
 
@@ -20,7 +20,7 @@ class SerialPort:
             try:
                 if self.serialPort is None: pass
                 elif self.serialPort.isOpen: self.serialPort.close()
-                self.serialPort = Serial('/dev/ttyAMA0',38400,timeout=1)
+                self.serialPort = Serial('/dev/ttyAMA0',38400,timeout=0.01)
                 return 0
             except: return 0
 
@@ -35,7 +35,7 @@ class SerialPort:
             try:
                 if self.serialPort is None: pass
                 elif self.serialPort.isOpen: self.serialPort.close()
-                self.serialPort = Serial('/dev/ttyAMA0',38400,timeout=1)
+                self.serialPort = Serial('/dev/ttyAMA0',38400,timeout=0.01)
                 return 0
             except:
 		return 0
