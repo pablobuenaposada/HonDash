@@ -37,10 +37,12 @@ class CromeQD2:
         return gearRaw
 
     def getRpm(self):
-        rpmLowRaw=self.serialPort.getByte(RPMLOW_CROME14)
-        rpmHighRaw=self.serialPort.getByte(RPMHIGH_CROME14) 
-        return 1851562/((rpmHighRaw * 256) + rpmLowRaw)
-
+	try:
+            rpmLowRaw=self.serialPort.getByte(RPMLOW_CROME14)
+            rpmHighRaw=self.serialPort.getByte(RPMHIGH_CROME14) 
+            return 1851562/((rpmHighRaw * 256) + rpmLowRaw)
+	except: return 0
+		
     def getBattery(self):
         batteryRaw = self.serialPort.getByte(BATT_CROME14)
         return (26.0 * batteryRaw) / 270.0
