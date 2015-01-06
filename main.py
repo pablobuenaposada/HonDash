@@ -35,6 +35,33 @@ speedFontSize = 120
 circleValueSize = 60
 circleTextSize = 25
 
+#init devices
+serial = CromeQD2()
+mcp3208 = MCP3208()
+controller = Controller()
+
+def adc2fuel(self,adc):
+    volts = (adc/4096.000)*4.80
+    return (int)(-7.348540077*pow(10,-1)*pow(volts,2)-32.27276861*volts+109.170896)
+
+#conversion for VDO 323-057 sensor powered by 4.8v and read with a 56ohms voltage divider
+def adc2oiltemp(adc):
+    volts = (adc/4096.000)*4.80
+    return (int)(-9.805174198*pow(10,-1)*pow(volts,9)+23.4368155*pow(volts,8)-240.7430517*pow(volts,7)+1390.11628*pow(volts,6)-4955.008229*pow(volts,5)+11266.31187*pow(volts,4)-16289.93484*pow(volts,3)+14423.41426*pow(volts,2)-7152.975474*volts+1697.497838)
+
+def adc2oilpress(adc):
+    volts = (adc/4096.000)*4.80
+    return round(7.671035919*pow(10,-2)*pow(volts,7)-1.077184901*pow(volts,6)+6.295494139*pow(volts,5)-19.62567902*pow(volts,4)+35.08161116*pow(volts,3)-35.51613665*pow(volts,2)+19.52857924*volts-4.551671147,1)
+
+def oilTempSensor():
+    return adc2oiltemp(mcp3208.getADC(7))
+
+def oilPressSensor():
+    return adc2oilpress(mcp3208.getADC(5))
+
+def waterTempSensor():
+    return adc2oiltemp(mcp3208.getADC(1))
+
 #init canvas
 canvas = Canvas(root,width=winWidth,height=winHeight,bg=Global.OFFBgColor)
 canvas.pack()
@@ -62,9 +89,9 @@ brake = Bar(canvas,1159,798,60,60,0,200,2100,2400,Global.brakeColor,Global.OFFbr
 throttle = Bar(canvas,1220,798,60,60,0,200,0,100,Global.throttleColor,Global.OFFthrottleBgColor)
 
 #circles
-oilTemp = Circle(canvas,(winWidth/8)*1,(winHeight/32)*18,225,60,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL T",Global.OFFshadeColor)
-oilPressure = Circle(canvas,(winWidth/8)*3,(winHeight/32)*18,225,60,240,300,0,8,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor)
-h2o = Circle(canvas,(winWidth/8)*5,(winHeight/32)*18,225,60,240,300,0,255,200,3000,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"H2O T",Global.OFFshadeColor)
+oilTemp = Circle(canvas,(winWidth/8)*1,(winHeight/32)*18,225,60,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL T",Global.OFFshadeColor,oilTempSensor,None)
+oilPressure = Circle(canvas,(winWidth/8)*3,(winHeight/32)*18,225,60,240,300,0,8,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor,oilPressSensor,None)
+h2o = Circle(canvas,(winWidth/8)*5,(winHeight/32)*18,225,60,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"H2O T",Global.OFFshadeColor,waterTempSensor,None)
 g = Gforce(canvas,(winWidth/8)*7,(winHeight/32)*18,283,2,2,"gray",6,"red",Global.OFFtextColor)
 
 #turn lights
@@ -83,10 +110,6 @@ ign = Text(canvas,120,720,"Helvetica",30,"bold italic",Global.OFFtextColor,"IGN:
 mapp = Text(canvas,182,768,"Helvetica",30,"bold italic",Global.OFFtextColor,"MAP: ","mBar","433")
 gear = Text(canvas,800,672,"Helvetica",30,"bold italic",Global.OFFtextColor,"GEAR: ","","N")
 
-#init devices
-serial = CromeQD2()
-mcp3208 = MCP3208()
-controller = Controller()
 
 digital4 = DigitalInput(4,controller.callbackDigital4)
 digital17 = DigitalInput(17,controller.callbackDigital17)

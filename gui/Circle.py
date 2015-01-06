@@ -2,7 +2,9 @@ from Text import *
 
 class Circle:
     
-    def __init__(self,canvas,x,y,diameter,width,startDegrees,rangeDegrees,minValue,maxValue,minWrnValue,maxWrnValue,minColor,normalColor,maxColor,fontSize,textSize,textColor,text,backgroundColor):
+    def __init__(self,canvas,x,y,diameter,width,startDegrees,rangeDegrees,minValue,maxValue,minWrnValue,maxWrnValue,minColor,normalColor,maxColor,fontSize,textSize,textColor,text,backgroundColor,updateFunction,updateParam):
+	self.updateFunction = updateFunction
+	self.updateParam = updateParam
         self.canvas = canvas
         self.minValue=minValue
         self.maxValue=maxValue
@@ -38,4 +40,6 @@ class Circle:
 	self.idValue.setColor(color)
 	self.idText.setColor(color)   
 
-    
+    def updateValue(self):
+	if self.updateParam is not None: self.setValue(self.updateFunction(self.updateParam))
+	else: self.setValue(self.updateFunction())
