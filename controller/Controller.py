@@ -10,7 +10,7 @@ class Controller:
         self.timer = Time()
 	self.fuelCounter = 0
 	self.fuelAverage = []
-	self.fuelCounterMax = 100
+	self.fuelCounterMax = 200
 
 
     def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear):
@@ -111,11 +111,11 @@ class Controller:
 
 	gear.setText(serial.getGear())
 	rpm.setRpm(serial.getRpm())
-	mapp.setText(serial.getMap())
-        ign.setText(int(serial.getIgn()))
-	iat.setText(int(serial.getIat()))
-	inj.setText(serial.getInj())
-	duty.setText(serial.getDutyCycle())
+	#mapp.setText(serial.getMap())
+        ign.updateValue()
+	iat.updateValue()
+	inj.updateValue()
+	duty.updateValue()
 	speed.setText(serial.getVss())
         oilTemp.updateValue()
         oilPressure.updateValue()
@@ -129,12 +129,12 @@ class Controller:
 	    self.fuelAverage = []
 	    self.fuelCounter = 0
 	h2o.updateValue()
-        h2oEcu.setText(int(serial.getEct()))
-        battery.setText(round(serial.getBattery(),1))
+        #h2oEcu.setText(int(serial.getEct()))
+        battery.updateValue()
         throttle.setHeight(serial.getTps())
         clutch.setHeight(0)#mcp3208.getADC(1))
-	if(serial.getVtec()): vtec.setText("on")
-	else: vtec.setText("off")
+	#if(serial.getVtec()): vtec.setText("on")
+	#else: vtec.setText("off")
         brake.setHeight(0)#mcp3208.getADC(7))'''
         time = self.timer.getTime()
         runTime.setText(self.timer.getTimeString())

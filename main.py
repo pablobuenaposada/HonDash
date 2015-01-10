@@ -32,8 +32,8 @@ winWidth=root.winfo_screenwidth() #1280
 winHeight=root.winfo_screenheight() #800
 
 speedFontSize = 120
-circleValueSize = 60
-circleTextSize = 25
+circleValueSize = 50
+circleTextSize = 15
 
 #init devices
 serial = CromeQD2()
@@ -62,6 +62,21 @@ def oilPressSensor():
 def waterTempSensor():
     return int(serial.getEct())
 
+def batterySensor():
+    return round(serial.getBattery(),1)
+
+def iatSensor():
+    return int(serial.getIat())
+
+def injSensor():
+    return serial.getInj()
+
+def ignSensor():
+    return int(serial.getIgn())
+
+def dutySensor():
+    return serial.getDutyCycle()
+
 #init canvas
 canvas = Canvas(root,width=winWidth,height=winHeight,bg=Global.OFFBgColor)
 canvas.pack()
@@ -69,14 +84,14 @@ canvas.pack()
 wallpaper=Icon(canvas,"/home/pi/Desktop/HonDash/images/camo4.jpg",1280/2,800/2,1280,800,False)
 
 fuelIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",1220,256,45,50,False)
-highBeamIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",375,270,83,51,False)
-trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",125,270,84,48,False)
-oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",250,270,109,41,False)
+highBeamIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",1240,380,63,31,False)
+trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",1040,380,64,38,False)
+oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",1140,380,89,21,False)
 
 #init graphics
 rpm = Rpm(canvas,winWidth/2,(winHeight/4.0)+10,winWidth/1.00,winHeight/2.75,100,Global.OFFrpmColor,Global.OFFshadeColor,20,140,0,9000)
-speed = Text(canvas,625,200,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","137")
-speedUnit = Text(canvas,800,243,"Helvetica",20,"bold italic",Global.OFFtextColor,"","","km/h")
+speed = Text(canvas,175,275,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
+speedUnit = Text(canvas,360,318,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
 mileage = 1 #Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","white","","","162.372 KM")
 fuel = Bar(canvas,923,280,0,250,0,50,0,100,Global.fuelColor,Global.OFFshadeColor)
 fuelText = Text(canvas,1050,256,"Helvetica",30,"bold italic",Global.OFFtextColor,"","%","100") 
@@ -84,32 +99,41 @@ fuelText = Text(canvas,1050,256,"Helvetica",30,"bold italic",Global.OFFtextColor
 #p=Text(canvas,640,50,"Helvetica",40,"bold italic","black","","7","")
 
 #pedals
-clutch = Bar(canvas,1100,798,60,60,0,480,0,200,Global.clutchColor,Global.OFFclutchBgColor)
-brake = Bar(canvas,1159,798,60,60,0,480,2100,2400,Global.brakeColor,Global.OFFbrakeBgColor)
-throttle = Bar(canvas,1220,798,60,60,0,480,0,100,Global.throttleColor,Global.OFFthrottleBgColor)
+clutch = Bar(canvas,1040,798,80,80,0,380,0,200,Global.clutchColor,Global.OFFclutchBgColor)
+brake = Bar(canvas,1119,798,80,80,0,380,2100,2400,Global.brakeColor,Global.OFFbrakeBgColor)
+throttle = Bar(canvas,1200,798,80,80,0,380,0,100,Global.throttleColor,Global.OFFthrottleBgColor)
 
 #circles
-oilTemp = Circle(canvas,160,650,225,60,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL T",Global.OFFshadeColor,oilTempSensor,None)
-oilPressure = Circle(canvas,530,650,225,60,240,300,0,8,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor,oilPressSensor,None)
-h2o = Circle(canvas,900,650,225,60,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"H2O T",Global.OFFshadeColor,waterTempSensor,None)
-g = None#Gforce(canvas,(winWidth/8)*7,(winHeight/32)*18,283,2,2,"gray",6,"red",Global.OFFtextColor)
+oilTemp = Circle(canvas,150,455,180,50,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL T",Global.OFFshadeColor,oilTempSensor,None)
+
+oilPressure = Circle(canvas,150,680,180,50,240,300,0,10,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor,oilPressSensor,None)
+
+h2o = Circle(canvas,400,455,180,50,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"H2O T",Global.OFFshadeColor,waterTempSensor,None)
+
+g = None#Gforce(canvas,450,680,205,2,2,"gray",6,"red",Global.OFFtextColor)
+
+battery = Circle(canvas,650,455,180,50,240,300,0,16,12,15,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"BAT",Global.OFFshadeColor,batterySensor,None)
+
+iat = Circle(canvas,900,455,180,50,240,300,0,50,0,40,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IAT",Global.OFFshadeColor,iatSensor,None)
+
+inj = Circle(canvas,400,680,180,50,240,300,0,10,0,100,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"INJ",Global.OFFshadeColor,injSensor,None)
+
+ign = Circle(canvas,900,680,180,50,240,300,0,50,0,50,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IGN",Global.OFFshadeColor,ignSensor,None)
+
+duty = Circle(canvas,650,680,180,50,240,300,0,50,0,50,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"DTY",Global.OFFshadeColor,dutySensor,None)
+
 
 #turn lights
-arrowLeft = Arrow(canvas,426,200,0.25,Global.signalColor,"left",False)
-arrowRight = Arrow(canvas,852,200,0.25,Global.signalColor,"right",False)
+arrowLeft = Arrow(canvas,476,250,0.35,Global.signalColor,"left",False)
+arrowRight = Arrow(canvas,802,250,0.35,Global.signalColor,"right",False)
 
 #info
-runTime = Text(canvas,244,215,"Helvetica",30,"bold italic",Global.OFFtextColor,"Run ","","00:00:00")
-h2oEcu = Text(canvas,910,324,"Helvetica",30,"bold italic",Global.OFFtextColor,"H2O: ","cº","44")
-inj = Text(canvas,895,372,"Helvetica",30,"bold italic",Global.OFFtextColor,"INJ: ","ms","4")
-duty = Text(canvas,900,420,"Helvetica",30,"bold italic",Global.OFFtextColor,"DTY: ","ms","4")
-vtec = Text(canvas,880,468,"Helvetica",30,"bold italic",Global.OFFtextColor,"VTC: ","","off")
-battery = Text(canvas,150,324,"Helvetica",30,"bold italic",Global.OFFtextColor,"BAT: ","v","12.4")
-iat = Text(canvas,130,372,"Helvetica",30,"bold italic",Global.OFFtextColor,"IAT: ","cº","44")
-ign = Text(canvas,120,420,"Helvetica",30,"bold italic",Global.OFFtextColor,"IGN: ","º","30")
-mapp = Text(canvas,182,468,"Helvetica",30,"bold italic",Global.OFFtextColor,"MAP: ","mBar","433")
-gear = Text(canvas,640,400,"Helvetica",200,"bold",Global.OFFtextColor,"","","N")
-
+runTime = Text(canvas,1130,330,"Helvetica",30,"bold italic",Global.OFFtextColor,"Run ","","00:00:00")
+h2oEcu = None#Text(canvas,910,324,"Helvetica",30,"bold italic",Global.OFFtextColor,"H2O: ","cº","44")
+vtec = None#Text(canvas,700,594,"Helvetica",30,"bold italic",Global.OFFtextColor,"VTC: ","","off")
+mapp = None#Text(canvas,702,738,"Helvetica",30,"bold italic",Global.OFFtextColor,"MAP: ","mBar","433")
+gear = Text(canvas,625,240,"Helvetica",200,"bold italic",Global.OFFtextColor,"","","N")
+gearUnit = Text(canvas,735,320,"Helvetica",20,"bold italic",Global.OFFtextColor,"GEAR","","")
 
 digital4 = DigitalInput(4,controller.callbackDigital4)
 digital17 = DigitalInput(17,controller.callbackDigital17)
