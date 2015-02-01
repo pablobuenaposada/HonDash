@@ -112,15 +112,15 @@ h2o = Circle(canvas,400,455,180,50,240,300,0,150,80,120,Global.circleMinColor,Gl
 
 g = None#Gforce(canvas,450,680,205,2,2,"gray",6,"red",Global.OFFtextColor)
 
-battery = Circle(canvas,650,455,180,50,240,300,0,16,12,15,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"BAT",Global.OFFshadeColor,batterySensor,None)
+battery = Circle(canvas,650,455,180,50,240,300,0,16,11,15,Global.circleMaxColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"BAT",Global.OFFshadeColor,batterySensor,None)
 
 iat = Circle(canvas,900,455,180,50,240,300,0,50,0,40,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IAT",Global.OFFshadeColor,iatSensor,None)
 
-inj = Circle(canvas,400,680,180,50,240,300,0,10,0,100,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"INJ",Global.OFFshadeColor,injSensor,None)
+inj = Circle(canvas,400,680,180,50,240,300,0,20,0,20,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"INJ ms",Global.OFFshadeColor,injSensor,None)
 
-ign = Circle(canvas,900,680,180,50,240,300,0,50,0,50,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IGN",Global.OFFshadeColor,ignSensor,None)
+ign = Circle(canvas,900,680,180,50,240,300,0,60,0,60,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IGN",Global.OFFshadeColor,ignSensor,None)
 
-duty = Circle(canvas,650,680,180,50,240,300,0,50,0,50,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"DTY",Global.OFFshadeColor,dutySensor,None)
+duty = Circle(canvas,650,680,180,50,240,300,0,50,0,50,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"DTY %",Global.OFFshadeColor,dutySensor,None)
 
 
 #turn lights
@@ -142,7 +142,7 @@ digital23 = DigitalInput(23,controller.callbackDigital23)
 digital24 = DigitalInput(24,controller.callbackDigital24)
 digital25 = DigitalInput(25,controller.callbackDigital25)
 digital27 = DigitalInput(27,controller.callbackDigital27)    
-controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear)
+controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit)
 accelerometer = ADXL345()
 
 axes = accelerometer.getAxes(True)

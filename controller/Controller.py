@@ -13,7 +13,7 @@ class Controller:
 	self.fuelCounterMax = 200
 
 
-    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear):
+    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit):
 	self.digital4 = digital4
 	self.digital17 = digital17
 	self.digital22 = digital22
@@ -45,6 +45,7 @@ class Controller:
 	self.fuelText = fuelText
 	self.wallpaper = wallpaper
 	self.gear = gear
+	self.gearUnit = gearUnit
 
     def callbackDigital25(self,channel):
     	self.arrowLeft.setFill(self.digital25.getValue())
@@ -70,38 +71,41 @@ class Controller:
 	    self.canvas.configure(bg=Global.ONBgColor)
 	    self.speed.setColor(Global.ONtextColor)
 	    self.speedUnit.setColor(Global.ONtextColor)
-            self.h2oEcu.setColor(Global.ONtextColor)
-            self.battery.setColor(Global.ONtextColor)
+            #self.h2oEcu.setColor(Global.ONtextColor)
+            self.battery.setTextColor(Global.ONtextColor)
             self.runTime.setColor(Global.ONtextColor)
-            self.inj.setColor(Global.ONtextColor)
-            self.duty.setColor(Global.ONtextColor)
-            self.vtec.setColor(Global.ONtextColor)
-            self.iat.setColor(Global.ONtextColor)
-            self.ign.setColor(Global.ONtextColor)
-            self.mapp.setColor(Global.ONtextColor)
+            self.inj.setTextColor(Global.ONtextColor)
+            self.duty.setTextColor(Global.ONtextColor)
+            #self.vtec.setColor(Global.ONtextColor)
+            self.iat.setTextColor(Global.ONtextColor)
+            self.ign.setTextColor(Global.ONtextColor)
+            #self.mapp.setColor(Global.ONtextColor)
 	    self.oilTemp.setTextColor(Global.ONtextColor)
 	    self.oilPressure.setTextColor(Global.ONtextColor)
 	    self.h2o.setTextColor(Global.ONtextColor)
-	    self.fuelText.setTextColor(Global.ONtextColor)
-	    
+	    #self.fuelText.setTextColor(Global.ONtextColor)
+	    self.gear.setColor(Global.ONtextColor)
+	    self.gearUnit.setColor(Global.ONtextColor) 
 	else:
 	    #self.wallpaper.setHidden(False)
 	    self.canvas.configure(bg=Global.OFFBgColor)
 	    self.speed.setColor(Global.OFFtextColor)
 	    self.speedUnit.setColor(Global.OFFtextColor)
-            self.h2oEcu.setColor(Global.OFFtextColor)
-            self.battery.setColor(Global.OFFtextColor)
+            #self.h2oEcu.setColor(Global.OFFtextColor)
+            self.battery.setTextColor(Global.OFFtextColor)
             self.runTime.setColor(Global.OFFtextColor)
-            self.inj.setColor(Global.OFFtextColor)
-            self.duty.setColor(Global.OFFtextColor)
-            self.vtec.setColor(Global.OFFtextColor)
-            self.iat.setColor(Global.OFFtextColor)
-            self.ign.setColor(Global.OFFtextColor)
-            self.mapp.setColor(Global.OFFtextColor)
+            self.inj.setTextColor(Global.OFFtextColor)
+            self.duty.setTextColor(Global.OFFtextColor)
+            #self.vtec.setColor(Global.OFFtextColor)
+            self.iat.setTextColor(Global.OFFtextColor)
+            self.ign.setTextColor(Global.OFFtextColor)
+            #self.mapp.setColor(Global.OFFtextColor)
 	    self.oilTemp.setTextColor(Global.OFFtextColor)
             self.oilPressure.setTextColor(Global.OFFtextColor)
             self.h2o.setTextColor(Global.OFFtextColor)
-	    self.fuelText.setTextColor(Global.OFFtextColor)
+	    #self.fuelText.setTextColor(Global.OFFtextColor)
+	    self.gear.setColor(Global.OFFtextColor)
+            self.gearUnit.setColor(Global.OFFtextColor)
 
     def adc2fuel(self,adc):
         volts = (adc/4096.000)*4.80
