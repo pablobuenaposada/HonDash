@@ -18,6 +18,8 @@ class Gauge:
         self.needleTip= needleTip
         self.needleColor= needleColor
         self.needleStipple = needleStipple
+	self.idMarks = []
+	self.idValues = []
 
         for i in range(0,self.maxValue+1,stepValue):
             degree=self.startGauge+((i*self.endGauge)/self.maxValue)
@@ -25,7 +27,7 @@ class Gauge:
             starty=y+(r-bigMarksHeight)*math.sin(math.radians(degree))
             finalx=x+r*math.cos(math.radians(degree))
             finaly=y+r*math.sin(math.radians(degree))
-            canvas.create_line(startx,starty,finalx,finaly,fill=bigMarksColor,width=bigMarksWidth,smooth=0)
+            self.idMarks.append(canvas.create_line(startx,starty,finalx,finaly,fill=bigMarksColor,width=bigMarksWidth,smooth=0))
             letterx=x+(r-(bigMarksHeight+(valueSize*0.75)))*math.cos(math.radians(degree))
             lettery=y+(r-(bigMarksHeight+(valueSize*0.75)))*math.sin(math.radians(degree))
             Text(canvas,letterx,lettery,valueFont,valueSize,valueWeight,valueColor,"","",str(i))
@@ -38,7 +40,7 @@ class Gauge:
                     starty=self.y+(r-smallMarksHeight)*math.sin(math.radians(degree+(j*step)))
                     finalx=self.x+r*math.cos(math.radians(degree+(j*step)))
                     finaly=self.y+r*math.sin(math.radians(degree+(j*step)))
-                    canvas.create_line(startx,starty,finalx,finaly,fill=smallMarksColor,width=smallMarksWidth)
+                    self.idMarks.append(canvas.create_line(startx,starty,finalx,finaly,fill=smallMarksColor,width=smallMarksWidth))
  
         #needle cover
         self.needleCover=canvas.create_oval(x-(needleCoverDiameter/2),y-(needleCoverDiameter/2),x+(needleCoverDiameter/2),y+(needleCoverDiameter/2),fill=needleCoverColor)
