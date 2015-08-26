@@ -15,7 +15,7 @@ class Circle:
         self.minColor = minColor
         self.normalColor = normalColor
         self.maxColor = maxColor
-        self.canvas.create_arc(x-(diameter/2),y-(diameter/2),x+(diameter/2),y+(diameter/2),style="arc", start=self.startDegrees, extent=-self.rangeDegrees,fill="",outline=backgroundColor,width=width)
+        self.idBackground = self.canvas.create_arc(x-(diameter/2),y-(diameter/2),x+(diameter/2),y+(diameter/2),style="arc", start=self.startDegrees, extent=-self.rangeDegrees,fill="",outline=backgroundColor,width=width)
         self.idCircle = self.canvas.create_arc(x-(diameter/2),y-(diameter/2),x+(diameter/2),y+(diameter/2),style="arc", start=self.startDegrees, extent=-self.rangeDegrees,fill="",outline=normalColor,width=width)
         
         self.idValue = Text(canvas,x,y,"Helvetica",fontSize,"bold",textColor,"","","80")
@@ -38,7 +38,10 @@ class Circle:
         
     def setTextColor(self,color):
 	self.idValue.setColor(color)
-	self.idText.setColor(color)   
+	self.idText.setColor(color)  
+	
+    def setBackgroundColor(self,color):
+	self.canvas.itemconfig(self.idBackground,outline=color) 
 
     def updateValue(self):
 	if self.updateParam is not None: self.setValue(self.updateFunction(self.updateParam))

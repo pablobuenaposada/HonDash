@@ -85,7 +85,18 @@ class Controller:
 	    self.h2o.setTextColor(Global.ONtextColor)
 	    #self.fuelText.setTextColor(Global.ONtextColor)
 	    self.gear.setColor(Global.ONtextColor)
-	    self.gearUnit.setColor(Global.ONtextColor) 
+	    self.gearUnit.setColor(Global.ONtextColor)
+	    #circles background
+	    self.oilTemp.setBackgroundColor(Global.ONshadeColor) 
+	    self.oilPressure.setBackgroundColor(Global.ONshadeColor)
+	    self.h2o.setBackgroundColor(Global.ONshadeColor)
+	    self.battery.setBackgroundColor(Global.ONshadeColor)
+	    self.inj.setBackgroundColor(Global.ONshadeColor)
+	    self.duty.setBackgroundColor(Global.ONshadeColor)
+	    self.iat.setBackgroundColor(Global.ONshadeColor)
+	    self.ign.setBackgroundColor(Global.ONshadeColor)
+
+	    self.rpm.setNeedleCoverColor(Global.ONneedleCoverColor)
 	else:
 	    #self.wallpaper.setHidden(False)
 	    self.canvas.configure(bg=Global.OFFBgColor)
@@ -106,15 +117,26 @@ class Controller:
 	    #self.fuelText.setTextColor(Global.OFFtextColor)
 	    self.gear.setColor(Global.OFFtextColor)
             self.gearUnit.setColor(Global.OFFtextColor)
+	    #circles background
+	    self.oilTemp.setBackgroundColor(Global.OFFshadeColor)
+            self.oilPressure.setBackgroundColor(Global.OFFshadeColor)
+            self.h2o.setBackgroundColor(Global.OFFshadeColor)
+            self.battery.setBackgroundColor(Global.OFFshadeColor)
+            self.inj.setBackgroundColor(Global.OFFshadeColor)
+            self.duty.setBackgroundColor(Global.OFFshadeColor)
+            self.iat.setBackgroundColor(Global.OFFshadeColor)
+            self.ign.setBackgroundColor(Global.OFFshadeColor)
+
+	    self.rpm.setNeedleCoverColor(Global.OFFneedleCoverColor)
 
     def adc2fuel(self,adc):
         volts = (adc/4096.000)*4.80
         return (int)(-7.348540077*pow(10,-1)*pow(volts,2)-32.27276861*volts+109.170896)     
 
     def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight,accelerometer,g,fuelText,gear):
-
+	
 	gear.setText(serial.getGear())
-	rpm.setRpm(serial.getRpm())
+	rpm.setValue(serial.getRpm()/1000)
 	#mapp.setText(serial.getMap())
         ign.updateValue()
 	iat.updateValue()

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Tkinter import *
+from gui.Gauge import *
 from gui.Rpm import *
 from gui.Text import *
 from gui.Bar import *
@@ -32,8 +33,10 @@ winWidth=root.winfo_screenwidth() #1280
 winHeight=root.winfo_screenheight() #800
 
 speedFontSize = 120
-circleValueSize = 50
-circleTextSize = 15
+circleValueSize = 40
+circleTextSize = 13
+circleRadius = 145
+circleWidth = 40 
 
 #init devices
 serial = CromeQD2()
@@ -89,12 +92,12 @@ trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",1040,380,64,3
 oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",1140,380,89,21,False)
 
 #init graphics
-rpm = Rpm(canvas,winWidth/2,(winHeight/4.0)+10,winWidth/1.00,winHeight/2.75,100,Global.OFFrpmColor,Global.OFFshadeColor,20,140,0,9000)
-speed = Text(canvas,175,275,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
-speedUnit = Text(canvas,360,318,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
+rpm = Gauge(canvas,640,260,250,135,210,1,6,10,Global.OFFgauge,40,"Helvetica","bold italic",14,4,Global.OFFgauge,30,8,Global.OFFgauge,5,8,"red","gray75",50,Global.OFFneedleCoverColor)
+speed = Text(canvas,145,350,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
+speedUnit = Text(canvas,340,390,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
 mileage = 1 #Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","white","","","162.372 KM")
 fuel = Bar(canvas,923,280,0,250,0,50,0,100,Global.fuelColor,Global.OFFshadeColor)
-fuelText = Text(canvas,1050,256,"Helvetica",30,"bold italic",Global.OFFtextColor,"","%","100") 
+fuelText = Text(canvas,1050,256,"Helvetica",30,"bold italic",Global.fuelTextColor,"","%","100") 
 
 #p=Text(canvas,640,50,"Helvetica",40,"bold italic","black","","7","")
 
@@ -104,36 +107,36 @@ brake = Bar(canvas,1119,798,80,80,0,380,2100,2400,Global.brakeColor,Global.OFFbr
 throttle = Bar(canvas,1200,798,80,80,0,380,0,100,Global.throttleColor,Global.OFFthrottleBgColor)
 
 #circles
-oilTemp = Circle(canvas,150,455,180,50,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL T",Global.OFFshadeColor,oilTempSensor,None)
+oilTemp = Circle(canvas,150,540,circleRadius,circleWidth,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL T",Global.OFFshadeColor,oilTempSensor,None)
 
-oilPressure = Circle(canvas,150,680,180,50,240,300,0,10,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor,oilPressSensor,None)
+oilPressure = Circle(canvas,150,715,circleRadius,circleWidth,240,300,0,10,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor,oilPressSensor,None)
 
-h2o = Circle(canvas,400,455,180,50,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"H2O T",Global.OFFshadeColor,waterTempSensor,None)
+h2o = Circle(canvas,400,540,circleRadius,circleWidth,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"H2O T",Global.OFFshadeColor,waterTempSensor,None)
 
 g = None#Gforce(canvas,450,680,205,2,2,"gray",6,"red",Global.OFFtextColor)
 
-battery = Circle(canvas,650,455,180,50,240,300,0,16,11,15,Global.circleMaxColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"BAT",Global.OFFshadeColor,batterySensor,None)
+battery = Circle(canvas,650,540,circleRadius,circleWidth,240,300,0,16,11,15,Global.circleMaxColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"BAT",Global.OFFshadeColor,batterySensor,None)
 
-iat = Circle(canvas,900,455,180,50,240,300,0,50,0,40,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IAT",Global.OFFshadeColor,iatSensor,None)
+iat = Circle(canvas,900,540,circleRadius,circleWidth,240,300,0,50,0,40,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IAT",Global.OFFshadeColor,iatSensor,None)
 
-inj = Circle(canvas,400,680,180,50,240,300,0,20,0,20,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"INJ ms",Global.OFFshadeColor,injSensor,None)
+inj = Circle(canvas,400,715,circleRadius,circleWidth,240,300,0,20,0,20,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"INJ ms",Global.OFFshadeColor,injSensor,None)
 
-ign = Circle(canvas,900,680,180,50,240,300,0,60,0,60,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IGN",Global.OFFshadeColor,ignSensor,None)
+ign = Circle(canvas,900,715,circleRadius,circleWidth,240,300,0,60,0,60,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"IGN",Global.OFFshadeColor,ignSensor,None)
 
-duty = Circle(canvas,650,680,180,50,240,300,0,50,0,50,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"DTY %",Global.OFFshadeColor,dutySensor,None)
+duty = Circle(canvas,650,715,circleRadius,circleWidth,240,300,0,50,0,50,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"DTY %",Global.OFFshadeColor,dutySensor,None)
 
 
 #turn lights
-arrowLeft = Arrow(canvas,476,250,0.35,Global.signalColor,"left",False)
-arrowRight = Arrow(canvas,802,250,0.35,Global.signalColor,"right",False)
+arrowLeft = Arrow(canvas,296,150,0.35,Global.signalColor,"left",False)
+arrowRight = Arrow(canvas,982,150,0.35,Global.signalColor,"right",False)
 
 #info
 runTime = Text(canvas,1130,330,"Helvetica",30,"bold italic",Global.OFFtextColor,"Run ","","00:00:00")
 h2oEcu = None#Text(canvas,910,324,"Helvetica",30,"bold italic",Global.OFFtextColor,"H2O: ","cº","44")
 vtec = None#Text(canvas,700,594,"Helvetica",30,"bold italic",Global.OFFtextColor,"VTC: ","","off")
 mapp = None#Text(canvas,702,738,"Helvetica",30,"bold italic",Global.OFFtextColor,"MAP: ","mBar","433")
-gear = Text(canvas,625,240,"Helvetica",200,"bold italic",Global.OFFtextColor,"","","N")
-gearUnit = Text(canvas,735,320,"Helvetica",20,"bold italic",Global.OFFtextColor,"GEAR","","")
+gear = Text(canvas,745,330,"Helvetica",80,"bold italic",Global.OFFtextColor,"","","N")
+gearUnit = Text(canvas,745,385,"Helvetica",20,"bold italic",Global.OFFtextColor,"GEAR","","")
 
 digital4 = DigitalInput(4,controller.callbackDigital4)
 digital17 = DigitalInput(17,controller.callbackDigital17)
