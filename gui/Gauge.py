@@ -30,7 +30,7 @@ class Gauge:
             self.idMarks.append(canvas.create_line(startx,starty,finalx,finaly,fill=bigMarksColor,width=bigMarksWidth,smooth=0))
             letterx=x+(r-(bigMarksHeight+(valueSize*0.75)))*math.cos(math.radians(degree))
             lettery=y+(r-(bigMarksHeight+(valueSize*0.75)))*math.sin(math.radians(degree))
-            Text(canvas,letterx,lettery,valueFont,valueSize,valueWeight,valueColor,"","",str(i))
+            self.idValues.append(Text(canvas,letterx,lettery,valueFont,valueSize,valueWeight,valueColor,"","",str(i)))
 
             nextDegree=self.startGauge+(((i+stepValue)*self.endGauge)/self.maxValue)
             if(i < self.maxValue):
@@ -62,7 +62,12 @@ class Gauge:
     def setNeedleCoverColor(self,color):
 	self.canvas.itemconfig(self.needleCover, fill=color)
 
+    def setColor(self,color):
+	for mark in self.idMarks:
+	    self.canvas.itemconfig(mark,fill=color)
 
+	for number in self.idValues:
+	    number.setColor(color)
 
 
 

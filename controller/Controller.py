@@ -13,7 +13,7 @@ class Controller:
 	self.fuelCounterMax = 200
 
 
-    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel):
+    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm):
 	self.digital4 = digital4
 	self.digital17 = digital17
 	self.digital22 = digital22
@@ -47,6 +47,7 @@ class Controller:
 	self.gear = gear
 	self.gearUnit = gearUnit
 	self.fuel = fuel
+	self.rpm = rpm
 
     def callbackDigital25(self,channel):
     	self.arrowLeft.setFill(self.digital25.getValue())
@@ -103,6 +104,8 @@ class Controller:
 	    self.throttle.setBackgroundColor(Global.ONthrottleBgColor)
 	    self.brake.setBackgroundColor(Global.ONbrakeBgColor)
 	    self.clutch.setBackgroundColor(Global.ONclutchBgColor)
+	
+	    self.rpm.setColor(Global.ONgauge)
 	else:
 	    #self.wallpaper.setHidden(False)
 	    self.canvas.configure(bg=Global.OFFBgColor)
@@ -139,6 +142,8 @@ class Controller:
 	    self.throttle.setBackgroundColor(Global.OFFthrottleBgColor)
             self.brake.setBackgroundColor(Global.OFFbrakeBgColor)
             self.clutch.setBackgroundColor(Global.OFFclutchBgColor)
+
+	    self.rpm.setColor(Global.OFFgauge)
 
     def adc2fuel(self,adc):
         volts = (adc/4096.000)*4.80
