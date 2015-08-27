@@ -13,7 +13,7 @@ class Controller:
 	self.fuelCounterMax = 200
 
 
-    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit):
+    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel):
 	self.digital4 = digital4
 	self.digital17 = digital17
 	self.digital22 = digital22
@@ -46,6 +46,7 @@ class Controller:
 	self.wallpaper = wallpaper
 	self.gear = gear
 	self.gearUnit = gearUnit
+	self.fuel = fuel
 
     def callbackDigital25(self,channel):
     	self.arrowLeft.setFill(self.digital25.getValue())
@@ -97,6 +98,7 @@ class Controller:
 	    self.ign.setBackgroundColor(Global.ONshadeColor)
 
 	    self.rpm.setNeedleCoverColor(Global.ONneedleCoverColor)
+	    self.fuel.setBackgroundColor(Global.ONshadeColor)
 	else:
 	    #self.wallpaper.setHidden(False)
 	    self.canvas.configure(bg=Global.OFFBgColor)
@@ -128,6 +130,7 @@ class Controller:
             self.ign.setBackgroundColor(Global.OFFshadeColor)
 
 	    self.rpm.setNeedleCoverColor(Global.OFFneedleCoverColor)
+	    self.fuel.setBackgroundColor(Global.OFFshadeColor)
 
     def adc2fuel(self,adc):
         volts = (adc/4096.000)*4.80
