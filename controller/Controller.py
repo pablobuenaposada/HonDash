@@ -99,6 +99,10 @@ class Controller:
 
 	    self.rpm.setNeedleCoverColor(Global.ONneedleCoverColor)
 	    self.fuel.setBackgroundColor(Global.ONshadeColor)
+
+	    self.throttle.setBackgroundColor(Global.ONthrottleBgColor)
+	    self.brake.setBackgroundColor(Global.ONbrakeBgColor)
+	    self.clutch.setBackgroundColor(Global.ONclutchBgColor)
 	else:
 	    #self.wallpaper.setHidden(False)
 	    self.canvas.configure(bg=Global.OFFBgColor)
@@ -131,6 +135,10 @@ class Controller:
 
 	    self.rpm.setNeedleCoverColor(Global.OFFneedleCoverColor)
 	    self.fuel.setBackgroundColor(Global.OFFshadeColor)
+
+	    self.throttle.setBackgroundColor(Global.OFFthrottleBgColor)
+            self.brake.setBackgroundColor(Global.OFFbrakeBgColor)
+            self.clutch.setBackgroundColor(Global.OFFclutchBgColor)
 
     def adc2fuel(self,adc):
         volts = (adc/4096.000)*4.80
