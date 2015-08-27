@@ -145,7 +145,7 @@ digital23 = DigitalInput(23,controller.callbackDigital23)
 digital24 = DigitalInput(24,controller.callbackDigital24)
 digital25 = DigitalInput(25,controller.callbackDigital25)
 digital27 = DigitalInput(27,controller.callbackDigital27)    
-controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit)
+controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel)
 accelerometer = ADXL345()
 
 axes = accelerometer.getAxes(True)
