@@ -34,3 +34,8 @@ class Bar:
         newWidth = self.x+newWidth    
         actualDimension = self.canvas.coords(self.idBar)
         self.canvas.coords(self.idBar,actualDimension[0],actualDimension[1],newWidth,actualDimension[3])
+        
+    def setBackgroundColor(self,color):
+    	self.canvas.itemconfig(self.idBackgroundBar,fill=color)
+    	self.canvas.itemconfig(self.idBackgroundBar,outline=color)
+    	
