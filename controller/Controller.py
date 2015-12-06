@@ -13,7 +13,7 @@ class Controller:
 	self.fuelCounterMax = 200
 
 
-    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm):
+    def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm,throttle,brake,clutch,odometer,odometerText):
 	self.digital4 = digital4
 	self.digital17 = digital17
 	self.digital22 = digital22
@@ -48,6 +48,11 @@ class Controller:
 	self.gearUnit = gearUnit
 	self.fuel = fuel
 	self.rpm = rpm
+	self.throttle = throttle
+	self.brake = brake
+	self.clutch = clutch
+	self.odometer = odometer
+	self.odometerText = odometerText
 
     def callbackDigital25(self,channel):
     	self.arrowLeft.setFill(self.digital25.getValue())
@@ -106,6 +111,8 @@ class Controller:
 	    self.clutch.setBackgroundColor(Global.ONclutchBgColor)
 	
 	    self.rpm.setColor(Global.ONgauge)
+
+	    self.odometerText.setColor(Global.ONtextColor)
 	else:
 	    #self.wallpaper.setHidden(False)
 	    self.canvas.configure(bg=Global.OFFBgColor)
@@ -144,6 +151,7 @@ class Controller:
             self.clutch.setBackgroundColor(Global.OFFclutchBgColor)
 
 	    self.rpm.setColor(Global.OFFgauge)
+	    self.odometerText.setColor(Global.OFFtextColor)
 
     def adc2fuel(self,adc):
         volts = (adc/4096.000)*4.80
@@ -152,7 +160,7 @@ class Controller:
     def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight,accelerometer,g,fuelText,gear):
 	
 	gear.setText(serial.getGear())
-	rpm.setValue(serial.getRpm()/1000)
+	rpm.setValue(serial.getRpm()/1000.0)
 	#mapp.setText(serial.getMap())
         ign.updateValue()
 	iat.updateValue()
@@ -180,6 +188,7 @@ class Controller:
         brake.setHeight(0)#mcp3208.getADC(7))'''
         time = self.timer.getTime()
         runTime.setText(self.timer.getTimeString())
+	self.odometerText.setText(self.odometer.getValue(serial.getVss()))
 	'''axes = accelerometer.getAxes(True)
 	g.setGforce(axes['y'],axes['z'])
 	print axes['x'],axes['y'],axes['z']'''

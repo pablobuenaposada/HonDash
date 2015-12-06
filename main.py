@@ -12,6 +12,7 @@ from devices.CromeQD2 import *
 from devices.MCP3208 import *
 from devices.DigitalInput import *
 from devices.ADXL345 import *
+from devices.Odometer import *
 from gui.Icon import *
 import sys
 from controller.Global import *
@@ -145,7 +146,11 @@ digital23 = DigitalInput(23,controller.callbackDigital23)
 digital24 = DigitalInput(24,controller.callbackDigital24)
 digital25 = DigitalInput(25,controller.callbackDigital25)
 digital27 = DigitalInput(27,controller.callbackDigital27)    
-controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm)
+
+odometer = Odometer()
+odometerText = Text(canvas,200,200,"Helvetica",20,"bold italic",Global.OFFtextColor,""," km","")
+
+controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm,throttle,brake,clutch,odometer,odometerText)
 accelerometer = ADXL345()
 
 axes = accelerometer.getAxes(True)

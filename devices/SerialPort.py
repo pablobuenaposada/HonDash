@@ -17,7 +17,7 @@ class SerialPort:
 	    if len(response) <= 0 : return 0
             else: return ord(response)
         except:
-            try:
+	    try:
                 if self.serialPort is None: pass
                 elif self.serialPort.isOpen: self.serialPort.close()
                 self.serialPort = Serial('/dev/ttyAMA0',38400,timeout=0.01)
