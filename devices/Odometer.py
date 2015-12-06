@@ -33,7 +33,7 @@ class Odometer:
 			f.write(str(total+kmTraveled))
 			f.close()	
 		return int(total+kmTraveled)'''
-		return self.total
+		return int(self.total)
 	    except Exception,e: 
 		print str(e)
 		#with open('mileage', 'r+') as f:

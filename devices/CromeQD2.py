@@ -66,7 +66,7 @@ class CromeQD2:
 
     def getVss(self):
         vssRaw = self.serialPort.getByte(VSS_CROME14)
-        return 235
+        return vssRaw
 
     def getMap(self):
         mapRaw = self.serialPort.getByte(MAP_CROME14)
