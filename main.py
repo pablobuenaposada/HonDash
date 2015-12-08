@@ -154,7 +154,6 @@ controller.things2control(canvas,digital4,digital17,digital22,digital23,digital2
 accelerometer = ADXL345()
 
 axes = accelerometer.getAxes(True)
-print axes['x'],axes['y'],axes['z']
 accelerometer.setOffset(axes['x'],axes['y'],axes['z']-1)
 
 #update graphics
