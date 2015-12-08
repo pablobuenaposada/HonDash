@@ -21,8 +21,8 @@ class Global:
     ONneedleCoverColor = "#333333"
     ONgauge = "#c3db7e"
   
-    fuelColor = "#ff0074"
-    fuelTextColor = "#b30051" 
+    fuelColor = "#ffb732"
+    fuelTextColor = "#cc8400" 
     clutchColor = "blue"    
     brakeColor = "red"
     throttleColor = "green"
@@ -32,7 +32,8 @@ class Global:
     circleMaxColor = "red"
     circleNormalColor = "#28cfbc"
    
-     
+    #constants
+    odometerTimer = 300     
 
     def __init__(self):
         pass

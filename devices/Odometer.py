@@ -1,6 +1,7 @@
 import datetime
 import cPickle as pickle
 import threading 
+from controller.Global import *
 
 class Odometer:
 
@@ -14,7 +15,7 @@ class Odometer:
 		self.saveTraveled()
 
 	def saveTraveled(self):
-		threading.Timer(300,self.saveTraveled).start()
+		threading.Timer(Global.odometerTimer,self.saveTraveled).start()
 		pickle.dump(self.total,open("saveOdo.p", "wb" ))
 
 	def getValue(self,speed):

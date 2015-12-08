@@ -93,7 +93,7 @@ trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",1040,380,64,3
 oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",1140,380,89,21,False)
 
 #init graphics
-rpm = Gauge(canvas,640,260,250,135,210,1,6,10,Global.OFFgauge,40,"Helvetica","bold italic",14,4,Global.OFFgauge,30,8,Global.OFFgauge,5,8,"red","gray75",50,Global.OFFneedleCoverColor)
+rpm = Gauge(canvas,640,260,250,135,210,1,6,9,Global.OFFgauge,40,"Helvetica","bold italic",14,4,Global.OFFgauge,30,8,Global.OFFgauge,5,8,"red","gray75",50,Global.OFFneedleCoverColor)
 speed = Text(canvas,145,350,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
 speedUnit = Text(canvas,340,390,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
 mileage = 1 #Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","white","","","162.372 KM")
