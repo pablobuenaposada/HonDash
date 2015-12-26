@@ -94,8 +94,8 @@ oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",1140,380,89,21,F
 
 #init graphics
 rpm = Gauge(canvas,640,260,250,135,210,1,6,9,Global.OFFgauge,40,"Helvetica","bold italic",14,4,Global.OFFgauge,30,8,Global.OFFgauge,5,8,"red","gray75",50,Global.OFFneedleCoverColor)
-speed = Text(canvas,145,350,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
-speedUnit = Text(canvas,340,390,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
+speed = Text(canvas,135,300,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
+speedUnit = Text(canvas,330,340,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
 mileage = 1 #Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","white","","","162.372 KM")
 fuel = Bar(canvas,923,280,0,250,0,50,0,100,Global.fuelColor,Global.OFFshadeColor)
 fuelText = Text(canvas,1050,256,"Helvetica",30,"bold italic",Global.fuelTextColor,"","%","100") 
@@ -148,7 +148,7 @@ digital25 = DigitalInput(25,controller.callbackDigital25)
 digital27 = DigitalInput(27,controller.callbackDigital27)    
 
 odometer = Odometer()
-odometerText = Text(canvas,200,200,"Helvetica",20,"bold italic",Global.OFFtextColor,""," km","")
+odometerText = Text(canvas,200,400,"Helvetica",20,"bold italic",Global.OFFtextColor,""," km","")
 
 controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm,throttle,brake,clutch,odometer,odometerText)
 accelerometer = ADXL345()
