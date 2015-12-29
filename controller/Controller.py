@@ -1,6 +1,7 @@
 from devices.Time import *
 import numpy
 from controller.Global import *
+import locale
 
 class Controller:
     
@@ -11,7 +12,7 @@ class Controller:
 	self.fuelCounter = 0
 	self.fuelAverage = []
 	self.fuelCounterMax = 200
-
+	locale.setlocale(locale.LC_ALL, 'en_GB.utf8')
 
     def things2control(self,canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm,throttle,brake,clutch,odometer,odometerText):
 	self.digital4 = digital4
@@ -188,7 +189,8 @@ class Controller:
         brake.setHeight(0)#mcp3208.getADC(7))'''
         time = self.timer.getTime()
         runTime.setText(self.timer.getTimeString())
-	self.odometerText.setText(self.odometer.getValue(serial.getVss()))
+	self.odometerText.setText(locale.format("%d",self.odometer.getValue(serial.getVss()),grouping=True))
+
 	'''axes = accelerometer.getAxes(True)
 	g.setGforce(axes['y'],axes['z'])
 	print axes['x'],axes['y'],axes['z']'''

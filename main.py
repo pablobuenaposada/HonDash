@@ -87,18 +87,18 @@ canvas.pack()
 
 wallpaper=Icon(canvas,"/home/pi/Desktop/HonDash/images/camo4.jpg",1280/2,800/2,1280,800,False)
 
-fuelIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",1220,256,45,50,False)
-highBeamIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",1240,380,63,31,False)
-trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",1040,380,64,38,False)
-oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",1140,380,89,21,False)
+fuelIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/fuel.png",352,356,45,50,False)
+highBeamIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/lights.png",900,380,63,31,False)
+trunkIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/rear.png",700,380,64,38,False)
+oilIcon = Icon(canvas,"/home/pi/Desktop/HonDash/images/oil.png",800,380,89,21,False)
 
 #init graphics
 rpm = Gauge(canvas,640,260,250,135,210,1,6,9,Global.OFFgauge,40,"Helvetica","bold italic",14,4,Global.OFFgauge,30,8,Global.OFFgauge,5,8,"red","gray75",50,Global.OFFneedleCoverColor)
-speed = Text(canvas,135,300,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
-speedUnit = Text(canvas,330,340,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
+speed = Text(canvas,135,250,"Helvetica",speedFontSize,"bold italic",Global.OFFtextColor,"","","139")
+speedUnit = Text(canvas,330,290,"Helvetica",30,"bold italic",Global.OFFtextColor,"","","km/h")
 mileage = 1 #Text(canvas,winWidth/2,(winHeight/10)*3,"Helvetica",10,"bold ","white","","","162.372 KM")
-fuel = Bar(canvas,923,280,0,250,0,50,0,100,Global.fuelColor,Global.OFFshadeColor)
-fuelText = Text(canvas,1050,256,"Helvetica",30,"bold italic",Global.fuelTextColor,"","%","100") 
+fuel = Bar(canvas,25,380,0,280,0,50,0,100,Global.fuelColor,Global.OFFshadeColor)
+fuelText = Text(canvas,175,356,"Helvetica",30,"bold italic",Global.fuelTextColor,"","%","100") 
 
 #p=Text(canvas,640,50,"Helvetica",40,"bold italic","black","","7","")
 
@@ -128,16 +128,16 @@ duty = Circle(canvas,650,715,circleRadius,circleWidth,240,300,0,50,0,50,Global.c
 
 
 #turn lights
-arrowLeft = Arrow(canvas,296,150,0.35,Global.signalColor,"left",False)
-arrowRight = Arrow(canvas,982,150,0.35,Global.signalColor,"right",False)
+arrowLeft = Arrow(canvas,330,150,0.35,Global.signalColor,"left",False)
+arrowRight = Arrow(canvas,938,150,0.35,Global.signalColor,"right",False)
 
 #info
-runTime = Text(canvas,1130,330,"Helvetica",30,"bold italic",Global.OFFtextColor,"Run ","","00:00:00")
+runTime = Text(canvas,100,415,"Helvetica",25,"bold italic",Global.OFFtextColor,"","","00:00:00")
 h2oEcu = None#Text(canvas,910,324,"Helvetica",30,"bold italic",Global.OFFtextColor,"H2O: ","cº","44")
 vtec = None#Text(canvas,700,594,"Helvetica",30,"bold italic",Global.OFFtextColor,"VTC: ","","off")
 mapp = None#Text(canvas,702,738,"Helvetica",30,"bold italic",Global.OFFtextColor,"MAP: ","mBar","433")
-gear = Text(canvas,745,330,"Helvetica",80,"bold italic",Global.OFFtextColor,"","","N")
-gearUnit = Text(canvas,745,385,"Helvetica",20,"bold italic",Global.OFFtextColor,"GEAR","","")
+gear = Text(canvas,1100,220,"Helvetica",350,"bold italic",Global.OFFtextColor,"","","N")
+gearUnit = None#Text(canvas,745,385,"Helvetica",20,"bold italic",Global.OFFtextColor,"GEAR","","")
 
 digital4 = DigitalInput(4,controller.callbackDigital4)
 digital17 = DigitalInput(17,controller.callbackDigital17)
@@ -148,7 +148,7 @@ digital25 = DigitalInput(25,controller.callbackDigital25)
 digital27 = DigitalInput(27,controller.callbackDigital27)    
 
 odometer = Odometer()
-odometerText = Text(canvas,200,400,"Helvetica",20,"bold italic",Global.OFFtextColor,""," km","")
+odometerText = Text(canvas,300,415,"Helvetica",25,"bold italic",Global.OFFtextColor,""," km","")
 
 controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm,throttle,brake,clutch,odometer,odometerText)
 accelerometer = ADXL345()
