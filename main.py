@@ -136,7 +136,7 @@ runTime = Text(canvas,100,415,"Helvetica",25,"bold italic",Global.OFFtextColor,"
 h2oEcu = None#Text(canvas,910,324,"Helvetica",30,"bold italic",Global.OFFtextColor,"H2O: ","cº","44")
 vtec = None#Text(canvas,700,594,"Helvetica",30,"bold italic",Global.OFFtextColor,"VTC: ","","off")
 mapp = None#Text(canvas,702,738,"Helvetica",30,"bold italic",Global.OFFtextColor,"MAP: ","mBar","433")
-gear = Text(canvas,1100,220,"Helvetica",350,"bold italic",Global.OFFtextColor,"","","N")
+gear = Text(canvas,1100,220,"Helvetica",350,"bold",Global.OFFtextColor,"","","N")
 gearUnit = None#Text(canvas,745,385,"Helvetica",20,"bold italic",Global.OFFtextColor,"GEAR","","")
 
 digital4 = DigitalInput(4,controller.callbackDigital4)

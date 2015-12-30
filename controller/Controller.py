@@ -160,14 +160,16 @@ class Controller:
 
     def updateAll(self,canvas,mcp3208,serial,controller,rpm,speed,oilTemp,oilPressure,h2o,h2oEcu,battery,fuel,throttle,clutch,brake,runTime,inj,duty,vtec,iat,ign,mapp,arrowLeft,arrowRight,accelerometer,g,fuelText,gear):
 	
-	gear.setText(serial.getGear())
+	rawSpeed = serial.getVss()
+	speed.setText(rawSpeed)
+	if (rawSpeed <= 0): gear.setText("N")
+	else: gear.setText(serial.getGear())
 	rpm.setValue(serial.getRpm()/1000.0)
 	#mapp.setText(serial.getMap())
         ign.updateValue()
 	iat.updateValue()
 	inj.updateValue()
 	duty.updateValue()
-	speed.setText(serial.getVss())
         oilTemp.updateValue()
         oilPressure.updateValue()
 	if self.fuelCounter < self.fuelCounterMax:
