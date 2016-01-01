@@ -128,8 +128,8 @@ duty = Circle(canvas,650,715,circleRadius,circleWidth,240,300,0,50,0,50,Global.c
 
 
 #turn lights
-arrowLeft = Arrow(canvas,330,150,0.35,Global.signalColor,"left",False)
-arrowRight = Arrow(canvas,938,150,0.35,Global.signalColor,"right",False)
+arrowLeft = Arrow(canvas,100,100,0.35,Global.signalColor,"left",False)
+arrowRight = Arrow(canvas,300,100,0.35,Global.signalColor,"right",False)
 
 #info
 runTime = Text(canvas,100,415,"Helvetica",25,"bold italic",Global.OFFtextColor,"","","00:00:00")
