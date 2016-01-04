@@ -93,7 +93,7 @@ class Controller:
 	    self.h2o.setTextColor(Global.ONtextColor)
 	    #self.fuelText.setTextColor(Global.ONtextColor)
 	    self.gear.setColor(Global.ONtextColor)
-	    #self.gearUnit.setColor(Global.ONtextColor)
+	    self.gearUnit.setColor(Global.ONtextColor)
 	    #circles background
 	    self.oilTemp.setBackgroundColor(Global.ONshadeColor) 
 	    self.oilPressure.setBackgroundColor(Global.ONshadeColor)
@@ -133,7 +133,7 @@ class Controller:
             self.h2o.setTextColor(Global.OFFtextColor)
 	    #self.fuelText.setTextColor(Global.OFFtextColor)
 	    self.gear.setColor(Global.OFFtextColor)
-            #self.gearUnit.setColor(Global.OFFtextColor)
+            self.gearUnit.setColor(Global.OFFtextColor)
 	    #circles background
 	    self.oilTemp.setBackgroundColor(Global.OFFshadeColor)
             self.oilPressure.setBackgroundColor(Global.OFFshadeColor)
