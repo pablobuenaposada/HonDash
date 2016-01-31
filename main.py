@@ -110,7 +110,7 @@ throttle = Bar(canvas,1200,798,80,80,0,380,0,100,Global.throttleColor,Global.OFF
 #circles
 oilTemp = Circle(canvas,150,540,circleRadius,circleWidth,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL T",Global.OFFshadeColor,oilTempSensor,None)
 
-oilPressure = Circle(canvas,150,715,circleRadius,circleWidth,240,300,0,10,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor,oilPressSensor,None)
+oilPressure = Circle(canvas,150,715,circleRadius,circleWidth,240,300,0,10,3,6,Global.circleMinColor,Global.circleNormalColor,Global.circleNormalColor,circleValueSize,circleTextSize,Global.OFFtextColor,"OIL P",Global.OFFshadeColor,oilPressSensor,None)
 
 h2o = Circle(canvas,400,540,circleRadius,circleWidth,240,300,0,150,80,120,Global.circleMinColor,Global.circleNormalColor,Global.circleMaxColor,circleValueSize,circleTextSize,Global.OFFtextColor,"H2O T",Global.OFFshadeColor,waterTempSensor,None)
 
