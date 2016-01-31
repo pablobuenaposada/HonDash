@@ -153,14 +153,6 @@ odometerText = Text(canvas,300,415,"Helvetica",25,"bold italic",Global.OFFtextCo
 controller.things2control(canvas,digital4,digital17,digital22,digital23,digital24,digital25,digital27,arrowLeft,arrowRight,fuelIcon,highBeamIcon,trunkIcon,oilIcon,speed,speedUnit,h2oEcu,battery,runTime,inj,duty,vtec,iat,ign,mapp,oilTemp,oilPressure,h2o,fuelText,wallpaper,gear,gearUnit,fuel,rpm,throttle,brake,clutch,odometer,odometerText)
 accelerometer = ADXL345()
 
-#controller.callbackDigital4(4)
-controller.callbackDigital17(17)
-controller.callbackDigital22(22)
-controller.callbackDigital23(23)
-controller.callbackDigital24(24)
-controller.callbackDigital25(25)
-controller.callbackDigital27(27)
-
 axes = accelerometer.getAxes(True)
 accelerometer.setOffset(axes['x'],axes['y'],axes['z']-1)
 
