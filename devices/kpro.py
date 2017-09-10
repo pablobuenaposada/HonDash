@@ -71,7 +71,7 @@ class Kpro:
                     self.data1 = temp
             elif self.version == 4:
                 temp = self.dev.read(0x82, 10000, 1000)  # kpro4
-                if len(temp) == 16:
+                if len(temp) == 14: #antes estaba a 16
                     self.data1 = temp
         except:
             self.__init__()
