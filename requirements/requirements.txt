@@ -1,3 +1,4 @@
 pytest
 pyusb
 numpy
+pytemperature

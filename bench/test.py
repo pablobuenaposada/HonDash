@@ -27,3 +27,5 @@ while True:
     print()
     print("VSS: ", kpro.vss(), end='\r')
     print()
+    print("ECT: ", kpro.ect(), end='\r')
+    print()
