@@ -11,6 +11,8 @@ kpro = Kpro()
 
 while True:
     kpro.update()
+    print("VER: ", kpro.version, end='\r')
+    print()
     print("BAT: ", kpro.bat(), end='\r')
     print()
     print("CAM: ", kpro.cam(), end='\r')
