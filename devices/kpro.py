@@ -16,6 +16,7 @@ KPRO2_VSS = 6
 KPRO2_RPM1 = 0
 KPRO2_RPM2 = 0
 KPRO2_CAM = 10
+KPRO2_GEAR = None
 
 KPRO4_ECT = 2
 KPRO4_IAT = 3
@@ -27,6 +28,7 @@ KPRO4_VSS = 4
 KPRO4_RPM1 = 2
 KPRO4_RPM2 = 3
 KPRO4_CAM = 8
+KPRO4_GEAR = 35
 
 
 class Kpro:
@@ -178,5 +180,14 @@ class Kpro:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO2_IAT]])
             elif self.version == 4:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO4_IAT]])
+        except:
+            return 0
+
+    def gear(self):
+        try:
+            if self.version == 2:
+                return self.data0[KPRO2_GEAR]
+            elif self.version == 4:
+                return self.data0[KPRO4_GEAR]
         except:
             return 0

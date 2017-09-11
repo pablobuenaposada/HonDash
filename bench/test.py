@@ -19,3 +19,4 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list['TPS'] = str(kpro.tps())
         output_list['VSS'] = str(kpro.vss())
         output_list['ECT'] = str(kpro.ect())
+        output_list['GEAR'] = str(kpro.gear())
