@@ -5,27 +5,17 @@ import os.path
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from devices.kpro import Kpro
+from reprint import output
 
 
 kpro = Kpro()
-
-while True:
-    kpro.update()
-    print("VER: ", kpro.version, end='\r')
-    print()
-    print("BAT: ", kpro.bat(), end='\r')
-    print()
-    print("CAM: ", kpro.cam(), end='\r')
-    print()
-    print("AFR: ", kpro.afr(), end='\r')
-    print()
-    print("IAT: ", kpro.iat(), end='\r')
-    print()
-    print("RPM: ", kpro.rpm(), end='\r')
-    print()
-    print("TPS: ", kpro.tps(), end='\r')
-    print()
-    print("VSS: ", kpro.vss(), end='\r')
-    print()
-    print("ECT: ", kpro.ect(), end='\r')
-    print()
+with output(output_type="dict", initial_len=1, interval=0) as output_list:
+    while True:
+        output_list['BAT'] = str(kpro.bat())
+        output_list['CAM'] = str(kpro.cam())
+        output_list['AFR'] = str(kpro.afr())
+        output_list['IAT'] = str(kpro.iat())
+        output_list['RPM'] = str(kpro.rpm())
+        output_list['TPS'] = str(kpro.tps())
+        output_list['VSS'] = str(kpro.vss())
+        output_list['ECT'] = str(kpro.ect())

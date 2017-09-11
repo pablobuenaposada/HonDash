@@ -1,7 +1,10 @@
+import threading
+
 import usb.core
 import usb.util
 from numpy import interp
 import pytemperature
+
 
 KPRO2_ECT = None
 KPRO2_IAT = 4
@@ -50,33 +53,35 @@ class Kpro:
                         lambda e: \
                             usb.util.endpoint_direction(e.bEndpointAddress) == \
                             usb.util.ENDPOINT_OUT)
+                threading.Thread(target=self.update).start()
             except:
                 pass
 
     def update(self):
-        try:
-            assert self.ep is not None
-            self.ep.write('\x60')
-            if self.version == 2:
-                temp = self.dev.read(0x81, 10000, 1000)  # kpro2
-                if len(temp) == 52:
-                    self.data0 = temp
-            elif self.version == 4:
-                temp = self.data0 = self.dev.read(0x82, 10000, 1000)  # kpro4
-                if len(temp) == 50:
-                    self.data0 = temp
+        while True:
+            try:
+                assert self.ep is not None
+                self.ep.write('\x60')
+                if self.version == 2:
+                    temp = self.dev.read(0x81, 10000, 1000)  # kpro2
+                    if len(temp) == 52:
+                        self.data0 = temp
+                elif self.version == 4:
+                    temp = self.data0 = self.dev.read(0x82, 10000, 1000)  # kpro4
+                    if len(temp) == 50:
+                        self.data0 = temp
 
-            self.ep.write('\x61')
-            if self.version == 2:
-                temp = self.dev.read(0x81, 10000, 1000)  # kpro2
-                if len(temp) == 68:
-                    self.data1 = temp
-            elif self.version == 4:
-                temp = self.dev.read(0x82, 10000, 1000)  # kpro4
-                if len(temp) == 14: #antes estaba a 16
-                    self.data1 = temp
-        except:
-            self.__init__()
+                self.ep.write('\x61')
+                if self.version == 2:
+                    temp = self.dev.read(0x81, 10000, 1000)  # kpro2
+                    if len(temp) == 68:
+                        self.data1 = temp
+                elif self.version == 4:
+                    temp = self.dev.read(0x82, 10000, 1000)  # kpro4
+                    if len(temp) == 14: #antes estaba a 16
+                        self.data1 = temp
+            except:
+                self.__init__()
 
     def bat(self):
         try:
