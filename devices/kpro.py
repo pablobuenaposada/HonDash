@@ -17,6 +17,8 @@ KPRO2_RPM1 = 0
 KPRO2_RPM2 = 0
 KPRO2_CAM = 10
 KPRO2_GEAR = None
+KPRO2_EPS = None
+KPRO2_SCS = None
 
 KPRO4_ECT = 2
 KPRO4_IAT = 3
@@ -29,6 +31,8 @@ KPRO4_RPM1 = 2
 KPRO4_RPM2 = 3
 KPRO4_CAM = 8
 KPRO4_GEAR = 35
+KPRO4_EPS = 31
+KPRO4_SCS = 31
 
 
 class Kpro:
@@ -189,5 +193,25 @@ class Kpro:
                 return self.data0[KPRO2_GEAR]
             elif self.version == 4:
                 return self.data0[KPRO4_GEAR]
+        except:
+            return 0
+
+    def eps(self):
+        mask = 0x20
+        try:
+            if self.version == 2:
+                return bool(self.data0[KPRO2_EPS] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_EPS] & mask)
+        except:
+            return 0
+
+    def scs(self):
+        mask = 0x10
+        try:
+            if self.version == 2:
+                return bool(self.data0[KPRO2_SCS] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_SCS] & mask)
         except:
             return 0
