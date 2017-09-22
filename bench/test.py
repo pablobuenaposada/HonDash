@@ -22,3 +22,8 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list['GEAR'] = str(kpro.gear())
         output_list['EPS'] = str(kpro.eps())
         output_list['SCS'] = str(kpro.scs())
+        output_list['RVSLCK'] = str(kpro.rvslck())
+        output_list['BKSW'] = str(kpro.bksw())
+        output_list['ACSW'] = str(kpro.acsw())
+        output_list['ACCL'] = str(kpro.accl())
+        output_list['FLR'] = str(kpro.flr())

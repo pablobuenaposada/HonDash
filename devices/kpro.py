@@ -19,10 +19,16 @@ KPRO2_CAM = 10
 KPRO2_GEAR = None
 KPRO2_EPS = None
 KPRO2_SCS = None
+KPRO2_RVSLCK = None
+KPRO2_BKSW = None
+KPRO2_ACSW = None
+KPRO2_ACCL = None
+KPRO2_FLR = None
 
 KPRO4_ECT = 2
 KPRO4_IAT = 3
 KPRO4_BAT = 4
+
 KPRO4_TPS = 5
 KPRO4_AFR1 = 16
 KPRO4_AFR2 = 17
@@ -33,6 +39,11 @@ KPRO4_CAM = 8
 KPRO4_GEAR = 35
 KPRO4_EPS = 31
 KPRO4_SCS = 31
+KPRO4_RVSLCK = 31
+KPRO4_BKSW = 31
+KPRO4_ACSW = 31
+KPRO4_ACCL = 31
+KPRO4_FLR = 31
 
 
 class Kpro:
@@ -86,6 +97,16 @@ class Kpro:
                     temp = self.dev.read(0x82, 10000, 1000)  # kpro4
                     if len(temp) == 14: #antes estaba a 16
                         self.data1 = temp
+
+                self.ep.write('\x62')
+                if self.version == 2:
+                    temp = self.dev.read(0x81, 10000, 1000)  # kpro2
+                    if len(temp) == 68:
+                        self.data2 = temp
+                elif self.version == 4:
+                    temp = self.dev.read(0x82, 10000, 1000)  # kpro4
+                    if len(temp) == 25:
+                        self.data2 = temp
             except:
                 self.__init__()
 
@@ -204,7 +225,7 @@ class Kpro:
             elif self.version == 4:
                 return bool(self.data0[KPRO4_EPS] & mask)
         except:
-            return 0
+            return False
 
     def scs(self):
         mask = 0x10
@@ -214,4 +235,54 @@ class Kpro:
             elif self.version == 4:
                 return bool(self.data0[KPRO4_SCS] & mask)
         except:
-            return 0
+            return False
+
+    def rvslck(self):
+        mask = 0x01
+        try:
+            if self.version == 2:
+                return bool(self.data0[KPRO2_RVSLCK] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_RVSLCK] & mask)
+        except:
+            return False
+
+    def bksw(self):
+        mask = 0x02
+        try:
+            if self.version == 2:
+                return bool(self.data0[KPRO2_BKSW] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_BKSW] & mask)
+        except:
+            return False
+
+    def acsw(self):
+        mask = 0x04
+        try:
+            if self.version == 2:
+                return bool(self.data0[KPRO2_ACSW] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_ACSW] & mask)
+        except:
+            return False
+
+    def accl(self):
+        mask = 0x08
+        try:
+            if self.version == 2:
+                return bool(self.data0[KPRO2_ACCL] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_ACCL] & mask)
+        except:
+            return False
+
+    def flr(self):
+        mask = 0x40
+        try:
+            if self.version == 2:
+                return bool(self.data0[KPRO2_FLR] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_FLR] & mask)
+        except:
+            return False
