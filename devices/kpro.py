@@ -131,9 +131,9 @@ class Kpro:
     def tps(self):
         try:
             if self.version == 2:
-                return interp(self.data0[KPRO2_TPS], [21, 229], [0, 100])
+                return int(interp(self.data0[KPRO2_TPS], [21, 229], [0, 100]))
             elif self.version == 4:
-                return interp(self.data0[KPRO4_TPS], [21, 229], [0, 100])
+                return int(interp(self.data0[KPRO4_TPS], [21, 229], [0, 100]))
         except:
             return 0
 
