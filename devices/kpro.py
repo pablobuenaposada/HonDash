@@ -122,9 +122,9 @@ class Kpro:
     def afr(self):
         try:
             if self.version == 2:
-                return 32768.0 / ((256 * self.data0[KPRO2_AFR2]) + self.data0.data0[KPRO2_AFR1])
+                return 32768.0 / ((256 * self.data0[KPRO2_AFR2]) + self.data0[KPRO2_AFR1])
             elif self.version == 4:
-                return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0.data0[KPRO4_AFR1])
+                return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0[KPRO4_AFR1])
         except:
             return 0
 
