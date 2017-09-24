@@ -6,9 +6,6 @@ from numpy import interp
 import pytemperature
 
 
-KPRO2_ECT = None
-KPRO2_IAT = 4
-KPRO2_BAT = 56
 KPRO2_TPS = 8
 KPRO2_AFR1 = 0
 KPRO2_AFR2 = 0
@@ -25,9 +22,18 @@ KPRO2_ACSW = None
 KPRO2_ACCL = None
 KPRO2_FLR = None
 
-KPRO4_ECT = 2
-KPRO4_IAT = 3
-KPRO4_BAT = 4
+KPRO2_ECT = None
+KPRO2_IAT = 4
+KPRO2_BAT = 56
+
+KPRO3_TPS = 7
+KPRO3_RPM1 = 4
+KPRO3_RPM2 = 5
+KPRO3_MAP = 8
+
+KPRO3_ECT = 4
+KPRO3_IAT = 5
+KPRO3_BAT = 6
 
 KPRO4_TPS = 5
 KPRO4_AFR1 = 16
@@ -45,6 +51,10 @@ KPRO4_ACSW = 31
 KPRO4_ACCL = 31
 KPRO4_FLR = 31
 
+KPRO4_ECT = 2
+KPRO4_IAT = 3
+KPRO4_BAT = 4
+
 
 class Kpro:
     def __init__(self):
@@ -53,6 +63,10 @@ class Kpro:
         self.data2 = []
         self.dev = None
         self.version = 0
+
+        # if True:
+        #     self.dev = usb.core.find(idVendor=0x403, idProduct=0xf5f8)
+        #     self.version = 3
         if usb.core.find(idVendor=0x403, idProduct=0xf5f8) is not None:  # kpro2
             self.dev = usb.core.find(idVendor=0x403, idProduct=0xf5f8)
             self.version = 2
@@ -83,6 +97,10 @@ class Kpro:
                     temp = self.dev.read(0x81, 10000, 1000)  # kpro2
                     if len(temp) == 52:
                         self.data0 = temp
+                elif self.version == 3:
+                    temp = self.dev.read(0x81, 10000, 1000)  # kpro3
+                    if len(temp) == 52:
+                        self.data0 = temp
                 elif self.version == 4:
                     temp = self.data0 = self.dev.read(0x82, 10000, 1000)  # kpro4
                     if len(temp) == 50:
@@ -93,6 +111,10 @@ class Kpro:
                     temp = self.dev.read(0x81, 10000, 1000)  # kpro2
                     if len(temp) == 68:
                         self.data1 = temp
+                elif self.version == 3:
+                    temp = self.dev.read(0x81, 10000, 1000)  # kpro3
+                    if len(temp) == 16:
+                        self.data1 = temp
                 elif self.version == 4:
                     temp = self.dev.read(0x82, 10000, 1000)  # kpro4
                     if len(temp) == 14: #antes estaba a 16
@@ -101,6 +123,10 @@ class Kpro:
                 self.ep.write('\x62')
                 if self.version == 2:
                     temp = self.dev.read(0x81, 10000, 1000)  # kpro2
+                    if len(temp) == 68:
+                        self.data2 = temp
+                elif self.version == 3:
+                    temp = self.dev.read(0x81, 10000, 1000)  # kpro3
                     if len(temp) == 68:
                         self.data2 = temp
                 elif self.version == 4:
@@ -114,6 +140,8 @@ class Kpro:
         try:
             if self.version == 2:
                 return self.data1[KPRO2_BAT] * 0.1
+            elif self.version == 3:
+                return self.data1[KPRO3_BAT] * 0.1
             elif self.version == 4:
                 return self.data1[KPRO4_BAT] * 0.1
         except:
@@ -132,6 +160,8 @@ class Kpro:
         try:
             if self.version == 2:
                 return int(interp(self.data0[KPRO2_TPS], [21, 229], [0, 100]))
+            elif self.version == 3:
+                return int(interp(self.data0[KPRO3_TPS], [21, 229], [0, 100]))
             elif self.version == 4:
                 return int(interp(self.data0[KPRO4_TPS], [21, 229], [0, 100]))
         except:
@@ -149,9 +179,11 @@ class Kpro:
     def rpm(self):
         try:
             if self.version == 2:
-                return ((256*self.data0[KPRO2_RPM2])+KPRO2_RPM1)*0.25
+                return ((256*self.data0[KPRO2_RPM2])+self.data0[KPRO2_RPM1])*0.25
+            elif self.version == 3:
+                return ((256 * self.data0[KPRO3_RPM2]) + self.data0[KPRO3_RPM1]) * 0.25
             elif self.version == 4:
-                return ((256*self.data0[KPRO4_RPM2])+KPRO4_RPM1)*0.25
+                return ((256*self.data0[KPRO4_RPM2])+self.data0[KPRO4_RPM1])*0.25
         except:
             return 0
 
@@ -181,6 +213,8 @@ class Kpro:
         try:
             if self.version == 2:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO2_ECT]])
+            elif self.version == 3:
+                return pytemperature.f2c(fahrenheit[self.data1[KPRO3_ECT]])
             elif self.version == 4:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO4_ECT]])
         except:
@@ -203,6 +237,8 @@ class Kpro:
         try:
             if self.version == 2:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO2_IAT]])
+            elif self.version == 3:
+                return pytemperature.f2c(fahrenheit[self.data1[KPRO3_IAT]])
             elif self.version == 4:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO4_IAT]])
         except:
@@ -286,3 +322,10 @@ class Kpro:
                 return bool(self.data0[KPRO4_FLR] & mask)
         except:
             return False
+
+    def map(self):
+        try:
+            if self.version == 3:
+                return self.data0[KPRO3_MAP]/100.0
+        except:
+            return 0
