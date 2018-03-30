@@ -11,5 +11,8 @@ virtualenv: clean
 	@$(PIP) install -U "pip"
 	@$(PIP) install -r $(DEPS)
 
+run:
+	. venv/bin/activate; sudo python bench/test.py
+
 test: virtualenv
 	$(PYTEST)
