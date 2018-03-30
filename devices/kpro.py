@@ -55,12 +55,15 @@ KPRO4_ECT = 2
 KPRO4_IAT = 3
 KPRO4_BAT = 4
 
+KPRO4_AN0_1 = 67
+KPRO4_AN0_2 = 66
 
 class Kpro:
     def __init__(self):
         self.data0 = []
         self.data1 = []
         self.data2 = []
+        self.data3 = []
         self.dev = None
         self.version = 0
 
@@ -133,6 +136,11 @@ class Kpro:
                     temp = self.dev.read(0x82, 10000, 1000)  # kpro4
                     if len(temp) == 25:
                         self.data2 = temp
+
+                self.ep.write('\x65')
+                if self.version == 4:
+                    temp = self.dev.read(0x82, 128, 1000)  # kpro4
+                    self.data3 = temp
             except:
                 self.__init__()
 
@@ -327,5 +335,12 @@ class Kpro:
         try:
             if self.version == 3:
                 return self.data0[KPRO3_MAP]/100.0
+        except:
+            return 0
+
+    def an0(self):
+        try:
+            if self.version == 4:
+                return interp((256*self.data3[KPRO4_AN0_1])+self.data3[KPRO4_AN0_2], [0, 4096], [0, 5])
         except:
             return 0

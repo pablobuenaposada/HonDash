@@ -2,3 +2,4 @@ pytest
 pyusb
 numpy
 pytemperature
+reprint
