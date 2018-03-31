@@ -13,7 +13,6 @@ var connection = new autobahn.Connection({
 connection.onopen = function (session) {
 
    function onevent1(args) {
-      //console.log("Got event:", args[0]);
        g1.refresh(args[0]["bat"]);
        g2.refresh(args[0]["iat"]);
        g3.refresh(args[0]["ect"]);

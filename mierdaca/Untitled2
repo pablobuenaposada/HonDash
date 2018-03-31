@@ -1,3 +1,0 @@
-from javax.swing import JFrame
-
-JFrame('Hello, World!', defaultCloseOperation=JFrame.EXIT_ON_CLOSE, size=(300, 300), locationRelativeTo=None).setVisible(True)
