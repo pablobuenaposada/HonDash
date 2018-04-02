@@ -11,6 +11,7 @@ run()
 kpro = Kpro()
 while True:
     publish('com.app.idea', {'bat': kpro.bat(),
+                             'gear': kpro.gear(),
                              'iat': kpro.iat(),
                              'tps': kpro.tps(),
                              'ect': kpro.ect(),
@@ -18,6 +19,6 @@ while True:
                              'vss': kpro.vss(),
                              'afr': kpro.afr(),
                              'cam': kpro.cam(),
-                             'an0': kpro.an0()
+                             'an0': kpro.analog_input(0)
                              })
     sleep(0.1)

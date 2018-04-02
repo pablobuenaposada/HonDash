@@ -18,9 +18,9 @@ connection.onopen = function (session) {
        ect.refresh(args[0]["ect"]);
        afr.refresh(args[0]["afr"]);
        g5.refresh(args[0]["cam"]);
-       g6.refresh(args[0]["vss"]);
-       g7.refresh(args[0]["vss"]);
-       g8.refresh(args[0]["an0"]);
+       fuelp.refresh(args[0]["vss"]);
+       oilt.refresh(args[0]["vss"]);
+       oilp.refresh(args[0]["an0"]);
        clutch.refresh(args[0]["vss"]);
        brake.refresh(args[0]["vss"]);
        throttle.refresh(args[0]["tps"]);

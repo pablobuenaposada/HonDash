@@ -338,9 +338,17 @@ class Kpro:
         except:
             return 0
 
-    def an0(self):
+    def analog_input(self, channel):
+        if self.version == 4:
+            if channel == 0:
+                index_1 = KPRO4_AN0_1
+                index_2 = KPRO4_AN0_2
+            else:
+                return 0
+        else:
+            return 0
+
         try:
-            if self.version == 4:
-                return interp((256*self.data3[KPRO4_AN0_1])+self.data3[KPRO4_AN0_2], [0, 4096], [0, 5])
-        except:
+            return interp((256 * self.data3[index_1]) + self.data3[index_2], [0, 4096], [0, 5])
+        except IndexError:
             return 0

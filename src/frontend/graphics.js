@@ -1,5 +1,5 @@
 var bat = new JustGage({
-    id: "g1",
+    id: "bat",
     value: 0,
     min: 0,
     max: 20,
@@ -105,37 +105,49 @@ var g5 = new JustGage({
     valueMinFontSize: 50,
 });
 
-var g6 = new JustGage({
-    id: "g6",
+var fuelp = new JustGage({
+    id: "fuelp",
     value: 0,
     min: 0,
     max: 100,
     decimals: 0,
     gaugeWidthScale: 1,
-    label: "temperature",
+    label: "FUEL PRESSURE",
     valueMinFontSize: 50,
 });
 
-var g7 = new JustGage({
-    id: "g7",
+var oilt = new JustGage({
+    id: "oilt",
     value: 0,
     min: 0,
     max: 100,
     decimals: 0,
     gaugeWidthScale: 1,
-    label: "temperature",
+    label: "OIL TEMP",
     valueMinFontSize: 50,
 });
 
-var g8 = new JustGage({
-    id: "g8",
+var oilp = new JustGage({
+    id: "oilp",
     value: 0,
     min: 0,
     max: 5,
     decimals: 2,
     gaugeWidthScale: 1,
-    label: "ANALOG 0",
+    label: "OIL PRESSURE",
     valueMinFontSize: 50,
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#cc2c24",
+            lo : 0,
+            hi : 2.5
+        },{
+        color : "#46877f",
+            lo : 2.5,
+            hi : 5
+        }]
+    }
 });
 
 var clutch = new Bar("b1", 0, 0, false, "#edebeb", "purple", 0, 100, true, "%", "Arial", "bold", 20);
@@ -143,10 +155,11 @@ var brake = new Bar("b2", 0, 0, false, "#edebeb", "red", 0, 100, true, "%", "Ari
 var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
 
 var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 20);
-var rpm = new Text("rpm", "0", 100, "arial", "bold", "", " rpm");
+var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#bc4077", 0, 9500, true, "", "Arial", "bold", 40);
+
 var speed = new Text("speed", "0", 150, "arial", "bold", "", "");
 var speed_unit = new Text("speed_unit", "km/h", 50, "arial", "bold", "", "");
-
+var gear = new Text("gear", "N", 150, "arial", "bold", "", "");
 
 //this.paper = Raphael("g1", "100%", "100%");
 //this.text = this.paper.text(100, 30, "100C");
