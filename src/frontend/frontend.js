@@ -13,10 +13,10 @@ var connection = new autobahn.Connection({
 connection.onopen = function (session) {
 
    function onevent1(args) {
-       g1.refresh(args[0]["bat"]);
-       g2.refresh(args[0]["iat"]);
-       g3.refresh(args[0]["ect"]);
-       g4.refresh(args[0]["afr"]);
+       bat.refresh(args[0]["bat"]);
+       iat.refresh(args[0]["iat"]);
+       ect.refresh(args[0]["ect"]);
+       afr.refresh(args[0]["afr"]);
        g5.refresh(args[0]["cam"]);
        g6.refresh(args[0]["vss"]);
        g7.refresh(args[0]["vss"]);
