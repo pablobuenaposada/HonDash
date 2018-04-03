@@ -194,6 +194,8 @@ class Kpro:
                 return ((256 * self.data0[KPRO3_RPM2]) + self.data0[KPRO3_RPM1]) * 0.25
             elif self.version == 4:
                 return ((256*self.data0[KPRO4_RPM2])+self.data0[KPRO4_RPM1])*0.25
+            else:
+                return 0
         except:
             return 0
 
