@@ -28,12 +28,10 @@ connection.onopen = function (session) {
        rpm.refresh(args[0]["rpm"]);
        speed.refresh(args[0]["vss"]);
        time.refresh(args[0]["time"]);
+       odo.refresh(args[0]["odo"]);
    }
 
    session.subscribe('com.app.idea', onevent1);
 };
 
 connection.open();
-
-
-

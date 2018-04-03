@@ -8,12 +8,15 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from devices.kpro import Kpro
 from devices.Time import Time
+from devices.Odometer import Odometer
 
 run()
 
 kpro = Kpro()
 time = Time()
+odo = Odometer()
 while True:
+    odo.save(kpro.vss())
     publish('com.app.idea', {'bat': kpro.bat(),
                              'gear': kpro.gear(),
                              'iat': kpro.iat(),
@@ -24,6 +27,7 @@ while True:
                              'afr': kpro.afr(),
                              'cam': kpro.cam(),
                              'an0': kpro.analog_input(0),
-                             'time': time.get_time()
+                             'time': time.get_time(),
+                             'odo': odo.get_mileage()
                              })
     sleep(0.1)

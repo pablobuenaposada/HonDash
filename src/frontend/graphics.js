@@ -150,15 +150,16 @@ var oilp = new JustGage({
     }
 });
 
-var clutch = new Bar("b1", 0, 0, false, "#edebeb", "purple", 0, 100, true, "%", "Arial", "bold", 20);
-var brake = new Bar("b2", 0, 0, false, "#edebeb", "red", 0, 100, true, "%", "Arial", "bold", 20);
+var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#222d5a", 0, 100, true, "%", "Arial", "bold", 20);
+var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
 var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
 
-var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 20);
+var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 30);
 var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#bc4077", 0, 9500, true, "", "Arial", "bold", 60);
 
-var speed = new Text("speed", "0", 150, "arial", "bold", "", "");
-var speed_unit = new Text("speed_unit", "km/h", 50, "arial", "bold", "", "");
-var gear = new Text("gear", "N", 170, "arial", "bold", "", "");
+var speed = new Text("speed", "0", 150, "arial", "bold", "", "", "");
+var speed_unit = new Text("speed_unit", "km/h", 50, "arial", "bold", "", "", "");
+var gear = new Text("gear", "N", 170, "arial", "bold", "", "", "");
 
-var time = new Text("time", "", 35, "arial", "bold", "", "");
+var time = new Text("time", "", 35, "arial", "bold", "italic", "", "");
+var odo = new Text("odo", "", 35, "arial", "bold", "italic", "", " km");

@@ -1,6 +1,6 @@
 class Text {
 
-     constructor(id, value, size, font, weight, prefix, suffix){
+     constructor(id, value, size, font, weight, style, prefix, suffix){
         this.id = id;
         this.prefix = prefix;
         this.suffix = suffix;
@@ -9,6 +9,7 @@ class Text {
         document.getElementById(this.id).style.fontSize = size+"px";
         document.getElementById(this.id).style.fontFamily = font;
         document.getElementById(this.id).style.fontWeight = weight;
+        document.getElementById(this.id).style.fontStyle = style;
      }
 
      refresh(value){
