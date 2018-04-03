@@ -1,7 +1,6 @@
 import datetime
 import cPickle as pickle
 import threading
-from controller.Global import *
 
 
 class Odometer:

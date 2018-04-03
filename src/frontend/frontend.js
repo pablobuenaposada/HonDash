@@ -24,10 +24,10 @@ connection.onopen = function (session) {
        clutch.refresh(args[0]["vss"]);
        brake.refresh(args[0]["vss"]);
        throttle.refresh(args[0]["tps"]);
-       fuel.refresh(args[0]["vss"]);
+       fuel.refresh(args[0]["tps"]);
        rpm.refresh(args[0]["rpm"]);
        speed.refresh(args[0]["vss"]);
-       f.refresh(args[0]["h2o"]);
+       time.refresh(args[0]["time"]);
    }
 
    session.subscribe('com.app.idea', onevent1);
