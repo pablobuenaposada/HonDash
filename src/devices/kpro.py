@@ -181,6 +181,8 @@ class Kpro:
                 return self.data0[KPRO2_VSS]
             elif self.version == 4:
                 return self.data0[KPRO4_VSS]
+            else:
+                return 0
         except:
             return 0
 

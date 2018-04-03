@@ -9,8 +9,11 @@ class Odometer:
         self.mileage = 0
         self.last_mileage_stored = 0
 
-        f = open('odometer.txt', 'r')
-        self.mileage = int(f.read())
+        try:
+            f = open('odometer.txt', 'r')
+            self.mileage = int(f.read())
+        except OSError:
+            pass
         self.last_mileage_stored = self.mileage
 
     def save(self, speed):
