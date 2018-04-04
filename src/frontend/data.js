@@ -30,6 +30,8 @@ connection.onopen = function (session) {
        time.refresh(args[0]["time"]);
        odo.refresh(args[0]["odo"]);
        gear.refresh(args[0]["gear"])
+       leftarrow.refresh(args[0]["left_turn_signal"]);
+       rightarrow.refresh(args[0]["right_turn_signal"]);
    }
 
    session.subscribe('com.app.idea', onevent1);

@@ -163,3 +163,13 @@ var gear = new Text("gear", "N", 170, "arial", "bold", "", "", "");
 
 var time = new Text("time", "", 35, "arial", "bold", "italic", "", "");
 var odo = new Text("odo", "", 35, "arial", "bold", "italic", "", " km");
+
+var reserve = new Icon("reserve", "fuel.svg");
+var battery = new Icon("battery", "battery.svg");
+var handbrake = new Icon("handbrake", "handbrake.svg");
+var lights = new Icon("lights", "lights.svg");
+var rear = new Icon("rear", "trunk.svg");
+var engine = new Icon("engine", "check_engine.svg");
+var oil = new Icon("oil", "oil.svg");
+var leftarrow = new Icon("leftarrow", "left_arrow.svg", "left_arrow_on.svg");
+var rightarrow = new Icon("rightarrow", "right_arrow.svg", "right_arrow_on.svg");

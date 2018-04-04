@@ -27,6 +27,8 @@ while True:
                              'cam': random.randint(0, 50),
                              'an0': random.uniform(0, 5),
                              'time': time.get_time(),
-                             'odo': odo.get_mileage()
+                             'odo': odo.get_mileage(),
+                             'left_turn_signal': random.randint(0, 1),
+                             'right_turn_signal': random.randint(0, 1),
                              })
     sleep(0.1)
