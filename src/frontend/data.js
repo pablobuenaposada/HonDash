@@ -29,6 +29,7 @@ connection.onopen = function (session) {
        speed.refresh(args[0]["vss"]);
        time.refresh(args[0]["time"]);
        odo.refresh(args[0]["odo"]);
+       gear.refresh(args[0]["gear"])
    }
 
    session.subscribe('com.app.idea', onevent1);

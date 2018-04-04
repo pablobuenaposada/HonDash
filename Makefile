@@ -15,5 +15,12 @@ make front:
 	. venv/bin/activate; python src/backend/backend.py &
 	open -a "Google Chrome" src/frontend/frontend.html
 
+make dummy:
+	. venv/bin/activate; crossbar start &
+	sleep 10
+	. venv/bin/activate; pkill python backend.py || true
+	. venv/bin/activate; python src/bench/dummy_backend.py &
+	open -a "Google Chrome" src/frontend/frontend.html
+
 test: virtualenv
 	. venv/bin/activate; which pytest
