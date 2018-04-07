@@ -9,6 +9,10 @@ run:
 	. venv/bin/activate; sudo python src/bench/test.py
 
 make front:
+
+	open -a "Google Chrome" src/frontend/frontend.html
+
+make real:
 	. venv/bin/activate; crossbar start &
 	sleep 10
 	. venv/bin/activate; pkill python backend.py || true

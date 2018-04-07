@@ -75,7 +75,7 @@ var afr = new JustGage({
     decimals: 1,
     gaugeWidthScale: 1,
     label: "AFR",
-    valueMinFontSize: 50,
+    valueMinFontSize: 40,
     customSectors: {
         length: true,
         ranges: [{
@@ -132,10 +132,10 @@ var oilp = new JustGage({
     value: 0,
     min: 0,
     max: 5,
-    decimals: 2,
+    decimals: 1,
     gaugeWidthScale: 1,
     label: "OIL PRESSURE",
-    valueMinFontSize: 50,
+    valueMinFontSize: 40,
     customSectors: {
         length: true,
         ranges: [{
@@ -150,6 +150,17 @@ var oilp = new JustGage({
     }
 });
 
+var g6 = new JustGage({
+    id: "g6",
+    value: 0,
+    min: 0,
+    max: 100,
+    decimals: 0,
+    gaugeWidthScale: 1,
+    label: "CAM",
+    valueMinFontSize: 50,
+});
+
 var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#222d5a", 0, 100, true, "%", "Arial", "bold", 20);
 var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
 var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
@@ -161,8 +172,8 @@ var speed = new Text("speed", "0", 150, "arial", "bold", "", "", "");
 var speed_unit = new Text("speed_unit", "km/h", 50, "arial", "bold", "", "", "");
 var gear = new Text("gear", "N", 170, "arial", "bold", "", "", "");
 
-var time = new Text("time", "", 35, "arial", "bold", "italic", "", "");
-var odo = new Text("odo", "", 35, "arial", "bold", "italic", "", " km");
+var time = new Text("time", "00:00:00", 35, "arial", "bold", "italic", "", "");
+var odo = new Text("odo", "0", 35, "arial", "bold", "italic", "", " km");
 
 var reserve = new Icon("reserve", "fuel.svg");
 var battery = new Icon("battery", "battery.svg");
