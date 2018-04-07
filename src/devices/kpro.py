@@ -172,6 +172,8 @@ class Kpro:
                 return int(interp(self.data0[KPRO3_TPS], [21, 229], [0, 100]))
             elif self.version == 4:
                 return int(interp(self.data0[KPRO4_TPS], [21, 229], [0, 100]))
+            else:
+                return 0
         except:
             return 0
 
@@ -262,8 +264,10 @@ class Kpro:
                 return self.data0[KPRO2_GEAR]
             elif self.version == 4:
                 return self.data0[KPRO4_GEAR]
+            else:
+                return 'N'
         except:
-            return 0
+            return 'N'
 
     def eps(self):
         mask = 0x20

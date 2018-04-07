@@ -1,0 +1,19 @@
+{
+    "pid": 8964, 
+    "argv": [
+        "/Users/DiSCLAiMER/Desktop/HonDash/venv/bin/crossbar", 
+        "start"
+    ], 
+    "options": {
+        "logdir": null, 
+        "command": "start", 
+        "logtofile": false, 
+        "config": "config.json", 
+        "logformat": "standard", 
+        "personality": "community", 
+        "reactor": null, 
+        "cbdir": "/Users/DiSCLAiMER/Desktop/HonDash/.crossbar", 
+        "colour": "auto", 
+        "loglevel": "info"
+    }
+}
