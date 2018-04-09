@@ -150,14 +150,47 @@ var oilp = new JustGage({
     }
 });
 
-var g6 = new JustGage({
-    id: "g6",
+var eth = new JustGage({
+    id: "eth",
     value: 0,
     min: 0,
     max: 100,
     decimals: 0,
     gaugeWidthScale: 1,
-    label: "CAM",
+    label: "ETH",
+    valueMinFontSize: 50,
+});
+
+var g7 = new JustGage({
+    id: "g7",
+    value: 0,
+    min: 0,
+    max: 100,
+    decimals: 0,
+    gaugeWidthScale: 1,
+    label: "G7",
+    valueMinFontSize: 50,
+});
+
+var g8 = new JustGage({
+    id: "g8",
+    value: 0,
+    min: 0,
+    max: 100,
+    decimals: 0,
+    gaugeWidthScale: 1,
+    label: "G8",
+    valueMinFontSize: 50,
+});
+
+var g9 = new JustGage({
+    id: "g9",
+    value: 0,
+    min: 0,
+    max: 100,
+    decimals: 0,
+    gaugeWidthScale: 1,
+    label: "G9",
     valueMinFontSize: 50,
 });
 
