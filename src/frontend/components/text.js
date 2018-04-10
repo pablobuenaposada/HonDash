@@ -6,7 +6,7 @@ class Text {
         this.suffix = suffix;
 
         document.getElementById(this.id).innerHTML = this.prefix+value+this.suffix;
-        document.getElementById(this.id).style.fontSize = size+"px";
+        document.getElementById(this.id).style.fontSize = size+"vw";
         document.getElementById(this.id).style.fontFamily = font;
         document.getElementById(this.id).style.fontWeight = weight;
         document.getElementById(this.id).style.fontStyle = style;

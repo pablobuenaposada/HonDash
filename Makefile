@@ -2,7 +2,7 @@ clean:
 	@rm -rf venv
 
 virtualenv: clean
-	virtualenv -p python3.5 venv
+	virtualenv -p python3.4 venv
 	. venv/bin/activate; pip install -r requirements.txt
 
 run:
