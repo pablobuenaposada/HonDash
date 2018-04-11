@@ -1,3 +1,5 @@
+var labelSize = 15;
+
 var bat = new JustGage({
     id: "bat",
     value: 0,
@@ -7,6 +9,7 @@ var bat = new JustGage({
     gaugeWidthScale: 1,
     label: "BATTERY",
     valueMinFontSize: 40,
+    labelMinFontSize: labelSize,
     customSectors: {
         length: true,
         ranges: [{
@@ -30,6 +33,7 @@ var iat = new JustGage({
     gaugeWidthScale: 1,
     label: "IAT",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
     customSectors: {
         length: true,
         ranges: [{
@@ -53,6 +57,7 @@ var ect = new JustGage({
     gaugeWidthScale: 1,
     label: "ECT",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
     customSectors: {
         length: true,
         ranges: [{
@@ -76,6 +81,7 @@ var afr = new JustGage({
     gaugeWidthScale: 1,
     label: "AFR",
     valueMinFontSize: 40,
+    labelMinFontSize: labelSize,
     customSectors: {
         length: true,
         ranges: [{
@@ -103,6 +109,7 @@ var g5 = new JustGage({
     gaugeWidthScale: 1,
     label: "CAM",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
 });
 
 var fuelp = new JustGage({
@@ -112,8 +119,9 @@ var fuelp = new JustGage({
     max: 100,
     decimals: 0,
     gaugeWidthScale: 1,
-    label: "FUEL PRESSURE",
+    label: "FUEL PRESS.",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
 });
 
 var oilt = new JustGage({
@@ -125,6 +133,7 @@ var oilt = new JustGage({
     gaugeWidthScale: 1,
     label: "OIL TEMP",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
 });
 
 var oilp = new JustGage({
@@ -134,8 +143,9 @@ var oilp = new JustGage({
     max: 5,
     decimals: 1,
     gaugeWidthScale: 1,
-    label: "OIL PRESSURE",
+    label: "OIL PRESS.",
     valueMinFontSize: 40,
+    labelMinFontSize: labelSize,
     customSectors: {
         length: true,
         ranges: [{
@@ -159,6 +169,7 @@ var eth = new JustGage({
     gaugeWidthScale: 1,
     label: "ETH",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
 });
 
 var g7 = new JustGage({
@@ -170,6 +181,7 @@ var g7 = new JustGage({
     gaugeWidthScale: 1,
     label: "G7",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
 });
 
 var g8 = new JustGage({
@@ -181,6 +193,7 @@ var g8 = new JustGage({
     gaugeWidthScale: 1,
     label: "G8",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
 });
 
 var g9 = new JustGage({
@@ -192,6 +205,8 @@ var g9 = new JustGage({
     gaugeWidthScale: 1,
     label: "G9",
     valueMinFontSize: 50,
+    labelMinFontSize: labelSize,
+
 });
 
 var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#222d5a", 0, 100, true, "%", "Arial", "bold", 20);

@@ -9,7 +9,7 @@
 
 [class*="col-"] {
     float: left;
-    /*border: 1px solid red;*/
+    border: 1px solid red;
     display: table;
     content: "";
     clear: both;
@@ -25,6 +25,7 @@
     max-height: 100px;
     margin-right: 5px;
     margin-left: 5px;
+    width: 10%;
 }
 
 .gauge{
