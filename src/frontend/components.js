@@ -220,8 +220,8 @@ var speed = new Text("speed", "0", 8, "arial", "bold", "", "", "");
 var speed_unit = new Text("speed_unit", "km/h", 2, "arial", "bold", "", "", "");
 var gear = new Text("gear", "N", 10, "arial", "bold", "", "", "");
 
-var time = new Text("time", "00:00:00", 2, "arial", "bold", "italic", "", "");
-var odo = new Text("odo", "0", 2, "arial", "bold", "italic", "", " km");
+var time = new Text("time", "00:00:00", 3, "arial", "bold", "italic", "", "");
+var odo = new Text("odo", "0", 3, "arial", "bold", "italic", "", " km");
 
 var reserve = new Icon("reserve", "fuel.svg");
 var battery = new Icon("battery", "battery.svg");
