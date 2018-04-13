@@ -10,6 +10,8 @@ var bat = new JustGage({
     label: "BATTERY",
     valueMinFontSize: 40,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -34,6 +36,8 @@ var iat = new JustGage({
     label: "IAT",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -58,6 +62,8 @@ var ect = new JustGage({
     label: "ECT",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -82,6 +88,8 @@ var afr = new JustGage({
     label: "AFR",
     valueMinFontSize: 40,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -110,6 +118,8 @@ var g5 = new JustGage({
     label: "CAM",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
 });
 
 var fuelp = new JustGage({
@@ -122,6 +132,8 @@ var fuelp = new JustGage({
     label: "FUEL PRESS.",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
 });
 
 var oilt = new JustGage({
@@ -134,6 +146,8 @@ var oilt = new JustGage({
     label: "OIL TEMP",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
 });
 
 var oilp = new JustGage({
@@ -146,6 +160,8 @@ var oilp = new JustGage({
     label: "OIL PRESS.",
     valueMinFontSize: 40,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -170,6 +186,8 @@ var eth = new JustGage({
     label: "ETH",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
 });
 
 var g7 = new JustGage({
@@ -182,6 +200,8 @@ var g7 = new JustGage({
     label: "G7",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
 });
 
 var g8 = new JustGage({
@@ -194,6 +214,8 @@ var g8 = new JustGage({
     label: "G8",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
 });
 
 var g9 = new JustGage({
@@ -206,7 +228,8 @@ var g9 = new JustGage({
     label: "G9",
     valueMinFontSize: 50,
     labelMinFontSize: labelSize,
-
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
 });
 
 var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#222d5a", 0, 100, true, "%", "Arial", "bold", 20);
