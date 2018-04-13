@@ -2,7 +2,7 @@ var common_attr = {
     value: 0,
     gaugeWidthScale: 1,
     valueMinFontSize: 35,
-    labelMinFontSize: 15,
+    labelMinFontSize: 20,
     startAnimationTime: 0,
     refreshAnimationTime: 0,
     labelFontColor: "black",
@@ -151,24 +151,6 @@ var eth = new JustGage(Object.assign({}, common_attr,
     max: 100,
     decimals: 0,
     label: "ETH",
-}));
-
-var g7 = new JustGage(Object.assign({}, common_attr,
-{
-    id: "g7",
-    min: 0,
-    max: 100,
-    decimals: 0,
-    label: "G7",
-}));
-
-var g8 = new JustGage(Object.assign({}, common_attr,
-{
-    id: "g8",
-    min: 0,
-    max: 100,
-    decimals: 0,
-    label: "G8",
 }));
 
 var g9 = new JustGage(Object.assign({}, common_attr,
