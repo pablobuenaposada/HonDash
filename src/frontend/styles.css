@@ -48,3 +48,7 @@
 .caca .row{
     height: 100%;
 }
+
+text:nth-child(6) tspan {
+  font-weight: bold;
+}
