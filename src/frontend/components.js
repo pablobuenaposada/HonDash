@@ -1,17 +1,20 @@
-var labelSize = 15;
-
-var bat = new JustGage({
-    id: "bat",
+var common_attr = {
     value: 0,
+    gaugeWidthScale: 1,
+    valueMinFontSize: 35,
+    labelMinFontSize: 15,
+    startAnimationTime: 0,
+    refreshAnimationTime: 0,
+    labelFontColor: "black",
+};
+
+var bat = new JustGage(Object.assign({}, common_attr,
+{
+    id: "bat",
     min: 0,
     max: 20,
     decimals: 1,
-    gaugeWidthScale: 1,
     label: "BATTERY",
-    valueMinFontSize: 40,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -24,20 +27,15 @@ var bat = new JustGage({
             hi : 20
         }]
     }
- });
+}));
 
-var iat = new JustGage({
+var iat = new JustGage(Object.assign({}, common_attr,
+{
     id: "g2",
-    value: 0,
     min: 0,
     max: 50,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "IAT",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -50,20 +48,15 @@ var iat = new JustGage({
             hi : 30
         }]
     }
-});
+}));
 
-var ect = new JustGage({
+var ect = new JustGage(Object.assign({}, common_attr,
+{
     id: "g3",
-    value: 0,
     min: 0,
     max: 150,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "ECT",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -76,20 +69,15 @@ var ect = new JustGage({
             hi : 90
         }]
     }
-});
+}));
 
-var afr = new JustGage({
+var afr = new JustGage(Object.assign({}, common_attr,
+{
     id: "g4",
-    value: 0,
     min: 0,
     max: 2,
     decimals: 1,
-    gaugeWidthScale: 1,
     label: "AFR",
-    valueMinFontSize: 40,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -106,62 +94,42 @@ var afr = new JustGage({
             hi : 2
         }]
     }
-});
+}));
 
-var g5 = new JustGage({
+var g5 = new JustGage(Object.assign({}, common_attr,
+{
     id: "g5",
-    value: 0,
     min: 0,
     max: 100,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "CAM",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
-});
+}));
 
-var fuelp = new JustGage({
+var fuelp = new JustGage(Object.assign({}, common_attr,
+{
     id: "fuelp",
-    value: 0,
     min: 0,
     max: 100,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "FUEL PRESS.",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
-});
+}));
 
-var oilt = new JustGage({
+var oilt = new JustGage(Object.assign({}, common_attr,
+{
     id: "oilt",
-    value: 0,
     min: 0,
     max: 100,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "OIL TEMP",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
-});
+}));
 
-var oilp = new JustGage({
+var oilp = new JustGage(Object.assign({}, common_attr,
+{
     id: "oilp",
-    value: 0,
     min: 0,
     max: 5,
     decimals: 1,
-    gaugeWidthScale: 1,
     label: "OIL PRESS.",
-    valueMinFontSize: 40,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
     customSectors: {
         length: true,
         ranges: [{
@@ -174,63 +142,43 @@ var oilp = new JustGage({
             hi : 5
         }]
     }
-});
+}));
 
-var eth = new JustGage({
+var eth = new JustGage(Object.assign({}, common_attr,
+{
     id: "eth",
-    value: 0,
     min: 0,
     max: 100,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "ETH",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
-});
+}));
 
-var g7 = new JustGage({
+var g7 = new JustGage(Object.assign({}, common_attr,
+{
     id: "g7",
-    value: 0,
     min: 0,
     max: 100,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "G7",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
-});
+}));
 
-var g8 = new JustGage({
+var g8 = new JustGage(Object.assign({}, common_attr,
+{
     id: "g8",
-    value: 0,
     min: 0,
     max: 100,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "G8",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
-});
+}));
 
-var g9 = new JustGage({
+var g9 = new JustGage(Object.assign({}, common_attr,
+{
     id: "g9",
-    value: 0,
     min: 0,
     max: 100,
     decimals: 0,
-    gaugeWidthScale: 1,
     label: "G9",
-    valueMinFontSize: 50,
-    labelMinFontSize: labelSize,
-    startAnimationTime: 0,
-    refreshAnimationTime: 0,
-});
+}));
 
 var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#222d5a", 0, 100, true, "%", "Arial", "bold", 20);
 var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);

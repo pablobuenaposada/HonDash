@@ -1,17 +1,17 @@
 {
+    "pid": 4403, 
     "options": {
-        "logtofile": false, 
-        "logdir": null, 
-        "command": "start", 
         "loglevel": "info", 
-        "personality": "community", 
-        "logformat": "standard", 
-        "cbdir": "/Users/DiSCLAiMER/Desktop/HonDash/.crossbar", 
-        "colour": "auto", 
+        "command": "start", 
         "reactor": null, 
-        "config": "config.json"
+        "logformat": "standard", 
+        "config": "config.json", 
+        "logdir": null, 
+        "colour": "auto", 
+        "logtofile": false, 
+        "cbdir": "/Users/DiSCLAiMER/Desktop/HonDash/.crossbar", 
+        "personality": "community"
     }, 
-    "pid": 1445, 
     "argv": [
         "/Users/DiSCLAiMER/Desktop/HonDash/venv/bin/crossbar", 
         "start"
