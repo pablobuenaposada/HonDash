@@ -2,7 +2,7 @@ var common_attr = {
     value: 0,
     gaugeWidthScale: 1,
     valueMinFontSize: 35,
-    labelMinFontSize: 20,
+    labelMinFontSize: 18,
     startAnimationTime: 0,
     refreshAnimationTime: 0,
     labelFontColor: "black",
@@ -111,7 +111,7 @@ var fuelp = new JustGage(Object.assign({}, common_attr,
     min: 0,
     max: 100,
     decimals: 0,
-    label: "FUEL PRESS.",
+    label: "FUEL PRES.",
 }));
 
 var oilt = new JustGage(Object.assign({}, common_attr,
@@ -129,7 +129,7 @@ var oilp = new JustGage(Object.assign({}, common_attr,
     min: 0,
     max: 5,
     decimals: 1,
-    label: "OIL PRESS.",
+    label: "OIL PRES.",
     customSectors: {
         length: true,
         ranges: [{
