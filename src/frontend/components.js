@@ -120,7 +120,7 @@ var oilt = new JustGage(Object.assign({}, common_attr,
     min: 0,
     max: 100,
     decimals: 0,
-    label: "OIL TEMP",
+    label: "OIL TEMP.",
 }));
 
 var oilp = new JustGage(Object.assign({}, common_attr,

@@ -3,3 +3,4 @@ venv/
 .cache/
 .idea/
 odometer.txt
+.crossbar/node.pid
