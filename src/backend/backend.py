@@ -7,7 +7,7 @@ import os.path
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from devices.kpro import Kpro
-from devices.Time import Time
+from devices.time import Time
 from devices.odometer import Odometer
 from devices.digital_input import DigitalInput
 from devices.mcp3208 import Mcp3208
