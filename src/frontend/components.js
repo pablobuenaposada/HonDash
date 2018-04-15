@@ -9,7 +9,7 @@ var common_attr = {
 };
 
 // Bars
-var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#123752", 0, 100, true, "%", "Arial", "bold", 20);
+var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#2170a9", 0, 100, true, "%", "Arial", "bold", 20);
 var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
 var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
 var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 30);
