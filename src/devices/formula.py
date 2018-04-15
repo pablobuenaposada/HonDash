@@ -1,4 +1,7 @@
 class Formula:
+    def __init__(self):
+        pass
+
     # conversion for VDO 323-057 sensor powered by 4.8v and read with a 56ohms voltage divider
     def vdo_323_057(adc):
         volts = (adc / 4096.000) * 4.80
