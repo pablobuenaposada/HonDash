@@ -7,7 +7,8 @@ class DigitalInput:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(pin, GPIO.BOTH)
-        GPIO.add_event_callback(pin, callback)
+        if callback is not None:
+            GPIO.add_event_callback(pin, callback)
 
     def status(self):
         if GPIO.input(self.pin) == 1:
