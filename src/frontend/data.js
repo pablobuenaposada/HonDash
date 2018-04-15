@@ -17,7 +17,7 @@ connection.onopen = function (session) {
        iat.refresh(args[0]["iat"]);
        ect.refresh(args[0]["ect"]);
        afr.refresh(args[0]["afr"]);
-       g5.refresh(args[0]["cam"]);
+       cam.refresh(args[0]["cam"]);
        fuelp.refresh(args[0]["vss"]);
        oilt.refresh(args[0]["ai0"]);
        oilp.refresh(args[0]["kan0"]);

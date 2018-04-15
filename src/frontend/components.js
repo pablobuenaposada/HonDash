@@ -122,13 +122,21 @@ var afr = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var g5 = new JustGage(Object.assign({}, common_attr,
+var cam = new JustGage(Object.assign({}, common_attr,
 {
-    id: "g5",
+    id: "cam",
     min: 0,
     max: 100,
     decimals: 0,
     label: "CAM",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#46877f",
+            lo : 0,
+            hi : 100
+        }]
+    }
 }));
 
 var fuelp = new JustGage(Object.assign({}, common_attr,
