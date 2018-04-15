@@ -14,4 +14,4 @@ def adc2oiltemp(adc):
 
 
 while True:
-    print(adc2oiltemp(an.adc(0)))
+    print(an.adc_with_formula(0,adc2oiltemp))
