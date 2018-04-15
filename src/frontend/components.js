@@ -13,7 +13,7 @@ var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#123752", 0, 100, true, "%",
 var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
 var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
 var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 30);
-var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#bc4077", 0, 9500, true, "", "Arial", "bold", 60);
+var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#E679E3", 0, 9500, true, "", "Arial", "bold", 60);
 
 // Text and numbers
 var speed = new Text("speed", "0", 8, "arial", "bold", "", "", "");
