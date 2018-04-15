@@ -8,7 +8,7 @@ import os.path
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from devices.Time import Time
-from devices.Odometer import Odometer
+from devices.odometer import Odometer
 
 run()
 

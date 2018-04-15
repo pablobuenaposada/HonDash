@@ -8,7 +8,7 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from devices.kpro import Kpro
 from devices.Time import Time
-from devices.Odometer import Odometer
+from devices.odometer import Odometer
 from devices.digital_input import DigitalInput
 from devices.mcp3208 import Mcp3208
 from devices.formula import Formula
@@ -58,6 +58,5 @@ while True:
                              'ai5': ai.voltage(5),
                              'ai6': ai.voltage(6),
                              'ai7': ai.voltage(7),
-                             }
-            )
+                             })
     sleep(0.1)
