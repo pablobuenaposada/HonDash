@@ -8,6 +8,32 @@ var common_attr = {
     labelFontColor: "black",
 };
 
+// Bars
+var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#123752", 0, 100, true, "%", "Arial", "bold", 20);
+var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
+var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
+var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 30);
+var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#bc4077", 0, 9500, true, "", "Arial", "bold", 60);
+
+// Text and numbers
+var speed = new Text("speed", "0", 8, "arial", "bold", "", "", "");
+var speed_unit = new Text("speed_unit", "km/h", 2, "arial", "bold", "", "", "");
+var gear = new Text("gear", "N", 10, "arial", "bold", "", "", "");
+var time = new Text("time", "00:00:00", 3, "arial", "bold", "italic", "", "");
+var odo = new Text("odo", "0", 2, "arial", "bold", "italic", "", " km");
+
+// Icons
+var reserve = new Icon("reserve", "fuel.svg");
+var battery = new Icon("battery", "battery.svg");
+var handbrake = new Icon("handbrake", "handbrake.svg");
+var lights = new Icon("lights", "lights.svg");
+var rear = new Icon("rear", "trunk.svg");
+var engine = new Icon("engine", "check_engine.svg");
+var oil = new Icon("oil", "oil.svg");
+var leftarrow = new Icon("leftarrow", "left_arrow.svg", "left_arrow_on.svg");
+var rightarrow = new Icon("rightarrow", "right_arrow.svg", "right_arrow_on.svg");
+
+// Gauges
 var bat = new JustGage(Object.assign({}, common_attr,
 {
     id: "bat",
@@ -161,27 +187,3 @@ var g9 = new JustGage(Object.assign({}, common_attr,
     decimals: 0,
     label: "G9",
 }));
-
-var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#222d5a", 0, 100, true, "%", "Arial", "bold", 20);
-var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
-var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
-
-var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 30);
-var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#bc4077", 0, 9500, true, "", "Arial", "bold", 60);
-
-var speed = new Text("speed", "0", 8, "arial", "bold", "", "", "");
-var speed_unit = new Text("speed_unit", "km/h", 2, "arial", "bold", "", "", "");
-var gear = new Text("gear", "N", 10, "arial", "bold", "", "", "");
-
-var time = new Text("time", "00:00:00", 3, "arial", "bold", "italic", "", "");
-var odo = new Text("odo", "0", 2, "arial", "bold", "italic", "", " km");
-
-var reserve = new Icon("reserve", "fuel.svg");
-var battery = new Icon("battery", "battery.svg");
-var handbrake = new Icon("handbrake", "handbrake.svg");
-var lights = new Icon("lights", "lights.svg");
-var rear = new Icon("rear", "trunk.svg");
-var engine = new Icon("engine", "check_engine.svg");
-var oil = new Icon("oil", "oil.svg");
-var leftarrow = new Icon("leftarrow", "left_arrow.svg", "left_arrow_on.svg");
-var rightarrow = new Icon("rightarrow", "right_arrow.svg", "right_arrow_on.svg");
