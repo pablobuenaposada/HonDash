@@ -262,11 +262,16 @@ class Kpro:
     def gear(self):
         try:
             if self.version == 2:
-                return self.data0[KPRO2_GEAR]
+                gear = self.data0[KPRO2_GEAR]
             elif self.version == 4:
-                return self.data0[KPRO4_GEAR]
+                gear = self.data0[KPRO4_GEAR]
             else:
                 return 'N'
+
+            if gear == 0:
+                return 'N'
+            else:
+                return gear
         except:
             return 'N'
 
