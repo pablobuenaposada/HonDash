@@ -58,6 +58,7 @@ KPRO4_BAT = 4
 KPRO4_AN0_1 = 67
 KPRO4_AN0_2 = 66
 
+
 class Kpro:
     def __init__(self):
         self.data0 = []

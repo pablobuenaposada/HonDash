@@ -23,6 +23,7 @@ di21 = DigitalInput(21)
 di6 = DigitalInput(6)
 di5 = DigitalInput(5)
 di12 = DigitalInput(12)
+
 while True:
     odo.save(kpro.vss())
     publish('com.app.idea', {'bat': kpro.bat(),
