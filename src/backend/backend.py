@@ -15,6 +15,7 @@ run()
 kpro = Kpro()
 time = Time()
 odo = Odometer()
+
 while True:
     odo.save(kpro.vss())
     publish('com.app.idea', {'bat': kpro.bat(),
@@ -28,6 +29,7 @@ while True:
                              'cam': kpro.cam(),
                              'an0': kpro.analog_input(0),
                              'time': time.get_time(),
-                             'odo': odo.get_mileage()
+                             'odo': odo.get_mileage(),
+                             'di22':
                              })
     sleep(0.1)
