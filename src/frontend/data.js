@@ -30,7 +30,7 @@ connection.onopen = function (session) {
        time.refresh(args[0]["time"]);
        odo.refresh(args[0]["odo"]);
        gear.refresh(args[0]["gear"])
-       leftarrow.refresh(args[0]["left_turn_signal"]);
+       leftarrow.refresh(args[0]["di22"]);
        rightarrow.refresh(args[0]["right_turn_signal"]);
    }
 

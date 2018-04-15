@@ -3,19 +3,19 @@ from autobahn_sync import publish, run
 import sys
 import os.path
 
-
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from devices.kpro import Kpro
 from devices.Time import Time
 from devices.Odometer import Odometer
+from devices.digital_input import DigitalInput
 
 run()
 
 kpro = Kpro()
 time = Time()
 odo = Odometer()
-
+di22 = DigitalInput(22)
 while True:
     odo.save(kpro.vss())
     publish('com.app.idea', {'bat': kpro.bat(),
@@ -30,6 +30,6 @@ while True:
                              'an0': kpro.analog_input(0),
                              'time': time.get_time(),
                              'odo': odo.get_mileage(),
-                             'di22':
+                             'di22': di22.status()
                              })
     sleep(0.1)
