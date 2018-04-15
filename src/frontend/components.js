@@ -9,9 +9,9 @@ var common_attr = {
 };
 
 // Bars
-var clutch = new Bar("b1", 0, 0, false, "#edebeb", "#2170a9", 0, 100, true, "%", "Arial", "bold", 20);
-var brake = new Bar("b2", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
-var throttle = new Bar("b3", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
+var clutch = new Bar("clutch", 0, 0, false, "#edebeb", "#2170a9", 0, 100, true, "%", "Arial", "bold", 20);
+var brake = new Bar("brake", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
+var throttle = new Bar("throttle", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
 var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 30);
 var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#d64d8a", 0, 9500, true, "", "Arial", "bold", 60);
 
@@ -57,7 +57,7 @@ var bat = new JustGage(Object.assign({}, common_attr,
 
 var iat = new JustGage(Object.assign({}, common_attr,
 {
-    id: "g2",
+    id: "iat",
     min: 0,
     max: 50,
     decimals: 0,
@@ -78,7 +78,7 @@ var iat = new JustGage(Object.assign({}, common_attr,
 
 var ect = new JustGage(Object.assign({}, common_attr,
 {
-    id: "g3",
+    id: "ect",
     min: 0,
     max: 150,
     decimals: 0,
@@ -99,7 +99,7 @@ var ect = new JustGage(Object.assign({}, common_attr,
 
 var afr = new JustGage(Object.assign({}, common_attr,
 {
-    id: "g4",
+    id: "afr",
     min: 0,
     max: 2,
     decimals: 1,
@@ -152,9 +152,25 @@ var oilt = new JustGage(Object.assign({}, common_attr,
 {
     id: "oilt",
     min: 0,
-    max: 100,
+    max: 150,
     decimals: 0,
     label: "OIL TEMP.",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#cc2c24",
+            lo : 0,
+            hi : 80
+        },{
+        color : "#46877f",
+            lo : 80,
+            hi : 95
+        },{
+        color : "#cc2c24",
+            lo : 95,
+            hi : 150
+        }]
+    }
 }));
 
 var oilp = new JustGage(Object.assign({}, common_attr,
