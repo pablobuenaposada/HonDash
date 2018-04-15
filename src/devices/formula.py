@@ -3,7 +3,7 @@ class Formula:
         pass
 
     # conversion for VDO 323-057 sensor powered by 4.8v and read with a 56ohms voltage divider
-    def vdo_323_057(self, adc):
+    def vdo_323_057(adc):
         volts = (adc / 4096.000) * 4.80
         return (int)(-9.805174198 * pow(10, -1) * pow(volts, 9) + 23.4368155 * pow(volts, 8) - 240.7430517 * pow(volts,
                                                                                                                  7) + 1390.11628 * pow(
