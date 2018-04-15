@@ -50,7 +50,7 @@ while True:
                              'di6': di6.status(),
                              'di5': di5.status(),
                              'di12': di12.status(),
-                             'ai0': ai.adc_with_formula(0, Formula.vdo_323_057()),
+                             'ai0': ai.adc_with_formula(0, Formula.vdo_323_057),
                              'ai1': ai.voltage(1),
                              'ai2': ai.voltage(2),
                              'ai3': ai.voltage(3),
