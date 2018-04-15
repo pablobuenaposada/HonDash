@@ -1,7 +1,7 @@
 import spidev
 
 
-class MCP3208:
+class Mcp3208:
     def __init__(self):
         self.spi = spidev.SpiDev()
         self.spi.open(0, 0)

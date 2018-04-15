@@ -3,9 +3,9 @@ import os.path
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-from devices.MCP3208 import MCP3208
+from devices.mcp3208 import Mcp3208
 
-an = MCP3208()
+an = Mcp3208()
 
 
 def adc2oiltemp(adc):
