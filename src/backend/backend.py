@@ -39,6 +39,7 @@ while True:
                              'vss': kpro.vss(),
                              'afr': kpro.afr(),
                              'cam': kpro.cam(),
+                             'mil': kpro.mil(),
                              'kan0': kpro.analog_input(0),
                              'kan1': kpro.analog_input(1),
                              'kan2': kpro.analog_input(2),

@@ -36,3 +36,4 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list['AN5'] = str(kpro.analog_input(5))
         output_list['AN6'] = str(kpro.analog_input(6))
         output_list['AN7'] = str(kpro.analog_input(7))
+        output_list['MIL'] = str(kpro.mil())

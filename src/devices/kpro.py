@@ -72,6 +72,8 @@ KPRO4_AN6_2 = 78
 KPRO4_AN7_1 = 81
 KPRO4_AN7_2 = 80
 
+KPRO4_MIL = 30
+
 class Kpro:
     def __init__(self):
         self.data0 = []
@@ -364,6 +366,22 @@ class Kpro:
                 return self.data0[KPRO3_MAP]/100.0
         except:
             return 0
+
+    def mil(self):
+        try:
+            if self.version == 4:
+                mil = self.data3[KPRO4_MIL]
+            else:
+                return False
+
+            if mil == 37:
+                return True
+            elif mil == 33:
+                return False
+            else:
+                return False
+        except:
+            return False
 
     def analog_input(self, channel):
         if self.version == 4:

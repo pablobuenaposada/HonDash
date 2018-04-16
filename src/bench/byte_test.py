@@ -29,13 +29,12 @@ if dev is not None:
             print(temp)
         elif version == 4:
             temp = dev.read(0x82, 10000, 1000)  # kpro4
-            # for n in temp:
-            #     print(hex(n))
+            #print(temp)
+
         ep.write('\x65')
         if version == 2:
             temp = dev.read(0x81, 10000, 1000)  # kpro2
             print(temp)
         elif version == 4:
             temp = dev.read(0x82, 128, 1000)  # kpro4
-
-            print(interp((256*temp[67])+temp[66], [0, 4096], [0, 5]))
+            print(temp[30])
