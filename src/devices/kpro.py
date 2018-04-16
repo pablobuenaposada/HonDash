@@ -57,7 +57,20 @@ KPRO4_BAT = 4
 
 KPRO4_AN0_1 = 67
 KPRO4_AN0_2 = 66
-
+KPRO4_AN1_1 = 69
+KPRO4_AN1_2 = 68
+KPRO4_AN2_1 = 71
+KPRO4_AN2_2 = 70
+KPRO4_AN3_1 = 73
+KPRO4_AN3_2 = 72
+KPRO4_AN4_1 = 75
+KPRO4_AN4_2 = 74
+KPRO4_AN5_1 = 77
+KPRO4_AN5_2 = 76
+KPRO4_AN6_1 = 79
+KPRO4_AN6_2 = 78
+KPRO4_AN7_1 = 81
+KPRO4_AN7_2 = 80
 
 class Kpro:
     def __init__(self):
@@ -357,6 +370,27 @@ class Kpro:
             if channel == 0:
                 index_1 = KPRO4_AN0_1
                 index_2 = KPRO4_AN0_2
+            elif channel == 1:
+                index_1 = KPRO4_AN1_1
+                index_2 = KPRO4_AN1_2
+            elif channel == 2:
+                index_1 = KPRO4_AN2_1
+                index_2 = KPRO4_AN2_2
+            elif channel == 3:
+                index_1 = KPRO4_AN3_1
+                index_2 = KPRO4_AN3_2
+            elif channel == 4:
+                index_1 = KPRO4_AN4_1
+                index_2 = KPRO4_AN4_2
+            elif channel == 5:
+                index_1 = KPRO4_AN5_1
+                index_2 = KPRO4_AN5_2
+            elif channel == 6:
+                index_1 = KPRO4_AN6_1
+                index_2 = KPRO4_AN6_2
+            elif channel == 7:
+                index_1 = KPRO4_AN7_1
+                index_2 = KPRO4_AN7_2
             else:
                 return 0
         else:
