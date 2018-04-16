@@ -420,7 +420,7 @@ class Kpro:
             else:
                 return "unknown"
 
-            if type == 3:
+            if type == 3:  # TODO the rest of ecu types
                 return "RSX - PRB"
             else:
                 return "unknown"
