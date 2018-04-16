@@ -45,10 +45,7 @@
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
 
-.caca .row{
-    height: 100%;
-}
-
+/*  trick for having the gauge label in bold */
 text:nth-child(6) tspan {
   font-weight: bold;
 }
