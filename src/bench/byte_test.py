@@ -23,18 +23,18 @@ if dev is not None:
         pass
 
     while True:
-        ep.write('\x40')
+        ep.write('\x60')
         if version == 2:
             temp = dev.read(0x81, 10000, 1000)  # kpro2
             print(temp)
-        elif version == 4:
-            temp = dev.read(0x82, 10000, 1000)  # kpro4
-            #print(temp)
+        # elif version == 4:
+        #     temp = dev.read(0x82, 10000, 1000)  # kpro4
+        #     print(temp)
 
-        ep.write('\x65')
-        if version == 2:
-            temp = dev.read(0x81, 10000, 1000)  # kpro2
-            print(temp)
-        elif version == 4:
-            temp = dev.read(0x82, 128, 1000)  # kpro4
-            print(temp[30])
+        # ep.write('\x65')
+        # if version == 2:
+        #     temp = dev.read(0x81, 10000, 1000)  # kpro2
+        #     print(temp)
+        # elif version == 4:
+        #     temp = dev.read(0x82, 128, 1000)  # kpro4
+        #     print(temp)

@@ -5,35 +5,43 @@ import usb.util
 from numpy import interp
 import pytemperature
 
+# command 0x40
+KPRO2_ECU_TYPE = 12
+KPRO2_IGN = 17
+KPRO2_SERIAL1 = 6
+KPRO2_SERIAL2 = 7
+KPRO2_FIRM1 = 8
+KPRO2_FIRM2 = 9
 
-KPRO2_TPS = 8
-KPRO2_AFR1 = 0
-KPRO2_AFR2 = 0
+KPRO4_ECU_TYPE = 10
+KPRO4_IGN = 15
+KPRO4_SERIAL1 = 4
+KPRO4_SERIAL2 = 5
+KPRO4_FIRM1 = 6
+KPRO4_FIRM2 = 7
+
+# command 0x60
+KPRO2_TPS = 7
+KPRO2_AFR1 = 18
+KPRO2_AFR2 = 19
 KPRO2_VSS = 6
-KPRO2_RPM1 = 0
-KPRO2_RPM2 = 0
+KPRO2_RPM1 = 4
+KPRO2_RPM2 = 5
 KPRO2_CAM = 10
-KPRO2_GEAR = None
-KPRO2_EPS = None
-KPRO2_SCS = None
-KPRO2_RVSLCK = None
-KPRO2_BKSW = None
-KPRO2_ACSW = None
-KPRO2_ACCL = None
-KPRO2_FLR = None
-
-KPRO2_ECT = None
-KPRO2_IAT = 4
-KPRO2_BAT = 56
+KPRO2_GEAR = 37
+KPRO2_EPS = 33
+KPRO2_SCS = 33
+KPRO2_RVSLCK = 33
+KPRO2_BKSW = 33
+KPRO2_ACSW = 33
+KPRO2_ACCL = 33
+KPRO2_FLR = 33
+KPRO2_MIL = 34
 
 KPRO3_TPS = 7
 KPRO3_RPM1 = 4
 KPRO3_RPM2 = 5
 KPRO3_MAP = 8
-
-KPRO3_ECT = 4
-KPRO3_IAT = 5
-KPRO3_BAT = 6
 
 KPRO4_TPS = 5
 KPRO4_AFR1 = 16
@@ -51,10 +59,20 @@ KPRO4_ACSW = 31
 KPRO4_ACCL = 31
 KPRO4_FLR = 31
 
+# command 0x61
+KPRO2_ECT = 4
+KPRO2_IAT = 5
+KPRO2_BAT = 6
+
+KPRO3_ECT = 4
+KPRO3_IAT = 5
+KPRO3_BAT = 6
+
 KPRO4_ECT = 2
 KPRO4_IAT = 3
 KPRO4_BAT = 4
 
+# command 0x65
 KPRO4_AN0_1 = 67
 KPRO4_AN0_2 = 66
 KPRO4_AN1_1 = 69
@@ -71,8 +89,8 @@ KPRO4_AN6_1 = 79
 KPRO4_AN6_2 = 78
 KPRO4_AN7_1 = 81
 KPRO4_AN7_2 = 80
-
 KPRO4_MIL = 30
+
 
 class Kpro:
     def __init__(self):
@@ -80,6 +98,7 @@ class Kpro:
         self.data1 = []
         self.data2 = []
         self.data3 = []
+        self.data4 = []
         self.dev = None
         self.version = 0
 
@@ -111,6 +130,14 @@ class Kpro:
         while True:
             try:
                 assert self.ep is not None
+                self.ep.write('\x40')
+                if self.version == 2:
+                    self.data4 = self.dev.read(0x81, 10000, 1000)  # kpro2
+                elif self.version == 3:
+                    self.data4 = self.dev.read(0x81, 10000, 1000)  # kpro3
+                elif self.version == 4:
+                    self.data4 = self.dev.read(0x82, 10000, 1000)  # kpro4
+
                 self.ep.write('\x60')
                 if self.version == 2:
                     temp = self.dev.read(0x81, 10000, 1000)  # kpro2
@@ -127,9 +154,7 @@ class Kpro:
 
                 self.ep.write('\x61')
                 if self.version == 2:
-                    temp = self.dev.read(0x81, 10000, 1000)  # kpro2
-                    if len(temp) == 68:
-                        self.data1 = temp
+                    self.data1 = self.dev.read(0x81, 16, 1000)  # kpro2
                 elif self.version == 3:
                     temp = self.dev.read(0x81, 10000, 1000)  # kpro3
                     if len(temp) == 16:
@@ -369,19 +394,84 @@ class Kpro:
 
     def mil(self):
         try:
-            if self.version == 4:
+            if self.version == 2:
+                mil = self.data0[KPRO2_MIL]
+                if mil == 9:
+                    return True
+                elif mil == 1:
+                    return False
+            elif self.version == 4:
                 mil = self.data3[KPRO4_MIL]
-            else:
-                return False
-
-            if mil == 37:
-                return True
-            elif mil == 33:
-                return False
+                if mil == 37:
+                    return True
+                elif mil == 33:
+                    return False
             else:
                 return False
         except:
             return False
+
+    def ecu_type(self):
+        try:
+            if self.version == 2:
+                type = self.data4[KPRO2_ECU_TYPE]
+            elif self.version == 4:
+                type = self.data4[KPRO4_ECU_TYPE]
+            else:
+                return "unknown"
+
+            if type == 3:
+                return "RSX - PRB"
+            else:
+                return "unknown"
+        except:
+            return "unknown"
+
+    def ign(self):
+        try:
+            if self.version == 2:
+                ign = self.data4[KPRO2_IGN]
+            elif self.version == 4:
+                ign = self.data4[KPRO4_IGN]
+            else:
+                return False
+
+            if ign == 1:
+                return True
+            else:
+                return False
+        except:
+            return False
+
+    def serial(self):
+        try:
+            if self.version == 2:
+                serial1 = self.data4[KPRO2_SERIAL1]
+                serial2 = self.data4[KPRO2_SERIAL2]
+            elif self.version == 4:
+                serial1 = self.data4[KPRO4_SERIAL1]
+                serial2 = self.data4[KPRO4_SERIAL2]
+            else:
+                return 0
+
+            return (256 * serial2) + serial1
+        except:
+            return 0
+
+    def firmware(self):
+        try:
+            if self.version == 2:
+                firm1 = self.data4[KPRO2_FIRM1]
+                firm2 = self.data4[KPRO2_FIRM2]
+            elif self.version == 4:
+                firm1 = self.data4[KPRO4_FIRM1]
+                firm2 = self.data4[KPRO4_FIRM2]
+            else:
+                return 0
+
+            return "{}.{:02d}".format(firm2, firm1)
+        except:
+            return 0
 
     def analog_input(self, channel):
         if self.version == 4:

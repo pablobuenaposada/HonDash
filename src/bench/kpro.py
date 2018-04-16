@@ -37,3 +37,7 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list['AN6'] = str(kpro.analog_input(6))
         output_list['AN7'] = str(kpro.analog_input(7))
         output_list['MIL'] = str(kpro.mil())
+        output_list['ECU_TYPE'] = str(kpro.ecu_type())
+        output_list['IGN'] = str(kpro.ign())
+        output_list['SERIAL'] = str(kpro.serial())
+        output_list['FIRMWARE'] = str(kpro.firmware())
