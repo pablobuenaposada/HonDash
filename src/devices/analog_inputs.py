@@ -1,7 +1,10 @@
 import spidev
 
 
-class Mcp3208:
+class AnalogInputs:
+    """
+    Interface for MCP3208
+    """
     def __init__(self):
         self.spi = spidev.SpiDev()
         self.spi.open(0, 0)

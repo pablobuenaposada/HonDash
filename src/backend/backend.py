@@ -10,7 +10,7 @@ from devices.kpro import Kpro
 from devices.time import Time
 from devices.odometer import Odometer
 from devices.digital_input import DigitalInput
-from devices.mcp3208 import Mcp3208
+from devices.analog_inputs import AnalogInputs
 from devices.formula import Formula
 
 run()
@@ -26,7 +26,7 @@ di21 = DigitalInput(21)
 di6 = DigitalInput(6)
 di5 = DigitalInput(5)
 di12 = DigitalInput(12)
-ai = Mcp3208()
+ai = AnalogInputs()
 
 while True:
     odo.save(kpro.vss())
