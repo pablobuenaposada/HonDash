@@ -193,7 +193,7 @@ class Kpro:
                 return self.data1[KPRO3_BAT] * 0.1
             elif self.version == 4:
                 return self.data1[KPRO4_BAT] * 0.1
-        except:
+        except IndexError:
             return 0
 
     def afr(self):
@@ -202,7 +202,7 @@ class Kpro:
                 return 32768.0 / ((256 * self.data0[KPRO2_AFR2]) + self.data0[KPRO2_AFR1])
             elif self.version == 4:
                 return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0[KPRO4_AFR1])
-        except:
+        except IndexError:
             return 0
 
     def tps(self):
@@ -215,7 +215,7 @@ class Kpro:
                 return int(interp(self.data0[KPRO4_TPS], [21, 229], [0, 100]))
             else:
                 return 0
-        except:
+        except IndexError:
             return 0
 
     def vss(self):
@@ -226,7 +226,7 @@ class Kpro:
                 return self.data0[KPRO4_VSS]
             else:
                 return 0
-        except:
+        except IndexError:
             return 0
 
     def rpm(self):
@@ -239,7 +239,7 @@ class Kpro:
                 return ((256*self.data0[KPRO4_RPM2])+self.data0[KPRO4_RPM1])*0.25
             else:
                 return 0
-        except:
+        except IndexError:
             return 0
 
     def cam(self):
@@ -248,7 +248,7 @@ class Kpro:
                 return (self.data0[KPRO2_CAM]-40)*0.5
             elif self.version == 4:
                 return (self.data0[KPRO4_CAM]-40)*0.5
-        except:
+        except IndexError:
             return 0
 
     def ect(self):
@@ -272,7 +272,7 @@ class Kpro:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO3_ECT]])
             elif self.version == 4:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO4_ECT]])
-        except:
+        except IndexError:
             return 0
 
     def iat(self):
@@ -296,7 +296,7 @@ class Kpro:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO3_IAT]])
             elif self.version == 4:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO4_IAT]])
-        except:
+        except IndexError:
             return 0
 
     def gear(self):
@@ -312,7 +312,7 @@ class Kpro:
                 return 'N'
             else:
                 return gear
-        except:
+        except IndexError:
             return 'N'
 
     def eps(self):
@@ -322,7 +322,7 @@ class Kpro:
                 return bool(self.data0[KPRO2_EPS] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_EPS] & mask)
-        except:
+        except IndexError:
             return False
 
     def scs(self):
@@ -332,7 +332,7 @@ class Kpro:
                 return bool(self.data0[KPRO2_SCS] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_SCS] & mask)
-        except:
+        except IndexError:
             return False
 
     def rvslck(self):
@@ -342,7 +342,7 @@ class Kpro:
                 return bool(self.data0[KPRO2_RVSLCK] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_RVSLCK] & mask)
-        except:
+        except IndexError:
             return False
 
     def bksw(self):
@@ -352,7 +352,7 @@ class Kpro:
                 return bool(self.data0[KPRO2_BKSW] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_BKSW] & mask)
-        except:
+        except IndexError:
             return False
 
     def acsw(self):
@@ -362,7 +362,7 @@ class Kpro:
                 return bool(self.data0[KPRO2_ACSW] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_ACSW] & mask)
-        except:
+        except IndexError:
             return False
 
     def accl(self):
@@ -372,7 +372,7 @@ class Kpro:
                 return bool(self.data0[KPRO2_ACCL] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_ACCL] & mask)
-        except:
+        except IndexError:
             return False
 
     def flr(self):
@@ -382,14 +382,14 @@ class Kpro:
                 return bool(self.data0[KPRO2_FLR] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_FLR] & mask)
-        except:
+        except IndexError:
             return False
 
     def map(self):
         try:
             if self.version == 3:
                 return self.data0[KPRO3_MAP]/100.0
-        except:
+        except IndexError:
             return 0
 
     def mil(self):
@@ -408,7 +408,7 @@ class Kpro:
                     return False
             else:
                 return False
-        except:
+        except IndexError:
             return False
 
     def ecu_type(self):
@@ -424,7 +424,7 @@ class Kpro:
                 return "RSX - PRB"
             else:
                 return "unknown"
-        except:
+        except IndexError:
             return "unknown"
 
     def ign(self):
@@ -440,7 +440,7 @@ class Kpro:
                 return True
             else:
                 return False
-        except:
+        except IndexError:
             return False
 
     def serial(self):
@@ -455,7 +455,7 @@ class Kpro:
                 return 0
 
             return (256 * serial2) + serial1
-        except:
+        except IndexError:
             return 0
 
     def firmware(self):
@@ -470,7 +470,7 @@ class Kpro:
                 return 0
 
             return "{}.{:02d}".format(firm2, firm1)
-        except:
+        except IndexError:
             return 0
 
     def analog_input(self, channel):
