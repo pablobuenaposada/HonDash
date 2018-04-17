@@ -1,13 +1,13 @@
 class Icon {
 
     constructor(id, path_off, path_on){
-        this.id = id;
+        this.element = document.getElementById(id);
         this.path_off = path_off;
         this.path_on = path_on;
         var img = document.createElement("img");
         img.src = "icons/"+this.path_off;
         img.style.width = "100%";
-        document.getElementById(this.id).appendChild(img);
+        this.element.appendChild(img);
     }
 
     refresh(value){
@@ -21,7 +21,7 @@ class Icon {
             img.src = "icons/"+this.path_off;
             img.style.width = "100%";
         }
-        document.getElementById(this.id).innerHTML = '';
-        document.getElementById(this.id).appendChild(img);
+        this.element.innerHTML = '';
+        this.element.appendChild(img);
     }
 }
