@@ -1,5 +1,5 @@
 class Formula:
-    # VDO 323-057 sensor powered by 5v and read with a 56ohms voltage divider
+    # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     def vdo_323_057(adc):
         volts = (adc / 4096.000) * 5.0
         return -6.556773822 * pow(10, -1) * pow(volts, 9) + 16.2933761 * pow(volts, 8) - 173.9768837 * pow(volts, 7) \
