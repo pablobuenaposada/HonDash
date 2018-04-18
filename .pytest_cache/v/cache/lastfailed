@@ -1,6 +1,0 @@
-{
-  "src/tests/devices/test_formula.py": true,
-  "src/tests/devices/test_formula.py::TestCase": true,
-  "src/tests/devices/test_formula.py::TestFormula": true,
-  "src/tests/devices/test_formula.py::TestFormula::test_vdo_323_057": true
-}

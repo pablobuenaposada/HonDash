@@ -4,3 +4,4 @@ venv/
 .idea/
 odometer.txt
 .crossbar/node.pid
+.pytest_cache/
