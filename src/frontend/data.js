@@ -33,6 +33,13 @@ connection.onopen = function (session) {
        gear.refresh(args[0]["gear"])
        leftarrow.refresh(args[0]["di22"]);
        rightarrow.refresh(args[0]["right_turn_signal"]);
+       reserve.refresh(args[0]["reserve"]);
+       battery.refresh(args[0]["battery"]);
+       mil.refresh(args[0]["mil"]);
+       handbrake.refresh(args[0]["handbrake"]);
+       high_beam.refresh(args[0]["high_beam"]);
+       trunk.refresh(args[0]["trunk"]);
+       oil_warning.refresh(args[0]["oil_warning"]);
    }
 
    session.subscribe('com.app.idea', onevent1);

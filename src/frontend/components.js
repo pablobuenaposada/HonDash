@@ -23,13 +23,13 @@ var time = new Text("time", "00:00:00", 3, "arial", "bold", "italic", "", "");
 var odo = new Text("odo", "0", 2, "arial", "bold", "italic", "", " km");
 
 // Icons
-var reserve = new Icon("reserve", "fuel.svg");
-var battery = new Icon("battery", "battery.svg");
-var handbrake = new Icon("handbrake", "handbrake.svg");
-var lights = new Icon("lights", "lights.svg");
-var rear = new Icon("rear", "trunk.svg");
-var mil = new Icon("mil", "check_engine.svg");
-var oil = new Icon("oil", "oil.svg");
+var reserve = new Icon("reserve", "fuel.svg", "fuel_on.svg");
+var battery = new Icon("battery", "battery.svg", "battery_on.svg");
+var handbrake = new Icon("handbrake", "handbrake.svg", "handbrake_on.svg");
+var high_beam = new Icon("high_beam", "lights.svg", "lights_on.svg");
+var trunk = new Icon("trunk", "trunk.svg", "trunk_on.svg");
+var mil = new Icon("mil", "check_engine.svg",  "check_engine_on.svg");
+var oil_warning = new Icon("oil_warning", "oil.svg", "oil_on.svg");
 var leftarrow = new Icon("leftarrow", "left_arrow.svg", "left_arrow_on.svg");
 var rightarrow = new Icon("rightarrow", "right_arrow.svg", "right_arrow_on.svg");
 

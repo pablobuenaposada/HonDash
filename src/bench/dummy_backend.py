@@ -30,5 +30,12 @@ while True:
                              'odo': odo.get_mileage(),
                              'left_turn_signal': random.randint(0, 1),
                              'right_turn_signal': random.randint(0, 1),
+                             'reserve': random.randint(0, 1),
+                             'battery': random.randint(0, 1),
+                             'mil': random.randint(0, 1),
+                             'handbrake': random.randint(0, 1),
+                             'high_beam': random.randint(0, 1),
+                             'trunk': random.randint(0, 1),
+                             'oil_warning': random.randint(0, 1),
                              })
     sleep(0.1)
