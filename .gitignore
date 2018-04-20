@@ -1,4 +1,7 @@
 *.pyc
 venv/
-.cache
-.idea
+.cache/
+.idea/
+odometer.txt
+.crossbar/node.pid
+.pytest_cache/
