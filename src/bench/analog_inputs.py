@@ -1,9 +1,4 @@
-import sys
-import os.path
-
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-from devices.mcp3208 import Mcp3208
+from src.devices.mcp3208 import Mcp3208
 
 an = Mcp3208()
 

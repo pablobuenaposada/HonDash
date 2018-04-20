@@ -1,10 +1,6 @@
 #sudo python bench/test.py
 from __future__ import print_function
-import sys
-import os.path
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-from devices.kpro import Kpro
+from src.devices.kpro import Kpro
 from reprint import output
 
 

@@ -1,14 +1,8 @@
 import random
 from time import sleep
 from autobahn_sync import publish, call, register, subscribe, run
-import sys
-import os.path
-
-
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-from devices.time import Time
-from devices.odometer import Odometer
+from src.devices.time import Time
+from src.devices.odometer import Odometer
 
 run()
 

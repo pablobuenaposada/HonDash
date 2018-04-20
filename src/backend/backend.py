@@ -1,17 +1,12 @@
 from time import sleep
 from autobahn_sync import publish, run
-import sys
-import os.path
 
-
-sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-from devices.kpro import Kpro
-from devices.time import Time
-from devices.odometer import Odometer
-from devices.digital_input import DigitalInput
-from devices.analog_inputs import AnalogInputs
-from devices.formula import Formula
+from src.devices.kpro import Kpro
+from src.devices.time import Time
+from src.devices.odometer import Odometer
+from src.devices.digital_input import DigitalInput
+from src.devices.analog_inputs import AnalogInputs
+from src.devices.formula import Formula
 
 run()
 
