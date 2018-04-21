@@ -24,3 +24,8 @@ class TestFormula(TestCase):
         self.assertEquals(Formula.adc_to_volts(0), 0)
         self.assertEquals(Formula.adc_to_volts(2047.5), 2.5)
         self.assertEquals(Formula.adc_to_volts(4095), 5)
+
+    def test_psi_to_bar(self):
+        self.assertEquals(Formula.psi_to_bar(0), 0)
+        self.assertEquals(Formula.psi_to_bar(1), 0.0689476)
+        self.assertEquals(Formula.psi_to_bar(2), 0.1378952)

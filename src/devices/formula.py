@@ -23,3 +23,6 @@ class Formula:
     def fuel_civic_eg_tank(adc):
         volts = (adc / 4096.000) * 4.80
         return int(-7.348540077 * pow(10, -1) * pow(volts, 2) - 32.27276861 * volts + 109.170896)
+
+    def psi_to_bar(psi):
+        return psi * 0.0689476
