@@ -19,3 +19,8 @@ class TestFormula(TestCase):
         self.assertEquals(Formula.ebay_150_psi(409.5), 0)
         self.assertEquals(Formula.ebay_150_psi(2047.5), 75)
         self.assertEquals(Formula.ebay_150_psi(3685.5), 150)
+
+    def test_adc_to_volts(self):
+        self.assertEquals(Formula.adc_to_volts(0), 0)
+        self.assertEquals(Formula.adc_to_volts(2047.5), 2.5)
+        self.assertEquals(Formula.adc_to_volts(4095), 5)
