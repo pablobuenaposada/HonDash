@@ -8,21 +8,17 @@ virtualenv: clean
 run:
 	. venv/bin/activate; sudo python src/bench/test.py
 
-make front:
-
-	open -a "Google Chrome" src/frontend/frontend.html
-
-make real:
+rpi:
 	. venv/bin/activate; crossbar start &
-	sleep 10
-	. venv/bin/activate; pkill python backend.py || true
+	sleep 5
+	pkill python backend.py || true
 	. venv/bin/activate; python src/backend/backend.py &
 	open -a "Google Chrome" src/frontend/frontend.html
 
-make dummy:
+dummy:
 	. venv/bin/activate; crossbar start &
-	sleep 10
-	. venv/bin/activate; pkill python backend.py || true
+	sleep 5
+	pkill python dummy_backend.py || true
 	. venv/bin/activate; python src/bench/dummy_backend.py &
 	open -a "Google Chrome" src/frontend/frontend.html
 
