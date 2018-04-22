@@ -5,3 +5,5 @@ before_install:
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
 script:
   - make test
+after_success:
+  - codecov

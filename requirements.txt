@@ -8,3 +8,5 @@ autobahn_sync==0.3.2
 atomicwrites==1.1.5
 RPi.GPIO==0.6.3
 spidev==3.2
+codecov
+pytest-cov

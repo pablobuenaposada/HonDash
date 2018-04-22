@@ -23,4 +23,4 @@ dummy:
 	open -a "Google Chrome" src/frontend/frontend.html
 
 test:
-	pytest src/tests
+	pytest src/tests --cov=./

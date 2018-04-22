@@ -5,3 +5,4 @@ venv/
 odometer.txt
 .crossbar/node.pid
 .pytest_cache/
+.coverage
