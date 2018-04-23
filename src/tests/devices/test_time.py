@@ -1,7 +1,9 @@
 from unittest import TestCase
 
-from devices.time import Time
+from src.devices.time import Time
 
 
 class TestTime(TestCase):
-    pass
+    def test_get_time(self):
+        t = Time()
+        self.assertRegexpMatches(t.get_time(), '\d{2}:\d{2}:\d{2}')
