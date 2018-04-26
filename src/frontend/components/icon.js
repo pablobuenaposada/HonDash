@@ -3,7 +3,7 @@ class Icon {
     constructor(args){
         this.element = document.getElementById(args.id);
         this.pathOff = args.pathOff;
-        this.pathOn = artgs.pathOn;
+        this.pathOn = args.pathOn;
         var img = document.createElement("img");
         img.src = "icons/" + this.pathOff;
         img.style.width = "100%";
