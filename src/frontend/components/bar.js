@@ -1,43 +1,44 @@
 class Bar {
 
-    // @todo: refactor the constructor to pass an object
-    // and not a list of arguments
-    constructor(id, x, y, isVertical, backgroundColor, fillColor, minValue, maxValue, enableTextValue, textEnding, textFont, textWeight, textSize) {
-        var element = document.getElementById(id);
-        this.x = x;
-        this.y = y;
+    constructor(args) {
+        var element = document.getElementById(args.id);
+        this.x = args.x || 0;
+        this.y = args.y || 0;
         this.width = element.offsetWidth;
         this.height = element.offsetHeight;
-        this.isVertical = isVertical;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-        this.enableTextValue = enableTextValue;
-        this.textEnding = textEnding;
-        this.textFont = textFont;
-        this.textWeight = textWeight;
-        this.textSize = textSize;
+        this.isVertical = args.isVertical || false;
+        this.minValue = args.minValue || 0;
+        this.maxValue = args.maxValue || 100;
+        this.enableTextValue = args.enableTextValue !== undefined
+            ? args.enableTextValue : true;
+        this.textEnding = args.textEnding !== undefined
+            ? args.textEnding : "%";
+        this.textFont = args.textFont || "Arial";
+        this.textWeight = args.textWeight || "bold";
+        this.textSize = args.textSize || 20;
+        var backgroundColor = args.backgroundColor || "#edebeb";
 
         // Raphael paper object
         this.paper = Raphael(id, "100%", "100%");
 
         // Background
-        this.background = this.paper.rect(x, y, this.width, this.height);
+        this.background = this.paper.rect(this.x, this.y, this.width, this.height);
         this.background.attr({
             fill: backgroundColor,
             stroke: backgroundColor,
         });
 
         // Bar fill & stroke
-        this.bar = this.paper.rect(x, y, this.width, this.height);
+        this.bar = this.paper.rect(this.x, this.y, this.width, this.height);
         this.bar.attr({
-            fill: fillColor,
-            stroke: fillColor,
+            fill: args.fillColor,
+            stroke: args.fillColor,
         });
 
         // Center the text on the Bar
         this.text = this.paper.text(
-            (this.width / 2) + x,
-            y + (this.height / 2),
+            (this.width / 2) + this.x,
+            this.y + (this.height / 2),
             ""
         );
     }

@@ -1,5 +1,106 @@
-var common_attr = {
+
+// Bars
+var clutch = new Bar({
+    id: "clutch",
+    backGroundColor: "#edebeb",
+    fillColor: "#2170a9"
+});
+
+var brake = new Bar({ id: "brake", fillColor: "#cc2c24" });
+
+var throttle = new Bar({ id: "throttle", fillColor: "#008b29" });
+
+var fuel = new Bar({
+    id: "fuel",
+    isVertical: true,
+    fillColor: "orange",
+    textSize: 30
+});
+
+var rpm = new Bar({
+    id: "rpm",
+    isVertical: true,
+    fillColor: "#d64d8a",
+    maxValue: 9500,
+    textEnding: "",
+    textSize: 60
+});
+
+// Text and numbers
+var speed = new Text({ id: "speed", value: "0", size: 8 });
+
+var speed_unit = new Text({ id: "speed_unit", value: "km/h", size: 2 });
+
+var gear = new Text({ id: "gear", value: "N", size: 10 });
+
+var time = new Text({
+    id: "time",
+    value: "00:00:00",
+    size: 3,
+    style: "italic",
+});
+
+var odo = new Text({
+    id: "odo",
+    value: "0",
+    size: 2,
+    style: "italic",
+    suffix: " km"
+});
+
+// Icons
+var reserve = new Icon({
+    id: "reserve",
+    pathOff: "fuel.svg",
+    pathOn: "fuel_on.svg"
+});
+var battery = new Icon({
+    id: "battery",
+    pathOff: "battery.svg",
+    pathOn: "battery_on.svg"
+});
+var handbrake = new Icon({
+    id: "handbrake",
+    pathOff: "handbrake.svg",
+    pathOn: "handbrake_on.svg"
+});
+var high_beam = new Icon({
+    id: "high_beam",
+    pathOff: "lights.svg",
+    pathOn: "lights_on.svg"
+});
+var trunk = new Icon({
+    id: "trunk",
+    pathOff: "trunk.svg",
+    pathOn: "trunk_on.svg"
+});
+var mil = new Icon({
+    id: "mil",
+    pathOff: "check_engine.svg",
+    pathOn:  "check_engine_on.svg"
+});
+var oil_warning = new Icon({
+    id: "oil_warning",
+    pathOff: "oil.svg",
+    pathOn: "oil_on.svg"
+});
+var leftarrow = new Icon({
+    id: "leftarrow",
+    pathOff: "left_arrow.svg",
+    pathOn: "left_arrow_on.svg"
+});
+var rightarrow = new Icon({
+    id: "rightarrow",
+    pathOff: "right_arrow.svg",
+    pathOn: "right_arrow_on.svg"
+});
+
+// Gauges
+var gageDefaults = {
+    min: 0,
+    max: 100,
     value: 0,
+    decimals: 0,
     gaugeWidthScale: 1,
     valueMinFontSize: 35,
     labelMinFontSize: 18,
@@ -8,36 +109,8 @@ var common_attr = {
     labelFontColor: "black",
 };
 
-// Bars
-var clutch = new Bar("clutch", 0, 0, false, "#edebeb", "#2170a9", 0, 100, true, "%", "Arial", "bold", 20);
-var brake = new Bar("brake", 0, 0, false, "#edebeb", "#cc2c24", 0, 100, true, "%", "Arial", "bold", 20);
-var throttle = new Bar("throttle", 0, 0, false, "#edebeb", "#008b29", 0, 100, true, "%", "Arial", "bold", 20);
-var fuel = new Bar("fuel", 0, 0, true, "#edebeb", "orange", 0, 100, true, "%", "Arial", "bold", 30);
-var rpm = new Bar("rpm", 0, 0, true, "#edebeb", "#d64d8a", 0, 9500, true, "", "Arial", "bold", 60);
-
-// Text and numbers
-var speed = new Text("speed", "0", 8, "arial", "bold", "", "", "");
-var speed_unit = new Text("speed_unit", "km/h", 2, "arial", "bold", "", "", "");
-var gear = new Text("gear", "N", 10, "arial", "bold", "", "", "");
-var time = new Text("time", "00:00:00", 3, "arial", "bold", "italic", "", "");
-var odo = new Text("odo", "0", 2, "arial", "bold", "italic", "", " km");
-
-// Icons
-var reserve = new Icon("reserve", "fuel.svg", "fuel_on.svg");
-var battery = new Icon("battery", "battery.svg", "battery_on.svg");
-var handbrake = new Icon("handbrake", "handbrake.svg", "handbrake_on.svg");
-var high_beam = new Icon("high_beam", "lights.svg", "lights_on.svg");
-var trunk = new Icon("trunk", "trunk.svg", "trunk_on.svg");
-var mil = new Icon("mil", "check_engine.svg",  "check_engine_on.svg");
-var oil_warning = new Icon("oil_warning", "oil.svg", "oil_on.svg");
-var leftarrow = new Icon("leftarrow", "left_arrow.svg", "left_arrow_on.svg");
-var rightarrow = new Icon("rightarrow", "right_arrow.svg", "right_arrow_on.svg");
-
-// Gauges
-var bat = new JustGage(Object.assign({}, common_attr,
-{
+var bat = new JustGage(Object.assign({}, gageDefaults, {
     id: "bat",
-    min: 0,
     max: 20,
     decimals: 1,
     label: "BATTERY",
@@ -55,12 +128,9 @@ var bat = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var iat = new JustGage(Object.assign({}, common_attr,
-{
+var iat = new JustGage(Object.assign({}, gageDefaults, {
     id: "iat",
-    min: 0,
     max: 50,
-    decimals: 0,
     label: "IAT",
     customSectors: {
         length: true,
@@ -76,12 +146,9 @@ var iat = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var ect = new JustGage(Object.assign({}, common_attr,
-{
+var ect = new JustGage(Object.assign({}, gageDefaults, {
     id: "ect",
-    min: 0,
     max: 150,
-    decimals: 0,
     label: "ECT",
     customSectors: {
         length: true,
@@ -97,10 +164,8 @@ var ect = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var afr = new JustGage(Object.assign({}, common_attr,
-{
+var afr = new JustGage(Object.assign({}, gageDefaults, {
     id: "afr",
-    min: 0,
     max: 2,
     decimals: 1,
     label: "AFR",
@@ -122,12 +187,8 @@ var afr = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var cam = new JustGage(Object.assign({}, common_attr,
-{
+var cam = new JustGage(Object.assign({}, gageDefaults, {
     id: "cam",
-    min: 0,
-    max: 100,
-    decimals: 0,
     label: "CAM",
     customSectors: {
         length: true,
@@ -139,21 +200,14 @@ var cam = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var fuelp = new JustGage(Object.assign({}, common_attr,
-{
+var fuelp = new JustGage(Object.assign({}, gageDefaults, {
     id: "fuelp",
-    min: 0,
-    max: 100,
-    decimals: 0,
     label: "FUEL PRES.",
 }));
 
-var oilt = new JustGage(Object.assign({}, common_attr,
-{
+var oilt = new JustGage(Object.assign({}, gageDefaults, {
     id: "oilt",
-    min: 0,
     max: 150,
-    decimals: 0,
     label: "OIL TEMP.",
     customSectors: {
         length: true,
@@ -173,10 +227,8 @@ var oilt = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var oilp = new JustGage(Object.assign({}, common_attr,
-{
+var oilp = new JustGage(Object.assign({}, gageDefaults, {
     id: "oilp",
-    min: 0,
     max: 5,
     decimals: 1,
     label: "OIL PRES.",
@@ -194,20 +246,12 @@ var oilp = new JustGage(Object.assign({}, common_attr,
     }
 }));
 
-var eth = new JustGage(Object.assign({}, common_attr,
-{
+var eth = new JustGage(Object.assign({}, gageDefaults, {
     id: "eth",
-    min: 0,
-    max: 100,
-    decimals: 0,
     label: "ETH",
 }));
 
-var g9 = new JustGage(Object.assign({}, common_attr,
-{
+var g9 = new JustGage(Object.assign({}, gageDefaults, {
     id: "g9",
-    min: 0,
-    max: 100,
-    decimals: 0,
     label: "G9",
 }));

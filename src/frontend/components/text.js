@@ -1,18 +1,18 @@
 class Text {
 
-     constructor(id, value, size, font, weight, style, prefix, suffix){
-        this.element = document.getElementById(id);
-        this.prefix = prefix;
-        this.suffix = suffix;
+    constructor(args){
+        this.element = document.getElementById(args.id);
+        this.prefix = args.prefix || "";
+        this.suffix = args.suffix || "";
 
-        this.element.innerHTML = this.prefix+value+this.suffix;
-        this.element.style.fontSize = size+"vw";
-        this.element.style.fontFamily = font;
-        this.element.style.fontWeight = weight;
-        this.element.style.fontStyle = style;
-     }
+        this.element.innerHTML = this.prefix + args.value + this.suffix;
+        this.element.style.fontSize = args.size + "vw";
+        this.element.style.fontFamily = args.font || "arial";
+        this.element.style.fontWeight = args.weight || "bold";
+        this.element.style.fontStyle = args.style || "";
+    }
 
-     refresh(value){
-        this.element.innerHTML = this.prefix+value+this.suffix;
-     }
- }
+    refresh(value){
+        this.element.innerHTML = this.prefix + value + this.suffix;
+    }
+}
