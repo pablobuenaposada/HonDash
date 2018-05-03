@@ -1,4 +1,4 @@
-from src.devices.mcp3208 import Mcp3208
+from devices.mcp3208 import Mcp3208
 
 an = Mcp3208()
 

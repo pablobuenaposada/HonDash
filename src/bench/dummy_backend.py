@@ -1,8 +1,8 @@
 import random
 from time import sleep
 from autobahn_sync import publish, call, register, subscribe, run
-from src.devices.time import Time
-from src.devices.odometer import Odometer
+from devices.time import Time
+from devices.odometer import Odometer
 
 run()
 

@@ -1,6 +1,6 @@
 #sudo python bench/test.py
 from __future__ import print_function
-from src.devices.kpro import Kpro
+from devices.kpro import Kpro
 from reprint import output
 
 
