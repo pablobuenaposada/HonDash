@@ -1,5 +1,6 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/kpro/docs/logo/hondash.png)
 
+[![Build Status](https://secure.travis-ci.org/pablobuenaposada/HonDash.png?branch=kpro)](http://travis-ci.org/pablobuenaposada/HonDash)
 [![alt tag](https://codecov.io/gh/pablobuenaposada/hondash/branch/kpro/graph/badge.svg)](https://codecov.io/gh/pablobuenaposada/hondash/)
 
 ## What's HonDash?
