@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.devices.time import Time
+from devices.time import Time
 
 
 class TestTime(TestCase):

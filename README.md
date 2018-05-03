@@ -63,5 +63,5 @@ In detail the board offers:
 
 Once you are inside the HonDash project folder run this:
 ```sh
-export PYTHONPATH='.'
+export PYTHONPATH='src'
 ```

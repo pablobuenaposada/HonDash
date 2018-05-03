@@ -1,4 +1,4 @@
-from src.devices.digital_input import DigitalInput
+from devices.digital_input import DigitalInput
 
 di = DigitalInput(22)
 

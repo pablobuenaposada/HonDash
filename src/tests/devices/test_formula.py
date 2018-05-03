@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.devices.formula import Formula
+from devices.formula import Formula
 
 
 class TestFormula(TestCase):
