@@ -23,7 +23,7 @@ HonDash is an open source instrument cluster developed for Honda engines.
 List of values available through K-Pro right now:
 
 Acronym | Value | K-Pro v2 | K-Pro v3 | K-Pro v4
-------- | ----- | -------- | -------- | --------
+------- | ----- | :------: | :------: | :------:
 BAT | Battery voltage |  |  |:white_check_mark:
 AFR | A/F ratio |  |  |:white_check_mark:
 TPS | Throttle position |  |  |:white_check_mark:
