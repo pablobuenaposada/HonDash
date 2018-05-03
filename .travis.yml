@@ -1,9 +1,13 @@
-language: python
-python:
-  - "3.4"
-before_install:
-  - export PYTHONPATH=$PYTHONPATH:$(pwd)
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+install:
+  - docker build --tag=hondash .
+
 script:
-  - make test
-after_success:
-  - codecov
+  - docker run hondash
+    /bin/sh -c '. venv/bin/activate && make test'
