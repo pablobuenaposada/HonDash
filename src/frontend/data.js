@@ -19,27 +19,27 @@ connection.onopen = function (session) {
        afr.refresh(args[0]["afr"]);
        cam.refresh(args[0]["cam"]);
        mil.refresh(args[0]["mil"]);
-       fuelp.refresh(args[0]["vss"]);
-       oilt.refresh(args[0]["ai0"]);
-       oilp.refresh(args[0]["kan0"]);
-       clutch.refresh(args[0]["vss"]);
+       fuel_pressure.refresh(args[0]["an1"]);
+       oil_temp.refresh(args[0]["ai0"]);
+       oil_pressure.refresh(args[0]["an0"]);
+       clutch.refresh(args[0]["bksw"]);
        brake.refresh(args[0]["vss"]);
        throttle.refresh(args[0]["tps"]);
-       fuel.refresh(args[0]["tps"]);
+       fuel.refresh(args[0]["ai1"]);
        rpm.refresh(args[0]["rpm"]);
        speed.refresh(args[0]["vss"]);
        time.refresh(args[0]["time"]);
        odo.refresh(args[0]["odo"]);
        gear.refresh(args[0]["gear"])
-       leftarrow.refresh(args[0]["di22"]);
-       rightarrow.refresh(args[0]["right_turn_signal"]);
-       reserve.refresh(args[0]["reserve"]);
-       battery.refresh(args[0]["battery"]);
+       leftarrow.refresh(args[0]["di4"]);
+       rightarrow.refresh(args[0]["di17"]);
+       reserve.refresh(args[0]["di27"]);
+       battery.refresh(args[0]["di22"]);
        mil.refresh(args[0]["mil"]);
-       handbrake.refresh(args[0]["handbrake"]);
-       high_beam.refresh(args[0]["high_beam"]);
-       trunk.refresh(args[0]["trunk"]);
-       oil_warning.refresh(args[0]["oil_warning"]);
+       handbrake.refresh(args[0]["di12"]);
+       high_beam.refresh(args[0]["di5"]);
+       trunk.refresh(args[0]["di6"]);
+       oil_warning.refresh(args[0]["di21"]);
    }
 
    session.subscribe('com.app.idea', onevent1);

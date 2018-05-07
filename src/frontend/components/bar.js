@@ -44,6 +44,8 @@ class Bar {
     }
 
     refresh(value) {
+        value += 0; // Casting to int just in case
+
         value = value > this.maxValue
             ? this.maxValue
             : (value < this.minValue)

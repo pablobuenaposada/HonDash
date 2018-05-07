@@ -2,6 +2,7 @@
 // Bars
 var clutch = new Bar({
     id: "clutch",
+    maxValue: 1,
     backGroundColor: "#edebeb",
     fillColor: "#2170a9"
 });
@@ -200,12 +201,20 @@ var cam = new JustGage(Object.assign({}, gageDefaults, {
     }
 }));
 
-var fuelp = new JustGage(Object.assign({}, gageDefaults, {
+var fuel_pressure = new JustGage(Object.assign({}, gageDefaults, {
     id: "fuelp",
     label: "FUEL PRES.",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#46877f",
+            lo : 0,
+            hi : 100
+        }]
+    }
 }));
 
-var oilt = new JustGage(Object.assign({}, gageDefaults, {
+var oil_temp = new JustGage(Object.assign({}, gageDefaults, {
     id: "oilt",
     max: 150,
     label: "OIL TEMP.",
@@ -227,9 +236,9 @@ var oilt = new JustGage(Object.assign({}, gageDefaults, {
     }
 }));
 
-var oilp = new JustGage(Object.assign({}, gageDefaults, {
+var oil_pressure = new JustGage(Object.assign({}, gageDefaults, {
     id: "oilp",
-    max: 5,
+    max: 7,
     decimals: 1,
     label: "OIL PRES.",
     customSectors: {

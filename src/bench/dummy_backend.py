@@ -1,8 +1,10 @@
 import random
 from time import sleep
-from autobahn_sync import publish, call, register, subscribe, run
+from autobahn_sync import publish, run
 from devices.time import Time
 from devices.odometer import Odometer
+
+from devices.formula import Formula
 
 run()
 
@@ -19,17 +21,33 @@ while True:
                              'vss': random.randint(0, 200),
                              'afr': random.uniform(0, 2),
                              'cam': random.randint(0, 50),
-                             'an0': random.uniform(0, 5),
+                             'mil': random.choice([True, False]),
+                             'bksw': random.choice([True, False]),
+                             'an0': Formula.psi_to_bar(Formula.ebay_150_psi(random.uniform(0, 5))),
+                             'an1': Formula.autometer_2246(random.uniform(0, 5)),
+                             'an2': random.uniform(0, 5),
+                             'an3': random.uniform(0, 5),
+                             'an4': random.uniform(0, 5),
+                             'an5': random.uniform(0, 5),
+                             'an6': random.uniform(0, 5),
+                             'an7': random.uniform(0, 5),
+                             'di4': random.randint(0, 1),
+                             'di5': random.randint(0, 1),
+                             'di6': random.randint(0, 1),
+                             'di12': random.randint(0, 1),
+                             'di21': random.randint(0, 1),
+                             'di17': random.randint(0, 1),
+                             'di27': random.randint(0, 1),
+                             'di22': random.randint(0, 1),
                              'time': time.get_time(),
                              'odo': odo.get_mileage(),
-                             'left_turn_signal': random.randint(0, 1),
-                             'right_turn_signal': random.randint(0, 1),
-                             'reserve': random.randint(0, 1),
-                             'battery': random.randint(0, 1),
-                             'mil': random.randint(0, 1),
-                             'handbrake': random.randint(0, 1),
-                             'high_beam': random.randint(0, 1),
-                             'trunk': random.randint(0, 1),
-                             'oil_warning': random.randint(0, 1),
+                             'ai0': Formula.vdo_323_057(random.uniform(0, 5)),
+                             'ai1': Formula.civic_eg_fuel_tank(random.uniform(0, 5)),
+                             'ai2': random.uniform(0, 5),
+                             'ai3': random.uniform(0, 5),
+                             'ai4': random.uniform(0, 5),
+                             'ai5': random.uniform(0, 5),
+                             'ai6': random.uniform(0, 5),
+                             'ai7': random.uniform(0, 5),
                              })
     sleep(0.1)
