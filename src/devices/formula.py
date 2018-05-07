@@ -3,6 +3,9 @@ class Formula:
     def adc_to_volts(adc):
         return (adc / 4095.000) * 5.0
 
+    def psi_to_bar(psi):
+        return psi * 0.0689476
+
     # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     def vdo_323_057(adc):
         volts = Formula.adc_to_volts(adc)
@@ -20,9 +23,6 @@ class Formula:
         volts = Formula.adc_to_volts(adc)
         return 37.5 * volts - 18.75
 
-    def fuel_civic_eg_tank(adc):
-        volts = (adc / 4096.000) * 4.80
-        return int(-7.348540077 * pow(10, -1) * pow(volts, 2) - 32.27276861 * volts + 109.170896)
-
-    def psi_to_bar(psi):
-        return psi * 0.0689476
+    def civic_eg_fuel_tank(adc):
+        volts = Formula.adc_to_volts(adc)
+        return -1.209083604 * pow(volts, 2) - 27.62416175 * volts + 104.7987284

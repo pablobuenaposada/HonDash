@@ -29,3 +29,8 @@ class TestFormula(TestCase):
         self.assertEquals(Formula.psi_to_bar(0), 0)
         self.assertEquals(Formula.psi_to_bar(1), 0.0689476)
         self.assertEquals(Formula.psi_to_bar(2), 0.1378952)
+
+    def test_civic_eg_fuel_tank(self):
+        self.assertEquals(int(Formula.civic_eg_fuel_tank(2713)), 0)
+        self.assertEquals(int(Formula.civic_eg_fuel_tank(1502)), 50)
+        self.assertEquals(int(Formula.civic_eg_fuel_tank(120)), 100)
