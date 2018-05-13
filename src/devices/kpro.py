@@ -130,59 +130,53 @@ class Kpro:
         while True:
             try:
                 assert self.ep is not None
-                self.ep.write('\x40')
-                if self.version == 2:
-                    self.data4 = self.dev.read(0x81, 10000, 1000)  # kpro2
-                elif self.version == 3:
-                    self.data4 = self.dev.read(0x81, 10000, 1000)  # kpro3
-                elif self.version == 4:
-                    self.data4 = self.dev.read(0x82, 10000, 1000)  # kpro4
+
+                if self.version == 4:
+                    self.ep.write('\x40')
+                    self.data4 = self.dev.read(0x82, 1000)  # kpro4
+                    self.ep.clear_halt()
 
                 self.ep.write('\x60')
                 if self.version == 2:
-                    temp = self.dev.read(0x81, 10000, 1000)  # kpro2
-                    if len(temp) == 52:
-                        self.data0 = temp
+                    self.data0 = self.dev.read(0x81, 1000)  # kpro2
                 elif self.version == 3:
-                    temp = self.dev.read(0x81, 10000, 1000)  # kpro3
-                    if len(temp) == 52:
-                        self.data0 = temp
+                    self.data0 = self.dev.read(0x81, 1000)  # kpro3
                 elif self.version == 4:
-                    temp = self.data0 = self.dev.read(0x82, 10000, 1000)  # kpro4
-                    if len(temp) == 50:
-                        self.data0 = temp
+                    self.data0 = self.dev.read(0x82, 1000)  # kpro4
+
+                self.ep.clear_halt()
 
                 self.ep.write('\x61')
+                # found on kpro2 that sometimes len=44, normally 16
                 if self.version == 2:
-                    self.data1 = self.dev.read(0x81, 16, 1000)  # kpro2
+                    self.data1 = self.dev.read(0x81, 1000)  # kpro2
                 elif self.version == 3:
-                    temp = self.dev.read(0x81, 10000, 1000)  # kpro3
-                    if len(temp) == 16:
-                        self.data1 = temp
+                    self.data1 = self.dev.read(0x81, 1000)  # kpro3
                 elif self.version == 4:
-                    temp = self.dev.read(0x82, 10000, 1000)  # kpro4
-                    if len(temp) == 14: #antes estaba a 16
-                        self.data1 = temp
+                    self.data1 = self.dev.read(0x82, 1000)  # kpro4
+
+                self.ep.clear_halt()
 
                 self.ep.write('\x62')
                 if self.version == 2:
-                    temp = self.dev.read(0x81, 10000, 1000)  # kpro2
+                    temp = self.dev.read(0x81, 1000)  # kpro2
                     if len(temp) == 68:
                         self.data2 = temp
                 elif self.version == 3:
-                    temp = self.dev.read(0x81, 10000, 1000)  # kpro3
+                    temp = self.dev.read(0x81, 1000)  # kpro3
                     if len(temp) == 68:
                         self.data2 = temp
                 elif self.version == 4:
-                    temp = self.dev.read(0x82, 10000, 1000)  # kpro4
+                    temp = self.dev.read(0x82, 1000)  # kpro4
                     if len(temp) == 25:
                         self.data2 = temp
 
-                self.ep.write('\x65')
                 if self.version == 4:
-                    temp = self.dev.read(0x82, 128, 1000)  # kpro4
-                    self.data3 = temp
-            except:
+                    self.ep.write('\x65')
+                    self.data3 = self.dev.read(0x82, 128, 1000)  # kpro4
+
+            except Exception as e:
+                print("USB problem", e)
                 self.__init__()
 
     def bat(self):
