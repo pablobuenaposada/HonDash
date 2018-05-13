@@ -27,6 +27,7 @@ KPRO2_AFR2 = 19
 KPRO2_VSS = 6
 KPRO2_RPM1 = 4
 KPRO2_RPM2 = 5
+KPRO2_MAP = 8
 KPRO2_CAM = 10
 KPRO2_GEAR = 37
 KPRO2_EPS = 33
@@ -180,6 +181,7 @@ class Kpro:
                 self.__init__()
 
     def bat(self):
+        # return unit: volts
         try:
             if self.version == 2:
                 return self.data1[KPRO2_BAT] * 0.1
@@ -201,6 +203,7 @@ class Kpro:
             return 0
 
     def tps(self):
+        # return unit: 0-100%
         try:
             if self.version == 2:
                 return int(interp(self.data0[KPRO2_TPS], [21, 229], [0, 100]))
@@ -214,6 +217,7 @@ class Kpro:
             return 0
 
     def vss(self):
+        # return unit: km/h
         try:
             if self.version == 2:
                 return self.data0[KPRO2_VSS]
@@ -225,6 +229,7 @@ class Kpro:
             return 0
 
     def rpm(self):
+        # return unit: revs. per minute
         try:
             if self.version == 2:
                 return int(((256*self.data0[KPRO2_RPM2])+self.data0[KPRO2_RPM1])*0.25)
@@ -238,6 +243,7 @@ class Kpro:
             return 0
 
     def cam(self):
+        # return units: degree
         try:
             if self.version == 2:
                 return (self.data0[KPRO2_CAM]-40)*0.5
@@ -381,9 +387,12 @@ class Kpro:
             return False
 
     def map(self):
+        # return unit: bar
         try:
-            if self.version == 3:
-                return self.data0[KPRO3_MAP]/100.0
+            if self.version == 2:
+                return self.data0[KPRO2_MAP] / 100.0
+            elif self.version == 3:
+                return self.data0[KPRO3_MAP] / 100.0
         except IndexError:
             return 0
 

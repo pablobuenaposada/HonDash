@@ -44,7 +44,7 @@ BKSW | Brake switch |  |  |:white_check_mark:
 ACSW | A/C switch |  |  |:white_check_mark:
 ACCL | A/C clutch |  |  |:white_check_mark:
 FLR | Fuel relay |  |  |:white_check_mark:
-MAP | Manifold absolute pressure |  |  |:white_check_mark:
+MAP | Manifold absolute pressure |:white_check_mark:|:white_check_mark:|:x:
 MIL | Malfunction indicator light |  |  |:x:
 ECU | Ecu type |  |  |:white_check_mark:
 IGN | Ignition advance |  |  |:white_check_mark:

@@ -260,7 +260,17 @@ var eth = new JustGage(Object.assign({}, gageDefaults, {
     label: "ETH",
 }));
 
-var g9 = new JustGage(Object.assign({}, gageDefaults, {
-    id: "g9",
-    label: "G9",
+var map = new JustGage(Object.assign({}, gageDefaults, {
+    id: "map",
+    max: 3,
+    decimals: 1,
+    label: "MAP",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#46877f",
+            lo : 0,
+            hi : 3
+        }]
+    }
 }));

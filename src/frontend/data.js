@@ -19,6 +19,7 @@ connection.onopen = function (session) {
        afr.refresh(args[0]["afr"] || 0);
        cam.refresh(args[0]["cam"] || 0);
        mil.refresh(args[0]["mil"] || 0);
+       map.refresh(args[0]["map"] || 0);
        fuel_pressure.refresh(args[0]["an1"] || 0);
        oil_temp.refresh(args[0]["ai0"] || 0);
        oil_pressure.refresh(args[0]["an0"] || 0);
