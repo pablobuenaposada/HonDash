@@ -37,8 +37,8 @@ ETH | Ethanol content |  |  |
 FT | Fuel temperature |  |  |
 IAT | Intake air temperature |:white_check_mark:|  |:white_check_mark:
 GEAR | Gear |  |  |:white_check_mark:
-EPS | Electronic power steering pressure |  |  |:white_check_mark:
-SCS | Service connector |  |  |:white_check_mark:
+EPS | Electronic power steering pressure |:white_check_mark:|  |:white_check_mark:
+SCS | Service connector |:white_check_mark:|  |:white_check_mark:
 RVSLCK | Reverse lock |  |  |:white_check_mark:
 BKSW | Brake switch |  |  |:white_check_mark:
 ACSW | A/C switch |  |  |:white_check_mark:
