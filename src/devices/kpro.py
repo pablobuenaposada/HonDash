@@ -226,11 +226,11 @@ class Kpro:
     def rpm(self):
         try:
             if self.version == 2:
-                return ((256*self.data0[KPRO2_RPM2])+self.data0[KPRO2_RPM1])*0.25
+                return int(((256*self.data0[KPRO2_RPM2])+self.data0[KPRO2_RPM1])*0.25)
             elif self.version == 3:
-                return ((256 * self.data0[KPRO3_RPM2]) + self.data0[KPRO3_RPM1]) * 0.25
+                return int(((256 * self.data0[KPRO3_RPM2]) + self.data0[KPRO3_RPM1]) * 0.25)
             elif self.version == 4:
-                return ((256*self.data0[KPRO4_RPM2])+self.data0[KPRO4_RPM1])*0.25
+                return int(((256*self.data0[KPRO4_RPM2])+self.data0[KPRO4_RPM1])*0.25)
             else:
                 return 0
         except IndexError:

@@ -36,7 +36,7 @@ while True:
                              'cam': kpro.cam(),
                              'mil': kpro.mil(),
                              'bksw': kpro.bksw(),
-                             'an0': Formula.ebay_150_psi(kpro.analog_input(0)),
+                             'an0': Formula.psi_to_bar(Formula.ebay_150_psi(kpro.analog_input(0))),
                              'an1': Formula.autometer_2246(kpro.analog_input(1)),
                              'an2': kpro.analog_input(2),
                              'an3': kpro.analog_input(3),
