@@ -167,7 +167,7 @@ var ect = new JustGage(Object.assign({}, gageDefaults, {
 
 var afr = new JustGage(Object.assign({}, gageDefaults, {
     id: "afr",
-    max: 2,
+    max: 30,
     decimals: 1,
     label: "AFR",
     customSectors: {
@@ -175,15 +175,15 @@ var afr = new JustGage(Object.assign({}, gageDefaults, {
         ranges: [{
             color : "#cc2c24",
             lo : 0,
-            hi : 0.9
+            hi : 14.5
         },{
         color : "#46877f",
-            lo : 0.9,
-            hi : 1.1
+            lo : 14.6,
+            hi : 14.8
         },{
         color : "#cc2c24",
-            lo : 1.1,
-            hi : 2
+            lo : 14.9,
+            hi : 30
         }]
     }
 }));

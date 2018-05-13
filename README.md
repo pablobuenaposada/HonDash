@@ -32,10 +32,10 @@ VSS | Speed |  |  |:white_check_mark:
 RPM | Revs. per minute |  |  |:white_check_mark:
 VTC | VTC cam angle |  |  |:white_check_mark:
 CLV | Calculated load value |  |  |
-ECT | Coolant temperature |  |  |:white_check_mark:
+ECT | Coolant temperature |:white_check_mark:|  |:white_check_mark:
 ETH | Ethanol content |  |  |
 FT | Fuel temperature |  |  |
-IAT | Intake air temperature |  |  |:white_check_mark:
+IAT | Intake air temperature |:white_check_mark:|  |:white_check_mark:
 GEAR | Gear |  |  |:white_check_mark:
 EPS | Electronic power steering pressure |  |  |:white_check_mark:
 SCS | Service connector |  |  |:white_check_mark:

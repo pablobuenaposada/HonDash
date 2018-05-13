@@ -191,11 +191,12 @@ class Kpro:
             return 0
 
     def afr(self):
+        # return unit: A/F ratio
         try:
             if self.version == 2:
-                return 32768.0 / ((256 * self.data0[KPRO2_AFR2]) + self.data0[KPRO2_AFR1])
+                return 32768.0 / ((256 * self.data0[KPRO2_AFR2]) + self.data0[KPRO2_AFR1]) * 14.7
             elif self.version == 4:
-                return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0[KPRO4_AFR1])
+                return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0[KPRO4_AFR1]) * 14.7
         except IndexError:
             return 0
 
