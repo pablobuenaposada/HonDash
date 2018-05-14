@@ -13,7 +13,7 @@ rpi:
 	sleep 5
 	pkill python backend.py || true
 	. venv/bin/activate; python src/backend/backend.py &
-	open -a "Google Chrome" src/frontend/frontend.html
+	chromium-browser --kiosk src/frontend/frontend.html	
 
 dummy:
 	. venv/bin/activate; crossbar start &
