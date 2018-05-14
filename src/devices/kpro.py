@@ -50,6 +50,7 @@ KPRO4_AFR2 = 17
 KPRO4_VSS = 4
 KPRO4_RPM1 = 2
 KPRO4_RPM2 = 3
+KPRO4_MAP = 6
 KPRO4_CAM = 8
 KPRO4_GEAR = 35
 KPRO4_EPS = 31
@@ -393,6 +394,8 @@ class Kpro:
                 return self.data0[KPRO2_MAP] / 100.0
             elif self.version == 3:
                 return self.data0[KPRO3_MAP] / 100.0
+            elif self.version == 4:
+                return self.data0[KPRO4_MAP] / 100.0
         except IndexError:
             return 0
 
@@ -406,9 +409,9 @@ class Kpro:
                     return False
             elif self.version == 4:
                 mil = self.data3[KPRO4_MIL]
-                if mil == 37:
+                if mil >= 36:
                     return True
-                elif mil == 33:
+                else:
                     return False
             else:
                 return False
