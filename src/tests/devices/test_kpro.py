@@ -31,14 +31,20 @@ class TestKpro(TestCase):
         self.kpro.data0[5] = 100
         self.assertEqual(self.kpro.tps(), 37)
 
-    def test_afr_v4(self):
+    def test_afr_v4_valid(self):
         self.kpro.version = 4
         self.kpro.data0[16] = 0
         self.kpro.data0[17] = 128
         self.assertEquals(self.kpro.afr(), 14.7)
 
-    def test_afr_v2(self):
+    def test_afr_v2_valid(self):
         self.kpro.version = 2
         self.kpro.data0[18] = 0
         self.kpro.data0[19] = 128
         self.assertEquals(self.kpro.afr(), 14.7)
+
+    def test_afr_v4_division_by_zero(self):
+        self.kpro.version = 4
+        self.kpro.data0[18] = 0
+        self.kpro.data0[19] = 0
+        self.assertEqual(self.kpro.afr(), 0)

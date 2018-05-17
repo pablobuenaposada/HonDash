@@ -200,7 +200,7 @@ class Kpro:
                 return 32768.0 / ((256 * self.data0[KPRO2_AFR2]) + self.data0[KPRO2_AFR1]) * 14.7
             elif self.version == 4:
                 return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0[KPRO4_AFR1]) * 14.7
-        except IndexError:
+        except (IndexError, ZeroDivisionError):
             return 0
 
     def tps(self):
