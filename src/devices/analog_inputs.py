@@ -17,6 +17,3 @@ class AnalogInputs:
     def voltage(self, channel):
         adc = self.adc(channel)
         return adc * 5.0 / 4096
-
-    def adc_with_formula(self, channel, formula):
-        return formula(self.adc(channel))
