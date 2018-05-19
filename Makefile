@@ -13,7 +13,7 @@ rpi:
 	sleep 80
 	pkill python backend.py || true
 	-. venv/bin/activate; PYTHONPATH=/home/pi/Desktop/HonDash/src python src/backend/backend.py > /home/pi/Desktop/HonDash/hondash.log 2>&1 &
-	chromium-browser --kiosk src/frontend/frontend.html	
+	chromium-browser --kiosk --incognito src/frontend/frontend.html	
 
 dummy:
 	. venv/bin/activate; crossbar start &
