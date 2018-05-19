@@ -6,3 +6,4 @@ odometer.txt
 .crossbar/node.pid
 .pytest_cache/
 .coverage
+hondash.log
