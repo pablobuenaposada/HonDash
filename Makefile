@@ -10,10 +10,15 @@ run:
 
 rpi:
 	. venv/bin/activate; crossbar start &
-	sleep 80
 	pkill python backend.py || true
 	-. venv/bin/activate; PYTHONPATH=/home/pi/Desktop/HonDash/src python src/backend/backend.py > /home/pi/Desktop/HonDash/hondash.log 2>&1 &
 	chromium-browser --kiosk --incognito src/frontend/frontend.html	
+
+pc:
+	. venv/bin/activate; crossbar start &
+	pkill python backend.py || true
+	. venv/bin/activate; PYTHONPATH=src python src/backend/backend.py &
+	open -a "Google Chrome" src/frontend/frontend.html
 
 dummy:
 	. venv/bin/activate; crossbar start &

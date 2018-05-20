@@ -8,7 +8,12 @@ from devices.digital_input import DigitalInput
 from devices.analog_inputs import AnalogInputs
 from devices.formula import Formula
 
-run()
+while True:
+    try:
+        run()
+        break
+    except:
+        continue
 
 kpro = Kpro()
 time = Time()
