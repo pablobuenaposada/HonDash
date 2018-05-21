@@ -37,8 +37,8 @@ class TestKpro(TestCase):
         self.kpro.data0[17] = 128
         self.assertEquals(self.kpro.afr(), 14.7)
 
-    def test_afr_v2_valid(self):
-        self.kpro.version = 2
+    def test_afr_v23_valid(self):
+        self.kpro.version = 23
         self.kpro.data0[18] = 0
         self.kpro.data0[19] = 128
         self.assertEquals(self.kpro.afr(), 14.7)

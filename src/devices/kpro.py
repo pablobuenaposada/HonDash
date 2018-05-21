@@ -6,12 +6,12 @@ from numpy import interp
 import pytemperature
 
 # command 0x40
-KPRO2_ECU_TYPE = 12
-KPRO2_IGN = 17
-KPRO2_SERIAL1 = 6
-KPRO2_SERIAL2 = 7
-KPRO2_FIRM1 = 8
-KPRO2_FIRM2 = 9
+KPRO23_ECU_TYPE = 12
+KPRO23_IGN = 17
+KPRO23_SERIAL1 = 6
+KPRO23_SERIAL2 = 7
+KPRO23_FIRM1 = 8
+KPRO23_FIRM2 = 9
 
 KPRO4_ECU_TYPE = 10
 KPRO4_IGN = 15
@@ -21,28 +21,23 @@ KPRO4_FIRM1 = 6
 KPRO4_FIRM2 = 7
 
 # command 0x60
-KPRO2_TPS = 7
-KPRO2_AFR1 = 18
-KPRO2_AFR2 = 19
-KPRO2_VSS = 6
-KPRO2_RPM1 = 4
-KPRO2_RPM2 = 5
-KPRO2_MAP = 8
-KPRO2_CAM = 10
-KPRO2_GEAR = 37
-KPRO2_EPS = 33
-KPRO2_SCS = 33
-KPRO2_RVSLCK = 33
-KPRO2_BKSW = 33
-KPRO2_ACSW = 33
-KPRO2_ACCL = 33
-KPRO2_FLR = 33
-KPRO2_MIL = 34
-
-KPRO3_TPS = 7
-KPRO3_RPM1 = 4
-KPRO3_RPM2 = 5
-KPRO3_MAP = 8
+KPRO23_TPS = 7
+KPRO23_AFR1 = 18
+KPRO23_AFR2 = 19
+KPRO23_VSS = 6
+KPRO23_RPM1 = 4
+KPRO23_RPM2 = 5
+KPRO23_MAP = 8
+KPRO23_CAM = 10
+KPRO23_GEAR = 37
+KPRO23_EPS = 33
+KPRO23_SCS = 33
+KPRO23_RVSLCK = 33
+KPRO23_BKSW = 33
+KPRO23_ACSW = 33
+KPRO23_ACCL = 33
+KPRO23_FLR = 33
+KPRO23_MIL = 34
 
 KPRO4_TPS = 5
 KPRO4_AFR1 = 16
@@ -62,13 +57,9 @@ KPRO4_ACCL = 31
 KPRO4_FLR = 31
 
 # command 0x61
-KPRO2_ECT = 4
-KPRO2_IAT = 5
-KPRO2_BAT = 6
-
-KPRO3_ECT = 4
-KPRO3_IAT = 5
-KPRO3_BAT = 6
+KPRO23_ECT = 4
+KPRO23_IAT = 5
+KPRO23_BAT = 6
 
 KPRO4_ECT = 2
 KPRO4_IAT = 3
@@ -104,13 +95,10 @@ class Kpro:
         self.dev = None
         self.version = 0
 
-        # if True:
-        #     self.dev = usb.core.find(idVendor=0x403, idProduct=0xf5f8)
-        #     self.version = 3
-        if usb.core.find(idVendor=0x403, idProduct=0xf5f8) is not None:  # kpro2
+        if usb.core.find(idVendor=0x403, idProduct=0xf5f8) is not None:  # kpro v2 & v3
             self.dev = usb.core.find(idVendor=0x403, idProduct=0xf5f8)
-            self.version = 2
-        elif usb.core.find(idVendor=0x1c40, idProduct=0x0434) is not None:  # kpro4
+            self.version = 23
+        elif usb.core.find(idVendor=0x1c40, idProduct=0x0434) is not None:  # kpro v4
             self.dev = usb.core.find(idVendor=0x1c40, idProduct=0x0434)
             self.version = 4
         if self.dev is not None:
@@ -135,47 +123,39 @@ class Kpro:
 
                 if self.version == 4:
                     self.ep.write('\x40')
-                    self.data4 = self.dev.read(0x82, 1000)  # kpro4
+                    self.data4 = self.dev.read(0x82, 1000)  # kpro v4
                     self.ep.clear_halt()
 
                 self.ep.write('\x60')
-                if self.version == 2:
-                    self.data0 = self.dev.read(0x81, 1000)  # kpro2
-                elif self.version == 3:
-                    self.data0 = self.dev.read(0x81, 1000)  # kpro3
+                if self.version == 23:
+                    self.data0 = self.dev.read(0x81, 1000)  # kpro v2 & v3
                 elif self.version == 4:
-                    self.data0 = self.dev.read(0x82, 1000)  # kpro4
+                    self.data0 = self.dev.read(0x82, 1000)  # kpro v4
 
                 self.ep.clear_halt()
 
                 self.ep.write('\x61')
                 # found on kpro2 that sometimes len=44, normally 16
-                if self.version == 2:
-                    self.data1 = self.dev.read(0x81, 1000)  # kpro2
-                elif self.version == 3:
-                    self.data1 = self.dev.read(0x81, 1000)  # kpro3
+                if self.version == 23:
+                    self.data1 = self.dev.read(0x81, 1000)  # kpro v2 & v3
                 elif self.version == 4:
-                    self.data1 = self.dev.read(0x82, 1000)  # kpro4
+                    self.data1 = self.dev.read(0x82, 1000)  # kpro v4
 
                 self.ep.clear_halt()
 
                 self.ep.write('\x62')
-                if self.version == 2:
-                    temp = self.dev.read(0x81, 1000)  # kpro2
-                    if len(temp) == 68:
-                        self.data2 = temp
-                elif self.version == 3:
-                    temp = self.dev.read(0x81, 1000)  # kpro3
+                if self.version == 23:
+                    temp = self.dev.read(0x81, 1000)  # kpro v2 & v3
                     if len(temp) == 68:
                         self.data2 = temp
                 elif self.version == 4:
-                    temp = self.dev.read(0x82, 1000)  # kpro4
+                    temp = self.dev.read(0x82, 1000)  # kpro v4
                     if len(temp) == 25:
                         self.data2 = temp
 
                 if self.version == 4:
                     self.ep.write('\x65')
-                    self.data3 = self.dev.read(0x82, 128, 1000)  # kpro4
+                    self.data3 = self.dev.read(0x82, 128, 1000)  # kpro v4
 
             except Exception as e:
                 print("USB problem", e)
@@ -184,10 +164,8 @@ class Kpro:
     def bat(self):
         # return unit: volts
         try:
-            if self.version == 2:
-                return self.data1[KPRO2_BAT] * 0.1
-            elif self.version == 3:
-                return self.data1[KPRO3_BAT] * 0.1
+            if self.version == 23:
+                return self.data1[KPRO23_BAT] * 0.1
             elif self.version == 4:
                 return self.data1[KPRO4_BAT] * 0.1
         except IndexError:
@@ -196,8 +174,8 @@ class Kpro:
     def afr(self):
         # return unit: A/F ratio
         try:
-            if self.version == 2:
-                return 32768.0 / ((256 * self.data0[KPRO2_AFR2]) + self.data0[KPRO2_AFR1]) * 14.7
+            if self.version == 23:
+                return 32768.0 / ((256 * self.data0[KPRO23_AFR2]) + self.data0[KPRO23_AFR1]) * 14.7
             elif self.version == 4:
                 return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0[KPRO4_AFR1]) * 14.7
         except (IndexError, ZeroDivisionError):
@@ -206,10 +184,8 @@ class Kpro:
     def tps(self):
         # return unit: 0-100%
         try:
-            if self.version == 2:
-                return int(interp(self.data0[KPRO2_TPS], [21, 229], [0, 100]))
-            elif self.version == 3:
-                return int(interp(self.data0[KPRO3_TPS], [21, 229], [0, 100]))
+            if self.version == 23:
+                return int(interp(self.data0[KPRO23_TPS], [21, 229], [0, 100]))
             elif self.version == 4:
                 return int(interp(self.data0[KPRO4_TPS], [21, 229], [0, 100]))
             else:
@@ -220,8 +196,8 @@ class Kpro:
     def vss(self):
         # return unit: km/h
         try:
-            if self.version == 2:
-                return self.data0[KPRO2_VSS]
+            if self.version == 23:
+                return self.data0[KPRO23_VSS]
             elif self.version == 4:
                 return self.data0[KPRO4_VSS]
             else:
@@ -232,10 +208,8 @@ class Kpro:
     def rpm(self):
         # return unit: revs. per minute
         try:
-            if self.version == 2:
-                return int(((256*self.data0[KPRO2_RPM2])+self.data0[KPRO2_RPM1])*0.25)
-            elif self.version == 3:
-                return int(((256 * self.data0[KPRO3_RPM2]) + self.data0[KPRO3_RPM1]) * 0.25)
+            if self.version == 23:
+                return int(((256*self.data0[KPRO23_RPM2])+self.data0[KPRO23_RPM1])*0.25)
             elif self.version == 4:
                 return int(((256*self.data0[KPRO4_RPM2])+self.data0[KPRO4_RPM1])*0.25)
             else:
@@ -246,8 +220,8 @@ class Kpro:
     def cam(self):
         # return units: degree
         try:
-            if self.version == 2:
-                return (self.data0[KPRO2_CAM]-40)*0.5
+            if self.version == 23:
+                return (self.data0[KPRO23_CAM]-40)*0.5
             elif self.version == 4:
                 return (self.data0[KPRO4_CAM]-40)*0.5
         except IndexError:
@@ -268,10 +242,8 @@ class Kpro:
                       -4, -5, -7, -9, -11, -13, -14, -18, -20, -22, -23, -25, -27, -31, -32, -34, -38, -40, -40, -40,
                       -40]
         try:
-            if self.version == 2:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO2_ECT]])
-            elif self.version == 3:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO3_ECT]])
+            if self.version == 23:
+                return pytemperature.f2c(fahrenheit[self.data1[KPRO23_ECT]])
             elif self.version == 4:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO4_ECT]])
         except IndexError:
@@ -292,10 +264,8 @@ class Kpro:
                       -4, -5, -7, -9, -11, -13, -14, -18, -20, -22, -23, -25, -27, -31, -32, -34, -38, -40, -40, -40,
                       -40]
         try:
-            if self.version == 2:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO2_IAT]])
-            elif self.version == 3:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO3_IAT]])
+            if self.version == 23:
+                return pytemperature.f2c(fahrenheit[self.data1[KPRO23_IAT]])
             elif self.version == 4:
                 return pytemperature.f2c(fahrenheit[self.data1[KPRO4_IAT]])
         except IndexError:
@@ -303,8 +273,8 @@ class Kpro:
 
     def gear(self):
         try:
-            if self.version == 2:
-                gear = self.data0[KPRO2_GEAR]
+            if self.version == 23:
+                gear = self.data0[KPRO23_GEAR]
             elif self.version == 4:
                 gear = self.data0[KPRO4_GEAR]
             else:
@@ -320,8 +290,8 @@ class Kpro:
     def eps(self):
         mask = 0x20
         try:
-            if self.version == 2:
-                return bool(self.data0[KPRO2_EPS] & mask)
+            if self.version == 23:
+                return bool(self.data0[KPRO23_EPS] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_EPS] & mask)
         except IndexError:
@@ -330,8 +300,8 @@ class Kpro:
     def scs(self):
         mask = 0x10
         try:
-            if self.version == 2:
-                return bool(self.data0[KPRO2_SCS] & mask)
+            if self.version == 23:
+                return bool(self.data0[KPRO23_SCS] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_SCS] & mask)
         except IndexError:
@@ -340,8 +310,8 @@ class Kpro:
     def rvslck(self):
         mask = 0x01
         try:
-            if self.version == 2:
-                return bool(self.data0[KPRO2_RVSLCK] & mask)
+            if self.version == 23:
+                return bool(self.data0[KPRO23_RVSLCK] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_RVSLCK] & mask)
         except IndexError:
@@ -350,8 +320,8 @@ class Kpro:
     def bksw(self):
         mask = 0x02
         try:
-            if self.version == 2:
-                return bool(self.data0[KPRO2_BKSW] & mask)
+            if self.version == 23:
+                return bool(self.data0[KPRO23_BKSW] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_BKSW] & mask)
         except IndexError:
@@ -360,8 +330,8 @@ class Kpro:
     def acsw(self):
         mask = 0x04
         try:
-            if self.version == 2:
-                return bool(self.data0[KPRO2_ACSW] & mask)
+            if self.version == 23:
+                return bool(self.data0[KPRO23_ACSW] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_ACSW] & mask)
         except IndexError:
@@ -370,8 +340,8 @@ class Kpro:
     def accl(self):
         mask = 0x08
         try:
-            if self.version == 2:
-                return bool(self.data0[KPRO2_ACCL] & mask)
+            if self.version == 23:
+                return bool(self.data0[KPRO23_ACCL] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_ACCL] & mask)
         except IndexError:
@@ -380,8 +350,8 @@ class Kpro:
     def flr(self):
         mask = 0x40
         try:
-            if self.version == 2:
-                return bool(self.data0[KPRO2_FLR] & mask)
+            if self.version == 23:
+                return bool(self.data0[KPRO23_FLR] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_FLR] & mask)
         except IndexError:
@@ -390,10 +360,8 @@ class Kpro:
     def map(self):
         # return unit: bar
         try:
-            if self.version == 2:
-                return self.data0[KPRO2_MAP] / 100.0
-            elif self.version == 3:
-                return self.data0[KPRO3_MAP] / 100.0
+            if self.version == 23:
+                return self.data0[KPRO23_MAP] / 100.0
             elif self.version == 4:
                 return self.data0[KPRO4_MAP] / 100.0
         except IndexError:
@@ -401,8 +369,8 @@ class Kpro:
 
     def mil(self):
         try:
-            if self.version == 2:
-                mil = self.data0[KPRO2_MIL]
+            if self.version == 23:
+                mil = self.data0[KPRO23_MIL]
                 if mil == 9:
                     return True
                 elif mil == 1:
@@ -420,8 +388,8 @@ class Kpro:
 
     def ecu_type(self):
         try:
-            if self.version == 2:
-                type = self.data4[KPRO2_ECU_TYPE]
+            if self.version == 23:
+                type = self.data4[KPRO23_ECU_TYPE]
             elif self.version == 4:
                 type = self.data4[KPRO4_ECU_TYPE]
             else:
@@ -436,8 +404,8 @@ class Kpro:
 
     def ign(self):
         try:
-            if self.version == 2:
-                ign = self.data4[KPRO2_IGN]
+            if self.version == 23:
+                ign = self.data4[KPRO23_IGN]
             elif self.version == 4:
                 ign = self.data4[KPRO4_IGN]
             else:
@@ -452,9 +420,9 @@ class Kpro:
 
     def serial(self):
         try:
-            if self.version == 2:
-                serial1 = self.data4[KPRO2_SERIAL1]
-                serial2 = self.data4[KPRO2_SERIAL2]
+            if self.version == 23:
+                serial1 = self.data4[KPRO23_SERIAL1]
+                serial2 = self.data4[KPRO23_SERIAL2]
             elif self.version == 4:
                 serial1 = self.data4[KPRO4_SERIAL1]
                 serial2 = self.data4[KPRO4_SERIAL2]
@@ -467,9 +435,9 @@ class Kpro:
 
     def firmware(self):
         try:
-            if self.version == 2:
-                firm1 = self.data4[KPRO2_FIRM1]
-                firm2 = self.data4[KPRO2_FIRM2]
+            if self.version == 23:
+                firm1 = self.data4[KPRO23_FIRM1]
+                firm2 = self.data4[KPRO23_FIRM2]
             elif self.version == 4:
                 firm1 = self.data4[KPRO4_FIRM1]
                 firm2 = self.data4[KPRO4_FIRM2]
