@@ -60,9 +60,6 @@ In detail the board offers:
 * 8x 12v digital inputs (perfect for turn signal indicators, high beam indicator, oil pressure warning, etc...)
 * 8x 5v analog inputs (4 resistor based + 4 voltage based)
 
-## Standalone installation
+## Advanced installation notes
 
-Once you are inside the HonDash project folder run this:
-```sh
-export PYTHONPATH='src'
-```
+check [here](https://github.com/pablobuenaposada/HonDash/tree/kpro/src)
