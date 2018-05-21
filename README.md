@@ -1,7 +1,7 @@
-![alt tag](https://raw.github.com/pablobuenaposada/HonDash/kpro/docs/logo/hondash.png)
+![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
-[![Build Status](https://secure.travis-ci.org/pablobuenaposada/HonDash.png?branch=kpro)](http://travis-ci.org/pablobuenaposada/HonDash)
-[![alt tag](https://codecov.io/gh/pablobuenaposada/hondash/branch/kpro/graph/badge.svg)](https://codecov.io/gh/pablobuenaposada/hondash/)
+[![Build Status](https://secure.travis-ci.org/pablobuenaposada/HonDash.png?branch=master)](http://travis-ci.org/pablobuenaposada/HonDash)
+[![alt tag](https://codecov.io/gh/pablobuenaposada/hondash/branch/master/graph/badge.svg)](https://codecov.io/gh/pablobuenaposada/hondash/)
 
 ## What's HonDash?
 
@@ -17,7 +17,7 @@ HonDash is an open source instrument cluster developed for Honda engines.
 
 ## Setup diagram
 
-<img src="https://raw.github.com/pablobuenaposada/HonDash/kpro/docs/readme/setup.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/kpro/docs/readme/setup.png" height="300" />
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" height="300" />
 
 ## Specifications
 
@@ -52,7 +52,7 @@ SRL | K-Pro serial number |  |  |:white_check_mark:
 FIRM | K-Pro firmware version |  |  |:white_check_mark:
 AN | Analog inputs | :x: |  |:white_check_mark:
 
-## Optional HonDash board
+## Optional HonDash board (in progress)
 
 This board is attached on top of the Raspberry and offers the ability to connect inputs that K-Pro can not manage or for safety reasons it's better to wire them to this board and not risk the K-Pro in case something goes wrong.
 
@@ -60,6 +60,6 @@ In detail the board offers:
 * 8x 12v digital inputs (perfect for turn signal indicators, high beam indicator, oil pressure warning, etc...)
 * 8x 5v analog inputs (4 resistor based + 4 voltage based)
 
-## Advanced installation notes
+## Advanced software installation notes
 
-check [here](https://github.com/pablobuenaposada/HonDash/tree/kpro/src)
+check [here](https://github.com/pablobuenaposada/HonDash/tree/master/src)

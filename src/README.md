@@ -1,4 +1,4 @@
-![alt tag](https://raw.github.com/pablobuenaposada/HonDash/kpro/docs/logo/hondash.png)
+![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
 ## How to run this project in a Raspberry Pi?
 Get Raspbian working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
