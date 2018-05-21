@@ -24,7 +24,7 @@ connection.onopen = function (session) {
        oil_temp.refresh(args[0]["ai0"] || 0);
        oil_pressure.refresh(args[0]["an0"] || 0);
        clutch.refresh(args[0]["bksw"] || 0);
-       brake.refresh(args[0]["vss"] || 0);
+       brake.refresh(args[0]["ai2"] || 0);
        throttle.refresh(args[0]["tps"] || 0);
        fuel.refresh(args[0]["ai1"] || 0);
        rpm.refresh(args[0]["rpm"] || 0);
