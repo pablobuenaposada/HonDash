@@ -21,6 +21,7 @@ run_rpi:
 	. venv/bin/activate; crossbar start &
 	pkill python backend.py || true
 	sudo -E PYTHONPATH=src ./venv/bin/python src/backend/backend.py &
+	sleep 5
 	chromium-browser --kiosk --incognito src/frontend/frontend.html &
 
 dummy:
