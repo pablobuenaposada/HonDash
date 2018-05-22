@@ -1,20 +1,8 @@
-
 // Bars
-var clutch = new Bar({
-    id: "clutch",
-    maxValue: 1,
-    backGroundColor: "#edebeb",
-    fillColor: "#2170a9"
-});
-
-var brake = new Bar({ id: "brake", fillColor: "#cc2c24" });
-
-var throttle = new Bar({ id: "throttle", fillColor: "#008b29" });
-
 var fuel = new Bar({
     id: "fuel",
     isVertical: true,
-    fillColor: "orange",
+    fillColor: "#46877f",
     textSize: 30
 });
 
@@ -28,72 +16,32 @@ var rpm = new Bar({
 });
 
 // Text and numbers
-var speed = new Text({ id: "speed", value: "0", size: 8 });
+var speed = new Text({ id: "speed", value: "0", size: 14 });
 
-var speed_unit = new Text({ id: "speed_unit", value: "km/h", size: 2 });
+var speed_unit = new Text({ id: "speed_unit", value: "km/h", size: 3 });
 
-var gear = new Text({ id: "gear", value: "N", size: 10 });
+var gear = new Text({ id: "gear", value: "N", size: 14 });
 
 var time = new Text({
     id: "time",
     value: "00:00:00",
-    size: 3,
+    size: 4,
     style: "italic",
 });
 
 var odo = new Text({
     id: "odo",
     value: "0",
-    size: 2,
+    size: 3,
     style: "italic",
     suffix: " km"
 });
 
 // Icons
-var reserve = new Icon({
-    id: "reserve",
-    pathOff: "fuel.svg",
-    pathOn: "fuel_on.svg"
-});
-var battery = new Icon({
-    id: "battery",
-    pathOff: "battery.svg",
-    pathOn: "battery_on.svg"
-});
-var handbrake = new Icon({
-    id: "handbrake",
-    pathOff: "handbrake.svg",
-    pathOn: "handbrake_on.svg"
-});
-var high_beam = new Icon({
-    id: "high_beam",
-    pathOff: "lights.svg",
-    pathOn: "lights_on.svg"
-});
-var trunk = new Icon({
-    id: "trunk",
-    pathOff: "trunk.svg",
-    pathOn: "trunk_on.svg"
-});
 var mil = new Icon({
     id: "mil",
     pathOff: "check_engine.svg",
     pathOn:  "check_engine_on.svg"
-});
-var oil_warning = new Icon({
-    id: "oil_warning",
-    pathOff: "oil.svg",
-    pathOn: "oil_on.svg"
-});
-var leftarrow = new Icon({
-    id: "leftarrow",
-    pathOff: "left_arrow.svg",
-    pathOn: "left_arrow_on.svg"
-});
-var rightarrow = new Icon({
-    id: "rightarrow",
-    pathOff: "right_arrow.svg",
-    pathOn: "right_arrow_on.svg"
 });
 
 // Gauges
@@ -103,8 +51,8 @@ var gageDefaults = {
     value: 0,
     decimals: 0,
     gaugeWidthScale: 1,
-    valueMinFontSize: 35,
-    labelMinFontSize: 18,
+    valueMinFontSize: 60,
+    labelMinFontSize: 20,
     startAnimationTime: 0,
     refreshAnimationTime: 0,
     labelFontColor: "black",
@@ -129,6 +77,19 @@ var bat = new JustGage(Object.assign({}, gageDefaults, {
     }
 }));
 
+var throttle = new JustGage(Object.assign({}, gageDefaults, {
+    id: "tps",
+    label: "TPS",
+    customSectors: {
+        length: true,
+        ranges: [{
+        color : "#46877f",
+            lo : 0,
+            hi : 100
+        }]
+    }
+}));
+
 var iat = new JustGage(Object.assign({}, gageDefaults, {
     id: "iat",
     max: 50,
@@ -136,13 +97,9 @@ var iat = new JustGage(Object.assign({}, gageDefaults, {
     customSectors: {
         length: true,
         ranges: [{
-            color : "#cc2c24",
-            lo : 30,
-            hi : 50
-        },{
         color : "#46877f",
             lo : 0,
-            hi : 30
+            hi : 50
         }]
     }
 }));
@@ -155,12 +112,12 @@ var ect = new JustGage(Object.assign({}, gageDefaults, {
         length: true,
         ranges: [{
             color : "#cc2c24",
-            lo : 90,
+            lo : 94,
             hi : 150
         },{
         color : "#46877f",
             lo : 0,
-            hi : 90
+            hi : 93
         }]
     }
 }));
@@ -175,28 +132,15 @@ var afr = new JustGage(Object.assign({}, gageDefaults, {
         ranges: [{
             color : "#cc2c24",
             lo : 0,
-            hi : 14.5
+            hi : 12.0
         },{
         color : "#46877f",
-            lo : 14.6,
-            hi : 14.8
+            lo : 12.0,
+            hi : 16.0
         },{
         color : "#cc2c24",
-            lo : 14.9,
+            lo : 16.0,
             hi : 30
-        }]
-    }
-}));
-
-var cam = new JustGage(Object.assign({}, gageDefaults, {
-    id: "cam",
-    label: "CAM",
-    customSectors: {
-        length: true,
-        ranges: [{
-            color : "#46877f",
-            lo : 0,
-            hi : 100
         }]
     }
 }));
@@ -236,6 +180,20 @@ var oil_temp = new JustGage(Object.assign({}, gageDefaults, {
     }
 }));
 
+var cam = new JustGage(Object.assign({}, gageDefaults, {
+    id: "cam",
+    max: 150,
+    label: "CAM",
+    customSectors: {
+        length: true,
+        ranges: [{
+        color : "#46877f",
+            lo : 0,
+            hi : 50
+        }]
+    }
+}));
+
 var oil_pressure = new JustGage(Object.assign({}, gageDefaults, {
     id: "oilp",
     max: 7,
@@ -246,18 +204,13 @@ var oil_pressure = new JustGage(Object.assign({}, gageDefaults, {
         ranges: [{
             color : "#cc2c24",
             lo : 0,
-            hi : 2.5
+            hi : 2
         },{
         color : "#46877f",
-            lo : 2.5,
-            hi : 5
+            lo : 2,
+            hi : 7
         }]
     }
-}));
-
-var eth = new JustGage(Object.assign({}, gageDefaults, {
-    id: "eth",
-    label: "ETH",
 }));
 
 var map = new JustGage(Object.assign({}, gageDefaults, {

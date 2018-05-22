@@ -211,7 +211,7 @@ class Kpro:
             else:
                 return {'kmh': 0, 'mph': 0}
             vss_kmh = self.data0[index]
-            vss_mph = vss_kmh * 0.6214
+            vss_mph = Formula.kmh_to_mph(vss_kmh)
             return {'kmh': vss_kmh, 'mph': int(vss_mph)}
         except IndexError:
             return {'kmh': 0, 'mph': 0}
