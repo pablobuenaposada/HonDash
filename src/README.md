@@ -5,8 +5,14 @@ Get Raspbian working in your raspberry, more info [here](https://www.raspberrypi
 
 Open the command line and install this packages:
 ```sh
-sudo apt-get install libffi-dev libssl-dev chromium-browser
+sudo apt-get install libffi-dev libssl-dev libatlas-base-dev
 ```
+
+Enable SSH and SPI through:
+```sh
+sudo raspi-config
+```
+Go to 5.Interfacing options --> enable both SSH and SPI
 
 Clone this project:
 ```sh
@@ -17,12 +23,12 @@ git clone https://github.com/pablobuenaposada/HonDash.git
 Being in the root of the project create de virtual enviroment:
 ```sh
 cd HonDash/
-make virtualenv
+make virtualenv_rpi
 
 ```
 Later you can just run the project:
 ```sh
-make rpi
+make run_rpi
 ```
 
 ## Optional tricks
@@ -32,7 +38,7 @@ crontab -e
 ```
 add this line:
 ```sh
-@reboot (export DISPLAY=:0 && cd /home/pi/Desktop/HonDash/ && make rpi)
+@reboot (export DISPLAY=:0 && cd /home/pi/Desktop/HonDash/ && make run_rpi)
 ```
 
 ### Disable screen saver
