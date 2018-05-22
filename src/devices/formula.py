@@ -8,9 +8,16 @@ class Formula:
 
     # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     def vdo_323_057(volts):
-        return -6.556773822 * pow(10, -1) * pow(volts, 9) + 16.2933761 * pow(volts, 8) - 173.9768837 * pow(volts, 7) \
+        return - 6.556773822 * pow(10, -1) * pow(volts, 9) + 16.2933761 * pow(volts, 8) - 173.9768837 * pow(volts, 7) \
                + 1044.151731 * pow(volts, 6) - 3868.010224 * pow(volts, 5) + 9139.591176 * pow(volts, 4) \
                - 13733.10194 * pow(volts, 3) + 12638.52233 * pow(volts, 2) - 6520.045818 * volts + 1620.527214
+
+    # AEM 30-2012 / Delphi 12160855 sensor powered by 5v and a 1500ohms voltage divider
+    def aem_30_2012(volts):
+        return - 9.800565802 * pow(10, -2) * pow(volts, 10) + 2.47857492 * pow(volts, 9) - 27.05872375 * pow(volts, 8) \
+               + 167.0212269 * pow(volts, 7) - 641.3215599 * pow(volts, 6) + 1587.480011 * pow(volts, 5) \
+               - 2536.694771 * pow(volts, 4) + 2537.216736 * pow(volts, 3) - 1457.917408 * pow(volts, 2) \
+               + 342.4844189 * volts + 149.2065268
 
     # Autometer #2246 (4590-0023-12) 100 psi oil pressure sensor or ebay 100 psi
     def autometer_2246(volts):

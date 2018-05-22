@@ -10,6 +10,11 @@ class TestFormula(TestCase):
         self.assertEquals(Formula.vdo_323_057(2.5), 104.66787557340672)
         self.assertEquals(Formula.vdo_323_057(5), -34.94136037743533)
 
+    def test_aem_30_2012(self):
+        self.assertEquals(Formula.aem_30_2012(0), 149.2065268)
+        self.assertEquals(Formula.aem_30_2012(2.5), 76.19333584048081)
+        self.assertEquals(Formula.aem_30_2012(5), -43.262274013110414)
+
     def test_autometer_2246(self):
         self.assertEquals(Formula.autometer_2246(0.5), 0)
         self.assertEquals(Formula.autometer_2246(2.5), 50)
