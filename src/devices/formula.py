@@ -27,5 +27,6 @@ class Formula:
     def ebay_150_psi(volts):
         return 37.5 * volts - 18.75
 
+    # civic eg fuel tank powered by 5v and a 1500ohms voltage divider
     def civic_eg_fuel_tank(volts):
-        return int(-1.209083604 * pow(volts, 2) - 27.62416175 * volts + 104.7987284)
+        return int(868.427437 * pow(volts, 2) - 600.9952442 * volts + 103.9628058)
