@@ -37,7 +37,7 @@ while True:
                              'ect': kpro.ect(),
                              'rpm': kpro.rpm(),
                              'vss': kpro.vss(),
-                             'afr': kpro.afr(),
+                             'o2': kpro.o2(),
                              'cam': kpro.cam(),
                              'mil': kpro.mil(),
                              'bksw': kpro.bksw(),
