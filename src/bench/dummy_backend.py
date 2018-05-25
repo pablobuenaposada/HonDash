@@ -13,13 +13,14 @@ odo = Odometer()
 while True:
     odo.save(random.randint(0, 200))
     publish('com.app.idea', {'bat': random.uniform(0, 15),
+                             'map': {'bar': random.uniform(0, 2), 'mbar': random.uniform(0, 2), 'psi': random.uniform(0, 2)},
                              'gear': random.randint(0, 6),
-                             'iat': random.randint(0, 50),
+                             'iat': {'celsius': random.randint(0, 50), 'fahrenheit': random.randint(0, 50)},
                              'tps': random.randint(0, 100),
-                             'ect': random.randint(0, 150),
+                             'ect': {'celsius': random.randint(0, 50), 'fahrenheit': random.randint(0, 50)},
                              'rpm': random.randint(0, 9000),
-                             'vss': random.randint(0, 200),
-                             'afr': random.uniform(0, 2),
+                             'vss': {'kmh': random.randint(0, 200), 'mph': random.randint(0, 200)},
+                             'o2': {'afr': random.uniform(0, 20), 'lambda': random.uniform(0, 1)},
                              'cam': random.randint(0, 50),
                              'mil': random.choice([True, False]),
                              'bksw': random.choice([True, False]),

@@ -6,6 +6,9 @@ class Formula:
     def psi_to_bar(psi):
         return psi * 0.0689476
 
+    def bar_to_psi(bar):
+        return bar * 14.503773773
+
     # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     def vdo_323_057(volts):
         return - 6.556773822 * pow(10, -1) * pow(volts, 9) + 16.2933761 * pow(volts, 8) - 173.9768837 * pow(volts, 7) \

@@ -4,6 +4,7 @@ import usb.core
 import usb.util
 from numpy import interp
 import pytemperature
+from devices.formula import Formula
 
 # command 0x40
 KPRO23_ECU_TYPE = 12
@@ -171,15 +172,22 @@ class Kpro:
         except IndexError:
             return 0
 
-    def afr(self):
-        # return unit: A/F ratio
+    def o2(self):
+        # return unit: afr and lambda
         try:
             if self.version == 23:
-                return 32768.0 / ((256 * self.data0[KPRO23_AFR2]) + self.data0[KPRO23_AFR1]) * 14.7
+                index_1 = KPRO23_AFR2
+                index_2 = KPRO23_AFR1
             elif self.version == 4:
-                return 32768.0 / ((256 * self.data0[KPRO4_AFR2]) + self.data0[KPRO4_AFR1]) * 14.7
+                index_1 = KPRO4_AFR2
+                index_2 = KPRO4_AFR1
+            else:
+                return {'afr': 0, 'lambda': 0}
+            o2_lambda = 32768.0 / ((256 * self.data0[index_1]) + self.data0[index_2])
+            o2_afr = o2_lambda * 14.7
+            return {'afr': o2_afr, 'lambda': o2_lambda}
         except (IndexError, ZeroDivisionError):
-            return 0
+            return {'afr': 0, 'lambda': 0}
 
     def tps(self):
         # return unit: 0-100%
@@ -194,16 +202,19 @@ class Kpro:
             return 0
 
     def vss(self):
-        # return unit: km/h
+        # return unit: km/h and mph
         try:
             if self.version == 23:
-                return self.data0[KPRO23_VSS]
+                index = KPRO23_VSS
             elif self.version == 4:
-                return self.data0[KPRO4_VSS]
+                index = KPRO4_VSS
             else:
-                return 0
+                return {'kmh': 0, 'mph': 0}
+            vss_kmh = self.data0[index]
+            vss_mph = vss_kmh * 0.6214
+            return {'kmh': vss_kmh, 'mph': int(vss_mph)}
         except IndexError:
-            return 0
+            return {'kmh': 0, 'mph': 0}
 
     def rpm(self):
         # return unit: revs. per minute
@@ -212,8 +223,6 @@ class Kpro:
                 return int(((256*self.data0[KPRO23_RPM2])+self.data0[KPRO23_RPM1])*0.25)
             elif self.version == 4:
                 return int(((256*self.data0[KPRO4_RPM2])+self.data0[KPRO4_RPM1])*0.25)
-            else:
-                return 0
         except IndexError:
             return 0
 
@@ -228,7 +237,8 @@ class Kpro:
             return 0
 
     def ect(self):
-        fahrenheit = [302, 302, 298, 294, 289, 285, 282, 278, 273, 269, 266, 262, 258, 253, 249, 246, 242, 239, 235,
+        # return units: celsius and fahrenheit
+        temperature = [302, 302, 298, 294, 289, 285, 282, 278, 273, 269, 266, 262, 258, 253, 249, 246, 242, 239, 235,
                       231, 226, 222, 219, 215, 212, 208, 206, 203, 201, 199, 197, 194, 192, 190, 188, 185, 183, 181,
                       179, 177, 177, 176, 174, 172, 170, 168, 167, 165, 165, 163, 161, 159, 158, 158, 156, 156, 154,
                       152, 152, 150, 149, 149, 147, 147, 145, 143, 143, 141, 141, 140, 138, 138, 136, 134, 134, 132,
@@ -243,14 +253,20 @@ class Kpro:
                       -40]
         try:
             if self.version == 23:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO23_ECT]])
+                index = KPRO23_ECT
             elif self.version == 4:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO4_ECT]])
+                index = KPRO4_ECT
+            else:
+                return {'celsius': 0, 'fahrenheit': 0}
+            ect_fahrenheit = temperature[self.data1[index]]
+            ect_celsius = pytemperature.f2c(ect_fahrenheit)
+            return {'celsius': ect_celsius, 'fahrenheit': ect_fahrenheit}
         except IndexError:
-            return 0
+            return {'celsius': 0, 'fahrenheit': 0}
 
     def iat(self):
-        fahrenheit = [302, 302, 298, 294, 289, 285, 282, 278, 273, 269, 266, 262, 258, 253, 249, 246, 242, 239, 235,
+        # return units: celsius and fahrenheit
+        temperature = [302, 302, 298, 294, 289, 285, 282, 278, 273, 269, 266, 262, 258, 253, 249, 246, 242, 239, 235,
                       231, 226, 222, 219, 215, 212, 208, 206, 203, 201, 199, 197, 194, 192, 190, 188, 185, 183, 181,
                       179, 177, 177, 176, 174, 172, 170, 168, 167, 165, 165, 163, 161, 159, 158, 158, 156, 156, 154,
                       152, 152, 150, 149, 149, 147, 147, 145, 143, 143, 141, 141, 140, 138, 138, 136, 134, 134, 132,
@@ -265,11 +281,16 @@ class Kpro:
                       -40]
         try:
             if self.version == 23:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO23_IAT]])
+                index = KPRO23_IAT
             elif self.version == 4:
-                return pytemperature.f2c(fahrenheit[self.data1[KPRO4_IAT]])
+                index = KPRO4_IAT
+            else:
+                return {'celsius': 0, 'fahrenheit': 0}
+            iat_fahrenheit = temperature[self.data1[index]]
+            iat_celsius = pytemperature.f2c(iat_fahrenheit)
+            return {'celsius': iat_celsius, 'fahrenheit': iat_fahrenheit}
         except IndexError:
-            return 0
+            return {'celsius': 0, 'fahrenheit': 0}
 
     def gear(self):
         try:
@@ -358,14 +379,20 @@ class Kpro:
             return False
 
     def map(self):
-        # return unit: bar
+        # return unit: bar, mbar and psi
         try:
             if self.version == 23:
-                return self.data0[KPRO23_MAP] / 100.0
+                index = KPRO23_MAP
             elif self.version == 4:
-                return self.data0[KPRO4_MAP] / 100.0
+                index = KPRO4_MAP
+            else:
+                return {'bar': 0, 'mbar': 0, 'psi': 0}
+            map_bar = self.data0[index] / 100.0
+            map_mbar = map_bar * 1000
+            map_psi = Formula.bar_to_psi(map_bar)
+            return {'bar': map_bar, 'mbar': map_mbar, 'psi': map_psi}
         except IndexError:
-            return 0
+            return {'bar': 0, 'mbar': 0, 'psi': 0}
 
     def mil(self):
         try:
@@ -449,6 +476,7 @@ class Kpro:
             return 0
 
     def analog_input(self, channel):
+        # return unit: volts
         if self.version == 4:
             if channel == 0:
                 index_1 = KPRO4_AN0_1
@@ -478,7 +506,6 @@ class Kpro:
                 return 0
         else:
             return 0
-
         try:
             return interp((256 * self.data3[index_1]) + self.data3[index_2], [0, 4096], [0, 5])
         except IndexError:
