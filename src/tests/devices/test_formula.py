@@ -39,3 +39,8 @@ class TestFormula(TestCase):
         self.assertEquals(int(Formula.civic_eg_fuel_tank(0.3416149068)), 0)
         self.assertEquals(int(Formula.civic_eg_fuel_tank(0.1040358891)), 50)
         self.assertEquals(int(Formula.civic_eg_fuel_tank(0.005657789614)), 100)
+
+    def test_s2000_fuel_tank(self):
+        self.assertEquals(int(Formula.s2000_fuel_tank(0.4044117647)), 0)
+        self.assertEquals(int(Formula.s2000_fuel_tank(0.1768488746)), 50)
+        self.assertEquals(int(Formula.s2000_fuel_tank(0.04296100463)), 100)

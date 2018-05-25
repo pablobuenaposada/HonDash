@@ -30,3 +30,7 @@ class Formula:
     # civic eg fuel tank powered by 5v and a 1500ohms voltage divider
     def civic_eg_fuel_tank(volts):
         return int(868.427437 * pow(volts, 2) - 600.9952442 * volts + 103.9628058)
+
+    # s2000 fuel tank powered by 5v and a 1500ohms voltage divider
+    def s2000_fuel_tank(volts):
+        return int(425.3064645 * pow(volts, 2) - 466.933388 * volts + 119.2749615)
