@@ -5,7 +5,7 @@ Get Raspbian working in your raspberry, more info [here](https://www.raspberrypi
 
 Open the command line and install this packages:
 ```sh
-sudo apt-get install libffi-dev libssl-dev libatlas-base-dev
+sudo apt install libatlas-base-dev
 ```
 
 Enable SSH and SPI through:
