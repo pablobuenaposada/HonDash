@@ -11,9 +11,10 @@ class Formula:
 
     # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     def vdo_323_057(volts):
-        return - 6.556773822 * pow(10, -1) * pow(volts, 9) + 16.2933761 * pow(volts, 8) - 173.9768837 * pow(volts, 7) \
-               + 1044.151731 * pow(volts, 6) - 3868.010224 * pow(volts, 5) + 9139.591176 * pow(volts, 4) \
-               - 13733.10194 * pow(volts, 3) + 12638.52233 * pow(volts, 2) - 6520.045818 * volts + 1620.527214
+        return -2.183715894 * pow(10, -1) * pow(volts, 10) + 5.613288037 * pow(volts, 9) - 62.2205559 * pow(volts, 8)\
+               + 389.2848412 * pow(volts, 7) - 1510.989619 * pow(volts, 6) + 3764.608696 * pow(volts, 5)\
+               - 6013.228539 * pow(volts, 4) + 5943.529221 * pow(volts, 3) - 3309.957466 * pow(volts, 2)\
+               + 750.5177822 * volts + 205.7905145
 
     # AEM 30-2012 / Delphi 12160855 sensor powered by 5v and a 1500ohms voltage divider
     def aem_30_2012(volts):

@@ -6,9 +6,9 @@ from devices.formula import Formula
 class TestFormula(TestCase):
 
     def test_vdo_323_057(self):
-        self.assertEquals(Formula.vdo_323_057(0), 1620.527214)
-        self.assertEquals(Formula.vdo_323_057(2.5), 104.66787557340672)
-        self.assertEquals(Formula.vdo_323_057(5), -34.94136037743533)
+        self.assertEquals(Formula.vdo_323_057(0), 205.7905145)
+        self.assertEquals(Formula.vdo_323_057(2.5), 104.39116301449056)
+        self.assertEquals(Formula.vdo_323_057(5), -36.1485057511554)
 
     def test_aem_30_2012(self):
         self.assertEquals(Formula.aem_30_2012(0), 149.2065268)
