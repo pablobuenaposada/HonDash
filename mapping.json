@@ -1,0 +1,33 @@
+{
+  "iat": {
+    "unit": "celsius"
+  },
+  "ect": {
+    "unit": "celsius"
+  },
+  "vss": {
+    "unit": "kmh"
+  },
+  "o2": {
+    "unit": "afr"
+  },
+  "map": {
+    "unit": "bar"
+  },
+  "an0": {
+    "unit": "bar",
+    "formula": "ebay_150_psi"
+  },
+  "an1": {
+    "unit": "psi",
+    "formula": "autometer_2246"
+  },
+  "an2": {
+    "unit": "celsius",
+    "formula": "vdo_323_057"
+  },
+  "an3": {
+    "unit": "per cent",
+    "formula": "civic_eg_fuel_tank"
+  }
+}
