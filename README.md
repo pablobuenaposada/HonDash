@@ -33,8 +33,8 @@ RPM | Revs. per minute |  |:white_check_mark:|:white_check_mark:
 VTC | VTC cam angle |  |  |:white_check_mark:
 CLV | Calculated load value |  |  |
 ECT | Coolant temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:
-ETH | Ethanol content |  |  |
-FT | Fuel temperature |  |  |
+ETH | Ethanol content |  |  |:white_check_mark:
+FLT | Fuel temperature |  |  |:white_check_mark:
 IAT | Intake air temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:
 GEAR | Gear |  |  |:white_check_mark:
 EPS | Electronic power steering pressure |:white_check_mark:|  |:white_check_mark:

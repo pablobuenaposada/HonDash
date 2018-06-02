@@ -84,6 +84,8 @@ KPRO4_AN6_2 = 78
 KPRO4_AN7_1 = 81
 KPRO4_AN7_2 = 80
 KPRO4_MIL = 30
+KPRO4_ETH = 98
+KPRO4_FLT = 99
 
 
 class Kpro:
@@ -169,6 +171,26 @@ class Kpro:
                 return self.data1[KPRO23_BAT] * 0.1
             elif self.version == 4:
                 return self.data1[KPRO4_BAT] * 0.1
+        except IndexError:
+            return 0
+
+    def eth(self):
+        # return unit: per cent
+        try:
+            if self.version == 4:
+                return self.data3[KPRO4_ETH]
+        except IndexError:
+            return 0
+
+    def flt(self):
+        try:
+            if self.version == 4:
+                index = KPRO4_FLT
+            else:
+                return {'celsius': 0, 'fahrenheit': 0}
+            flt_celsius = self.data3[index]
+            flt_fahrenheit = pytemperature.c2f(flt_celsius)
+            return {'celsius': flt_celsius, 'fahrenheit': flt_fahrenheit}
         except IndexError:
             return 0
 
