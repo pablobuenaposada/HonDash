@@ -15,33 +15,56 @@ while True:
     except:
         continue
 
-map = Mapper()
 kpro = Kpro()
 time = Time()
 odo = Odometer()
+map = Mapper()
+
+iat_unit = map.get_unit('iat')
+ect_unit = map.get_unit('ect')
+vss_unit = map.get_unit('vss')
+o2_unit = map.get_unit('o2')
+map_unit = map.get_unit('map')
+an0_unit = map.get_unit('an0')
+an0_formula = map.get_formula('an0')
+an1_unit = map.get_unit('an1')
+an1_formula = map.get_formula('an1')
+an2_unit = map.get_unit('an2')
+an2_formula = map.get_formula('an2')
+an3_unit = map.get_unit('an3')
+an3_formula = map.get_formula('an3')
+an4_unit = map.get_unit('an4')
+an4_formula = map.get_formula('an4')
+an5_unit = map.get_unit('an5')
+an5_formula = map.get_formula('an5')
+an6_unit = map.get_unit('an6')
+an6_formula = map.get_formula('an6')
+an7_unit = map.get_unit('an7')
+an7_formula = map.get_formula('an7')
+
 while True:
     odo.save(kpro.vss()['kmh'])
     publish('com.app.idea', {'bat': kpro.bat(),
                              'gear': kpro.gear(),
-                             'iat': kpro.iat().setdefault(map.get_unit('iat'), 'celsius'),
+                             'iat': kpro.iat().setdefault(iat_unit, 'celsius'),
                              'tps': kpro.tps(),
-                             'ect': kpro.ect().setdefault(map.get_unit('ect'), 'celsius'),
+                             'ect': kpro.ect().setdefault(ect_unit, 'celsius'),
                              'rpm': kpro.rpm(),
-                             'vss': kpro.vss().setdefault(map.get_unit('vss'), 'kmh'),
-                             'o2': kpro.o2().setdefault(map.get_unit('o2'), 'afr'),
+                             'vss': kpro.vss().setdefault(vss_unit, 'kmh'),
+                             'o2': kpro.o2().setdefault(o2_unit, 'afr'),
                              'cam': kpro.cam(),
                              'mil': kpro.mil(),
                              'bksw': kpro.bksw(),
                              'flr': kpro.flr(),
-                             'map': kpro.map().setdefault(map.get_unit('map'), 'bar'),
-                             'an0': map.get_formula('an0')(kpro.analog_input(0)).setdefault(map.get_unit('an0'), 'volts'),
-                             'an1': map.get_formula('an1')(kpro.analog_input(1)).setdefault(map.get_unit('an1'), 'volts'),
-                             'an2': map.get_formula('an2')(kpro.analog_input(2)).setdefault(map.get_unit('an2'), 'volts'),
-                             'an3': map.get_formula('an3')(kpro.analog_input(3)).setdefault(map.get_unit('an3'), 'volts'),
-                             'an4': map.get_formula('an4')(kpro.analog_input(4)).setdefault(map.get_unit('an4'), 'volts'),
-                             'an5': map.get_formula('an5')(kpro.analog_input(5)).setdefault(map.get_unit('an5'), 'volts'),
-                             'an6': map.get_formula('an6')(kpro.analog_input(6)).setdefault(map.get_unit('an6'), 'volts'),
-                             'an7': map.get_formula('an7')(kpro.analog_input(7)).setdefault(map.get_unit('an7'), 'volts'),
+                             'map': kpro.map().setdefault(map_unit, 'bar'),
+                             'an0': an0_formula(kpro.analog_input(0)).setdefault(an0_unit, 'volts'),
+                             'an1': an1_formula(kpro.analog_input(1)).setdefault(an1_unit, 'volts'),
+                             'an2': an2_formula(kpro.analog_input(2)).setdefault(an2_unit, 'volts'),
+                             'an3': an3_formula(kpro.analog_input(3)).setdefault(an3_unit, 'volts'),
+                             'an4': an4_formula(kpro.analog_input(4)).setdefault(an4_unit, 'volts'),
+                             'an5': an5_formula(kpro.analog_input(5)).setdefault(an5_unit, 'volts'),
+                             'an6': an6_formula(kpro.analog_input(6)).setdefault(an6_unit, 'volts'),
+                             'an7': an7_formula(kpro.analog_input(7)).setdefault(an7_unit, 'volts'),
                              'time': time.get_time(),
                              'odo': odo.get_mileage(),
                              })
