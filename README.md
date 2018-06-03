@@ -52,14 +52,6 @@ SRL | K-Pro serial number |  |  |:white_check_mark:
 FIRM | K-Pro firmware version |  |  |:white_check_mark:
 AN | Analog inputs | :x: |  |:white_check_mark:
 
-## Optional HonDash board (in progress)
-
-This board is attached on top of the Raspberry and offers the ability to connect inputs that K-Pro can not manage or for safety reasons it's better to wire them to this board and not risk the K-Pro in case something goes wrong.
-
-In detail the board offers:
-* 8x 12v digital inputs (perfect for turn signal indicators, high beam indicator, oil pressure warning, etc...)
-* 8x 5v analog inputs (4 resistor based + 4 voltage based)
-
 ## Advanced software installation notes
 
 check [here](https://github.com/pablobuenaposada/HonDash/tree/master/src)
