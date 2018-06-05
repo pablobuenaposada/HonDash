@@ -1,18 +1,18 @@
 // Bars
-var fuel = new Bar({
-    id: "fuel",
-    isVertical: true,
-    fillColor: "#46877f",
-    textSize: 30
-});
-
-var rpm = new Bar({
-    id: "rpm",
+var bar1 = new Bar({
+    id: "bar1",
     isVertical: true,
     fillColor: "#d64d8a",
     maxValue: 9500,
     textEnding: "",
     textSize: 60
+});
+
+var bar2 = new Bar({
+    id: "bar2",
+    isVertical: true,
+    fillColor: "#46877f",
+    textSize: 30
 });
 
 // Text and numbers
@@ -29,8 +29,8 @@ var time = new Text({
     style: "italic",
 });
 
-var odo = new Text({
-    id: "odo",
+var odometer = new Text({
+    id: "odometer",
     value: "0",
     size: 3,
     style: "italic",
@@ -38,14 +38,14 @@ var odo = new Text({
 });
 
 // Icons
-var mil = new Icon({
-    id: "mil",
+var icon1 = new Icon({
+    id: "icon1",
     pathOff: "check_engine.svg",
     pathOn:  "check_engine_on.svg"
 });
 
 // Gauges
-var gageDefaults = {
+var gaugeDefaults = {
     min: 0,
     max: 100,
     value: 0,
@@ -58,8 +58,94 @@ var gageDefaults = {
     labelFontColor: "black",
 };
 
-var bat = new JustGage(Object.assign({}, gageDefaults, {
-    id: "bat",
+var gauge1 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge1",
+    max: 150,
+    label: "ECT",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#cc2c24",
+            lo : 94,
+            hi : 150
+        },{
+        color : "#46877f",
+            lo : 0,
+            hi : 93
+        }]
+    }
+}));
+
+var gauge2 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge2",
+    max: 50,
+    label: "IAT",
+    customSectors: {
+        length: true,
+        ranges: [{
+        color : "#46877f",
+            lo : 0,
+            hi : 50
+        }]
+    }
+}));
+
+var gauge3 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge3",
+    max: 150,
+    label: "OIL TEMP.",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#cc2c24",
+            lo : 0,
+            hi : 80
+        },{
+        color : "#46877f",
+            lo : 80,
+            hi : 95
+        },{
+        color : "#cc2c24",
+            lo : 95,
+            hi : 150
+        }]
+    }
+}));
+
+var gauge4 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge4",
+    max: 7,
+    decimals: 1,
+    label: "OIL PRES.",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#cc2c24",
+            lo : 0,
+            hi : 2
+        },{
+        color : "#46877f",
+            lo : 2,
+            hi : 7
+        }]
+    }
+}));
+
+var gauge5 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge5",
+    label: "FUEL PRES.",
+    customSectors: {
+        length: true,
+        ranges: [{
+            color : "#46877f",
+            lo : 0,
+            hi : 100
+        }]
+    }
+}));
+
+var gauge6 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge6",
     max: 20,
     decimals: 1,
     label: "BATTERY",
@@ -77,23 +163,10 @@ var bat = new JustGage(Object.assign({}, gageDefaults, {
     }
 }));
 
-var throttle = new JustGage(Object.assign({}, gageDefaults, {
-    id: "tps",
-    label: "TPS",
-    customSectors: {
-        length: true,
-        ranges: [{
-        color : "#46877f",
-            lo : 0,
-            hi : 100
-        }]
-    }
-}));
-
-var iat = new JustGage(Object.assign({}, gageDefaults, {
-    id: "iat",
-    max: 50,
-    label: "IAT",
+var gauge7 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge7",
+    max: 150,
+    label: "CAM",
     customSectors: {
         length: true,
         ranges: [{
@@ -104,26 +177,8 @@ var iat = new JustGage(Object.assign({}, gageDefaults, {
     }
 }));
 
-var ect = new JustGage(Object.assign({}, gageDefaults, {
-    id: "ect",
-    max: 150,
-    label: "ECT",
-    customSectors: {
-        length: true,
-        ranges: [{
-            color : "#cc2c24",
-            lo : 94,
-            hi : 150
-        },{
-        color : "#46877f",
-            lo : 0,
-            hi : 93
-        }]
-    }
-}));
-
-var afr = new JustGage(Object.assign({}, gageDefaults, {
-    id: "afr",
+var gauge8 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge8",
     max: 30,
     decimals: 1,
     label: "AFR",
@@ -145,76 +200,8 @@ var afr = new JustGage(Object.assign({}, gageDefaults, {
     }
 }));
 
-var fuel_pressure = new JustGage(Object.assign({}, gageDefaults, {
-    id: "fuelp",
-    label: "FUEL PRES.",
-    customSectors: {
-        length: true,
-        ranges: [{
-            color : "#46877f",
-            lo : 0,
-            hi : 100
-        }]
-    }
-}));
-
-var oil_temp = new JustGage(Object.assign({}, gageDefaults, {
-    id: "oilt",
-    max: 150,
-    label: "OIL TEMP.",
-    customSectors: {
-        length: true,
-        ranges: [{
-            color : "#cc2c24",
-            lo : 0,
-            hi : 80
-        },{
-        color : "#46877f",
-            lo : 80,
-            hi : 95
-        },{
-        color : "#cc2c24",
-            lo : 95,
-            hi : 150
-        }]
-    }
-}));
-
-var cam = new JustGage(Object.assign({}, gageDefaults, {
-    id: "cam",
-    max: 150,
-    label: "CAM",
-    customSectors: {
-        length: true,
-        ranges: [{
-        color : "#46877f",
-            lo : 0,
-            hi : 50
-        }]
-    }
-}));
-
-var oil_pressure = new JustGage(Object.assign({}, gageDefaults, {
-    id: "oilp",
-    max: 7,
-    decimals: 1,
-    label: "OIL PRES.",
-    customSectors: {
-        length: true,
-        ranges: [{
-            color : "#cc2c24",
-            lo : 0,
-            hi : 2
-        },{
-        color : "#46877f",
-            lo : 2,
-            hi : 7
-        }]
-    }
-}));
-
-var map = new JustGage(Object.assign({}, gageDefaults, {
-    id: "map",
+var gauge9 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge9",
     max: 3,
     decimals: 1,
     label: "MAP",
@@ -224,6 +211,19 @@ var map = new JustGage(Object.assign({}, gageDefaults, {
             color : "#46877f",
             lo : 0,
             hi : 3
+        }]
+    }
+}));
+
+var gauge10 = new JustGage(Object.assign({}, gaugeDefaults, {
+    id: "gauge10",
+    label: "TPS",
+    customSectors: {
+        length: true,
+        ranges: [{
+        color : "#46877f",
+            lo : 0,
+            hi : 100
         }]
     }
 }));
