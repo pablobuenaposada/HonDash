@@ -41,6 +41,6 @@ class TestFormula(TestCase):
         self.assertEquals(Formula.civic_eg_fuel_tank(0.1724137931), {'per cent': 100})
 
     def test_s2000_fuel_tank(self):
-        self.assertEquals(Formula.s2000_fuel_tank(0.4044117647), {'per cent': 0})
-        self.assertEquals(Formula.s2000_fuel_tank(0.1768488746), {'per cent': 50})
-        self.assertEquals(Formula.s2000_fuel_tank(0.04296100463), {'per cent': 100})
+        self.assertEquals(Formula.s2000_fuel_tank(3.5), {'per cent': 0})
+        self.assertEquals(Formula.s2000_fuel_tank(2.47), {'per cent': 50})
+        self.assertEquals(Formula.s2000_fuel_tank(0.9), {'per cent': 100})
