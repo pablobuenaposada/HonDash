@@ -35,6 +35,11 @@ class Formula:
                + 342.4844189 * volts + 149.2065268
         return {"celsius": celsius, "fahrenheit": Formula.celsius_to_fahrenheit(celsius)}
 
+    # Bosch 0280130039 / 0280130026 sensor powered by 5v and a 1500ohms voltage divider
+    def bosch_0280130039_0280130026(volts):
+        celsius = 4.303155022 * pow(10, -1) * pow(volts, 2) -28.49330639 * volts + 104.9358479
+        return {"celsius": celsius, "fahrenheit": Formula.celsius_to_fahrenheit(celsius)}
+
     # Autometer #2246 (4590-0023-12) 100 psi oil pressure sensor or ebay 100 psi
     def autometer_2246(volts):
         psi = 25 * volts - 12.5
