@@ -57,6 +57,7 @@ while True:
                              'bksw': kpro.bksw(),
                              'flr': kpro.flr(),
                              'map': kpro.map().setdefault(map_unit, 'bar'),
+                             'eth': kpro.eth(),
                              'an0': an0_formula(kpro.analog_input(0)).setdefault(an0_unit, 'volts'),
                              'an1': an1_formula(kpro.analog_input(1)).setdefault(an1_unit, 'volts'),
                              'an2': an2_formula(kpro.analog_input(2)).setdefault(an2_unit, 'volts'),
