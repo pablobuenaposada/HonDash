@@ -99,10 +99,10 @@ var gauge3 = new JustGage(Object.assign({}, gaugeDefaults, {
         ranges: [{
             color : "#cc2c24",
             lo : 0,
-            hi : 80
+            hi : 60
         },{
         color : "#46877f",
-            lo : 80,
+            lo : 60,
             hi : 95
         },{
         color : "#cc2c24",
