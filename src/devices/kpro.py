@@ -38,6 +38,7 @@ KPRO23_BKSW = 33
 KPRO23_ACSW = 33
 KPRO23_ACCL = 33
 KPRO23_FLR = 33
+KPRO23_FANC = 33
 KPRO23_MIL = 34
 
 KPRO4_TPS = 5
@@ -56,6 +57,7 @@ KPRO4_BKSW = 31
 KPRO4_ACSW = 31
 KPRO4_ACCL = 31
 KPRO4_FLR = 31
+KPRO4_FANC = 31
 
 # command 0x61
 KPRO23_ECT = 4
@@ -397,6 +399,16 @@ class Kpro:
                 return bool(self.data0[KPRO23_FLR] & mask)
             elif self.version == 4:
                 return bool(self.data0[KPRO4_FLR] & mask)
+        except IndexError:
+            return False
+
+    def fanc(self):
+        mask = 0x80
+        try:
+            if self.version == 23:
+                return bool(self.data0[KPRO23_FANC] & mask)
+            elif self.version == 4:
+                return bool(self.data0[KPRO4_FANC] & mask)
         except IndexError:
             return False
 
