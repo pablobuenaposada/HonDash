@@ -51,7 +51,7 @@ ECU | Ecu type |  |  |:white_check_mark:
 IGN | Ignition advance |  |  |:white_check_mark:
 SRL | K-Pro serial number |  |  |:white_check_mark:
 FIRM | K-Pro firmware version |  |  |:white_check_mark:
-AN | Analog inputs | :x: |  |:white_check_mark:
+AN | Analog inputs | :x: |:white_check_mark:|:white_check_mark:
 
 ## Advanced software installation notes
 
