@@ -68,6 +68,7 @@ while True:
                      'mil': kpro.mil(),
                      'bksw': kpro.bksw(),
                      'flr': kpro.flr(),
+                     'eth': kpro.eth(),
                      'map': kpro.map()[map_unit],
                      'an0': an0_formula(kpro.analog_input(0))[an0_unit],
                      'an1': an1_formula(kpro.analog_input(1))[an1_unit],

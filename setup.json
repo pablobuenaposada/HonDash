@@ -298,5 +298,18 @@
   },
   "gear": {
     "tag": "gear"
+  },
+  "eth": {
+    "label": "ETH",
+    "tag": "no use",
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "max": 100,
+    "suffix": ""
   }
 }

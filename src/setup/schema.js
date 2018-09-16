@@ -153,6 +153,7 @@ var schema = {
             "gear": gear,
             "rpm": rpm,
             "mil": mil,
+            "eth": simple_value_no_units_no_decimals(),
             "vss": simple_value_no_decimals(speed_units),
             "cam": simple_value_no_units_no_decimals(),
             "bat": simple_value_no_units(),
