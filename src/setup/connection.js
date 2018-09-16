@@ -41,6 +41,14 @@ function updateFields() {
     }
 }
 
+function download(){
+     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(editor.getValue(), null, 2));
+     var dlAnchorElem = document.getElementById('downloadAnchorElem');
+     dlAnchorElem.setAttribute("href", dataStr);
+     dlAnchorElem.setAttribute("download", "setup.json");
+     dlAnchorElem.click();
+}
+
 function save(){
     var c = new autobahn.Connection({url: 'ws://127.0.0.1:8080/ws', realm: 'realm1'});
 
