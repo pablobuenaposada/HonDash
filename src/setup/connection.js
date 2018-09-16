@@ -22,7 +22,7 @@ function updateFields() {
         } catch(err) {} // some of the values doesn't have tag field
 
         if (selectedOption == 'not use'){
-            divs[i].style.backgroundColor = "#EEEEEE";
+            divs[i].style.backgroundColor = "#ffdddd";
             var nodes = divs[i].getElementsByTagName('*');
             for (var i = 0; i < nodes.length; i++){
                 var nodeName = nodes[i].name;
@@ -32,7 +32,7 @@ function updateFields() {
             }
         }
         else {
-            divs[i].style.backgroundColor = "#DDDDDD";
+            divs[i].style.backgroundColor = "#ddfae2";
             var nodes = divs[i].getElementsByTagName('*');
             for (var i = 0; i < nodes.length; i++){
                 nodes[i].disabled = false;
