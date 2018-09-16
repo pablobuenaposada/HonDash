@@ -11,12 +11,13 @@ class Bar {
         this.maxValue = args.maxValue || 100;
         this.enableTextValue = args.enableTextValue !== undefined
             ? args.enableTextValue : true;
-        this.textEnding = args.textEnding !== undefined
-            ? args.textEnding : "%";
+        this.suffix = args.suffix !== undefined
+            ? args.suffix : "";
         this.textFont = args.textFont || "Arial";
         this.textWeight = args.textWeight || "bold";
         this.textSize = args.textSize || 20;
         var backgroundColor = args.backgroundColor || "#edebeb";
+        this.sectors = args.sectors || [];
 
         // Raphael paper object
         this.paper = Raphael(args.id, "100%", "100%");
@@ -31,8 +32,8 @@ class Bar {
         // Bar fill & stroke
         this.bar = this.paper.rect(this.x, this.y, this.width, this.height);
         this.bar.attr({
-            fill: args.fillColor,
-            stroke: args.fillColor,
+            fill: this.getFillColor(this.minValue),
+            stroke: this.getFillColor(this.minValue),
         });
 
         // Center the text on the Bar
@@ -41,6 +42,16 @@ class Bar {
             this.y + (this.height / 2),
             ""
         );
+    }
+
+    getFillColor(value) {
+        if (this.sectors.length > 0) {
+            for (var i = 0; i < this.sectors.length; i++) {
+                if (value >= this.sectors[i].lo && value <= this.sectors[i].hi) {
+                    return this.sectors[i].color;
+                }
+            }
+        }
     }
 
     refresh(value) {
@@ -53,19 +64,33 @@ class Bar {
             : value;
 
         if (this.isVertical) {
+            var color = this.getFillColor(value);
             this.newWidth = (this.width * value) / this.maxValue;
-            this.bar.attr({width: this.newWidth});
+            this.bar.attr({width: this.newWidth, fill: color, stroke: color});
         }
         else {
+            var color = this.getFillColor(value);
             this.newHeight = (this.height * value) / this.maxValue;
-            this.bar.attr({y: (this.y - this.newHeight) + this.height  , height: this.newHeight});
+            this.bar.attr({y: (this.y - this.newHeight) + this.height  , height: this.newHeight, fill: color, stroke: color});
         }
 
         this.enableTextValue && this.text.attr({
             "font-family": this.textFont,
             "font-size": this.textSize,
             "font-weight": this.textWeight,
-            text: value + this.textEnding,
+            text: value + this.suffix,
         });
+    }
+
+    setMax(max) {
+        this.maxValue = max;
+    }
+
+    setSectors(sectors) {
+        this.sectors = sectors;
+    }
+
+    setSuffix(suffix) {
+        this.suffix = suffix;
     }
 };

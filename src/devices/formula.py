@@ -35,6 +35,11 @@ class Formula:
                + 342.4844189 * volts + 149.2065268
         return {"celsius": celsius, "fahrenheit": Formula.celsius_to_fahrenheit(celsius)}
 
+    # Bosch 0280130039 / 0280130026 sensor powered by 5v and a 1500ohms voltage divider
+    def bosch_0280130039_0280130026(volts):
+        celsius = 4.303155022 * pow(10, -1) * pow(volts, 2) -28.49330639 * volts + 104.9358479
+        return {"celsius": celsius, "fahrenheit": Formula.celsius_to_fahrenheit(celsius)}
+
     # Autometer #2246 (4590-0023-12) 100 psi oil pressure sensor or ebay 100 psi
     def autometer_2246(volts):
         psi = 25 * volts - 12.5
@@ -49,6 +54,6 @@ class Formula:
     def civic_eg_fuel_tank(volts):
         return {"per cent": int(-1.209083604 * pow(volts, 2) - 27.62416175 * volts + 104.7987284)}
 
-    # s2000 fuel tank powered by 5v and a 1500ohms voltage divider
+    # s2000 fuel tank powered by 5v and a 56ohms voltage divider
     def s2000_fuel_tank(volts):
-        return {"per cent": int(425.3064645 * pow(volts, 2) - 466.933388 * volts + 119.2749615)}
+        return {"per cent": int(-6.163413263 * pow(volts, 2) - 11.48794404 * volts + 116.2915039)}

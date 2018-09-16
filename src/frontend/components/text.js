@@ -15,4 +15,10 @@ class Text {
     refresh(value){
         this.element.innerHTML = this.prefix + value + this.suffix;
     }
+
+    setSuffix(suffix){
+        if (suffix != null){
+            this.suffix = suffix;
+        }
+    }
 }

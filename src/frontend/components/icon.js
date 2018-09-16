@@ -2,8 +2,8 @@ class Icon {
 
     constructor(args){
         this.element = document.getElementById(args.id);
-        this.pathOff = args.pathOff;
-        this.pathOn = args.pathOn;
+        this.pathOff = "";
+        this.pathOn = "";
         var img = document.createElement("img");
         img.src = "icons/" + this.pathOff;
         img.style.width = "100%";
@@ -16,5 +16,13 @@ class Icon {
         img.src = "icons/" + (value > 0 ? this.pathOn : this.pathOff);
         this.element.innerHTML = '';
         this.element.appendChild(img);
+    }
+
+    setPathoff(path){
+        this.pathOff = path;
+    }
+
+    setPathon(path){
+        this.pathOn = path;
     }
 }

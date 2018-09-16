@@ -16,3 +16,6 @@ class TestMapper(TestCase):
     def test_get_formula(self):
         self.assertEquals(self.mapper.get_formula('an0'), Formula.ebay_150_psi)
         self.assertEquals(self.mapper.get_formula('foo'), Formula.voltage)
+
+    def test_get_setup(self):
+        print(self.mapper.get_setup())

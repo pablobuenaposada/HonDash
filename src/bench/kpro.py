@@ -25,6 +25,7 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list['ACSW'] = str(kpro.acsw())
         output_list['ACCL'] = str(kpro.accl())
         output_list['FLR'] = str(kpro.flr())
+        output_list['FANC'] = str(kpro.fanc())
         output_list['MAP'] = str(kpro.map())
         output_list['AN0'] = str(kpro.analog_input(0))
         output_list['AN1'] = str(kpro.analog_input(1))
