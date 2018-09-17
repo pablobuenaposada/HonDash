@@ -42,11 +42,15 @@ function updateFields() {
 }
 
 function download(){
-     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(editor.getValue(), null, 2));
-     var dlAnchorElem = document.getElementById('downloadAnchorElem');
-     dlAnchorElem.setAttribute("href", dataStr);
-     dlAnchorElem.setAttribute("download", "setup.json");
-     dlAnchorElem.click();
+    try {
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(editor.getValue(), null, 2));
+        var dlAnchorElem = document.getElementById('downloadAnchorElem');
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", "setup.json");
+        dlAnchorElem.click();
+    } catch (e) {
+        alert("sorry, an error occurred\n" + e.message);
+    }
 }
 
 function save(){
@@ -58,8 +62,8 @@ function save(){
                 schema['startval'] = setup;
                 alert("setup saved");
             },
-            function (err) {
-                alert("sorry, an error occurred", err);
+            function (e) {
+                alert("sorry, an error occurred\n" + e.message);
             }
         );
     };
