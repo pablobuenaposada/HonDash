@@ -3,16 +3,21 @@
 ## How to run this project in a Raspberry Pi?
 Get Raspbian working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
 
+let's update:
+```sh
+sudo apt update
+```
+
 Open the command line and install this packages:
 ```sh
 sudo apt install libatlas-base-dev
 ```
 
-Enable SSH and SPI through:
+Enable SSH through:
 ```sh
 sudo raspi-config
 ```
-Go to 5.Interfacing options --> enable both SSH and SPI
+Go to 5.Interfacing options --> enable both SSH
 
 Clone this project:
 ```sh
@@ -29,6 +34,38 @@ make virtualenv_rpi
 Later you can just run the project:
 ```sh
 make run_rpi
+```
+
+### Enable hotspot
+```sh
+sudo apt install network-manager network-manager-gnome openvpn \openvpn-systemd-resolved network-manager-openvpn \network-manager-openvpn-gnome
+```
+
+```sh
+sudo apt purge openresolv dhcpcd5
+```
+
+```sh
+sudo ln -sf /lib/systemd/resolv.conf /etc/resolv.conf
+```
+
+Right click on the desktop bar and remove 'Wireless & Wired Network'
+
+Reboot
+
+Right click on the network manager and add a WiFi connection type, connection name: HonDash, ssid: HonDash, mode: Hotspot
+
+### Nginx for enable the setup tool
+```sh
+sudo apt-get install nginx
+```
+
+```sh
+sudo /etc/init.d/nginx start
+```
+
+```sh
+cp /home/pi/Desktop/HonDash/nginx/default /etc/nginx/sites-enabled/default
 ```
 
 ## Optional tricks
