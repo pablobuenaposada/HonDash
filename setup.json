@@ -1,315 +1,255 @@
 {
-  "vss": {
-    "sectors": [],
-    "suffix": "",
-    "label": "",
-    "tag": "speed",
-    "unit": "kmh",
-    "max": 300
-  },
-  "cam": {
-    "label": "CAM",
-    "tag": "gauge7",
-    "sectors": [
-      {
-        "color": "#46877f",
-        "hi": 50,
-        "lo": 0
-      }
-    ],
-    "max": 100,
-    "suffix": ""
-  },
-  "ect": {
-    "sectors": [
-      {
-        "color": "#cc2c24",
-        "hi": 150,
-        "lo": 94
-      },
-      {
-        "color": "#46877f",
-        "hi": 93,
-        "lo": 0
-      }
-    ],
-    "suffix": "",
-    "label": "ECT",
-    "tag": "gauge1",
-    "unit": "celsius",
-    "max": 150
-  },
-  "iat": {
-    "sectors": [
-      {
-        "color": "#46877f",
-        "hi": 50,
-        "lo": 0
-      }
-    ],
-    "suffix": "",
-    "label": "IAT",
-    "tag": "gauge2",
-    "unit": "celsius",
-    "max": 50
-  },
-  "tps": {
-    "label": "TPS",
-    "tag": "gauge10",
-    "sectors": [
-      {
-        "color": "#46877f",
-        "hi": 100,
-        "lo": 0
-      }
-    ],
-    "max": 100,
-    "suffix": ""
-  },
-  "odo": {
-    "tag": "odo",
-    "value": 686,
-    "suffix": " km",
-    "unit": "km"
-  },
-  "template": "basic",
-  "map": {
-    "tag": "gauge9",
-    "sectors": [
-      {
-        "color": "#46877f",
-        "hi": 3,
-        "lo": 0
-      }
-    ],
-    "suffix": "",
-    "label": "MAP",
-    "decimals": 1,
-    "unit": "bar",
-    "max": 3
-  },
-  "an1": {
-    "formula": "autometer_2246",
-    "tag": "gauge5",
-    "sectors": [
-      {
-        "color": "#46877f",
-        "hi": 100,
-        "lo": 0
-      }
-    ],
-    "suffix": "",
-    "label": "FUEL PRES.",
-    "decimals": 0,
-    "unit": "psi",
-    "max": 100
-  },
-  "an7": {
-    "formula": "vdo_323_057",
-    "tag": "not use",
-    "sectors": [
-      {
-        "color": "#cc2c24",
-        "hi": 80,
-        "lo": 0
-      }
-    ],
-    "suffix": "",
-    "label": "OIL TEMP.",
-    "decimals": 0,
-    "unit": "celsius",
-    "max": 150
-  },
-  "an3": {
-    "formula": "civic_eg_fuel_tank",
-    "tag": "bar2",
-    "sectors": [
-      {
-        "color": "#46877f",
-        "hi": 100,
-        "lo": 0
-      }
-    ],
-    "suffix": "%",
-    "label": "",
-    "decimals": 0,
-    "unit": "per cent",
-    "max": 100
-  },
-  "version": 1,
-  "an5": {
-    "formula": "vdo_323_057",
-    "tag": "not use",
-    "sectors": [
-      {
-        "color": "#cc2c24",
-        "hi": 80,
-        "lo": 0
-      }
-    ],
-    "suffix": "",
-    "label": "OIL TEMP.",
-    "decimals": 0,
-    "unit": "celsius",
-    "max": 150
-  },
-  "bat": {
-    "tag": "gauge6",
-    "sectors": [
-      {
-        "color": "#cc2c24",
-        "hi": 12,
-        "lo": 0
-      },
-      {
-        "color": "#46877f",
-        "hi": 20,
-        "lo": 12
-      }
-    ],
-    "suffix": "",
-    "label": "BATTERY",
-    "decimals": 1,
-    "max": 20
-  },
   "mil": {
     "pathoff": "check_engine_off.svg",
     "tag": "icon1",
     "pathon": "check_engine_on.svg"
   },
-  "an0": {
-    "formula": "ebay_150_psi",
-    "tag": "gauge4",
-    "sectors": [
-      {
-        "color": "#cc2c24",
-        "hi": 2,
-        "lo": 0
-      },
-      {
-        "color": "#46877f",
-        "hi": 7,
-        "lo": 2
-      }
-    ],
+  "an6": {
+    "label": "",
+    "unit": "celsius",
     "suffix": "",
-    "label": "OIL PRES.",
-    "decimals": 1,
-    "unit": "bar",
-    "max": 7
+    "sectors": [],
+    "decimals": 0,
+    "tag": "not use",
+    "max": 0,
+    "formula": "vdo_323_057"
   },
-  "o2": {
-    "tag": "gauge8",
+  "an1": {
+    "label": "",
+    "unit": "celsius",
+    "suffix": "",
+    "sectors": [],
+    "decimals": 0,
+    "tag": "not use",
+    "max": 0,
+    "formula": "vdo_323_057"
+  },
+  "tps": {
+    "label": "TPS",
+    "tag": "gauge10",
+    "max": 100,
+    "suffix": "",
     "sectors": [
       {
-        "color": "#cc2c24",
-        "hi": 12,
-        "lo": 0
-      },
-      {
+        "lo": 0,
         "color": "#46877f",
-        "hi": 16,
-        "lo": 12
+        "hi": 100
+      }
+    ]
+  },
+  "eth": {
+    "label": "ETH",
+    "tag": "gauge4",
+    "max": 100,
+    "suffix": "",
+    "sectors": [
+      {
+        "lo": 0,
+        "color": "#46877f",
+        "hi": 100
+      }
+    ]
+  },
+  "an4": {
+    "label": "",
+    "unit": "celsius",
+    "suffix": "",
+    "sectors": [],
+    "decimals": 0,
+    "tag": "not use",
+    "max": 0,
+    "formula": "vdo_323_057"
+  },
+  "vss": {
+    "label": "",
+    "unit": "kmh",
+    "suffix": "",
+    "sectors": [],
+    "tag": "speed",
+    "max": 300
+  },
+  "gear": {
+    "tag": "gear"
+  },
+  "an5": {
+    "label": "",
+    "unit": "celsius",
+    "suffix": "",
+    "sectors": [],
+    "decimals": 0,
+    "tag": "not use",
+    "max": 0,
+    "formula": "vdo_323_057"
+  },
+  "time": {
+    "tag": "time"
+  },
+  "ect": {
+    "label": "ECT",
+    "unit": "celsius",
+    "suffix": "",
+    "sectors": [
+      {
+        "lo": 94,
+        "color": "#cc2c24",
+        "hi": 150
       },
       {
-        "color": "#cc2c24",
-        "hi": 30,
-        "lo": 16
+        "lo": 0,
+        "color": "#46877f",
+        "hi": 94
       }
     ],
-    "suffix": "",
-    "label": "AFR",
-    "decimals": 1,
-    "unit": "afr",
-    "max": 30
+    "tag": "gauge1",
+    "max": 150
+  },
+  "an0": {
+    "label": "",
+    "unit": "per cent",
+    "suffix": "%",
+    "sectors": [
+      {
+        "lo": 0,
+        "color": "#46877f",
+        "hi": 100
+      }
+    ],
+    "decimals": 0,
+    "tag": "bar2",
+    "max": 100,
+    "formula": "civic_eg_fuel_tank"
+  },
+  "odo": {
+    "value": 0,
+    "tag": "odo",
+    "unit": "km"
   },
   "rpm": {
     "tag": "bar1",
     "sectors": [
       {
+        "lo": 0,
         "color": "#d64d8a",
-        "hi": 9500,
-        "lo": 0
+        "hi": 9000
       }
-    ],
-    "max": 9500,
-    "suffix": ""
+    ]
   },
-  "an4": {
-    "formula": "vdo_323_057",
+  "an7": {
+    "label": "",
+    "unit": "celsius",
+    "suffix": "",
+    "sectors": [],
+    "decimals": 0,
     "tag": "not use",
+    "max": 0,
+    "formula": "vdo_323_057"
+  },
+  "version": 1,
+  "map": {
+    "label": "MAP",
+    "unit": "bar",
+    "suffix": "",
     "sectors": [
       {
-        "color": "#cc2c24",
-        "hi": 80,
-        "lo": 0
+        "lo": 0,
+        "color": "#46877f",
+        "hi": 3
       }
     ],
-    "suffix": "",
-    "label": "OIL TEMP.",
-    "decimals": 0,
-    "unit": "celsius",
-    "max": 150
+    "tag": "gauge9",
+    "max": 3,
+    "decimals": 1
   },
-  "an6": {
-    "formula": "vdo_323_057",
-    "tag": "not use",
+  "template": "basic",
+  "o2": {
+    "label": "AFR",
+    "unit": "afr",
+    "suffix": "",
     "sectors": [
       {
+        "lo": 0,
         "color": "#cc2c24",
-        "hi": 80,
-        "lo": 0
+        "hi": 12
+      },
+      {
+        "lo": 12,
+        "color": "#46877f",
+        "hi": 16
+      },
+      {
+        "lo": 16,
+        "color": "#cc2c24",
+        "hi": 30
       }
     ],
-    "suffix": "",
-    "label": "OIL TEMP.",
-    "decimals": 0,
+    "tag": "gauge8",
+    "max": 30,
+    "decimals": 1
+  },
+  "iat": {
+    "label": "IAT",
     "unit": "celsius",
-    "max": 150
+    "suffix": "",
+    "sectors": [
+      {
+        "lo": 0,
+        "color": "#46877f",
+        "hi": 70
+      }
+    ],
+    "tag": "gauge2",
+    "max": 50
+  },
+  "cam": {
+    "label": "CAM",
+    "tag": "gauge7",
+    "max": 100,
+    "suffix": "",
+    "sectors": [
+      {
+        "lo": 0,
+        "color": "#46877f",
+        "hi": 100
+      }
+    ]
+  },
+  "an3": {
+    "label": "",
+    "unit": "celsius",
+    "suffix": "",
+    "sectors": [],
+    "decimals": 1,
+    "tag": "not use",
+    "max": 0,
+    "formula": "vdo_323_057"
   },
   "an2": {
-    "formula": "vdo_323_057",
-    "tag": "gauge3",
-    "sectors": [
-      {
-        "color": "#cc2c24",
-        "hi": 80,
-        "lo": 0
-      },
-      {
-        "color": "#46877f",
-        "hi": 95,
-        "lo": 80
-      },
-      {
-        "color": "#cc2c24",
-        "hi": 150,
-        "lo": 95
-      }
-    ],
-    "suffix": "",
-    "label": "OIL TEMP.",
-    "decimals": 0,
+    "label": "",
     "unit": "celsius",
-    "max": 150
+    "suffix": "",
+    "sectors": [],
+    "decimals": 0,
+    "tag": "not use",
+    "max": 0,
+    "formula": "vdo_323_057"
   },
-  "time": {
-    "tag": "time"
-  },
-  "gear": {
-    "tag": "gear"
-  },
-  "eth": {
-    "label": "ETH",
-    "tag": "no use",
+  "bat": {
+    "label": "BATTERY",
+    "suffix": "",
     "sectors": [
       {
+        "lo": 0,
+        "color": "#cc2c24",
+        "hi": 12
+      },
+      {
+        "lo": 12,
         "color": "#46877f",
-        "hi": 100,
-        "lo": 0
+        "hi": 20
       }
     ],
-    "max": 100,
-    "suffix": ""
+    "tag": "gauge6",
+    "max": 20,
+    "decimals": 1
   }
 }
