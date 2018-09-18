@@ -4,6 +4,11 @@
     "tag": "icon1",
     "pathon": "check_engine_on.svg"
   },
+  "fan": {
+    "pathoff": "fan_off.svg",
+    "tag": "icon2",
+    "pathon": "fan_on.svg"
+  },
   "an6": {
     "label": "",
     "unit": "celsius",

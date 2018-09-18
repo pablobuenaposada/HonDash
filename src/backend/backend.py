@@ -66,6 +66,7 @@ while True:
                      'o2': kpro.o2()[o2_unit],
                      'cam': kpro.cam(),
                      'mil': kpro.mil(),
+                     'fan': kpro.fanc(),
                      'bksw': kpro.bksw(),
                      'flr': kpro.flr(),
                      'eth': kpro.eth(),

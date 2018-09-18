@@ -10,6 +10,7 @@ var odo = new Text({id: "odo", value: "0", size: 3, style: "italic"});
 
 // Icons
 var icon1 = new Icon({id: "icon1"});
+var icon2 = new Icon({id: "icon2"});
 
 // Gauges
 var gauge1 = new Gauge({id: "gauge1"});
