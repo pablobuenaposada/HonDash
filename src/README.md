@@ -3,22 +3,23 @@
 ## How to run this project in a Raspberry Pi?
 Get Raspbian working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
 
-let's update:
+Let's update:
 ```sh
 sudo apt update
 ```
 
-Open the command line and install this packages:
+Install this packages:
 ```sh
 sudo apt install libatlas-base-dev
 ```
-
+### SSH
 Enable SSH through:
 ```sh
 sudo raspi-config
 ```
 Go to 5.Interfacing options --> enable both SSH
 
+### Install the project
 Clone this project:
 ```sh
 cd /home/pi/Desktop/
