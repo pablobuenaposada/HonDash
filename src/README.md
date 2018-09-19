@@ -71,17 +71,13 @@ sudo /etc/init.d/nginx start
 ```
 
 ```sh
-cp /home/pi/Desktop/HonDash/nginx/default /etc/nginx/sites-enabled/default
+cp /home/pi/Desktop/HonDash/config/nginx/default /etc/nginx/sites-enabled/default
 ```
 
 ## Optional tricks
 ### HonDash at startup
 ```sh
-crontab -e
-```
-add this line:
-```sh
-@reboot (export DISPLAY=:0 && cd /home/pi/Desktop/HonDash/ && make run_rpi)
+crontab /home/pi/Desktop/HonDash/config/cron/cron
 ```
 
 ### Disable screen saver
