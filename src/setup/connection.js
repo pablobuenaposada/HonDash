@@ -53,8 +53,10 @@ function download(){
     }
 }
 
+var webSocketUrl = 'ws://' + (window.location.hostname || '127.0.0.1') + ':8080/ws';
+
 function save(){
-    var c = new autobahn.Connection({url: 'ws://127.0.0.1:8080/ws', realm: 'realm1'});
+    var c = new autobahn.Connection({url: webSocketUrl, realm: 'realm1'});
 
     c.onopen = function (session) {
         session.call("save", [editor.getValue()]).then(
@@ -78,7 +80,7 @@ try {
 }
 
 var connection = new autobahn.Connection({
-   url: 'ws://127.0.0.1:8080/ws',
+   url: webSocketUrl,
    realm: 'realm1'}
 );
 
