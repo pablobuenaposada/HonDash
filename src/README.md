@@ -36,7 +36,12 @@ Later you can just run the project:
 ```sh
 make run_rpi
 ```
-
+### Hostname
+Change the hostname from raspberrypi to hondash
+```sh
+sudo sed -i 's/raspberrypi/hondash/g' /etc/hostname
+sudo sed -i 's/raspberrypi/hondash/g' /etc/hosts
+```
 ### Enable hotspot
 ```sh
 sudo apt install network-manager network-manager-gnome openvpn \openvpn-systemd-resolved network-manager-openvpn \network-manager-openvpn-gnome
