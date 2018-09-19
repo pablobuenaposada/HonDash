@@ -30,7 +30,7 @@ AFR | A/F ratio |  |  |:white_check_mark:
 TPS | Throttle position |:white_check_mark:|:white_check_mark:|:white_check_mark:
 VSS | Speed |  |  |:white_check_mark:
 RPM | Revs. per minute |  |:white_check_mark:|:white_check_mark:
-VTC | VTC cam angle |  |  |:white_check_mark:
+CAM | VTC cam angle |  |  |:white_check_mark:
 CLV | Calculated load value |  |  |
 ECT | Coolant temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:
 ETH | Ethanol content |  |  |:white_check_mark:
