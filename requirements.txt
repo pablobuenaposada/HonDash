@@ -5,8 +5,5 @@ pytemperature==1.0
 reprint==0.5.1
 crossbar==18.4.1
 autobahn_sync==0.3.2
-atomicwrites==1.1.5
-RPi.GPIO==0.6.3
-spidev==3.2
 codecov
 pytest-cov
