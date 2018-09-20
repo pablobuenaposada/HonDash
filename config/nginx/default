@@ -2,13 +2,15 @@ server {
         listen 80 default_server;
         listen [::]:80 default_server;
 
-        root /home/pi/Desktop/HonDash/src/setup;
-
         index index.html index.htm index.nginx-debian.html;
 
         server_name _;
 
         location / {
-                try_files $uri $uri/ =404;
+                root /home/pi/Desktop/HonDash/src/frontend;
+        }
+
+        location /setup {
+                root /home/pi/Desktop/HonDash/src;
         }
 }
