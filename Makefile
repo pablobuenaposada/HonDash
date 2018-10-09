@@ -1,4 +1,5 @@
 ISORT="venv/bin/isort"
+FLAKE8="venv/bin/flake8"
 
 clean:
 	@rm -rf venv
@@ -33,8 +34,11 @@ dummy:
 	. venv/bin/activate; python src/bench/dummy_backend.py &
 	open -a "Google Chrome" src/frontend/index.html
 
-test: isort
+test: isort lint
 	pytest src/tests --cov=./
 
 isort:
 	$(ISORT) -rc src
+
+lint:
+	$(FLAKE8) src

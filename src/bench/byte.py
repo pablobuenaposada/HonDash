@@ -1,5 +1,4 @@
 import usb
-from numpy import interp
 
 if usb.core.find(idVendor=0x403, idProduct=0xf5f8) is not None:  # kpro2
     dev = usb.core.find(idVendor=0x403, idProduct=0xf5f8)
@@ -15,11 +14,8 @@ if dev is not None:
         intf = cfg[(0, 0)]
         ep = usb.util.find_descriptor(
             intf,
-            custom_match= \
-                lambda e: \
-                    usb.util.endpoint_direction(e.bEndpointAddress) == \
-                    usb.util.ENDPOINT_OUT)
-    except:
+            custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT)
+    except Exception:
         pass
 
     while True:

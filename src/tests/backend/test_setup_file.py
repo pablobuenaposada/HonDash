@@ -15,7 +15,7 @@ class TestSetupFile(TestCase):
         Checks that we can get the vss config values from the setup file
         """
         vss_params = self.setup.get_value('vss')
-        assert vss_params # checks that the dict return is not empty
+        assert vss_params  # checks that the dict return is not empty
 
     # def test_update_key(self):
     #     """

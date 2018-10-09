@@ -8,3 +8,4 @@ autobahn_sync==0.3.2
 codecov
 pytest-cov
 isort
+flake8

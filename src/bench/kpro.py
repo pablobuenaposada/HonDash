@@ -1,4 +1,4 @@
-#sudo python bench/test.py
+# sudo python bench/test.py
 from __future__ import print_function
 
 from reprint import output

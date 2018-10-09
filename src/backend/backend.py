@@ -10,49 +10,49 @@ from devices.time import Time
 
 @register(u'setup')
 def setup():
-    return setup.load_setup()
+    return setup_file.load_setup()
 
 
 @register(u'save')
 def save(new_setup):
-    setup.save_setup(new_setup)
+    setup_file.save_setup(new_setup)
 
 
 while True:
     try:
         run()
         break
-    except:
+    except Exception:
         continue
 
 kpro = Kpro()
 time = Time()
 odo = Odometer()
-setup = SetupFile()
+setup_file = SetupFile()
 
-iat_unit = setup.json.get('iat', {}).get('unit', 'celsius')
-ect_unit = setup.json.get('ect', {}).get('unit', 'celsius')
-vss_unit = setup.json.get('vss', {}).get('unit', 'kmh')
-o2_unit = setup.json.get('o2', {}).get('unit', 'afr')
-odo_unit = setup.json.get('odo', {}).get('unit', 'km')
-map_unit = setup.json.get('map', {}).get('unit', 'bar')
-an0_unit = setup.json.get('an0', {}).get('unit', 'volts')
-an1_unit = setup.json.get('an1', {}).get('unit', 'volts')
-an2_unit = setup.json.get('an2', {}).get('unit', 'volts')
-an3_unit = setup.json.get('an3', {}).get('unit', 'volts')
-an4_unit = setup.json.get('an4', {}).get('unit', 'volts')
-an5_unit = setup.json.get('an5', {}).get('unit', 'volts')
-an6_unit = setup.json.get('an6', {}).get('unit', 'volts')
-an7_unit = setup.json.get('an7', {}).get('unit', 'volts')
+iat_unit = setup_file.json.get('iat', {}).get('unit', 'celsius')
+ect_unit = setup_file.json.get('ect', {}).get('unit', 'celsius')
+vss_unit = setup_file.json.get('vss', {}).get('unit', 'kmh')
+o2_unit = setup_file.json.get('o2', {}).get('unit', 'afr')
+odo_unit = setup_file.json.get('odo', {}).get('unit', 'km')
+map_unit = setup_file.json.get('map', {}).get('unit', 'bar')
+an0_unit = setup_file.json.get('an0', {}).get('unit', 'volts')
+an1_unit = setup_file.json.get('an1', {}).get('unit', 'volts')
+an2_unit = setup_file.json.get('an2', {}).get('unit', 'volts')
+an3_unit = setup_file.json.get('an3', {}).get('unit', 'volts')
+an4_unit = setup_file.json.get('an4', {}).get('unit', 'volts')
+an5_unit = setup_file.json.get('an5', {}).get('unit', 'volts')
+an6_unit = setup_file.json.get('an6', {}).get('unit', 'volts')
+an7_unit = setup_file.json.get('an7', {}).get('unit', 'volts')
 
-an0_formula = setup.get_formula('an0')
-an1_formula = setup.get_formula('an1')
-an2_formula = setup.get_formula('an2')
-an3_formula = setup.get_formula('an3')
-an4_formula = setup.get_formula('an4')
-an5_formula = setup.get_formula('an5')
-an6_formula = setup.get_formula('an6')
-an7_formula = setup.get_formula('an7')
+an0_formula = setup_file.get_formula('an0')
+an1_formula = setup_file.get_formula('an1')
+an2_formula = setup_file.get_formula('an2')
+an3_formula = setup_file.get_formula('an3')
+an4_formula = setup_file.get_formula('an4')
+an5_formula = setup_file.get_formula('an5')
+an6_formula = setup_file.get_formula('an6')
+an7_formula = setup_file.get_formula('an7')
 
 while True:
     odo.save(kpro.vss()['kmh'])
