@@ -1,21 +1,26 @@
 from unittest import TestCase
 
-from backend.mapper import Mapper
-
-from devices.formula import Formula
+from devices.setup_file import SetupFile
 
 
-class TestMapper(TestCase):
+class TestSetupFile(TestCase):
+
     def setUp(self):
-        self.mapper = Mapper()
+        # note that the json file loaded in this test is the one used also as example
+        # located in the root folder of this project
+        self.setup = SetupFile()
 
-    def test_get_unit(self):
-        self.assertEquals(self.mapper.get_unit('vss'), 'kmh')
-        self.assertEquals(self.mapper.get_unit('foo'), None)
+    def test_get_value(self):
+        """
+        Checks that we can get the vss config values from the setup file
+        """
+        vss_params = self.setup.get_value('vss')
+        assert vss_params # checks that the dict return is not empty
 
-    def test_get_formula(self):
-        self.assertEquals(self.mapper.get_formula('an0'), Formula.ebay_150_psi)
-        self.assertEquals(self.mapper.get_formula('foo'), Formula.voltage)
-
-    def test_get_setup(self):
-        print(self.mapper.get_setup())
+    # def test_update_key(self):
+    #     """
+    #     Update of the label field for the vss config
+    #     """
+        # assert self.setup.get_value('vss')['label'] is ""
+        # self.setup.update_key('vss', {'label': 'display text'})
+        # assert self.setup.get_value('vss')['label'] is "display text"
