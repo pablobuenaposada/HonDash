@@ -34,11 +34,14 @@ dummy:
 	. venv/bin/activate; python src/bench/dummy_backend.py &
 	open -a "Google Chrome" src/frontend/index.html
 
-test: isort lint
+test: isort-check lint
 	pytest src/tests --cov=./
 
-isort:
+isort-fix:
 	$(ISORT) -rc src
+
+isort-check:
+	$(ISORT) -rc -c src
 
 lint:
 	$(FLAKE8) src
