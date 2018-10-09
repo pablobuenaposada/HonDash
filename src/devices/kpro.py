@@ -1,9 +1,10 @@
 import threading
 
+import pytemperature
 import usb.core
 import usb.util
 from numpy import interp
-import pytemperature
+
 from devices.formula import Formula
 
 # command 0x40

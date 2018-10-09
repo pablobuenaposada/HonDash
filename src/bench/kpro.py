@@ -1,8 +1,9 @@
 #sudo python bench/test.py
 from __future__ import print_function
-from devices.kpro import Kpro
+
 from reprint import output
 
+from devices.kpro import Kpro
 
 kpro = Kpro()
 with output(output_type="dict", initial_len=1, interval=0) as output_list:

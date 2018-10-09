@@ -1,10 +1,11 @@
 import random
 from time import sleep
+
 from autobahn_sync import publish, run
-from devices.time import Time
-from devices.odometer import Odometer
 
 from devices.formula import Formula
+from devices.odometer import Odometer
+from devices.time import Time
 
 run()
 

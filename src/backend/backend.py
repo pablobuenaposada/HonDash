@@ -1,11 +1,11 @@
 from time import sleep
-from autobahn_sync import publish, run, register
+
+from autobahn_sync import publish, register, run
 
 from devices.kpro import Kpro
-from devices.time import Time
 from devices.odometer import Odometer
-
 from devices.setup_file import SetupFile
+from devices.time import Time
 
 
 @register(u'setup')
