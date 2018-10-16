@@ -31,7 +31,7 @@
   },
   "tps": {
     "label": "TPS",
-    "tag": "gauge10",
+    "tag": "gauge8",
     "max": 100,
     "suffix": "",
     "sectors": [
@@ -161,7 +161,7 @@
         "hi": 3
       }
     ],
-    "tag": "gauge9",
+    "tag": "gauge5",
     "max": 3,
     "decimals": 1
   },
@@ -187,7 +187,7 @@
         "hi": 30
       }
     ],
-    "tag": "gauge8",
+    "tag": "gauge3",
     "max": 30,
     "decimals": 1
   },
