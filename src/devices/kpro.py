@@ -90,6 +90,24 @@ KPRO4_MIL = 30
 KPRO4_ETH = 98
 KPRO4_FLT = 99
 
+# command 0xb0
+KPRO3_AN0_1 = 5
+KPRO3_AN0_2 = 4
+KPRO3_AN1_1 = 7
+KPRO3_AN1_2 = 6
+KPRO3_AN2_1 = 9
+KPRO3_AN2_2 = 8
+KPRO3_AN3_1 = 11
+KPRO3_AN3_2 = 10
+KPRO3_AN4_1 = 13
+KPRO3_AN4_2 = 12
+KPRO3_AN5_1 = 15
+KPRO3_AN5_2 = 14
+KPRO3_AN6_1 = 17
+KPRO3_AN6_2 = 16
+KPRO3_AN7_1 = 19
+KPRO3_AN7_2 = 18
+
 
 class Kpro:
     def __init__(self):
@@ -98,6 +116,7 @@ class Kpro:
         self.data2 = []
         self.data3 = []
         self.data4 = []
+        self.data5 = []
         self.dev = None
         self.version = 0
 
@@ -144,8 +163,6 @@ class Kpro:
                 elif self.version == 4:
                     self.data1 = self.dev.read(0x82, 1000)  # kpro v4
 
-                self.ep.clear_halt()
-
                 self.ep.write('\x62')
                 if self.version == 23:
                     temp = self.dev.read(0x81, 1000)  # kpro v2 & v3
@@ -159,6 +176,10 @@ class Kpro:
                 if self.version == 4:
                     self.ep.write('\x65')
                     self.data3 = self.dev.read(0x82, 128, 1000)  # kpro v4
+                else:  # for v3 only, v2 will not return anything meaningful
+                    self.ep.clear_halt()
+                    self.ep.write('\xb0')
+                    self.data5 = self.dev.read(0x81, 1000)
 
             except Exception as e:
                 print("USB problem", e)
@@ -536,9 +557,43 @@ class Kpro:
                 index_2 = KPRO4_AN7_2
             else:
                 return 0
+
+            try:
+                return interp((256 * self.data3[index_1]) + self.data3[index_2], [0, 4096], [0, 5])
+            except IndexError:
+                return 0
+
+        elif self.version == 23:
+            if channel == 0:
+                index_1 = KPRO3_AN0_1
+                index_2 = KPRO3_AN0_2
+            elif channel == 1:
+                index_1 = KPRO3_AN1_1
+                index_2 = KPRO3_AN1_2
+            elif channel == 2:
+                index_1 = KPRO3_AN2_1
+                index_2 = KPRO3_AN2_2
+            elif channel == 3:
+                index_1 = KPRO3_AN3_1
+                index_2 = KPRO3_AN3_2
+            elif channel == 4:
+                index_1 = KPRO3_AN4_1
+                index_2 = KPRO3_AN4_2
+            elif channel == 5:
+                index_1 = KPRO3_AN5_1
+                index_2 = KPRO3_AN5_2
+            elif channel == 6:
+                index_1 = KPRO3_AN6_1
+                index_2 = KPRO3_AN6_2
+            elif channel == 7:
+                index_1 = KPRO3_AN7_1
+                index_2 = KPRO3_AN7_2
+            else:
+                return 0
+
+            try:
+                return interp((256 * self.data5[index_1]) + self.data5[index_2], [0, 1024], [0, 5])
+            except IndexError:
+                return 0
         else:
-            return 0
-        try:
-            return interp((256 * self.data3[index_1]) + self.data3[index_2], [0, 4096], [0, 5])
-        except IndexError:
             return 0
