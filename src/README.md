@@ -8,10 +8,16 @@ Let's update:
 sudo apt update
 ```
 
+Install vim because reasons:
+ ```sh
+sudo apt install vim
+```
+
 Install this packages:
 ```sh
 sudo apt install libatlas-base-dev
 ```
+
 ### SSH
 Enable SSH through:
 ```sh
@@ -36,12 +42,14 @@ Later you can just run the project:
 ```sh
 make run_rpi
 ```
+
 ### Hostname
 Change the hostname from raspberrypi to hondash
 ```sh
 sudo sed -i 's/raspberrypi/hondash/g' /etc/hostname
 sudo sed -i 's/raspberrypi/hondash/g' /etc/hosts
 ```
+
 ### Enable hotspot
 ```sh
 sudo apt install network-manager network-manager-gnome openvpn \openvpn-systemd-resolved network-manager-openvpn \network-manager-openvpn-gnome
@@ -50,6 +58,7 @@ sudo apt install network-manager network-manager-gnome openvpn \openvpn-systemd-
 ```sh
 sudo apt purge openresolv dhcpcd5
 ```
+reboot and run this: 
 
 ```sh
 sudo ln -sf /lib/systemd/resolv.conf /etc/resolv.conf
@@ -67,11 +76,11 @@ sudo apt-get install nginx
 ```
 
 ```sh
-sudo /etc/init.d/nginx start
+cp /home/pi/Desktop/HonDash/config/nginx/default /etc/nginx/sites-enabled/default
 ```
 
 ```sh
-cp /home/pi/Desktop/HonDash/config/nginx/default /etc/nginx/sites-enabled/default
+sudo /etc/init.d/nginx start
 ```
 
 ## Optional tricks
@@ -84,7 +93,7 @@ crontab /home/pi/Desktop/HonDash/config/cron/cron
 ```sh
 sudo apt-get install xscreensaver
 ```
-Go to preference --> screensaver --> disable screensaver.
+Go to Preferences --> Screensaver --> disable screensaver.
 
 ### Disable SSH warning
 ```sh
