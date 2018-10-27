@@ -93,7 +93,7 @@ var rpm = {
     "properties": {
         "tag": tag,
         "suffix": suffix,
-        "max": max,
+        "max": {"type": "integer"},
         "sectors": sectors
     }
 };
