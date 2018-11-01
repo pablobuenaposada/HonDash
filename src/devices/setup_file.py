@@ -35,4 +35,4 @@ class SetupFile:
 
     def save_setup(self, setup):
         with open(FILE_NAME, 'w') as file:
-            json.dump(setup, file, indent=2)
+            json.dump(setup, file, indent=2, sort_keys=True)
