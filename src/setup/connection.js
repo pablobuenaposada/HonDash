@@ -13,17 +13,56 @@ function disableField(xpath) {
     getElementsByXPath(xpath)[0].disabled=true;
 }
 
-function updateFields() {
+function disableFromSelectByValue(select, value){
+    for (var option in select[0].options){
+        if (select[0].options[option].label == value){
+            select[0].options[option].disabled = true;
+            break;
+        }
+    }
+}
+
+function checkTagValues(){
+    // get currently used tags
+    var usedTags=[];
     var divs = getElementsByXPath("//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']");
-    for (var i in divs){
-        var select = getElementsByXPath("div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]", divs[i]);
+    for (var div in divs){
+        var select = getElementsByXPath("div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]", divs[div]);
+        try {
+            var selectedOption = select[0].options[select[0].selectedIndex].label;
+        } catch(err) {} // some of the values doesn't have tag field
+
+        if (selectedOption != 'not use'){
+            usedTags.push(selectedOption);
+        }
+    }
+
+    // update the tag field with the free tags available
+    var divs = getElementsByXPath("//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']");
+    for (var div in divs){
+        var select = getElementsByXPath("div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]", divs[div]);
+        var selectedOption = select[0].options[select[0].selectedIndex].label;
+        try {
+            for (var tag in usedTags){
+                if (select != undefined && selectedOption != usedTags[tag]){
+                    disableFromSelectByValue(select, usedTags[tag]);
+                }
+            }
+        } catch(err) {} // some of the values doesn't have tag field
+    }
+}
+
+function checkDivColor(){
+    var divs = getElementsByXPath("//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']");
+    for (var div in divs){
+        var select = getElementsByXPath("div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]", divs[div]);
         try {
             var selectedOption = select[0].options[select[0].selectedIndex].label;
         } catch(err) {} // some of the values doesn't have tag field
 
         if (selectedOption == 'not use'){
-            divs[i].style.backgroundColor = "#ffdddd";
-            var nodes = divs[i].getElementsByTagName('*');
+            divs[div].style.backgroundColor = "#ffdddd";
+            var nodes = divs[div].getElementsByTagName('*');
             for (var i = 0; i < nodes.length; i++){
                 var nodeName = nodes[i].name;
                 if (typeof nodeName !== "undefined" && !nodeName.includes('tag')){
@@ -32,13 +71,18 @@ function updateFields() {
             }
         }
         else {
-            divs[i].style.backgroundColor = "#ddfae2";
-            var nodes = divs[i].getElementsByTagName('*');
+            divs[div].style.backgroundColor = "#ddfae2";
+            var nodes = divs[div].getElementsByTagName('*');
             for (var i = 0; i < nodes.length; i++){
                 nodes[i].disabled = false;
             }
         }
     }
+}
+
+function updateFields() {
+    checkDivColor();
+    checkTagValues();
 }
 
 function download(){
