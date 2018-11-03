@@ -57,3 +57,7 @@ class Formula:
     # s2000 fuel tank powered by 5v and a 56ohms voltage divider
     def s2000_fuel_tank(volts):
         return {"per cent": int(-6.163413263 * pow(volts, 2) - 11.48794404 * volts + 116.2915039)}
+
+    # toyota mr2 w30 fuel tank powered by 5v and a 56ohms voltage divider
+    def mr2_w30_fuel_tank(volts):
+        return {"per cent": int(36.4757313*volts-41.31229235)}

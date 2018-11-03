@@ -45,6 +45,10 @@ class TestFormula(TestCase):
         self.assertEquals(Formula.s2000_fuel_tank(2.47), {'per cent': 50})
         self.assertEquals(Formula.s2000_fuel_tank(0.9), {'per cent': 100})
 
+    def test_mr2_w30_fuel_tank(self):
+        self.assertEquals(Formula.mr2_w30_fuel_tank(1.13), {'per cent': 0})
+        self.assertEquals(Formula.mr2_w30_fuel_tank(3.9), {'per cent': 100})
+
     def test_bosch_0280130039_0280130026(self):
         self.assertEquals(Formula.bosch_0280130039_0280130026(4.314974654), {'celsius': -9.999999950263089,
                                                                              'fahrenheit': 14.000000089526441})

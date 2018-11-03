@@ -14,6 +14,7 @@ Fuel tank | Resistor value
 ------- | -----
 Civic EG | 56Ω 1/4 watt
 S2000 | 56Ω 1/4 watt
+MR2 W30 | 56Ω 1/4 watt
 
 > ⚠️ WARNING: K-Pro inputs are rate up to 5v max, double check this installation otherwise you will end damaging the K-Pro board and possibly the entire ECU.
 

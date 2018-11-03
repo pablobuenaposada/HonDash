@@ -49,7 +49,7 @@ var tag = {
 };
 var formula = {
     "type": "string",
-    "enum": ["autometer_2246", "vdo_323_057", "aem_30_2012", "ebay_150_psi", "civic_eg_fuel_tank", "s2000_fuel_tank"]
+    "enum": ["autometer_2246", "vdo_323_057", "aem_30_2012", "ebay_150_psi", "civic_eg_fuel_tank", "s2000_fuel_tank", "mr2_w30_fuel_tank"]
 };
 var time = {
     "type": "object",
