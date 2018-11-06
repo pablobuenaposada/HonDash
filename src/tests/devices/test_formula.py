@@ -45,6 +45,11 @@ class TestFormula(TestCase):
         self.assertEquals(Formula.s2000_fuel_tank(2.47), {'per cent': 50})
         self.assertEquals(Formula.s2000_fuel_tank(0.9), {'per cent': 100})
 
+    def test_mx5_na_fuel_tank(self):
+        self.assertEquals(Formula.mx5_na_fuel_tank(3.14), {'per cent': 0})
+        self.assertEquals(Formula.mx5_na_fuel_tank(1.85), {'per cent': 50})
+        self.assertEquals(Formula.mx5_na_fuel_tank(0.55), {'per cent': 100})
+
     def test_mr2_w30_fuel_tank(self):
         self.assertEquals(Formula.mr2_w30_fuel_tank(1.13), {'per cent': 0})
         self.assertEquals(Formula.mr2_w30_fuel_tank(3.9), {'per cent': 100})
