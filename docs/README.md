@@ -1,21 +1,49 @@
-![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
+## What's HonDash?
 
-## Fuel level 
+HonDash is an open source instrument cluster developed for Honda engines managed through [Hondata](https://www.hondata.com/) ECUs.
 
-In order to display the fuel level you must hook the fuel level sender of your car to one of the analog inputs of the K-Pro.
+## Requirements (minimum)
 
-Later on you will be able to read this analog input from the K-Pro and translate it to something human readable in HonDash. 
+- Hondata K-Pro ECU v2* / v3 / v4
+- Raspberry Pi 3 Model B+
+- HDMI screen
 
-Here is a schematic diagram:
+\* v2 only if it has on board datalogging, check [here](https://www.hondata.com/kpro2)
 
-<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="300" />
+## Setup diagram
 
-Fuel tank | Resistor value
-------- | -----
-Civic EG | 56Ω 1/4 watt
-S2000 | 56Ω 1/4 watt
-MR2 W30 | 56Ω 1/4 watt
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" height="300" />
 
-> ⚠️ WARNING: K-Pro inputs are rate up to 5v max, double check this installation otherwise you will end damaging the K-Pro board and possibly the entire ECU.
+## Specifications
 
-> A common practice for stock clusters in cars is to supply the fuel level unit with 12v from the actual cluster, so in order to run the fuel level in HonDash you will need to be completely sure that non other device is supplying power to the fuel level sender, check you car schematics, **disconnect the fuel level sender from your original cluster plugs** and use a multimeter to verify that the signal sent to K-Pro does not exceed 5v at all.
+List of values available through K-Pro right now:
+
+Acronym | Value | K-Pro v2 | K-Pro v3 | K-Pro v4
+------- | ----- | :------: | :------: | :------:
+BAT | Battery voltage |:white_check_mark:|:white_check_mark:|:white_check_mark:
+AFR | A/F ratio |  |:white_check_mark:|:white_check_mark:
+TPS | Throttle position |:white_check_mark:|:white_check_mark:|:white_check_mark:
+VSS | Speed |  |:white_check_mark:|:white_check_mark:
+RPM | Revs. per minute |  |:white_check_mark:|:white_check_mark:
+CAM | VTC cam angle |  |:white_check_mark:|:white_check_mark:
+CLV | Calculated load value |  |  |
+ECT | Coolant temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:
+ETH | Ethanol content |  |  |:white_check_mark:
+FLT | Fuel temperature |  |  |:white_check_mark:
+IAT | Intake air temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:
+GEAR | Gear |  |:white_check_mark:|:white_check_mark:
+EPS | Electronic power steering pressure |:white_check_mark:|  |:white_check_mark:
+SCS | Service connector |:white_check_mark:|  |:white_check_mark:
+RVSLCK | Reverse lock |  |  |:white_check_mark:
+BKSW | Brake switch |  |  |:white_check_mark:
+ACSW | A/C switch |  |  |:white_check_mark:
+ACCL | A/C clutch |  |  |:white_check_mark:
+FLR | Fuel relay |  |  |:white_check_mark:
+FANC | Fan control |:white_check_mark:|:white_check_mark:|:white_check_mark:
+MAP | Manifold absolute pressure |:white_check_mark:|:white_check_mark:|:white_check_mark:
+MIL | Malfunction indicator light |  |  |:white_check_mark:
+ECU | Ecu type |  |  |:white_check_mark:
+IGN | Ignition status |  |  |:white_check_mark:
+SRL | K-Pro serial number |  |  |:white_check_mark:
+FIRM | K-Pro firmware version |  |  |:white_check_mark:
+AN | Analog inputs | :x: |:white_check_mark:|:white_check_mark:
