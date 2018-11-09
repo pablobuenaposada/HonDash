@@ -2,8 +2,6 @@
 venv/
 .cache/
 .idea/
-odometer.txt
 .crossbar/node.pid
 .pytest_cache/
 .coverage
-hondash.log
