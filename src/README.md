@@ -29,7 +29,7 @@ Go to 5.Interfacing options --> enable both SSH
 Clone this project:
 ```sh
 cd /home/pi/Desktop/
-git clone https://github.com/pablobuenaposada/HonDash.git
+git clone --recursive https://github.com/pablobuenaposada/HonDash.git
 ```
 
 Being in the root of the project create de virtual enviroment:
