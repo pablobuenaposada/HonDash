@@ -4,3 +4,6 @@
 [submodule "src/frontend/lib/justgage"]
 	path = src/frontend/lib/justgage
 	url = https://github.com/toorshia/justgage
+[submodule "src/frontend/lib/raphael"]
+	path = src/frontend/lib/raphael
+	url = https://github.com/DmitryBaranovskiy/raphael.git
