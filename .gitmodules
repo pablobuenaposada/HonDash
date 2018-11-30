@@ -1,3 +1,6 @@
 [submodule "src/frontend/lib/autobahn-js-browser"]
 	path = src/frontend/lib/autobahn-js-browser
 	url = https://github.com/crossbario/autobahn-js-browser.git
+[submodule "src/frontend/lib/justgage"]
+	path = src/frontend/lib/justgage
+	url = https://github.com/toorshia/justgage
