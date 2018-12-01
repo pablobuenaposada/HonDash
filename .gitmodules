@@ -7,3 +7,6 @@
 [submodule "src/frontend/lib/raphael"]
 	path = src/frontend/lib/raphael
 	url = https://github.com/DmitryBaranovskiy/raphael.git
+[submodule "src/setup/lib/autobahn-js-browser"]
+	path = src/setup/lib/autobahn-js-browser
+	url = https://github.com/crossbario/autobahn-js-browser.git
