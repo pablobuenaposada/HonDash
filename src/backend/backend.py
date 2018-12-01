@@ -2,7 +2,7 @@ from time import sleep
 
 from autobahn_sync import publish, register, run
 
-from devices.kpro import Kpro
+from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
 from devices.setup_file import SetupFile
 from devices.time import Time

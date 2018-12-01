@@ -1,6 +1,6 @@
 from unittest import TestCase, mock
 
-from devices.kpro import Kpro
+from devices.kpro.kpro import Kpro
 
 
 class TestKpro(TestCase):
