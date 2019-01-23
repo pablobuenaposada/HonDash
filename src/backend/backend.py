@@ -6,6 +6,8 @@ from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
 from devices.setup_file import SetupFile
 from devices.time import Time
+from version import __version__
+
 
 
 @register(u'setup')
@@ -82,5 +84,6 @@ while True:
                      'an7': an7_formula(kpro.analog_input(7))[an7_unit],
                      'time': time.get_time(),
                      'odo': odo.get_mileage()[odo_unit],
+                     'ver': __version__
                      })
     sleep(0.1)

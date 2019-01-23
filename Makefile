@@ -5,12 +5,12 @@ clean:
 	@rm -rf venv
 
 virtualenv: clean
-	virtualenv -p python3 venv
+	virtualenv -p python3.5 venv
 	. venv/bin/activate; pip install -r requirements.txt
 
 virtualenv_rpi: clean
 	pip install virtualenv
-	sudo /usr/bin/easy_install virtualenv
+	sudo /usr/bin/easy_install virtualenv==16.0.0
 	virtualenv -p python3 venv
 	. venv/bin/activate; pip install -r requirements.txt
 
