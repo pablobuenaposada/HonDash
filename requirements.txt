@@ -9,3 +9,4 @@ codecov
 pytest-cov
 isort
 flake8
+gitpython==2.1.11
