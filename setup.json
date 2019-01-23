@@ -257,5 +257,9 @@
     "suffix": "",
     "tag": "speed",
     "unit": "kmh"
+  },
+  "ver": {
+    "tag": "version",
+    "suffix": " version"
   }
 }

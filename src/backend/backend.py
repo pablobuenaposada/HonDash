@@ -6,6 +6,7 @@ from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
 from devices.setup_file import SetupFile
 from devices.time import Time
+from devices.version import Version
 
 
 @register(u'setup')
@@ -29,6 +30,7 @@ kpro = Kpro()
 time = Time()
 odo = Odometer()
 setup_file = SetupFile()
+version = Version()
 
 iat_unit = setup_file.json.get('iat', {}).get('unit', 'celsius')
 ect_unit = setup_file.json.get('ect', {}).get('unit', 'celsius')
@@ -53,6 +55,8 @@ an4_formula = setup_file.get_formula('an4')
 an5_formula = setup_file.get_formula('an5')
 an6_formula = setup_file.get_formula('an6')
 an7_formula = setup_file.get_formula('an7')
+
+version = version.get_current_tag()
 
 while True:
     odo.save(kpro.vss()['kmh'])
@@ -81,5 +85,6 @@ while True:
                      'an7': an7_formula(kpro.analog_input(7))[an7_unit],
                      'time': time.get_time(),
                      'odo': odo.get_mileage()[odo_unit],
+                     'ver': version
                      })
     sleep(0.1)

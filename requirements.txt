@@ -1,4 +1,4 @@
-pytest==3.5.0
+pytest==3.6.0
 pyusb==1.0.2
 numpy==1.14.2
 pytemperature==1.0
@@ -9,3 +9,4 @@ codecov
 pytest-cov
 isort
 flake8
+gitpython==2.1.11

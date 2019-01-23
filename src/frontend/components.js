@@ -7,6 +7,7 @@ var speed = new Text({id: "speed", value: "0", size: 14});
 var gear = new Text({ id: "gear", value: "N", size: 14 });
 var time = new Text({id: "time", value: "00:00:00", size: 4, style: "italic"});
 var odo = new Text({id: "odo", value: "0", size: 3, style: "italic"});
+var version = new Text({id: "version", value: "", size: 1, style: "italic"});
 
 // Icons
 var icon1 = new Icon({id: "icon1"});
