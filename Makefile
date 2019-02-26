@@ -14,7 +14,7 @@ virtualenv_rpi: clean
 	virtualenv -p python3 venv
 	. venv/bin/activate; pip install -r requirements.txt
 
-run:
+run: virtualenv
 	. venv/bin/activate; crossbar start &
 	pkill python backend.py || true
 	. venv/bin/activate; PYTHONPATH=src python src/backend/backend.py &
