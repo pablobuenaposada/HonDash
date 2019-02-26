@@ -6,10 +6,10 @@ from devices.kpro.kpro import Kpro
 class TestKpro(TestCase):
 
     def setUp(self):
-        # we are not unit testing USB features and find() may raise a
+        # we are not unit testing USB features so it may raise a
         # `usb.core.NoBackendError` e.g. on Docker
-        with mock.patch('usb.core.find') as m_find:
-            m_find.return_value = None
+        with mock.patch('devices.kpro.kpro.Kpro.__init__') as m___init__:
+            m___init__.return_value = None
             self.kpro = Kpro()
         self.kpro.data0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

@@ -20,26 +20,30 @@ class Kpro:
         self.dev = None
         self.version = 0
 
-        if usb.core.find(idVendor=0x403, idProduct=0xf5f8) is not None:  # kpro v2 & v3
-            self.dev = usb.core.find(idVendor=0x403, idProduct=0xf5f8)
-            self.version = 23
-        elif usb.core.find(idVendor=0x1c40, idProduct=0x0434) is not None:  # kpro v4
-            self.dev = usb.core.find(idVendor=0x1c40, idProduct=0x0434)
-            self.version = 4
-        if self.dev is not None:
-            try:
-                self.dev.set_configuration()
-                cfg = self.dev.get_active_configuration()
-                intf = cfg[(0, 0)]
-                self.ep = usb.util.find_descriptor(
-                    intf,
-                    custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT)
-                threading.Thread(target=self.update).start()
-            except Exception:
-                pass
+        while self.dev is None:
+            if usb.core.find(idVendor=0x403, idProduct=0xf5f8) is not None:  # kpro v2 & v3
+                self.dev = usb.core.find(idVendor=0x403, idProduct=0xf5f8)
+                self.version = 23
+            elif usb.core.find(idVendor=0x1c40, idProduct=0x0434) is not None:  # kpro v4
+                self.dev = usb.core.find(idVendor=0x1c40, idProduct=0x0434)
+                self.version = 4
+            if self.dev is not None:
+                try:
+                    self.dev.set_configuration()
+                    cfg = self.dev.get_active_configuration()
+                    intf = cfg[(0, 0)]
+                    self.ep = usb.util.find_descriptor(
+                        intf,
+                        custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT)
+                    threading.Thread(target=self.update).start()
+                except usb.core.USBError:
+                    # if there's an error while connecting to the usb device we just want to try again so let's ensure
+                    # that the while loop condition while go on
+                    self.dev = None
 
     def update(self):
-        while True:
+        usb_status = True
+        while usb_status:
             try:
                 assert self.ep is not None
 
@@ -81,8 +85,9 @@ class Kpro:
                     self.ep.write('\xb0')
                     self.data5 = self.dev.read(0x81, 1000)
 
-            except Exception as e:
-                print("USB problem", e)
+            except Exception:
+                # if there's an error while gathering the data, stop the update and try to reconnect usb again
+                usb_status = False
                 self.__init__()
 
     def bat(self):

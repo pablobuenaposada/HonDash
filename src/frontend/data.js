@@ -16,14 +16,14 @@ var connection = new autobahn.Connection({
 
 connection.onopen = function (session) {
 
-   function onevent1(args) {
+    function onevent1(args) {
         for (var key in args[0]) { // for all values
             try { // if it's associated to a frontend tag
                 window[setup[key]['tag']]["refresh"](args[0][key]);
             }
             catch (e) {}
         }
-   }
+    }
 
     session.call("setup").then(
         function (res) {
@@ -41,14 +41,13 @@ connection.onopen = function (session) {
             }
         },
         function (err) {
-            console.log("error:",  setup[value]['tag'], err);
+            // an error getting the setup? reload the page and try again
+            location.reload();
         }
     );
 
    session.subscribe('data', onevent1);
 
 };
-
-
 
 connection.open();
