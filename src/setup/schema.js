@@ -58,6 +58,13 @@ var time = {
         "tag": tag
     }
 };
+var screen = {
+    "type": "object",
+    "required": ["rotate"],
+    "properties": {
+        "rotate": {"type": "boolean"}
+    }
+};
 var sectors = {
     "type": "array",
     "format": "table",
@@ -157,6 +164,7 @@ var schema = {
         "properties": {
             "version": version,
             "template": template,
+            "screen": screen,
             "time": time,
             "odo": odo,
             "gear": gear,

@@ -16,6 +16,7 @@ def setup():
 @register(u'save')
 def save(new_setup):
     setup_file.save_setup(new_setup)
+    setup_file.rotate_screen(new_setup['screen']['rotate'])
 
 
 while True:
@@ -25,10 +26,10 @@ while True:
     except Exception:
         continue
 
-kpro = Kpro()
 time = Time()
-odo = Odometer()
 setup_file = SetupFile()
+odo = Odometer()
+kpro = Kpro()
 
 iat_unit = setup_file.json.get('iat', {}).get('unit', 'celsius')
 ect_unit = setup_file.json.get('ect', {}).get('unit', 'celsius')
