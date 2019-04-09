@@ -3,6 +3,7 @@ import json
 from devices.formula import Formula
 
 FILE_NAME = 'setup.json'
+OS_CONFIG_FILE = '/boot/config.txt'
 
 
 class SetupFile:
@@ -33,6 +34,25 @@ class SetupFile:
             self.json = json.load(file)
         return self.json
 
-    def save_setup(self, setup):
+    @staticmethod
+    def save_setup(setup):
         with open(FILE_NAME, 'w') as file:
             json.dump(setup, file, indent=2, sort_keys=True)
+
+    @staticmethod
+    def rotate_screen(enable):
+        try:
+            if enable:
+                if 'display_rotate' not in open(OS_CONFIG_FILE).read():
+                    with open(OS_CONFIG_FILE, "a+") as file:
+                        file.write("display_rotate=2\n")
+            else:
+                if 'display_rotate' in open(OS_CONFIG_FILE).read():
+                    with open(OS_CONFIG_FILE, "r") as f:
+                        lines = f.readlines()
+                    with open(OS_CONFIG_FILE, "w") as f:
+                        for line in lines:
+                            if 'display_rotate' not in line:
+                                f.write(line)
+        except FileNotFoundError:
+            pass

@@ -232,6 +232,9 @@
     ],
     "tag": "bar1"
   },
+  "screen": {
+    "rotate": false
+  },
   "template": "basic",
   "time": {
     "tag": "time"
