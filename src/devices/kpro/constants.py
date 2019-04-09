@@ -1,3 +1,11 @@
+# kpro device ids
+KPRO23_ID_VENDOR = 0x403
+KPRO23_ID_PRODUCT = 0xf5f8
+KPRO4_ID_VENDOR = 0x1c40
+KPRO4_ID_PRODUCT = 0x0434
+KPRO23_ID = 23  # v2 and v3 works equally so I mixed both version numbers
+KPRO4_ID = 4
+
 # command 0x40
 KPRO23_ECU_TYPE = 12
 KPRO23_IGN = 17
