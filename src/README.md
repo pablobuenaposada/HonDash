@@ -15,7 +15,7 @@ sudo apt install vim
 
 Install this packages:
 ```sh
-sudo apt install libatlas-base-dev libssl-dev libsnappy-dev
+sudo apt install libatlas-base-dev libssl-dev libsnappy-dev libffi-dev
 ```
 
 ### SSH
