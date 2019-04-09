@@ -1,7 +1,7 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
 ## How to run this project in a Raspberry Pi?
-Get Raspbian working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
+Get Raspbian (release date 2018-11-13) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
 
 Let's update:
 ```sh
@@ -15,7 +15,7 @@ sudo apt install vim
 
 Install this packages:
 ```sh
-sudo apt install libatlas-base-dev
+sudo apt install libatlas-base-dev libssl-dev libsnappy-dev
 ```
 
 ### SSH
@@ -76,7 +76,7 @@ sudo apt-get install nginx
 ```
 
 ```sh
-cp /home/pi/Desktop/HonDash/config/nginx/default /etc/nginx/sites-enabled/default
+sudo cp /home/pi/Desktop/HonDash/config/nginx/default /etc/nginx/sites-enabled/default
 ```
 
 ```sh
@@ -99,17 +99,6 @@ Go to Preferences --> Screensaver --> disable screensaver.
 ```sh
 sudo rm /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
 ```
-
-### Hide mouse pointer
-```sh
-sudo apt-get install unclutter
-vim ~/.config/lxsession/LXDE-pi/autostart
-```
-add this line:
-```sh
-@unclutter -idle 0.1
-```
-
 ### Boot faster
 rcconf
 disable bluethoot, alsa...
