@@ -89,6 +89,16 @@ sudo /etc/init.d/nginx start
 crontab /home/pi/Desktop/HonDash/config/cron/cron
 ```
 
+### Hide mouse pointer
+```sh
+sudo apt-get install unclutter
+vim /etc/xdg/lxsession/LXDE-pi/autostart
+```
+add this line:
+```sh
+@unclutter -idle 0.1
+```
+
 ### Disable screen saver
 ```sh
 sudo apt-get install xscreensaver
