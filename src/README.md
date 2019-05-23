@@ -46,13 +46,14 @@ make run_rpi
 ### Hostname
 Change the hostname from raspberrypi to hondash
 ```sh
-sudo sed -i 's/raspberrypi/hondash/g' /etc/hostname
-sudo sed -i 's/raspberrypi/hondash/g' /etc/hosts
+sudo sed -i 's/raspberrypi/hondash/g' /etc/hostname /etc/hosts
 ```
 
 ### Enable hotspot
 ```sh
-sudo apt install network-manager network-manager-gnome openvpn \openvpn-systemd-resolved network-manager-openvpn \network-manager-openvpn-gnome
+sudo apt install network-manager network-manager-gnome openvpn \
+openvpn-systemd-resolved network-manager-openvpn \
+network-manager-openvpn-gnome
 ```
 
 ```sh
@@ -72,7 +73,7 @@ Right click on the network manager and add a WiFi connection type, connection na
 
 ### Nginx for enable the setup tool
 ```sh
-sudo apt-get install nginx
+sudo apt install nginx
 ```
 
 ```sh
@@ -91,7 +92,7 @@ crontab /home/pi/Desktop/HonDash/config/cron/cron
 
 ### Hide mouse pointer
 ```sh
-sudo apt-get install unclutter
+sudo apt install unclutter
 vim /etc/xdg/lxsession/LXDE-pi/autostart
 ```
 add this line:
@@ -101,7 +102,7 @@ add this line:
 
 ### Disable screen saver
 ```sh
-sudo apt-get install xscreensaver
+sudo apt install xscreensaver
 ```
 Go to Preferences --> Screensaver --> disable screensaver.
 
@@ -112,5 +113,3 @@ sudo rm /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
 ### Boot faster
 rcconf
 disable bluethoot, alsa...
-
-
