@@ -77,10 +77,11 @@ class TestSetupFile:
             with open(fp.name) as f:
                 assert f.read() == ''  # now is gone
 
-    # def test_update_key(self):
-    #     """
-    #     Update of the label field for the vss config
-    #     """
-        # assert self.setup.get_value('vss')['label'] is ""
-        # self.setup.update_key('vss', {'label': 'display text'})
-        # assert self.setup.get_value('vss')['label'] is "display text"
+    def test_update_key(self):
+        """
+        Check that an update of an attribute is performed but the rest is not
+        """
+        assert self.setup.get_value('vss')['label'] == ""
+        self.setup.save_setup({"vss": {"label": "display text"}})
+        assert self.setup.get_value('vss')['label'] == "display text"
+        assert self.setup.get_value('screen') is not None

@@ -252,7 +252,10 @@
     "suffix": "",
     "tag": "gauge8"
   },
-  "version": 1,
+  "ver": {
+    "suffix": " version",
+    "tag": "version"
+  },
   "vss": {
     "label": "",
     "max": 300,
@@ -261,8 +264,5 @@
     "tag": "speed",
     "unit": "kmh"
   },
-  "ver": {
-    "tag": "version",
-    "suffix": " version"
-  }
+  "version": "2.1.1"
 }

@@ -129,13 +129,14 @@ var gear = {
         "tag": tag
     }
 };
-var version = {
-    "type": "number"
-};
 var template = {
     "type": "string",
     "required": true,
-    "enum": ["basic"]
+    "enum": ["basic", "animalillo"],
+    "links": [
+        {"mediaType": "image",
+        "href": "templates/{{self}}.png"}
+        ]
 };
 var label = {"type": "string"};
 var max = {"type": "integer"};
@@ -162,7 +163,6 @@ var schema = {
         "title": "HonDash setup",
         "hideTitle": true,
         "properties": {
-            "version": version,
             "template": template,
             "screen": screen,
             "time": time,
