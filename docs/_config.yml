@@ -2,3 +2,5 @@ theme: jekyll-theme-architect
 
 plugins:
   - jemoji
+
+google_analytics: UA-142137323-1
