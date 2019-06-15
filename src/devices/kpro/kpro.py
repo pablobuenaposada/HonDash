@@ -52,7 +52,6 @@ class Kpro:
                 if self.version == constants.KPRO4_ID:
                     self.ep.write('\x40')
                     self.data4 = self.kpro_device.read(0x82, 1000)  # kpro v4
-                    self.ep.clear_halt()
 
                 self.ep.write('\x60')
                 if self.version == constants.KPRO23_ID:
@@ -60,7 +59,6 @@ class Kpro:
                 elif self.version == constants.KPRO4_ID:
                     self.data0 = self.kpro_device.read(0x82, 1000)  # kpro v4
 
-                self.ep.clear_halt()
 
                 self.ep.write('\x61')
                 # found on kpro2 that sometimes len=44, normally 16
@@ -87,10 +85,13 @@ class Kpro:
                     self.ep.write('\xb0')
                     self.data5 = self.kpro_device.read(0x81, 1000)
 
-            except Exception:
-                # if there's an error while gathering the data, stop the update and try to reconnect usb again
-                usb_status = False
-                self.__init__()
+            except usb.core.USBError as e:
+                if e.args[0] == 60:  # error 60 (operation timed out), just continue to try again
+                    pass
+                else:
+                    # if there's an error while gathering the data, stop the update and try to reconnect usb again
+                    usb_status = False
+                    self.__init__()
 
     def bat(self):
         """
