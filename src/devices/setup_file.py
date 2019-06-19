@@ -34,10 +34,11 @@ class SetupFile:
             self.json = json.load(file)
         return self.json
 
-    @staticmethod
-    def save_setup(setup):
+    def save_setup(self, setup):
+        self.json.update(setup)
         with open(FILE_NAME, 'w') as file:
-            json.dump(setup, file, indent=2, sort_keys=True)
+            json.dump(self.json, file, indent=2, sort_keys=True)
+        self.__init__()
 
     @staticmethod
     def rotate_screen(enable):
