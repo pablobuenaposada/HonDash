@@ -41,14 +41,16 @@ function checkTagValues(){
     var divs = getElementsByXPath("//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']");
     for (var div in divs){
         var select = getElementsByXPath("div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]", divs[div]);
-        var selectedOption = select[0].options[select[0].selectedIndex].label;
-        try {
-            for (var tag in usedTags){
-                if (select != undefined && selectedOption != usedTags[tag]){
-                    disableFromSelectByValue(select, usedTags[tag]);
+        if (select.length > 0){ // if we found the 'tag' select
+            var selectedOption = select[0].options[select[0].selectedIndex].label;
+            try {
+                for (var tag in usedTags){
+                    if (select != undefined && selectedOption != usedTags[tag]){
+                        disableFromSelectByValue(select, usedTags[tag]);
+                    }
                 }
-            }
-        } catch(err) {} // some of the values doesn't have tag field
+            } catch(err) {} // some of the values doesn't have tag field
+        }
     }
 }
 
