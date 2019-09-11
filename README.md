@@ -3,6 +3,8 @@
 [![Build Status](https://secure.travis-ci.org/pablobuenaposada/HonDash.png?branch=master)](http://travis-ci.org/pablobuenaposada/HonDash)
 [![alt tag](https://codecov.io/gh/pablobuenaposada/hondash/branch/master/graph/badge.svg)](https://codecov.io/gh/pablobuenaposada/hondash/)
 
+Start from checking [hondash.com](https://hondash.com)!
+
 ## What's HonDash?
 
 HonDash is an open source instrument cluster developed for Honda engines.
