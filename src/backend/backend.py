@@ -9,7 +9,6 @@ from devices.time import Time
 from version import __version__
 
 
-
 @register(u'setup')
 def setup():
     return setup_file.load_setup()

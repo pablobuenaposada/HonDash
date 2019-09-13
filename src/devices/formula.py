@@ -66,6 +66,18 @@ class Formula:
     def civic_eg_fuel_tank(volts):
         return {"per cent": int(-1.209083604 * pow(volts, 2) - 27.62416175 * volts + 104.7987284)}
 
+    @staticmethod
+    def civic_ek_fuel_tank(volts):
+        """
+        Specs of this tank
+        Empty: 105-108 ohms
+        Half: 29.5-35.5 ohms
+        Full: 3.5-5 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        return {"per cent": int(-0.6348765014 * pow(volts, 2) - 31.07210689 * volts + 109.1937751)}
+
     # s2000 fuel tank powered by 5v and a 56ohms voltage divider
     @staticmethod
     def s2000_fuel_tank(volts):

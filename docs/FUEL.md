@@ -13,6 +13,7 @@ Here is a schematic diagram:
 Fuel tank | Resistor value | Cabin harness wire color
 ------- | -------------- | -------------
 Civic EG | 56Ω 1/4 watt | yellow/white
+Civic EK | 56Ω 1/4 watt | yellow/black
 S2000 | 56Ω 1/4 watt | yellow/black
 MR2 W30 | 56Ω 1/4 watt | 
 MX5 NA | 56Ω 1/4 watt |

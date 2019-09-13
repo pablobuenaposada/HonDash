@@ -59,7 +59,6 @@ class Kpro:
                 elif self.version == constants.KPRO4_ID:
                     self.data0 = self.kpro_device.read(0x82, 1000)  # kpro v4
 
-
                 self.ep.write('\x61')
                 # found on kpro2 that sometimes len=44, normally 16
                 if self.version == constants.KPRO23_ID:
