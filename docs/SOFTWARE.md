@@ -2,6 +2,7 @@
 
 ## Burn SD card
 Download the latest image:
+* [HonDash v. 2.1.2](https://www.dropbox.com/s/wo2zu6usjs9alvh/HonDash_v2.1.2.img?dl=0)
 * [HonDash v. 2.1.1](https://www.dropbox.com/s/eajdt88avvtk086/HonDash_v2.1.1.img?dl=0)
 * [HonDash v. 2.1.0](https://www.dropbox.com/s/509qwhykxto52ex/HonDash_2.1.img?dl=0)
 
