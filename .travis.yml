@@ -6,8 +6,7 @@ services:
   - docker
 
 install:
-  - docker build --tag=hondash .
+  - make docker/build
 
 script:
-  - docker run hondash
-    /bin/sh -c '. venv/bin/activate && make test'
+  - make docker/run/test

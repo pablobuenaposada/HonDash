@@ -2,7 +2,7 @@
 # Build with:
 # docker build --tag=hondash .
 # Run with:
-# docker run hondash /bin/sh -c '. venv/bin/activate && make test'
+# docker run hondash /bin/sh -c 'make test'
 # Or for interactive shell:
 # docker run -it --rm hondash
 # TODO:
@@ -18,11 +18,10 @@ ENV LANG="en_US.UTF-8" \
     LANGUAGE="en_US.UTF-8" \
     LC_ALL="en_US.UTF-8"
 
-# install system dependencies
-RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
-	python3 python3-dev virtualenv make lsb-release pkg-config git build-essential \
-    libssl-dev tox
-
 WORKDIR /app
 COPY . /app
+
+RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
+	lsb-release make sudo && \
+	make system_dependencies
 RUN make virtualenv
