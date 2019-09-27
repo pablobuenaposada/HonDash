@@ -10,7 +10,7 @@ PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
 SYSTEM_DEPENDENCIES=$(PYTHON_WITH_VERSION) $(PYTHON_WITH_VERSION)-dev \
 	virtualenv lsb-release pkg-config git build-essential libssl-dev tox \
 	libsnappy-dev
-OS=$(shell lsb_release -si)
+OS=$(shell lsb_release -si 2>/dev/null || uname)
 
 system_dependencies:
 ifeq ($(OS), Ubuntu)
