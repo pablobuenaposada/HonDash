@@ -1,7 +1,7 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
 [![Build Status](https://secure.travis-ci.org/pablobuenaposada/HonDash.png?branch=master)](http://travis-ci.org/pablobuenaposada/HonDash)
-[![alt tag](https://codecov.io/gh/pablobuenaposada/hondash/branch/master/graph/badge.svg)](https://codecov.io/gh/pablobuenaposada/hondash/)
+[![Coverage Status](https://coveralls.io/repos/github/pablobuenaposada/HonDash/badge.svg?branch=master)](https://coveralls.io/github/pablobuenaposada/HonDash?branch=master)
 
 Start from checking [hondash.com](https://hondash.com)!
 

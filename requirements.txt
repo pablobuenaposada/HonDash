@@ -1,3 +1,4 @@
+coveralls
 pytest==4.3.0
 pyusb==1.0.2
 numpy==1.14.2
@@ -5,7 +6,6 @@ pytemperature==1.0
 reprint==0.5.1
 crossbar==19.6.1
 autobahn_sync==0.3.2
-codecov
 pytest-cov
 isort
 flake8

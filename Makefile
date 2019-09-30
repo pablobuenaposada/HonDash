@@ -4,6 +4,7 @@ PIP=$(VIRTUAL_ENV)/bin/pip
 PYTEST=$(VIRTUAL_ENV)/bin/pytest
 ISORT=$(VIRTUAL_ENV)/bin/isort
 FLAKE8=$(VIRTUAL_ENV)/bin/flake8
+COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 CROSSBAR=$(VIRTUAL_ENV)/bin/crossbar
 PYTHON_VERSION=3
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
@@ -54,7 +55,8 @@ dummy:
 	open -a "Google Chrome" src/frontend/index.html
 
 test: lint
-	PYTHONPATH=src $(PYTEST) src/tests --cov=./
+	PYTHONPATH=src $(PYTEST) --cov src/ src/tests
+	@if [ -n "$$CI" ] && [ -f $(COVERALLS) ]; then $(COVERALLS); fi \
 
 lint/isort-fix: virtualenv
 	$(ISORT) -rc src
@@ -71,7 +73,7 @@ docker/build:
 	docker build --tag=hondash .
 
 docker/run/test:
-	docker run hondash /bin/sh -c 'make test'
+	docker run --env-file docker.env hondash /bin/sh -c 'make test'
 
 docker/run/shell:
 	docker run -it --rm hondash
