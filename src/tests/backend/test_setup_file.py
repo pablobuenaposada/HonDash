@@ -1,3 +1,5 @@
+import os
+from shutil import copyfile
 from tempfile import NamedTemporaryFile
 
 from devices import setup_file
@@ -8,7 +10,12 @@ class TestSetupFile:
     def setup_method(self):
         # note that the json file loaded in this test is the one used also as example
         # located in the root folder of this project
-        self.setup = setup_file.SetupFile()
+        self.file_name = NamedTemporaryFile().name
+        copyfile(setup_file.FILE_NAME, self.file_name)
+        self.setup = setup_file.SetupFile(self.file_name)
+
+    def teardown_method(self):
+        os.remove(self.file_name)
 
     def test_get_value(self):
         """

@@ -7,8 +7,9 @@ OS_CONFIG_FILE = '/boot/config.txt'
 
 
 class SetupFile:
-    def __init__(self):
-        with open(FILE_NAME) as file:
+    def __init__(self, file_name=FILE_NAME):
+        self.file_name = file_name
+        with open(self.file_name) as file:
             self.json = json.load(file)
 
     def get_value(self, key):
@@ -30,15 +31,15 @@ class SetupFile:
         return getattr(Formula, formula)
 
     def load_setup(self):
-        with open(FILE_NAME) as file:
+        with open(self.file_name) as file:
             self.json = json.load(file)
         return self.json
 
     def save_setup(self, setup):
         self.json.update(setup)
-        with open(FILE_NAME, 'w') as file:
+        with open(self.file_name, 'w') as file:
             json.dump(self.json, file, indent=2, sort_keys=True)
-        self.__init__()
+        self.__init__(self.file_name)
 
     @staticmethod
     def rotate_screen(enable):
