@@ -1,22 +1,7 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
 ## How to run this project in a Raspberry Pi?
-Get Raspbian (release date 2018-11-13) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
-
-Let's update:
-```sh
-sudo apt update
-```
-
-Install vim because reasons:
- ```sh
-sudo apt install vim
-```
-
-Install this packages:
-```sh
-sudo apt install libatlas-base-dev libssl-dev libsnappy-dev libffi-dev
-```
+Get Raspbian (release date 2019-09-26) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
 
 ### SSH
 Enable SSH through:
@@ -25,18 +10,37 @@ sudo raspi-config
 ```
 Go to 5.Interfacing options --> enable both SSH
 
+ssh into it:
+```sh
+ssh pi@raspberrypi.local
+```
+
+Let's update:
+```sh
+sudo apt update
+```
+
+Install vim because reasons:
+ ```sh
+sudo apt -y install vim
+```
+
 ### Install the project
 Clone this project:
 ```sh
 cd /home/pi/Desktop/
 git clone --recursive https://github.com/pablobuenaposada/HonDash.git
+cd HonDash/
 ```
 
-Being in the root of the project create de virtual enviroment:
+Install dependencies:
 ```sh
-cd HonDash/
-make virtualenv_rpi
+make system_dependencies
+```
 
+Create de virtual enviroment:
+```sh
+make virtualenv
 ```
 Later you can just run the project:
 ```sh
@@ -73,7 +77,7 @@ Right click on the network manager and add a WiFi connection type, connection na
 
 ### Nginx for enable the setup tool
 ```sh
-sudo apt install nginx
+sudo apt -y install nginx
 ```
 
 ```sh
@@ -93,7 +97,7 @@ crontab /home/pi/Desktop/HonDash/config/cron/cron
 ### Hide mouse pointer
 ```sh
 sudo apt install unclutter
-vim /etc/xdg/lxsession/LXDE-pi/autostart
+sudo vim /etc/xdg/lxsession/LXDE-pi/autostart
 ```
 add this line:
 ```sh
@@ -102,7 +106,7 @@ add this line:
 
 ### Disable screen saver
 ```sh
-sudo apt install xscreensaver
+sudo apt -y install xscreensaver
 ```
 Go to Preferences --> Screensaver --> disable screensaver.
 
