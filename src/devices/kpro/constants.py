@@ -1,7 +1,7 @@
 # kpro device ids
 KPRO23_ID_VENDOR = 0x403
-KPRO23_ID_PRODUCT = 0xf5f8
-KPRO4_ID_VENDOR = 0x1c40
+KPRO23_ID_PRODUCT = 0xF5F8
+KPRO4_ID_VENDOR = 0x1C40
 KPRO4_ID_PRODUCT = 0x0434
 KPRO23_ID = 23  # v2 and v3 works equally so I mixed both version numbers
 KPRO4_ID = 4

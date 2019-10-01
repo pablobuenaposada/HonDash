@@ -5,8 +5,10 @@ PYTEST=$(VIRTUAL_ENV)/bin/pytest
 ISORT=$(VIRTUAL_ENV)/bin/isort
 FLAKE8=$(VIRTUAL_ENV)/bin/flake8
 COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
+BLACK=$(VIRTUAL_ENV)/bin/black
 CROSSBAR=$(VIRTUAL_ENV)/bin/crossbar
 PYTHON_VERSION=3
+LOCAL_DEV_PYTHON_VERSION=python3.7
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
 SYSTEM_DEPENDENCIES=$(PYTHON_WITH_VERSION) $(PYTHON_WITH_VERSION)-dev \
 	virtualenv lsb-release pkg-config git build-essential libssl-dev tox \
@@ -23,7 +25,7 @@ clean:
 	rm -rf $(VIRTUAL_ENV)
 
 $(VIRTUAL_ENV):
-	virtualenv -p $(PYTHON_WITH_VERSION) $(VIRTUAL_ENV)
+	virtualenv -p $(LOCAL_DEV_PYTHON_VERSION) $(VIRTUAL_ENV)
 	$(PIP) install -r requirements.txt
 
 virtualenv: $(VIRTUAL_ENV)
@@ -67,7 +69,13 @@ lint/isort-check: virtualenv
 lint/flake8: virtualenv
 	$(FLAKE8) src
 
-lint: lint/isort-check lint/flake8
+lint/black-fix: virtualenv
+	$(BLACK) --exclude $(VIRTUAL_ENV) src
+
+lint/black-check: virtualenv
+	$(BLACK) --exclude $(VIRTUAL_ENV) src --check
+
+lint: lint/isort-check lint/flake8 lint/black-check
 
 docker/build:
 	docker build --tag=hondash .
@@ -77,3 +85,6 @@ docker/run/test:
 
 docker/run/shell:
 	docker run -it --rm hondash
+
+docker/run/lint:
+	docker run hondash /bin/sh -c 'make lint'
