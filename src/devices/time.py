@@ -7,7 +7,8 @@ class Time:
 
     def get_time(self):
         now = time.time() - self.initial_time
-        return "{}:{}:{}".format(str(time.gmtime(now)[3]).zfill(2),
-                                 str(time.gmtime(now)[4]).zfill(2),
-                                 str(time.gmtime(now)[5]).zfill(2)
-                                 )
+        return "{}:{}:{}".format(
+            str(time.gmtime(now)[3]).zfill(2),
+            str(time.gmtime(now)[4]).zfill(2),
+            str(time.gmtime(now)[5]).zfill(2),
+        )

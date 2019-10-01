@@ -8,7 +8,7 @@
 # TODO:
 #	- delete archives to keep small the container small
 #	- setup caching (for apt, and pip)
-FROM ubuntu:18.04
+FROM ubuntu:19.04
 
 # configure locale
 RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \

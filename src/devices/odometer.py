@@ -22,13 +22,17 @@ class Odometer:
         speed always in kmh
         """
         now = datetime.datetime.now()
-        diff = (now - self.lastTime).microseconds + (now - self.lastTime).seconds * 1000000
+        diff = (now - self.lastTime).microseconds + (
+            now - self.lastTime
+        ).seconds * 1000000
         km_traveled = (speed / 3600000000.0) * diff
         self.lastTime = now
         self.lastSpeed = speed
         self.mileage += km_traveled
 
-        if int(self.mileage) > self.last_mileage_stored:  # only store when we ran one km more
+        if (
+            int(self.mileage) > self.last_mileage_stored
+        ):  # only store when we ran one km more
             self.setup_file.update_key("odo", {"value": int(self.mileage)})
             self.last_mileage_stored = int(self.mileage)
 

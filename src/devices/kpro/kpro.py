@@ -22,11 +22,29 @@ class Kpro:
 
         # let's see if we can find a recognized kpro device
         while self.kpro_device is None:
-            if usb.core.find(idVendor=constants.KPRO23_ID_VENDOR, idProduct=constants.KPRO23_ID_PRODUCT) is not None:  # kpro v2/3
-                self.kpro_device = usb.core.find(idVendor=constants.KPRO23_ID_VENDOR, idProduct=constants.KPRO23_ID_PRODUCT)
+            if (
+                usb.core.find(
+                    idVendor=constants.KPRO23_ID_VENDOR,
+                    idProduct=constants.KPRO23_ID_PRODUCT,
+                )
+                is not None
+            ):  # kpro v2/3
+                self.kpro_device = usb.core.find(
+                    idVendor=constants.KPRO23_ID_VENDOR,
+                    idProduct=constants.KPRO23_ID_PRODUCT,
+                )
                 self.version = constants.KPRO23_ID
-            elif usb.core.find(idVendor=constants.KPRO4_ID_VENDOR, idProduct=constants.KPRO4_ID_PRODUCT) is not None:  # kpro v4
-                self.kpro_device = usb.core.find(idVendor=constants.KPRO4_ID_VENDOR, idProduct=constants.KPRO4_ID_PRODUCT)
+            elif (
+                usb.core.find(
+                    idVendor=constants.KPRO4_ID_VENDOR,
+                    idProduct=constants.KPRO4_ID_PRODUCT,
+                )
+                is not None
+            ):  # kpro v4
+                self.kpro_device = usb.core.find(
+                    idVendor=constants.KPRO4_ID_VENDOR,
+                    idProduct=constants.KPRO4_ID_PRODUCT,
+                )
                 self.version = constants.KPRO4_ID
 
             if self.kpro_device is not None:  # if kpro device is found
@@ -36,7 +54,11 @@ class Kpro:
                     intf = cfg[(0, 0)]
                     self.ep = usb.util.find_descriptor(
                         intf,
-                        custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT)
+                        custom_match=lambda e: usb.util.endpoint_direction(
+                            e.bEndpointAddress
+                        )
+                        == usb.util.ENDPOINT_OUT,
+                    )
                     threading.Thread(target=self.update).start()
                 except usb.core.USBError:
                     # if there's an error while connecting to the usb device we just want to try again so let's ensure
@@ -50,23 +72,23 @@ class Kpro:
                 assert self.ep is not None
 
                 if self.version == constants.KPRO4_ID:
-                    self.ep.write('\x40')
+                    self.ep.write("\x40")
                     self.data4 = self.kpro_device.read(0x82, 1000)  # kpro v4
 
-                self.ep.write('\x60')
+                self.ep.write("\x60")
                 if self.version == constants.KPRO23_ID:
                     self.data0 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
                 elif self.version == constants.KPRO4_ID:
                     self.data0 = self.kpro_device.read(0x82, 1000)  # kpro v4
 
-                self.ep.write('\x61')
+                self.ep.write("\x61")
                 # found on kpro2 that sometimes len=44, normally 16
                 if self.version == constants.KPRO23_ID:
                     self.data1 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
                 elif self.version == constants.KPRO4_ID:
                     self.data1 = self.kpro_device.read(0x82, 1000)  # kpro v4
 
-                self.ep.write('\x62')
+                self.ep.write("\x62")
                 if self.version == constants.KPRO23_ID:
                     temp = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
                     if len(temp) == 68:
@@ -77,15 +99,17 @@ class Kpro:
                         self.data2 = temp
 
                 if self.version == constants.KPRO4_ID:
-                    self.ep.write('\x65')
+                    self.ep.write("\x65")
                     self.data3 = self.kpro_device.read(0x82, 128, 1000)  # kpro v4
                 else:  # for v3 only, v2 will not return anything meaningful
                     self.ep.clear_halt()
-                    self.ep.write('\xb0')
+                    self.ep.write("\xb0")
                     self.data5 = self.kpro_device.read(0x81, 1000)
 
             except usb.core.USBError as e:
-                if e.args[0] == 60:  # error 60 (operation timed out), just continue to try again
+                if (
+                    e.args[0] == 60
+                ):  # error 60 (operation timed out), just continue to try again
                     pass
                 else:
                     # if there's an error while gathering the data, stop the update and try to reconnect usb again
@@ -121,10 +145,10 @@ class Kpro:
             if self.version == constants.KPRO4_ID:
                 index = constants.KPRO4_FLT
             else:
-                return {'celsius': 0, 'fahrenheit': 0}
+                return {"celsius": 0, "fahrenheit": 0}
             flt_celsius = self.data3[index]
             flt_fahrenheit = pytemperature.c2f(flt_celsius)
-            return {'celsius': flt_celsius, 'fahrenheit': flt_fahrenheit}
+            return {"celsius": flt_celsius, "fahrenheit": flt_fahrenheit}
         except IndexError:
             return 0
 
@@ -141,12 +165,12 @@ class Kpro:
                 index_1 = constants.KPRO4_AFR2
                 index_2 = constants.KPRO4_AFR1
             else:
-                return {'afr': 0, 'lambda': 0}
+                return {"afr": 0, "lambda": 0}
             o2_lambda = 32768.0 / ((256 * self.data0[index_1]) + self.data0[index_2])
             o2_afr = o2_lambda * 14.7
-            return {'afr': o2_afr, 'lambda': o2_lambda}
+            return {"afr": o2_afr, "lambda": o2_lambda}
         except (IndexError, ZeroDivisionError):
-            return {'afr': 0, 'lambda': 0}
+            return {"afr": 0, "lambda": 0}
 
     def tps(self):
         """
@@ -155,7 +179,9 @@ class Kpro:
         # return unit: 0-100%
         try:
             if self.version == constants.KPRO23_ID:
-                return int(interp(self.data0[constants.KPRO23_TPS], [21, 229], [0, 100]))
+                return int(
+                    interp(self.data0[constants.KPRO23_TPS], [21, 229], [0, 100])
+                )
             elif self.version == constants.KPRO4_ID:
                 return int(interp(self.data0[constants.KPRO4_TPS], [21, 229], [0, 100]))
             else:
@@ -174,20 +200,32 @@ class Kpro:
             elif self.version == constants.KPRO4_ID:
                 index = constants.KPRO4_VSS
             else:
-                return {'kmh': 0, 'mph': 0}
+                return {"kmh": 0, "mph": 0}
             vss_kmh = self.data0[index]
             vss_mph = Formula.kmh_to_mph(vss_kmh)
-            return {'kmh': vss_kmh, 'mph': int(vss_mph)}
+            return {"kmh": vss_kmh, "mph": int(vss_mph)}
         except IndexError:
-            return {'kmh': 0, 'mph': 0}
+            return {"kmh": 0, "mph": 0}
 
     def rpm(self):
         # return unit: revs. per minute
         try:
             if self.version == constants.KPRO23_ID:
-                return int(((256 * self.data0[constants.KPRO23_RPM2]) + self.data0[constants.KPRO23_RPM1]) * 0.25)
+                return int(
+                    (
+                        (256 * self.data0[constants.KPRO23_RPM2])
+                        + self.data0[constants.KPRO23_RPM1]
+                    )
+                    * 0.25
+                )
             elif self.version == constants.KPRO4_ID:
-                return int(((256 * self.data0[constants.KPRO4_RPM2]) + self.data0[constants.KPRO4_RPM1]) * 0.25)
+                return int(
+                    (
+                        (256 * self.data0[constants.KPRO4_RPM2])
+                        + self.data0[constants.KPRO4_RPM1]
+                    )
+                    * 0.25
+                )
         except IndexError:
             return 0
 
@@ -206,62 +244,552 @@ class Kpro:
         Engine coolant temperature
         """
         # return units: celsius and fahrenheit
-        temperature = [302, 302, 298, 294, 289, 285, 282, 278, 273, 269, 266, 262, 258, 253, 249, 246, 242, 239, 235,
-                       231, 226, 222, 219, 215, 212, 208, 206, 203, 201, 199, 197, 194, 192, 190, 188, 185, 183, 181,
-                       179, 177, 177, 176, 174, 172, 170, 168, 167, 165, 165, 163, 161, 159, 158, 158, 156, 156, 154,
-                       152, 152, 150, 149, 149, 147, 147, 145, 143, 143, 141, 141, 140, 138, 138, 136, 134, 134, 132,
-                       132, 131, 131, 129, 129, 127, 127, 125, 125, 125, 123, 123, 122, 122, 122, 120, 120, 118, 118,
-                       116, 116, 116, 114, 114, 113, 113, 111, 111, 111, 109, 109, 107, 107, 107, 105, 105, 104, 104,
-                       102, 102, 102, 100, 100, 98, 98, 96, 96, 96, 95, 95, 93, 93, 91, 91, 91, 89, 89, 87, 87, 87, 86,
-                       86, 84, 84, 82, 82, 82, 80, 80, 78, 78, 77, 77, 77, 75, 75, 73, 73, 73, 71, 71, 69, 69, 68, 68,
-                       68, 66, 66, 64, 64, 62, 62, 62, 60, 60, 59, 59, 57, 57, 57, 55, 55, 53, 53, 53, 51, 51, 50, 50,
-                       48, 48, 48, 46, 46, 44, 44, 42, 42, 42, 41, 41, 39, 39, 39, 37, 37, 35, 35, 33, 33, 32, 32, 30,
-                       30, 28, 26, 26, 24, 24, 23, 21, 21, 19, 19, 17, 15, 15, 14, 14, 12, 10, 10, 8, 8, 6, 5, 3, 1, 0,
-                       -4, -5, -7, -9, -11, -13, -14, -18, -20, -22, -23, -25, -27, -31, -32, -34, -38, -40, -40, -40,
-                       -40]
+        temperature = [
+            302,
+            302,
+            298,
+            294,
+            289,
+            285,
+            282,
+            278,
+            273,
+            269,
+            266,
+            262,
+            258,
+            253,
+            249,
+            246,
+            242,
+            239,
+            235,
+            231,
+            226,
+            222,
+            219,
+            215,
+            212,
+            208,
+            206,
+            203,
+            201,
+            199,
+            197,
+            194,
+            192,
+            190,
+            188,
+            185,
+            183,
+            181,
+            179,
+            177,
+            177,
+            176,
+            174,
+            172,
+            170,
+            168,
+            167,
+            165,
+            165,
+            163,
+            161,
+            159,
+            158,
+            158,
+            156,
+            156,
+            154,
+            152,
+            152,
+            150,
+            149,
+            149,
+            147,
+            147,
+            145,
+            143,
+            143,
+            141,
+            141,
+            140,
+            138,
+            138,
+            136,
+            134,
+            134,
+            132,
+            132,
+            131,
+            131,
+            129,
+            129,
+            127,
+            127,
+            125,
+            125,
+            125,
+            123,
+            123,
+            122,
+            122,
+            122,
+            120,
+            120,
+            118,
+            118,
+            116,
+            116,
+            116,
+            114,
+            114,
+            113,
+            113,
+            111,
+            111,
+            111,
+            109,
+            109,
+            107,
+            107,
+            107,
+            105,
+            105,
+            104,
+            104,
+            102,
+            102,
+            102,
+            100,
+            100,
+            98,
+            98,
+            96,
+            96,
+            96,
+            95,
+            95,
+            93,
+            93,
+            91,
+            91,
+            91,
+            89,
+            89,
+            87,
+            87,
+            87,
+            86,
+            86,
+            84,
+            84,
+            82,
+            82,
+            82,
+            80,
+            80,
+            78,
+            78,
+            77,
+            77,
+            77,
+            75,
+            75,
+            73,
+            73,
+            73,
+            71,
+            71,
+            69,
+            69,
+            68,
+            68,
+            68,
+            66,
+            66,
+            64,
+            64,
+            62,
+            62,
+            62,
+            60,
+            60,
+            59,
+            59,
+            57,
+            57,
+            57,
+            55,
+            55,
+            53,
+            53,
+            53,
+            51,
+            51,
+            50,
+            50,
+            48,
+            48,
+            48,
+            46,
+            46,
+            44,
+            44,
+            42,
+            42,
+            42,
+            41,
+            41,
+            39,
+            39,
+            39,
+            37,
+            37,
+            35,
+            35,
+            33,
+            33,
+            32,
+            32,
+            30,
+            30,
+            28,
+            26,
+            26,
+            24,
+            24,
+            23,
+            21,
+            21,
+            19,
+            19,
+            17,
+            15,
+            15,
+            14,
+            14,
+            12,
+            10,
+            10,
+            8,
+            8,
+            6,
+            5,
+            3,
+            1,
+            0,
+            -4,
+            -5,
+            -7,
+            -9,
+            -11,
+            -13,
+            -14,
+            -18,
+            -20,
+            -22,
+            -23,
+            -25,
+            -27,
+            -31,
+            -32,
+            -34,
+            -38,
+            -40,
+            -40,
+            -40,
+            -40,
+        ]
         try:
             if self.version == constants.KPRO23_ID:
                 index = constants.KPRO23_ECT
             elif self.version == constants.KPRO4_ID:
                 index = constants.KPRO4_ECT
             else:
-                return {'celsius': 0, 'fahrenheit': 0}
+                return {"celsius": 0, "fahrenheit": 0}
             ect_fahrenheit = temperature[self.data1[index]]
             ect_celsius = pytemperature.f2c(ect_fahrenheit)
-            return {'celsius': ect_celsius, 'fahrenheit': ect_fahrenheit}
+            return {"celsius": ect_celsius, "fahrenheit": ect_fahrenheit}
         except IndexError:
-            return {'celsius': 0, 'fahrenheit': 0}
+            return {"celsius": 0, "fahrenheit": 0}
 
     def iat(self):
         """
         Intake air temperature
         """
         # return units: celsius and fahrenheit
-        temperature = [302, 302, 298, 294, 289, 285, 282, 278, 273, 269, 266, 262, 258, 253, 249, 246, 242, 239, 235,
-                       231, 226, 222, 219, 215, 212, 208, 206, 203, 201, 199, 197, 194, 192, 190, 188, 185, 183, 181,
-                       179, 177, 177, 176, 174, 172, 170, 168, 167, 165, 165, 163, 161, 159, 158, 158, 156, 156, 154,
-                       152, 152, 150, 149, 149, 147, 147, 145, 143, 143, 141, 141, 140, 138, 138, 136, 134, 134, 132,
-                       132, 131, 131, 129, 129, 127, 127, 125, 125, 125, 123, 123, 122, 122, 122, 120, 120, 118, 118,
-                       116, 116, 116, 114, 114, 113, 113, 111, 111, 111, 109, 109, 107, 107, 107, 105, 105, 104, 104,
-                       102, 102, 102, 100, 100, 98, 98, 96, 96, 96, 95, 95, 93, 93, 91, 91, 91, 89, 89, 87, 87, 87, 86,
-                       86, 84, 84, 82, 82, 82, 80, 80, 78, 78, 77, 77, 77, 75, 75, 73, 73, 73, 71, 71, 69, 69, 68, 68,
-                       68, 66, 66, 64, 64, 62, 62, 62, 60, 60, 59, 59, 57, 57, 57, 55, 55, 53, 53, 53, 51, 51, 50, 50,
-                       48, 48, 48, 46, 46, 44, 44, 42, 42, 42, 41, 41, 39, 39, 39, 37, 37, 35, 35, 33, 33, 32, 32, 30,
-                       30, 28, 26, 26, 24, 24, 23, 21, 21, 19, 19, 17, 15, 15, 14, 14, 12, 10, 10, 8, 8, 6, 5, 3, 1, 0,
-                       -4, -5, -7, -9, -11, -13, -14, -18, -20, -22, -23, -25, -27, -31, -32, -34, -38, -40, -40, -40,
-                       -40]
+        temperature = [
+            302,
+            302,
+            298,
+            294,
+            289,
+            285,
+            282,
+            278,
+            273,
+            269,
+            266,
+            262,
+            258,
+            253,
+            249,
+            246,
+            242,
+            239,
+            235,
+            231,
+            226,
+            222,
+            219,
+            215,
+            212,
+            208,
+            206,
+            203,
+            201,
+            199,
+            197,
+            194,
+            192,
+            190,
+            188,
+            185,
+            183,
+            181,
+            179,
+            177,
+            177,
+            176,
+            174,
+            172,
+            170,
+            168,
+            167,
+            165,
+            165,
+            163,
+            161,
+            159,
+            158,
+            158,
+            156,
+            156,
+            154,
+            152,
+            152,
+            150,
+            149,
+            149,
+            147,
+            147,
+            145,
+            143,
+            143,
+            141,
+            141,
+            140,
+            138,
+            138,
+            136,
+            134,
+            134,
+            132,
+            132,
+            131,
+            131,
+            129,
+            129,
+            127,
+            127,
+            125,
+            125,
+            125,
+            123,
+            123,
+            122,
+            122,
+            122,
+            120,
+            120,
+            118,
+            118,
+            116,
+            116,
+            116,
+            114,
+            114,
+            113,
+            113,
+            111,
+            111,
+            111,
+            109,
+            109,
+            107,
+            107,
+            107,
+            105,
+            105,
+            104,
+            104,
+            102,
+            102,
+            102,
+            100,
+            100,
+            98,
+            98,
+            96,
+            96,
+            96,
+            95,
+            95,
+            93,
+            93,
+            91,
+            91,
+            91,
+            89,
+            89,
+            87,
+            87,
+            87,
+            86,
+            86,
+            84,
+            84,
+            82,
+            82,
+            82,
+            80,
+            80,
+            78,
+            78,
+            77,
+            77,
+            77,
+            75,
+            75,
+            73,
+            73,
+            73,
+            71,
+            71,
+            69,
+            69,
+            68,
+            68,
+            68,
+            66,
+            66,
+            64,
+            64,
+            62,
+            62,
+            62,
+            60,
+            60,
+            59,
+            59,
+            57,
+            57,
+            57,
+            55,
+            55,
+            53,
+            53,
+            53,
+            51,
+            51,
+            50,
+            50,
+            48,
+            48,
+            48,
+            46,
+            46,
+            44,
+            44,
+            42,
+            42,
+            42,
+            41,
+            41,
+            39,
+            39,
+            39,
+            37,
+            37,
+            35,
+            35,
+            33,
+            33,
+            32,
+            32,
+            30,
+            30,
+            28,
+            26,
+            26,
+            24,
+            24,
+            23,
+            21,
+            21,
+            19,
+            19,
+            17,
+            15,
+            15,
+            14,
+            14,
+            12,
+            10,
+            10,
+            8,
+            8,
+            6,
+            5,
+            3,
+            1,
+            0,
+            -4,
+            -5,
+            -7,
+            -9,
+            -11,
+            -13,
+            -14,
+            -18,
+            -20,
+            -22,
+            -23,
+            -25,
+            -27,
+            -31,
+            -32,
+            -34,
+            -38,
+            -40,
+            -40,
+            -40,
+            -40,
+        ]
         try:
             if self.version == constants.KPRO23_ID:
                 index = constants.KPRO23_IAT
             elif self.version == constants.KPRO4_ID:
                 index = constants.KPRO4_IAT
             else:
-                return {'celsius': 0, 'fahrenheit': 0}
+                return {"celsius": 0, "fahrenheit": 0}
             iat_fahrenheit = temperature[self.data1[index]]
             iat_celsius = pytemperature.f2c(iat_fahrenheit)
-            return {'celsius': iat_celsius, 'fahrenheit': iat_fahrenheit}
+            return {"celsius": iat_celsius, "fahrenheit": iat_fahrenheit}
         except IndexError:
-            return {'celsius': 0, 'fahrenheit': 0}
+            return {"celsius": 0, "fahrenheit": 0}
 
     def gear(self):
         try:
@@ -270,14 +798,14 @@ class Kpro:
             elif self.version == 4:
                 gear = self.data0[constants.KPRO4_GEAR]
             else:
-                return 'N'
+                return "N"
 
             if gear == 0:
-                return 'N'
+                return "N"
             else:
                 return gear
         except IndexError:
-            return 'N'
+            return "N"
 
     def eps(self):
         """
@@ -388,13 +916,13 @@ class Kpro:
             elif self.version == constants.KPRO4_ID:
                 index = constants.KPRO4_MAP
             else:
-                return {'bar': 0, 'mbar': 0, 'psi': 0}
+                return {"bar": 0, "mbar": 0, "psi": 0}
             map_bar = self.data0[index] / 100.0
             map_mbar = map_bar * 1000
             map_psi = Formula.bar_to_psi(map_bar)
-            return {'bar': map_bar, 'mbar': map_mbar, 'psi': map_psi}
+            return {"bar": map_bar, "mbar": map_mbar, "psi": map_psi}
         except IndexError:
-            return {'bar': 0, 'mbar': 0, 'psi': 0}
+            return {"bar": 0, "mbar": 0, "psi": 0}
 
     def mil(self):
         """
@@ -514,7 +1042,9 @@ class Kpro:
                 return 0
 
             try:
-                return interp((256 * self.data3[index_1]) + self.data3[index_2], [0, 4096], [0, 5])
+                return interp(
+                    (256 * self.data3[index_1]) + self.data3[index_2], [0, 4096], [0, 5]
+                )
             except IndexError:
                 return 0
 
@@ -547,7 +1077,9 @@ class Kpro:
                 return 0
 
             try:
-                return interp((256 * self.data5[index_1]) + self.data5[index_2], [0, 1024], [0, 5])
+                return interp(
+                    (256 * self.data5[index_1]) + self.data5[index_2], [0, 1024], [0, 5]
+                )
             except IndexError:
                 return 0
         else:
