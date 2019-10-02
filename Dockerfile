@@ -1,13 +1,10 @@
 # Docker image for installing dependencies on Linux and running tests.
 # Build with:
-# docker build --tag=hondash .
+# docker build --tag=pablobuenaposada/hondash .
 # Run with:
-# docker run hondash /bin/sh -c 'make test'
+# docker run pablobuenaposada/hondash /bin/sh -c 'make test'
 # Or for interactive shell:
-# docker run -it --rm hondash
-# TODO:
-#	- delete archives to keep small the container small
-#	- setup caching (for apt, and pip)
+# docker run -it --rm pablobuenaposada/hondash
 FROM ubuntu:18.04
 
 # configure locale
