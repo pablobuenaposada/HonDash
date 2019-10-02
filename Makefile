@@ -10,7 +10,8 @@ CROSSBAR=$(VIRTUAL_ENV)/bin/crossbar
 PYTHON_VERSION=3
 LOCAL_DEV_PYTHON_VERSION=python3.7
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
-SYSTEM_DEPENDENCIES=$(PYTHON_WITH_VERSION) $(PYTHON_WITH_VERSION)-dev \
+DOCKER_IMAGE=pablobuenaposada/hondash
+SYSTEM_DEPENDENCIES=$(LOCAL_DEV_PYTHON_VERSION) $(LOCAL_DEV_PYTHON_VERSION)-dev \
 	virtualenv lsb-release pkg-config git build-essential libssl-dev tox \
 	libsnappy-dev
 OS=$(shell lsb_release -si 2>/dev/null || uname)
@@ -78,13 +79,16 @@ lint/black-check: virtualenv
 lint: lint/isort-check lint/flake8 lint/black-check
 
 docker/build:
-	docker build --tag=hondash .
+	docker build --cache-from=$(DOCKER_IMAGE):latest --tag=$(DOCKER_IMAGE) .
+
+docker/pull:
+	docker pull $(DOCKER_IMAGE)
 
 docker/run/test:
-	docker run --env-file docker.env hondash /bin/sh -c 'make test'
+	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make test'
 
 docker/run/shell:
-	docker run -it --rm hondash
+	docker run -it --rm $(DOCKER_IMAGE)
 
 docker/run/lint:
-	docker run hondash /bin/sh -c 'make lint'
+	docker run $(DOCKER_IMAGE) /bin/sh -c 'make lint'
