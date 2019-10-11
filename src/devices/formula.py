@@ -25,6 +25,27 @@ class Formula:
     def celsius_to_fahrenheit(celsius):
         return (celsius * 1.8) + 32
 
+    @staticmethod
+    def kpro_temp(kpro_value):
+        """
+        Conversion of whatever temperature unit kpro outputs into celsius and fahrenheit units
+        """
+        celsius = (
+            -1.626652278 * pow(10, -13) * pow(kpro_value, 8)
+            + 1.057080753 * pow(10, -10) * pow(kpro_value, 7)
+            - 2.768353645 * pow(10, -8) * pow(kpro_value, 6)
+            + 3.764093343 * pow(10, -6) * pow(kpro_value, 5)
+            - 2.852699948 * pow(10, -4) * pow(kpro_value, 4)
+            + 1.190815094 * pow(10, -2) * pow(kpro_value, 3)
+            - 2.362556588 * pow(10, -1) * pow(kpro_value, 2)
+            - 1.883911735 * pow(10, -1) * kpro_value
+            + 145.3815768
+        )
+        return {
+            "celsius": round(celsius),
+            "fahrenheit": round(Formula.celsius_to_fahrenheit(celsius)),
+        }
+
     # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     @staticmethod
     def vdo_323_057(volts):
