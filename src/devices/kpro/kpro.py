@@ -509,8 +509,8 @@ class Kpro:
                 index = constants.KPRO4_ECT
             else:
                 return {"celsius": 0, "fahrenheit": 0}
-            ect_fahrenheit = temperature[self.data1[index]]
-            ect_celsius = pytemperature.f2c(ect_fahrenheit)
+            ect_fahrenheit = int(temperature[self.data1[index]])
+            ect_celsius = int(pytemperature.f2c(ect_fahrenheit))
             return {"celsius": ect_celsius, "fahrenheit": ect_fahrenheit}
         except IndexError:
             return {"celsius": 0, "fahrenheit": 0}
@@ -785,8 +785,8 @@ class Kpro:
                 index = constants.KPRO4_IAT
             else:
                 return {"celsius": 0, "fahrenheit": 0}
-            iat_fahrenheit = temperature[self.data1[index]]
-            iat_celsius = pytemperature.f2c(iat_fahrenheit)
+            iat_fahrenheit = int(temperature[self.data1[index]])
+            iat_celsius = int(pytemperature.f2c(iat_fahrenheit))
             return {"celsius": iat_celsius, "fahrenheit": iat_fahrenheit}
         except IndexError:
             return {"celsius": 0, "fahrenheit": 0}
