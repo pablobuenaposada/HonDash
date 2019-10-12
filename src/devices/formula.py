@@ -42,8 +42,8 @@ class Formula:
             + 145.3815768
         )
         return {
-            "celsius": int(celsius),
-            "fahrenheit": int(Formula.celsius_to_fahrenheit(celsius)),
+            "celsius": round(celsius),
+            "fahrenheit": round(Formula.celsius_to_fahrenheit(celsius)),
         }
 
     # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
