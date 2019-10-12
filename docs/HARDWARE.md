@@ -19,6 +19,10 @@ USB A-Male to B-Male cable | | $5
 
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/detailed_installation.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/detailed_installation.png" height="300" />
 
+## Schema for the kit
+
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/hondash_diagram.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/hondash_diagram.png" height="400" />
+
 ## Remarks
 
 * It should run with any screen resolution but cannot ensure that graphics would render 100% perfect.
