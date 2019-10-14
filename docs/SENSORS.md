@@ -12,8 +12,8 @@ For now not all the sensors that works with Hondata can be read in HonDash but t
 Sensor type | Reference | Thread | Working range
 ------- | --------- | ------ | ------
 Wideband | All | - | -
-Pressure | Autometer 2246 | 1/8 NPT | 0 - 100 psi
-Pressure | ebay 150psi | 1/8 NPT | 0 - 150 psi
+Pressure | Autometer 2246 / eBay 100 psi | 1/8 NPT | 0 - 100 psi / 0.5V - 4.5V
+Pressure | eBay 150 psi | 1/8 NPT | 0 - 150 psi / 0.5V - 4.5V
 Temperature | VDO 323-057 | 1/8 NPT | -40 - 150 ºC
 Temperature | AEM 30-2012 | 1/8 NPT | -40 - 150 ºC     
 Temperature | Bosch 0280130039 / 0280130026 | M12x1.5mm | -40 - 130-140 ºC
