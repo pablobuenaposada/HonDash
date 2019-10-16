@@ -7,7 +7,7 @@ class Odometer:
     def __init__(self):
         self.lastTime = datetime.datetime.now()
         self.lastSpeed = 0
-        self.mileage = 0
+        self.mileage = 0  # always stored in km
         self.last_mileage_stored = 0
         self.setup_file = SetupFile()
 
