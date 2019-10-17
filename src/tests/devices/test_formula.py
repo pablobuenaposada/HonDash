@@ -5,6 +5,23 @@ from devices.formula import Formula
 
 class TestFormula:
     @staticmethod
+    @pytest.mark.parametrize("adc, voltage", ((0, 0), (2047.5, 2.5), (4095, 5)))
+    def test_adc_to_volts(adc, voltage):
+        assert Formula.adc_to_volts(adc) == voltage
+
+    @staticmethod
+    @pytest.mark.parametrize("psi, bar", ((0, 0), (1, 0.0689476), (2, 0.1378952)))
+    def test_psi_to_bar(psi, bar):
+        assert Formula.psi_to_bar(psi) == bar
+
+    @staticmethod
+    @pytest.mark.parametrize(
+        "voltage, result", ((0, {"volts": 0}), (2.5, {"volts": 2.5}), (5, {"volts": 5}))
+    )
+    def test_voltage(voltage, result):
+        assert Formula.voltage(voltage) == result
+
+    @staticmethod
     @pytest.mark.parametrize(
         "voltage, celsius, fahrenheit",
         (
@@ -49,16 +66,6 @@ class TestFormula:
     )
     def test_ebay_150_psi(voltage, bar, psi):
         assert Formula.ebay_150_psi(voltage) == {"bar": bar, "psi": psi}
-
-    @staticmethod
-    @pytest.mark.parametrize("adc, voltage", ((0, 0), (2047.5, 2.5), (4095, 5)))
-    def test_adc_to_volts(adc, voltage):
-        assert Formula.adc_to_volts(adc) == voltage
-
-    @staticmethod
-    @pytest.mark.parametrize("psi, bar", ((0, 0), (1, 0.0689476), (2, 0.1378952)))
-    def test_psi_to_bar(psi, bar):
-        assert Formula.psi_to_bar(psi) == bar
 
     @staticmethod
     @pytest.mark.parametrize(
