@@ -7,34 +7,28 @@ FLAKE8=$(VIRTUAL_ENV)/bin/flake8
 COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 BLACK=$(VIRTUAL_ENV)/bin/black
 CROSSBAR=$(VIRTUAL_ENV)/bin/crossbar
-PYTHON_VERSION=3
-LOCAL_DEV_PYTHON_VERSION=python3.7
+PYTHON_VERSION=3.7
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
 DOCKER_IMAGE=pablobuenaposada/hondash
-SYSTEM_DEPENDENCIES=$(LOCAL_DEV_PYTHON_VERSION) $(LOCAL_DEV_PYTHON_VERSION)-dev \
+SYSTEM_DEPENDENCIES_UBUNTU=$(PYTHON_WITH_VERSION) $(PYTHON_WITH_VERSION)-dev \
 	virtualenv lsb-release pkg-config git build-essential libssl-dev tox \
-	libsnappy-dev
+	libsnappy-dev python3-pip
+SYSTEM_DEPENDENCIES_RASPBIAN=virtualenv libatlas-base-dev libsnappy-dev
 OS=$(shell lsb_release -si 2>/dev/null || uname)
 
 system_dependencies:
 ifeq ($(OS), Ubuntu)
-	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES)
+	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_UBUNTU)
+else ifeq ($(OS), Raspbian)
+	sudo apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_RASPBIAN)
 endif
 
 clean:
 	py3clean .
 	rm -rf $(VIRTUAL_ENV)
 
-$(VIRTUAL_ENV):
-	virtualenv -p $(LOCAL_DEV_PYTHON_VERSION) $(VIRTUAL_ENV)
-	$(PIP) install -r requirements.txt
-
-virtualenv: $(VIRTUAL_ENV)
-
-virtualenv_rpi:
-	pip install virtualenv
-	sudo /usr/bin/easy_install virtualenv==16.0.0
-	virtualenv -p $(PYTHON_WITH_VERSION) $(VIRTUAL_ENV)
+virtualenv:
+	virtualenv --python=$(PYTHON_WITH_VERSION) $(VIRTUAL_ENV)
 	$(PIP) install -r requirements.txt
 
 run: virtualenv
@@ -45,8 +39,7 @@ run: virtualenv
 
 run_rpi:
 	$(CROSSBAR) start &
-	pkill python backend.py || true
-	sudo -E PYTHONPATH=src $(PYTHON) src/backend/backend.py &
+	sudo PYTHONPATH=src $(PYTHON) src/backend/backend.py &
 	sleep 5
 	chromium-browser --kiosk --incognito src/frontend/index.html &
 
