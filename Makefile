@@ -27,17 +27,21 @@ clean:
 	py3clean .
 	rm -rf $(VIRTUAL_ENV)
 
-virtualenv:
+$(VIRTUAL_ENV):
 	virtualenv --python=$(PYTHON_WITH_VERSION) $(VIRTUAL_ENV)
 	$(PIP) install -r requirements.txt
 
+virtualenv: $(VIRTUAL_ENV)
+
 run: virtualenv
+	cp -n default_setup.json setup.json
 	$(CROSSBAR) start &
 	pkill python backend.py || true
 	PYTHONPATH=src $(PYTHON) src/backend/backend.py &
 	open -a "Google Chrome" src/frontend/index.html &
 
 run_rpi:
+	cp -n default_setup.json setup.json
 	$(CROSSBAR) start &
 	sudo PYTHONPATH=src $(PYTHON) src/backend/backend.py &
 	sleep 5

@@ -3,8 +3,10 @@ from unittest.mock import patch
 from freezegun import freeze_time
 
 from devices.odometer import Odometer
+from devices.setup_file import DEFAULT_CONFIG_FILE_NAME
 
 
+@patch("devices.setup_file.FILE_NAME", DEFAULT_CONFIG_FILE_NAME)
 class TestOdometer:
     def test_get_mileage(self):
         """

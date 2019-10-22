@@ -2,13 +2,14 @@ import json
 
 from devices.formula import Formula
 
+DEFAULT_CONFIG_FILE_NAME = "default_setup.json"
 FILE_NAME = "setup.json"
 OS_CONFIG_FILE = "/boot/config.txt"
 
 
 class SetupFile:
-    def __init__(self, file_name=FILE_NAME):
-        self.file_name = file_name
+    def __init__(self, file_name=None):
+        self.file_name = file_name or FILE_NAME
         with open(self.file_name) as file:
             self.json = json.load(file)
 
@@ -30,8 +31,9 @@ class SetupFile:
 
         return getattr(Formula, formula)
 
-    def load_setup(self):
-        with open(self.file_name) as file:
+    def load_setup(self, file_name=None):
+        file_name = file_name or self.file_name
+        with open(file_name) as file:
             self.json = json.load(file)
         return self.json
 
@@ -40,6 +42,10 @@ class SetupFile:
         with open(self.file_name, "w") as file:
             json.dump(self.json, file, indent=2, sort_keys=True)
         self.__init__(self.file_name)
+
+    def reset_setup(self):
+        setup = self.load_setup(DEFAULT_CONFIG_FILE_NAME)
+        self.save_setup(setup)
 
     @staticmethod
     def rotate_screen(enable):

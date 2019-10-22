@@ -118,6 +118,22 @@ function save(){
     c.open();
 }
 
+function reset(){
+    var c = new autobahn.Connection({url: webSocketUrl, realm: 'realm1'});
+
+    c.onopen = function (session) {
+        session.call("reset").then(
+            function (setup) {
+                alert("setup reseted");
+            },
+            function (e) {
+                alert("sorry, an error occurred\n" + e.message);
+            }
+        );
+    };
+    c.open();
+}
+
 try {
    var autobahn = require('autobahn');
 } catch (e) {
