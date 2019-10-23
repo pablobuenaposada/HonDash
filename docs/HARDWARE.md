@@ -10,7 +10,7 @@ Raspberry plastic case | http://a.co/d/8z8Me8D | $7
 Micro usb DC Converter 12V to 5V 3A | http://a.co/d/adrZTSE | $5
 HSD070PWW1 1280x800 screen + HDMI driver | https://www.ebay.com/sch/i.html?_nkw=HSD070PWW1+hdmi | $65
 HDMI male-male cable | | $10
-DC Power plug with pigtails | | $1
+DC Power plug 5.5x2.1mm | | $1
 USB A-Male to B-Male cable | | $5
 
 <br/>
