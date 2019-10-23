@@ -20,6 +20,11 @@ def save(new_setup):
     setup_file.rotate_screen(new_setup["screen"]["rotate"])
 
 
+@register(u"reset")
+def reset():
+    setup_file.reset_setup()
+
+
 while True:
     try:
         run()

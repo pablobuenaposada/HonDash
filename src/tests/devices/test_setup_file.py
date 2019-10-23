@@ -10,7 +10,7 @@ class TestSetupFile:
         # note that the json file loaded in this test is the one used also as example
         # located in the root folder of this project
         self.file_name = NamedTemporaryFile().name
-        copyfile(setup_file.FILE_NAME, self.file_name)
+        copyfile(setup_file.DEFAULT_CONFIG_FILE_NAME, self.file_name)
         self.setup = setup_file.SetupFile(self.file_name)
 
     def teardown_method(self):
@@ -22,6 +22,21 @@ class TestSetupFile:
         """
         vss_params = self.setup.get_value("vss")
         assert vss_params  # checks that the dict return is not empty
+
+    def test_reset_setup(self):
+        """ Checks that the reset setup loads the default json """
+        # get the initial value for vss
+        vss_config = self.setup.get_value("vss")
+
+        # let's put the json in blank
+        self.setup.json = {}
+        assert self.setup.get_value("vss") is None
+
+        # reset the setup
+        self.setup.reset_setup()
+
+        # now the value should be back
+        assert self.setup.get_value("vss") == vss_config
 
     def test_enable_rotate_screen(self):
         """
