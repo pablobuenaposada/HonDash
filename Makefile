@@ -89,3 +89,11 @@ docker/run/shell:
 
 docker/run/lint:
 	docker run $(DOCKER_IMAGE) /bin/sh -c 'make lint'
+
+sd-image/create:
+	sudo dd bs=1024 if=$(path) of=full_size_image.img
+
+sd-image/shrink:
+	wget -c https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
+	chmod +x pishrink.sh
+	sudo ./pishrink.sh full_size_image.img shrinked_image.img

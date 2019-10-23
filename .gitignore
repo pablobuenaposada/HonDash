@@ -7,3 +7,5 @@ venv/
 .pytest_cache/
 .coverage
 src/setup/lib/node_modules/
+pishrink.sh
+*.img
