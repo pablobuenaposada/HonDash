@@ -117,3 +117,19 @@ sudo rm /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
 ### Boot faster
 rcconf
 disable bluethoot, alsa...
+
+### Create SD card image file
+Check your sd card path with:
+```sh
+diskutil list
+```
+
+use the provided make command to build a full sd card image:
+```sh
+make sd-image/create path=/dev/rdisk6
+```
+
+shrink it:
+```sh
+make sd-image/shrink
+```
