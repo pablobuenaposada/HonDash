@@ -6,9 +6,8 @@ Later on you will be able to read this analog input from the K-Pro and translate
 
 This is necessary because from factory fuel level signal is not sent to the ECU, the signal is just sent directly to the stock car cluster.
 
-Here is a schematic diagram:
-
-<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="300" />
+## Wiring
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="300"/>
 
 Fuel tank | Resistor value | Cabin harness wire color
 ------- | -------------- | -------------
@@ -21,6 +20,27 @@ MX5 NA | 56Ω 1/4 watt |
 <br/>
  
 E5 pin is usually empty in the engine harness, to get a wire in there you need an old pigtail from other harness or you can buy them new on-line fairly cheap, the manufacturer is `TE Connectivity` and the reference is `316836-1`.
+
+## K-manager setup
+Even though this step is not necessary for HonDash, is always good to setup the fuel level in K-manager too, just for troubleshoot problems in this part it's already worth it.
+
+Go to `Parameters` -> `Analog Inputs` and fill the chosen analog port like this:
+
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/kpro_fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/kpro_fuel.png" height="600"/>
+
+The values within the red square should be filled according to this table (use comma as decimal separator):
+
+Fuel tank | Voltage at 0% | Voltage at 100%
+--------- | ------------- | -------------
+Civic EG | 3,31 | 0,17
+Civic EK | 3,29 | 0,29
+S2000 | 3,5 | 0,9
+MR2 W30 | 1,13 | 3,9
+MX5 NA | 3,14 | 0,55
+
+<br/>
+
+After reuploading the calibration, you should be able to see your current fuel level in the display window after adding this new parameter.
 
 ## ⚠ Warning
 K-Pro inputs are rate up to 5v max, double check this installation otherwise you will end damaging the K-Pro board and possibly the entire ECU.
