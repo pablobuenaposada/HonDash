@@ -1,6 +1,5 @@
 import threading
 
-import pytemperature
 import usb.core
 import usb.util
 from numpy import interp
@@ -147,7 +146,7 @@ class Kpro:
             else:
                 return {"celsius": 0, "fahrenheit": 0}
             flt_celsius = self.data3[index]
-            flt_fahrenheit = pytemperature.c2f(flt_celsius)
+            flt_fahrenheit = Formula.celsius_to_fahrenheit(flt_celsius)
             return {"celsius": flt_celsius, "fahrenheit": flt_fahrenheit}
         except IndexError:
             return 0
