@@ -235,6 +235,11 @@
   "screen": {
     "rotate": false
   },
+  "scs": {
+    "tag": "icon3",
+    "pathon": "scs_on.png",
+    "pathoff": "scs_off.png"
+  },
   "template": "basic",
   "time": {
     "tag": "time"

@@ -12,6 +12,7 @@ var version = new Text({id: "version", value: "", size: 1, style: "italic"});
 // Icons
 var icon1 = new Icon({id: "icon1"});
 var icon2 = new Icon({id: "icon2"});
+var icon3 = new Icon({id: "icon3"});
 
 // Gauges
 var gauge1 = new Gauge({id: "gauge1"});

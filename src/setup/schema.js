@@ -45,7 +45,7 @@ function simple_value(units) {
 /* fields */
 var tag = {
     "type": "string",
-    "enum": ["not use","gauge1", "gauge2", "gauge3", "gauge4", "gauge5", "gauge6", "gauge7", "gauge8", "gauge9", "gauge10", "time", "odo", "bar1", "bar2", "icon1", "icon2", "gear", "speed"]
+    "enum": ["not use","gauge1", "gauge2", "gauge3", "gauge4", "gauge5", "gauge6", "gauge7", "gauge8", "gauge9", "gauge10", "time", "odo", "bar1", "bar2", "icon1", "icon2", "icon3", "gear", "speed"]
 };
 var formula = {
     "type": "string",
@@ -122,6 +122,15 @@ var fan = {
         "pathoff": {"type": "string"}
     }
 };
+var scs = {
+    "type": "object",
+    "required": ["tag"],
+    "properties": {
+        "tag": tag,
+        "pathon": {"type": "string"},
+        "pathoff": {"type": "string"}
+    }
+};
 var gear = {
     "type": "object",
     "required": ["tag"],
@@ -171,6 +180,7 @@ var schema = {
             "rpm": rpm,
             "mil": mil,
             "fan": fan,
+            "scs": scs,
             "eth": simple_value_no_units_no_decimals(),
             "vss": simple_value_no_decimals(speed_units),
             "cam": simple_value_no_units_no_decimals(),
