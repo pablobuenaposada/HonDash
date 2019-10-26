@@ -94,6 +94,11 @@ sudo /etc/init.d/nginx start
 crontab /home/pi/Desktop/HonDash/config/cron/cron
 ```
 
+### Remove wizard setup message
+```sh
+sudo rm /etc/xdg/autostart/piwiz.desktop
+```
+
 ### Hide mouse pointer
 ```sh
 sudo apt install unclutter
