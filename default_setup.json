@@ -154,6 +154,10 @@
     "pathon": "fan_on.svg",
     "tag": "icon2"
   },
+  "fmw": {
+    "suffix": " K-pro version",
+    "tag": "firmware_version"
+  },
   "gear": {
     "tag": "gear"
   },
