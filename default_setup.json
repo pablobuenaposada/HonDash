@@ -155,7 +155,6 @@
     "tag": "icon2"
   },
   "fmw": {
-    "suffix": " K-pro version",
     "tag": "firmware_version"
   },
   "gear": {
@@ -262,7 +261,6 @@
     "tag": "gauge8"
   },
   "ver": {
-    "suffix": " version",
     "tag": "version"
   },
   "version": "2.1.2",
