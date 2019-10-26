@@ -104,6 +104,11 @@ add this line:
 @unclutter -idle 0.1
 ```
 
+### Wallpaper
+```sh
+env DISPLAY=:0.0 pcmanfm -w /home/pi/Desktop/HonDash/docs/logo/hondash.png --wallpaper-mode=fit
+```
+
 ### Disable screen saver
 ```sh
 sudo apt -y install xscreensaver
