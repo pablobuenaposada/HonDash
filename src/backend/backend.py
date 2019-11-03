@@ -5,6 +5,7 @@ from autobahn_sync import publish, register, run
 from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
 from devices.setup_file import SetupFile
+from devices.style import Style
 from devices.time import Time
 from version import __version__
 
@@ -35,6 +36,7 @@ while True:
 time = Time()
 setup_file = SetupFile()
 odo = Odometer()
+style = Style()
 kpro = Kpro()
 
 iat_unit = setup_file.json.get("iat", {}).get("unit", "celsius")
@@ -63,6 +65,7 @@ an7_formula = setup_file.get_formula("an7")
 
 while True:
     odo.save(kpro.vss()["kmh"])
+    style.update(kpro.tps())
     publish(
         "data",
         {
@@ -93,6 +96,7 @@ while True:
             "an7": an7_formula(kpro.analog_input(7))[an7_unit],
             "time": time.get_time(),
             "odo": odo.get_mileage()[odo_unit],
+            "style": style.status,
             "ver": __version__,
         },
     )

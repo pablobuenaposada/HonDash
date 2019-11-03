@@ -16,7 +16,7 @@ class Bar {
         this.textFont = args.textFont || "Arial";
         this.textWeight = args.textWeight || "bold";
         this.textSize = args.textSize || 20;
-        var backgroundColor = args.backgroundColor || "#edebeb";
+        this.backgroundColor = args.backgroundColor || "#edebeb";
         this.sectors = args.sectors || [];
 
         // Raphael paper object
@@ -25,8 +25,8 @@ class Bar {
         // Background
         this.background = this.paper.rect(this.x, this.y, this.width, this.height);
         this.background.attr({
-            fill: backgroundColor,
-            stroke: backgroundColor,
+            fill: this.backgroundColor,
+            stroke: this.backgroundColor,
         });
 
         // Bar fill & stroke
@@ -92,5 +92,13 @@ class Bar {
 
     setSuffix(suffix) {
         this.suffix = suffix;
+    }
+
+    setBackgroundColor(color){
+        this.backgroundColor = color;
+        this.background.attr({
+            fill: this.backgroundColor,
+            stroke: this.backgroundColor,
+        });
     }
 };

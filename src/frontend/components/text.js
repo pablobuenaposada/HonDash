@@ -21,4 +21,8 @@ class Text {
             this.suffix = suffix;
         }
     }
+
+    setColor(color){
+        this.element.style.color = color;
+    }
 }

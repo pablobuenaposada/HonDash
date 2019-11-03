@@ -43,3 +43,6 @@ var gauge7 = new Gauge({ id: "gauge7" });
 var gauge8 = new Gauge({ id: "gauge8" });
 var gauge9 = new Gauge({ id: "gauge9" });
 var gauge10 = new Gauge({ id: "gauge10" });
+
+// Background
+var style = new Style({ id: "style" });

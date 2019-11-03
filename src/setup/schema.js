@@ -194,6 +194,48 @@ var analog = {
     sectors: sectors
   }
 };
+var style = {
+  type: "object",
+  required: [
+    "tag",
+    "dayBackgroundColor",
+    "nightBackgroundColor",
+    "dayTextColor",
+    "nightTextColor",
+    "dayBackgroundGaugeColor",
+    "nightBackgroundGaugeColor"
+  ],
+  properties: {
+    tag: {
+      type: "string",
+      enum: ["style"]
+    },
+    dayBackgroundColor: {
+      type: "string",
+      format: "color"
+    },
+    nightBackgroundColor: {
+      type: "string",
+      format: "color"
+    },
+    dayTextColor: {
+      type: "string",
+      format: "color"
+    },
+    nightTextColor: {
+      type: "string",
+      format: "color"
+    },
+    dayBackgroundGaugeColor: {
+      type: "string",
+      format: "color"
+    },
+    nightBackgroundGaugeColor: {
+      type: "string",
+      format: "color"
+    }
+  }
+};
 
 var schema = {
   schema: {
@@ -204,6 +246,7 @@ var schema = {
       template: template,
       screen: screen,
       time: time,
+      style: style,
       odo: odo,
       gear: gear,
       rpm: rpm,
