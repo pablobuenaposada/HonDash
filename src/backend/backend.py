@@ -36,7 +36,11 @@ while True:
 time = Time()
 setup_file = SetupFile()
 odo = Odometer()
-style = Style()
+style = Style(
+    setup_file.json.get("style").get("tpsLowerThreshold"),
+    setup_file.json.get("style").get("tpsUpperThreshold"),
+    setup_file.json.get("style").get("elapsedSeconds"),
+)
 kpro = Kpro()
 
 iat_unit = setup_file.json.get("iat", {}).get("unit", "celsius")

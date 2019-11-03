@@ -203,7 +203,10 @@ var style = {
     "dayTextColor",
     "nightTextColor",
     "dayBackgroundGaugeColor",
-    "nightBackgroundGaugeColor"
+    "nightBackgroundGaugeColor",
+    "tpsLowerThreshold",
+    "tpsUpperThreshold",
+    "elapsedSeconds"
   ],
   properties: {
     tag: {
@@ -233,6 +236,15 @@ var style = {
     nightBackgroundGaugeColor: {
       type: "string",
       format: "color"
+    },
+    tpsLowerThreshold: {
+      type: "integer"
+    },
+    tpsUpperThreshold: {
+      type: "integer"
+    },
+    elapsedSeconds: {
+      type: "integer"
     }
   }
 };

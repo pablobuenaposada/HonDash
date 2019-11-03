@@ -21,7 +21,7 @@ class TestStyle:
         tps_within_range = (
             style.threshold_lower_limit
         )  # the lower limit is inside the range
-        seconds_to_switch_status = style.elapsed_goal_seconds
+        seconds_to_switch_status = style.elapsed_seconds
         start_time = datetime.datetime.now()
 
         # starting in day mode
@@ -49,7 +49,7 @@ class TestStyle:
         tps_outside_range = (
             style.threshold_upper_limit + 1
         )  # the upper limit + 1 is outside the range
-        seconds_to_switch_status = style.elapsed_goal_seconds
+        seconds_to_switch_status = style.elapsed_seconds
         start_time = datetime.datetime.now()
 
         # starting in day mode
@@ -78,7 +78,7 @@ class TestStyle:
         tps_within_range = (
             style.threshold_lower_limit
         )  # the lower limit is inside the range
-        seconds_to_switch_status = style.elapsed_goal_seconds
+        seconds_to_switch_status = style.elapsed_seconds
         start_time = datetime.datetime.now()
 
         with freeze_time(start_time):

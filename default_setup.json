@@ -243,6 +243,18 @@
     "pathon": "scs_on.png",
     "pathoff": "scs_off.png"
   },
+  "style": {
+    "tag": "style",
+    "dayBackgroundColor": "#ffffff",
+    "nightBackgroundColor": "#000000",
+    "dayTextColor": "#000000",
+    "nightTextColor": "#ffffff",
+    "dayBackgroundGaugeColor": "#edebeb",
+    "nightBackgroundGaugeColor": "#808080",
+    "tpsLowerThreshold": 8,
+    "tpsUpperThreshold": 10,
+    "elapsedSeconds": 3
+  },
   "template": "basic",
   "time": {
     "tag": "time"
@@ -264,15 +276,6 @@
     "tag": "version"
   },
   "version": "2.2.0",
-  "style": {
-    "tag": "style",
-    "dayBackgroundColor": "#ffffff",
-    "nightBackgroundColor": "#000000",
-    "dayTextColor": "#000000",
-    "nightTextColor": "#ffffff",
-    "dayBackgroundGaugeColor": "#edebeb",
-    "nightBackgroundGaugeColor": "#808080"
-  },
   "vss": {
     "label": "",
     "max": 300,
