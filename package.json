@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "prettier": "1.18.2"
+  },
+  "name": "hondash",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pablobuenaposada/HonDash.git"
+  },
+  "author": "Pablo Buenaposada",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pablobuenaposada/HonDash/issues"
+  },
+  "homepage": "http://www.hondash.com"
+}

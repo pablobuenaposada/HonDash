@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="lib/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="lib/autobahn-js-browser/autobahn.min.js"></script>
-        <script src="connection.js"></script>
-        <script src="lib/jsoneditor.js"></script>
-        <script src="schema.js"></script>
-        <title>HonDash setup</title>
-    </head>
+  <head>
+    <link
+      data-require="bootstrap@3.3.7"
+      data-semver="3.3.7"
+      rel="stylesheet"
+      href="lib/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="lib/autobahn-js-browser/autobahn.min.js"></script>
+    <script src="connection.js"></script>
+    <script src="lib/jsoneditor.js"></script>
+    <script src="schema.js"></script>
+    <title>HonDash setup</title>
+  </head>
 
-    <body>
-        <div id='editor_holder'></div>
-        <div class="save_div">
-            <button class="btn btn-danger btn-lg" onclick="reset()">Reset</button>
-            <button class="btn btn-warning btn-lg" onclick="download()">Download</button>
-            <button class="btn btn-primary btn-lg" onclick="save()">Save</button>
-        </div>
-        <br>
-        <a id="downloadAnchorElem" style="display:none"></a>
-    </body>
+  <body>
+    <div id="editor_holder"></div>
+    <div class="save_div">
+      <button class="btn btn-danger btn-lg" onclick="reset()">Reset</button>
+      <button class="btn btn-warning btn-lg" onclick="download()">
+        Download
+      </button>
+      <button class="btn btn-primary btn-lg" onclick="save()">Save</button>
+    </div>
+    <br />
+    <a id="downloadAnchorElem" style="display:none"></a>
+  </body>
 </html>

@@ -35,7 +35,7 @@ cd HonDash/
 
 Install dependencies:
 ```sh
-make system_dependencies
+sudo make system_dependencies
 ```
 
 Create de virtual enviroment:

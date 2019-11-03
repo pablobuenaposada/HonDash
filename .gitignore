@@ -9,3 +9,4 @@ venv/
 src/setup/lib/node_modules/
 pishrink.sh
 *.img
+node_modules/

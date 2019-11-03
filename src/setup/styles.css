@@ -1,58 +1,65 @@
-#editor_holder{
-    margin: 0px 50px 0px 50px;
+#editor_holder {
+  margin: 0px 50px 0px 50px;
 }
 
 #editor_holder > div > div.well.well-sm > div > div > .row {
-    display: inline-block;
-    vertical-align:top;
-    width: 35%;
-    padding: 0 4px 0 4px;
+  display: inline-block;
+  vertical-align: top;
+  width: 35%;
+  padding: 0 4px 0 4px;
 }
 
 /* every field */
-#editor_holder > div > div.well.well-sm > div > div > .row > div > div.well.well-sm {
-    /*background-color: yellow;*/
-    height: 100%;
-    /*border: 8px solid #e3e3e3;*/
+#editor_holder
+  > div
+  > div.well.well-sm
+  > div
+  > div
+  > .row
+  > div
+  > div.well.well-sm {
+  /*background-color: yellow;*/
+  height: 100%;
+  /*border: 8px solid #e3e3e3;*/
 }
 
 /* main box */
 #editor_holder > div > div {
-    background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 body {
-    background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 /* title */
 #editor_holder > div > h3 {
-    text-align: center;
-    font-size: 40px;
+  text-align: center;
+  font-size: 40px;
 }
 
 .save_div {
-    text-align: center;
+  text-align: center;
 }
 
 /* trick for correct bottom margin in sector boxes */
 .well-sm {
-    padding-bottom: 9px !important;
+  padding-bottom: 9px !important;
 }
 
 /* version field */
 #editor_holder > div > div.well.well-sm > div > div > div:nth-child(1) {
-    width: 50%;
+  width: 50%;
 }
 
 /* template field */
 #editor_holder > div > div.well.well-sm > div > div > div:nth-child(2) {
-    width: 50%;
+  width: 50%;
 }
 
 .template {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
