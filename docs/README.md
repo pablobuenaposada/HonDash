@@ -2,6 +2,17 @@
 
 HonDash is an open source instrument cluster developed for Honda engines managed through [Hondata](https://www.hondata.com/) ECUs.
 
+## Features
+- Pulls data from K-Pro USB
+- Minimal wiring involved
+- [K-Pro v3/v4 analog inputs available](http://hondash.com/SENSORS.html)
+- Custom gauge color value depending
+- [Display configuration through Wi-Fi](http://hondash.com/SETUP.html)
+- [Fuel level through K-Pro analog input](http://hondash.com/FUEL.html)
+- Adjustable measurement units
+- Odometer
+- Running time
+
 ## Requirements (minimum)
 
 - Hondata K-Pro* ECU v2 / v3 / v4
@@ -49,3 +60,4 @@ IGN | Ignition status |  |  |:white_check_mark:
 SRL | K-Pro serial number |  |  |:white_check_mark:
 FIRM | K-Pro firmware version |  |  |:white_check_mark:
 AN | Analog inputs | :x: |:white_check_mark:|:white_check_mark:
+ 
