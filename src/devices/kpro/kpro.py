@@ -73,6 +73,9 @@ class Kpro:
                 if self.version == constants.KPRO4_ID:
                     self.ep.write("\x40")
                     self.data4 = self.kpro_device.read(0x82, 1000)  # kpro v4
+                else:
+                    self.ep.write("\x40")
+                    self.data4 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
 
                 self.ep.write("\x60")
                 if self.version == constants.KPRO23_ID:
