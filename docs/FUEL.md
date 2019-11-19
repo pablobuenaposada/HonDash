@@ -7,6 +7,7 @@ Later on you will be able to read this analog input from the K-Pro and translate
 This is necessary because from factory fuel level signal is not sent to the ECU, the signal is just sent directly to the stock car cluster.
 
 ## Wiring
+<br/>
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="300"/>
 
 Fuel tank | Resistor value | Cabin harness wire color

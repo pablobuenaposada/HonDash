@@ -44,7 +44,7 @@ RPM | Revs. per minute |  |:white_check_mark:|:white_check_mark:
 CAM | VTC cam angle |  |:white_check_mark:|:white_check_mark:
 CLV | Calculated load value |  |  |
 ECT | Coolant temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:
-ETH | Ethanol content |  |  |:white_check_mark:
+ETH | Ethanol content |:x:|  |:white_check_mark:
 FLT | Fuel temperature |  |  |:white_check_mark:
 IAT | Intake air temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:
 GEAR | Gear |  |:white_check_mark:|:white_check_mark:
@@ -60,7 +60,7 @@ MAP | Manifold absolute pressure |:white_check_mark:|:white_check_mark:|:white_c
 MIL | Malfunction indicator light |  |  |:white_check_mark:
 ECU | Ecu type |  |  |:white_check_mark:
 IGN | Ignition status |  |  |:white_check_mark:
-SRL | K-Pro serial number |  |  |:white_check_mark:
-FIRM | K-Pro firmware version |  |  |:white_check_mark:
+SRL | K-Pro serial number |:white_check_mark:|  |:white_check_mark:
+FIRM | K-Pro firmware version |:white_check_mark:|  |:white_check_mark:
 AN | Analog inputs | :x: |:white_check_mark:|:white_check_mark:
  
