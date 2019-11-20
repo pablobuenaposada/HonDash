@@ -8,7 +8,7 @@ This is necessary because from factory fuel level signal is not sent to the ECU,
 
 ## Wiring
 <br/>
-<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="300"/>
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="400"/>
 
 Fuel tank | Resistor value | Cabin harness wire color
 ------- | -------------- | -------------
