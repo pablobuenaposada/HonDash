@@ -29,7 +29,10 @@ HonDash is an open source instrument cluster developed for Honda engines managed
 - K-Pro must have the latest firmware from Kmanager V4.4.1
 ```
 
-
 ## Setup diagram
 
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" height="300" />
+
+## Ready to run kit
+
+Check [this](http://hondash.com/READYTORUN.html) out if you just want to buy everything assembled.
