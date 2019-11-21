@@ -1,3 +1,7 @@
+<div style="text-align:center">
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/hondash_kit.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/hondash_kit.png" height="300" />
+</div>
+
 ## What's HonDash?
 
 HonDash is an open source instrument cluster developed for Honda engines managed through [Hondata](https://www.hondata.com/) ECUs.
