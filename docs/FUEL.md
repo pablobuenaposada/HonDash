@@ -10,13 +10,13 @@ This is necessary because from factory fuel level signal is not sent to the ECU,
 <br/>
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="400"/>
 
-Fuel tank | Resistor value | Cabin harness wire color
-------- | -------------- | -------------
-Civic EG | 56Ω 1/4 watt | yellow/white
-Civic EK | 56Ω 1/4 watt | yellow/black
-S2000 | 56Ω 1/4 watt | yellow/black
-MR2 W30 | 56Ω 1/4 watt | 
-MX5 NA | 56Ω 1/4 watt |
+Fuel tank | Resistor value | Cabin harness wire color | Specs
+------- | -------------- | ------------- | -------------
+Civic EG | 56Ω 1/4 watt | yellow/white | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_eg.jpg)
+Civic EK | 56Ω 1/4 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_ek.png)
+S2000 | 56Ω 1/4 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/s2000.png)
+MR2 W30 | 56Ω 1/4 watt | N/A | N/A
+MX5 NA | 56Ω 1/4 watt | N/A | N/A
 
 <br/>
  
