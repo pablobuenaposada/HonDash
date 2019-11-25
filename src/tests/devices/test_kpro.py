@@ -8,19 +8,7 @@ from devices.kpro.kpro import Kpro
 
 class TestKpro:
 
-    temp_sensor_argvalues = (
-        (181, 10, 50),
-        (159, 20, 68),
-        (110, 40, 104),
-        (87, 50, 122),
-        (51, 70, 158),
-        (40, 80, 176),
-        (35, 85, 185),
-        (31, 90, 194),
-        (27, 95, 203),
-        (24, 100, 212),
-        (14, 120, 248),
-    )
+    temp_sensor_argvalues = ((51, 69, 156), (40, 80, 175), (31, 91, 195))
 
     def setup_method(self):
         # we are not unit testing USB features so it may raise a
