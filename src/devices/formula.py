@@ -28,18 +28,19 @@ class Formula:
     @staticmethod
     def kpro_temp(kpro_value):
         """
-        Conversion of whatever temperature unit kpro outputs into celsius and fahrenheit units
+        Conversion of whatever temperature unit kpro outputs into celsius and fahrenheit units.
+        Linear regression made with https://arachnoid.com/polysolve/
         """
         celsius = (
-            -1.626652278 * pow(10, -13) * pow(kpro_value, 8)
-            + 1.057080753 * pow(10, -10) * pow(kpro_value, 7)
-            - 2.768353645 * pow(10, -8) * pow(kpro_value, 6)
-            + 3.764093343 * pow(10, -6) * pow(kpro_value, 5)
-            - 2.852699948 * pow(10, -4) * pow(kpro_value, 4)
-            + 1.190815094 * pow(10, -2) * pow(kpro_value, 3)
-            - 2.362556588 * pow(10, -1) * pow(kpro_value, 2)
-            - 1.883911735 * pow(10, -1) * kpro_value
-            + 145.3815768
+            -2.7168631716148286 * pow(10, 0) * kpro_value
+            + 3.5250001884568352 * pow(10, -2) * pow(kpro_value, 2)
+            - 4.6668312213461976 * pow(10, -4) * pow(kpro_value, 3)
+            + 6.2314622546038854 * pow(10, -6) * pow(kpro_value, 4)
+            - 5.5155685454381802 * pow(10, -8) * pow(kpro_value, 5)
+            + 2.6888773098684158 * pow(10, -10) * pow(kpro_value, 6)
+            - 6.5904712075799765 * pow(10, -13) * pow(kpro_value, 7)
+            + 6.3467552343485511 * pow(10, -16) * pow(kpro_value, 8)
+            + 1.5037636674235824 * pow(10, 2)
         )
         return {
             "celsius": round(celsius),
