@@ -30,6 +30,9 @@ SYSTEM_DEPENDENCIES_RASPBIAN= \
     libatlas-base-dev \
     libsnappy-dev \
     virtualenv
+SYSTEM_DEPENDENCIES_MACOS= \
+    snappy \
+    npm
 OS=$(shell lsb_release -si 2>/dev/null || uname)
 
 system_dependencies:
@@ -37,6 +40,8 @@ ifeq ($(OS), Ubuntu)
 	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_UBUNTU)
 else ifeq ($(OS), Raspbian)
 	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_RASPBIAN)
+else ifeq ($(OS), Darwin)
+	brew install $(SYSTEM_DEPENDENCIES_MACOS)
 endif
 
 clean:
