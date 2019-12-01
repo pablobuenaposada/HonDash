@@ -101,9 +101,67 @@ function checkDivColor() {
   }
 }
 
+function enforceAllowedUnits(unitsSelect, allowedUnits) {
+  var option = unitsSelect[0].getElementsByTagName("option");
+  var allowedUnitIndex = -1;
+  for (var i = 0; i < option.length; i++) {
+    if (allowedUnits.includes(option[i].value)) {
+      option[i].disabled = false;
+      allowedUnitIndex = i;
+    } else {
+      option[i].disabled = true;
+    }
+  }
+
+  // if the selected unit is not allowed, move it to a new allowed one
+  if (!allowedUnits.includes(option[unitsSelect[0].selectedIndex].value)) {
+    unitsSelect[0].selectedIndex = allowedUnitIndex;
+  }
+}
+
+var formulas = "contains(., '[an') and contains(., '[formula]')";
+var formulaVsUnits = {
+  vdo_323_057: ["celsius", "fahrenheit"],
+  autometer_2246: ["psi", "bar"],
+  aem_30_2012: ["celsius", "fahrenheit"],
+  ebay_150_psi: ["psi", "bar"],
+  bosch_0280130039_0280130026: ["celsius", "fahrenheit"]
+};
+var otherUnits = ["per cent"];
+
+function checkUnitValues() {
+  var divs = getElementsByXPath(
+    "//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']"
+  );
+
+  for (var div in divs) {
+    var formula = getElementsByXPath(
+      "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[" +
+        formulas +
+        "]]",
+      divs[div]
+    );
+    if (formula.length > 0) {
+      var selectedFormula = formula[0].options[formula[0].selectedIndex].value;
+      var unitsSelect = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[unit]')]]",
+        divs[div]
+      );
+
+      // if the formula is a recognized one
+      if (selectedFormula in formulaVsUnits) {
+        enforceAllowedUnits(unitsSelect, formulaVsUnits[selectedFormula]);
+      } else {
+        enforceAllowedUnits(unitsSelect, otherUnits);
+      }
+    }
+  }
+}
+
 function updateFields() {
   checkDivColor();
   checkTagValues();
+  checkUnitValues();
 }
 
 function download() {
