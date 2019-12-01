@@ -231,9 +231,6 @@ connection.onopen = function(session) {
     schema["startval"] = setup;
     editor = new JSONEditor(document.getElementById("editor_holder"), schema);
     editor.on("change", updateFields); // for every change in the fields, trigger this function
-    disableField(
-      "//*[@id='editor_holder']/div/div[2]/div/div/div[1]/div/div[1]/input"
-    ); // disable version field
   });
 };
 
