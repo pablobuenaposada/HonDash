@@ -101,113 +101,61 @@ function checkDivColor() {
   }
 }
 
+function enforceAllowedUnits(unitsSelect, allowedUnits) {
+  var option = unitsSelect[0].getElementsByTagName("option");
+  var allowedUnitIndex = -1;
+  for (var i = 0; i < option.length; i++) {
+    if (allowedUnits.includes(option[i].value)) {
+      option[i].disabled = false;
+      allowedUnitIndex = i;
+    } else {
+      option[i].disabled = true;
+    }
+  }
+
+  // if the selected unit is not allowed, move it to a new allowed one
+  if (!allowedUnits.includes(option[unitsSelect[0].selectedIndex].value)) {
+    unitsSelect[0].selectedIndex = allowedUnitIndex;
+  }
+}
+
+var formulas = "contains(., '[an') and contains(., '[formula]')";
+var formulaVsUnits = {
+  vdo_323_057: ["celsius", "fahrenheit"],
+  autometer_2246: ["psi", "bar"],
+  aem_30_2012: ["celsius", "fahrenheit"],
+  ebay_150_psi: ["psi", "bar"],
+  bosch_0280130039_0280130026: ["celsius", "fahrenheit"]
+};
+var otherUnits = ["per cent"];
+
 function checkUnitValues() {
-
-  var formulas =
-  "contains(., '[an') and contains(., '[formula]')";
-
-  var tempUnits = ["celsius", "fahrenheit"];
-  var pressureUnits = ["psi", "bar"];
-  var otherUnits = ["per cent"];
-
   var divs = getElementsByXPath(
     "//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']"
   );
 
   for (var div in divs) {
-
     var formula = getElementsByXPath(
-      "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name["+formulas+"]]",
+      "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[" +
+        formulas +
+        "]]",
       divs[div]
     );
     if (formula.length > 0) {
-        var selectedFormula = formula[0].options[formula[0].selectedIndex].value;
-        var unitsSelect = getElementsByXPath("div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[unit]')]]", divs[div]);
+      var selectedFormula = formula[0].options[formula[0].selectedIndex].value;
+      var unitsSelect = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[unit]')]]",
+        divs[div]
+      );
 
-        if (selectedFormula == "vdo_323_057"){
-            var op = unitsSelect[0].getElementsByTagName("option");
-            for (var i = 0; i < op.length; i++) {
-                if (tempUnits.includes(op[i].value)){
-                    op[i].disabled = false;
-                    unitsSelect[0].selectedIndex = i;
-                }
-                else{
-                    op[i].disabled = true;
-                }
-            }
-        }
-
-        else if (selectedFormula == "autometer_2246"){
-            var op = unitsSelect[0].getElementsByTagName("option");
-            for (var i = 0; i < op.length; i++) {
-                if (pressureUnits.includes(op[i].value)){
-                    op[i].disabled = false;
-                    unitsSelect[0].selectedIndex = i;
-                }
-                else{
-                    op[i].disabled = true;
-                }
-            }
-        }
-
-        else if (selectedFormula == "aem_30_2012"){
-            var op = unitsSelect[0].getElementsByTagName("option");
-            for (var i = 0; i < op.length; i++) {
-                if (tempUnits.includes(op[i].value)){
-                    op[i].disabled = false;
-                    unitsSelect[0].selectedIndex = i;
-                }
-                else{
-                    op[i].disabled = true;
-                }
-            }
-        }
-
-        else if (selectedFormula == "ebay_150_psi"){
-            var op = unitsSelect[0].getElementsByTagName("option");
-            for (var i = 0; i < op.length; i++) {
-                if (pressureUnits.includes(op[i].value)){
-                    op[i].disabled = false;
-                    unitsSelect[0].selectedIndex = i;
-                }
-                else{
-                    op[i].disabled = true;
-                }
-            }
-        }
-
-        else if (selectedFormula == "bosch_0280130039_0280130026"){
-            var op = unitsSelect[0].getElementsByTagName("option");
-            for (var i = 0; i < op.length; i++) {
-                if (tempUnits.includes(op[i].value)){
-                    op[i].disabled = false;
-                    unitsSelect[0].selectedIndex = i;
-                }
-                else{
-                    op[i].disabled = true;
-                }
-            }
-        }
-
-        else {
-            var op = unitsSelect[0].getElementsByTagName("option");
-            for (var i = 0; i < op.length; i++) {
-                if (otherUnits.includes(op[i].value)){
-                    op[i].disabled = false;
-                    unitsSelect[0].selectedIndex = i;
-                }
-                else{
-                    op[i].disabled = true;
-                }
-            }
-        }
+      // if the formula is a recognized one
+      if (selectedFormula in formulaVsUnits) {
+        enforceAllowedUnits(unitsSelect, formulaVsUnits[selectedFormula]);
+      } else {
+        enforceAllowedUnits(unitsSelect, otherUnits);
+      }
     }
-
-
-
   }
-
-
 }
 
 function updateFields() {
