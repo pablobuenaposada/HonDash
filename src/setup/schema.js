@@ -185,9 +185,9 @@ var analog = {
   required: ["tag", "unit", "formula"],
   properties: {
     tag: tag,
+    formula: formula,
     unit: unit(temp_units.concat(pressure_units).concat(per_cent_units)),
     decimals: decimals,
-    formula: formula,
     label: label,
     suffix: suffix,
     max: max,
