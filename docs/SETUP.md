@@ -6,8 +6,8 @@ HonDash offers a Wi-Fi network all the time where you can set your preferences, 
 
 Once your are connected to it, simply open your browser and type:
 
-* [hondash.local](http://hondash.local) to see the actual dashboard
-* [hondash.local/setup](http://hondash.local/setup) to configure the dashboard
+* [hondash.local/](http://hondash.local/) to see the actual dashboard
+* [hondash.local/setup/](http://hondash.local/setup/) to configure the dashboard
 
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/wifi_setup.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/wifi_setup.png" height="500"/>
 
