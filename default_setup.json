@@ -239,21 +239,21 @@
     "rotate": false
   },
   "scs": {
-    "tag": "icon3",
+    "pathoff": "scs_off.png",
     "pathon": "scs_on.png",
-    "pathoff": "scs_off.png"
+    "tag": "icon3"
   },
   "style": {
-    "tag": "style",
     "dayBackgroundColor": "#ffffff",
-    "nightBackgroundColor": "#000000",
-    "dayTextColor": "#000000",
-    "nightTextColor": "#ffffff",
     "dayBackgroundGaugeColor": "#edebeb",
+    "dayTextColor": "#000000",
+    "elapsedSeconds": 3,
+    "nightBackgroundColor": "#000000",
     "nightBackgroundGaugeColor": "#808080",
+    "nightTextColor": "#ffffff",
+    "tag": "style",
     "tpsLowerThreshold": 8,
-    "tpsUpperThreshold": 10,
-    "elapsedSeconds": 3
+    "tpsUpperThreshold": 10
   },
   "template": "basic",
   "time": {
