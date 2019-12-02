@@ -252,7 +252,7 @@
     "nightBackgroundGaugeColor": "#808080",
     "nightTextColor": "#ffffff",
     "tag": "style",
-    "tpsLowerThreshold": 8,
+    "tpsLowerThreshold": 5,
     "tpsUpperThreshold": 10
   },
   "template": "basic",
