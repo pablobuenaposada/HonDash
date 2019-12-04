@@ -21,6 +21,10 @@ USB A-Male to B-Male cable | | $5
 
 ## Remarks
 
+* Install the Raspberry Pi in the most ventilated place you can, hot temperatures will slow down the processing speed or even things stop working.
+
+* Wi-Fi coverage is limited, if you notice any connection problem while configuring try to be closer to Raspberry Pi.
+
 * It should run with any screen resolution but cannot ensure that graphics would render 100% perfect.
 
 * You can connect the USB coming from the K-Pro to any USB port from the Raspberry, doesn't matter.
