@@ -3,10 +3,12 @@
 ## Burn SD card
 Download the latest image:
 * [HonDash v. 2.3.0](https://www.dropbox.com/s/getaj6mjqisxf2n/HonDash_v2.3.0.img?dl=0)
+    * `MD5: d969b61be37a1d3c2d658540bde098a5`
 * [HonDash v. 2.2.0](https://www.dropbox.com/s/o0p84ighdjjr5ip/HonDash_v2.2.0.img?dl=0)
 * [HonDash v. 2.1.2](https://www.dropbox.com/s/wo2zu6usjs9alvh/HonDash_v2.1.2.img?dl=0)
 * [HonDash v. 2.1.1](https://www.dropbox.com/s/eajdt88avvtk086/HonDash_v2.1.1.img?dl=0)
 * [HonDash v. 2.1.0](https://www.dropbox.com/s/509qwhykxto52ex/HonDash_2.1.img?dl=0)
+* [Release notes](https://github.com/pablobuenaposada/HonDash/blob/master/CHANGELOG.md)
 
 Download also _[Etcher](https://www.balena.io/etcher/)_ and install it.
 Use a **16GB** microSD card, for now not other sizes are compatible, we recommend _SanDisk Ultra Class 10_ 
