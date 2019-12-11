@@ -2,6 +2,7 @@ from time import sleep
 
 from autobahn_sync import publish, register, run
 
+from devices.kpro.hondata import HondataBluetooth
 from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
 from devices.setup_file import SetupFile
@@ -41,7 +42,13 @@ style = Style(
     setup_file.json.get("style").get("tpsUpperThreshold"),
     setup_file.json.get("style").get("elapsedSeconds"),
 )
-kpro = Kpro()
+
+if (setup_file.json.get("bluetoothAddress") != None and setup_file.json.get("bluetoothAddress") != ''):
+    print("Using Hondata Bluetooth protocol, device: '{}'".format(setup_file.json.get("bluetoothAddress")))
+    kpro = HondataBluetooth(setup_file.json.get("bluetoothAddress"))
+else:
+    print("Using Hondata KPro USB protocol")
+    kpro = Kpro()
 
 iat_unit = setup_file.json.get("iat", {}).get("unit", "celsius")
 ect_unit = setup_file.json.get("ect", {}).get("unit", "celsius")
@@ -68,6 +75,7 @@ an6_formula = setup_file.get_formula("an6")
 an7_formula = setup_file.get_formula("an7")
 
 while True:
+    print("Going to publish data ... ")
     odo.save(kpro.vss()["kmh"])
     style.update(kpro.tps())
     publish(
