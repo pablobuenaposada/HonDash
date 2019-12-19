@@ -153,6 +153,17 @@ class Formula:
     def mr2_w30_fuel_tank(volts):
         return {"per cent": int(36.4757313 * volts - 41.31229235)}
 
+    @staticmethod
+    def mr2_w20_fuel_tank(volts):
+        """
+        Specs of this tank (http://mr2.ie/mr2/bgb/mk2/mechanical/6_015.html)
+        Empty: 110 ohms
+        Full: 3 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        return {"per cent": int(-32.67973856 * volts + 108.1699346)}
+
     # mazda mx5 na fuel tank powered by 5v and a 56ohms voltage divider
     @staticmethod
     def mx5_na_fuel_tank(volts):
