@@ -12,96 +12,152 @@ from version import __version__
 
 @register(u"setup")
 def setup():
-    return setup_file.load_setup()
+    """ Remote Procedure Call used from the frontend"""
+    return Backend.setup()
 
 
 @register(u"save")
 def save(new_setup):
-    setup_file.save_setup(new_setup)
-    setup_file.rotate_screen(new_setup["screen"]["rotate"])
+    """ Remote Procedure Call used from the frontend"""
+    Backend.save(new_setup)
 
 
 @register(u"reset")
 def reset():
-    setup_file.reset_setup()
+    """ Remote Procedure Call used from the frontend"""
+    Backend.reset()
 
 
-while True:
-    try:
-        run()
-        break
-    except Exception:
-        continue
+class Backend:
+    _instance = None
 
-time = Time()
-setup_file = SetupFile()
-odo = Odometer()
-style = Style(
-    setup_file.json.get("style").get("tpsLowerThreshold"),
-    setup_file.json.get("style").get("tpsUpperThreshold"),
-    setup_file.json.get("style").get("elapsedSeconds"),
-)
-kpro = Kpro()
+    def __init__(self):
+        self._init_websocket()
+        self._init_resources()
+        self._load_user_preferences()
 
-iat_unit = setup_file.json.get("iat", {}).get("unit", "celsius")
-ect_unit = setup_file.json.get("ect", {}).get("unit", "celsius")
-vss_unit = setup_file.json.get("vss", {}).get("unit", "kmh")
-o2_unit = setup_file.json.get("o2", {}).get("unit", "afr")
-odo_unit = setup_file.json.get("odo", {}).get("unit", "km")
-map_unit = setup_file.json.get("map", {}).get("unit", "bar")
-an0_unit = setup_file.json.get("an0", {}).get("unit", "volts")
-an1_unit = setup_file.json.get("an1", {}).get("unit", "volts")
-an2_unit = setup_file.json.get("an2", {}).get("unit", "volts")
-an3_unit = setup_file.json.get("an3", {}).get("unit", "volts")
-an4_unit = setup_file.json.get("an4", {}).get("unit", "volts")
-an5_unit = setup_file.json.get("an5", {}).get("unit", "volts")
-an6_unit = setup_file.json.get("an6", {}).get("unit", "volts")
-an7_unit = setup_file.json.get("an7", {}).get("unit", "volts")
+    @staticmethod
+    def _init_websocket():
+        while True:
+            try:
+                run()
+                break
+            except Exception:
+                pass
 
-an0_formula = setup_file.get_formula("an0")
-an1_formula = setup_file.get_formula("an1")
-an2_formula = setup_file.get_formula("an2")
-an3_formula = setup_file.get_formula("an3")
-an4_formula = setup_file.get_formula("an4")
-an5_formula = setup_file.get_formula("an5")
-an6_formula = setup_file.get_formula("an6")
-an7_formula = setup_file.get_formula("an7")
+    def _init_resources(self):
+        self.time = Time()
+        self.setup_file = SetupFile()
+        self.odo = Odometer()
+        self.style = Style(
+            self.setup_file.json.get("style").get("tpsLowerThreshold"),
+            self.setup_file.json.get("style").get("tpsUpperThreshold"),
+            self.setup_file.json.get("style").get("elapsedSeconds"),
+        )
+        self.kpro = Kpro()
 
-while True:
-    odo.save(kpro.vss()["kmh"])
-    style.update(kpro.tps())
-    publish(
-        "data",
-        {
-            "bat": kpro.bat(),
-            "gear": kpro.gear(),
-            "iat": kpro.iat()[iat_unit],
-            "tps": kpro.tps(),
-            "ect": kpro.ect()[ect_unit],
-            "rpm": kpro.rpm(),
-            "vss": kpro.vss()[vss_unit],
-            "o2": kpro.o2()[o2_unit],
-            "cam": kpro.cam(),
-            "mil": kpro.mil(),
-            "fan": kpro.fanc(),
-            "bksw": kpro.bksw(),
-            "flr": kpro.flr(),
-            "eth": kpro.eth(),
-            "scs": kpro.scs(),
-            "fmw": kpro.firmware(),
-            "map": kpro.map()[map_unit],
-            "an0": an0_formula(kpro.analog_input(0))[an0_unit],
-            "an1": an1_formula(kpro.analog_input(1))[an1_unit],
-            "an2": an2_formula(kpro.analog_input(2))[an2_unit],
-            "an3": an3_formula(kpro.analog_input(3))[an3_unit],
-            "an4": an4_formula(kpro.analog_input(4))[an4_unit],
-            "an5": an5_formula(kpro.analog_input(5))[an5_unit],
-            "an6": an6_formula(kpro.analog_input(6))[an6_unit],
-            "an7": an7_formula(kpro.analog_input(7))[an7_unit],
-            "time": time.get_time(),
-            "odo": odo.get_mileage()[odo_unit],
-            "style": style.status,
-            "ver": __version__,
-        },
-    )
-    sleep(0.1)
+    def _load_user_preferences(self):
+        """
+        In order to read only once from the setup file
+        we will load in memory some user preferences that we are gonna use later on.
+        """
+
+        self.iat_unit = self.setup_file.json.get("iat", {}).get("unit", "celsius")
+        self.ect_unit = self.setup_file.json.get("ect", {}).get("unit", "celsius")
+        self.vss_unit = self.setup_file.json.get("vss", {}).get("unit", "kmh")
+        self.o2_unit = self.setup_file.json.get("o2", {}).get("unit", "afr")
+        self.odo_unit = self.setup_file.json.get("odo", {}).get("unit", "km")
+        self.map_unit = self.setup_file.json.get("map", {}).get("unit", "bar")
+        self.an0_unit = self.setup_file.json.get("an0", {}).get("unit", "volts")
+        self.an1_unit = self.setup_file.json.get("an1", {}).get("unit", "volts")
+        self.an2_unit = self.setup_file.json.get("an2", {}).get("unit", "volts")
+        self.an3_unit = self.setup_file.json.get("an3", {}).get("unit", "volts")
+        self.an4_unit = self.setup_file.json.get("an4", {}).get("unit", "volts")
+        self.an5_unit = self.setup_file.json.get("an5", {}).get("unit", "volts")
+        self.an6_unit = self.setup_file.json.get("an6", {}).get("unit", "volts")
+        self.an7_unit = self.setup_file.json.get("an7", {}).get("unit", "volts")
+
+        self.an0_formula = self.setup_file.get_formula("an0")
+        self.an1_formula = self.setup_file.get_formula("an1")
+        self.an2_formula = self.setup_file.get_formula("an2")
+        self.an3_formula = self.setup_file.get_formula("an3")
+        self.an4_formula = self.setup_file.get_formula("an4")
+        self.an5_formula = self.setup_file.get_formula("an5")
+        self.an6_formula = self.setup_file.get_formula("an6")
+        self.an7_formula = self.setup_file.get_formula("an7")
+
+    def update(self):
+        """ load the websocket with updated info """
+        self.odo.save(self.kpro.vss()["kmh"])
+        self.style.update(self.kpro.tps())
+        publish(
+            "data",
+            {
+                "bat": self.kpro.bat(),
+                "gear": self.kpro.gear(),
+                "iat": self.kpro.iat()[self.iat_unit],
+                "tps": self.kpro.tps(),
+                "ect": self.kpro.ect()[self.ect_unit],
+                "rpm": self.kpro.rpm(),
+                "vss": self.kpro.vss()[self.vss_unit],
+                "o2": self.kpro.o2()[self.o2_unit],
+                "cam": self.kpro.cam(),
+                "mil": self.kpro.mil(),
+                "fan": self.kpro.fanc(),
+                "bksw": self.kpro.bksw(),
+                "flr": self.kpro.flr(),
+                "eth": self.kpro.eth(),
+                "scs": self.kpro.scs(),
+                "fmw": self.kpro.firmware(),
+                "map": self.kpro.map()[self.map_unit],
+                "an0": self.an0_formula(self.kpro.analog_input(0))[self.an0_unit],
+                "an1": self.an1_formula(self.kpro.analog_input(1))[self.an1_unit],
+                "an2": self.an2_formula(self.kpro.analog_input(2))[self.an2_unit],
+                "an3": self.an3_formula(self.kpro.analog_input(3))[self.an3_unit],
+                "an4": self.an4_formula(self.kpro.analog_input(4))[self.an4_unit],
+                "an5": self.an5_formula(self.kpro.analog_input(5))[self.an5_unit],
+                "an6": self.an6_formula(self.kpro.analog_input(6))[self.an6_unit],
+                "an7": self.an7_formula(self.kpro.analog_input(7))[self.an7_unit],
+                "time": self.time.get_time(),
+                "odo": self.odo.get_mileage()[self.odo_unit],
+                "style": self.style.status,
+                "ver": __version__,
+            },
+        )
+
+    def _setup(self):
+        return self.setup_file.load_setup()
+
+    def _save(self, new_setup):
+        self.setup_file.save_setup(new_setup)
+        self.setup_file.rotate_screen(new_setup["screen"]["rotate"])
+
+    def _reset(self):
+        self.setup_file.reset_setup()
+
+    @classmethod
+    def get(cls):
+        """ get the running instance of Backend class or instantiate it for first time """
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+
+    @classmethod
+    def setup(cls):
+        return cls.get()._setup()
+
+    @classmethod
+    def save(cls, new_setup):
+        cls.get()._save(new_setup)
+
+    @classmethod
+    def reset(cls):
+        cls.get()._reset()
+
+
+if __name__ == "__main__":
+    # if the file is getting executed then start the backend behaviour
+    backend = Backend.get()
+    while True:
+        backend.update()
+        sleep(0.1)  # TODO: not use sleep :(
