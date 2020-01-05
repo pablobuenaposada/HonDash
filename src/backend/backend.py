@@ -12,19 +12,19 @@ from version import __version__
 
 @register(u"setup")
 def setup():
-    """ Remote Procedure Call used from the frontend"""
+    """ Remote Procedure Call used from the frontend """
     return Backend.setup()
 
 
 @register(u"save")
 def save(new_setup):
-    """ Remote Procedure Call used from the frontend"""
+    """ Remote Procedure Call used from the frontend """
     Backend.save(new_setup)
 
 
 @register(u"reset")
 def reset():
-    """ Remote Procedure Call used from the frontend"""
+    """ Remote Procedure Call used from the frontend """
     Backend.reset()
 
 
@@ -43,7 +43,7 @@ class Backend:
                 run()
                 break
             except Exception:
-                pass
+                pass  # don't give up mate, we have to start this thing no matter how
 
     def _init_resources(self):
         self.time = Time()
