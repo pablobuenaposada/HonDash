@@ -33,8 +33,8 @@ class Backend:
 
     def __init__(self):
         self._init_websocket()
-        self._init_resources()
         self._load_user_preferences()
+        self._init_resources()
 
     @staticmethod
     def _init_websocket():
@@ -47,13 +47,7 @@ class Backend:
 
     def _init_resources(self):
         self.time = Time()
-        self.setup_file = SetupFile()
         self.odo = Odometer()
-        self.style = Style(
-            self.setup_file.json.get("style").get("tpsLowerThreshold"),
-            self.setup_file.json.get("style").get("tpsUpperThreshold"),
-            self.setup_file.json.get("style").get("elapsedSeconds"),
-        )
         self.kpro = Kpro()
 
     def _load_user_preferences(self):
@@ -61,6 +55,13 @@ class Backend:
         In order to read only once from the setup file
         we will load in memory some user preferences that we are gonna use later on.
         """
+        self.setup_file = SetupFile()
+
+        self.style = Style(
+            self.setup_file.json.get("style").get("tpsLowerThreshold"),
+            self.setup_file.json.get("style").get("tpsUpperThreshold"),
+            self.setup_file.json.get("style").get("elapsedSeconds"),
+        )
 
         self.iat_unit = self.setup_file.json.get("iat", {}).get("unit", "celsius")
         self.ect_unit = self.setup_file.json.get("ect", {}).get("unit", "celsius")
@@ -131,6 +132,8 @@ class Backend:
     def _save(self, new_setup):
         self.setup_file.save_setup(new_setup)
         self.setup_file.rotate_screen(new_setup["screen"]["rotate"])
+        publish("refresh")  # refresh the frontend so the new changes are applied
+        self._load_user_preferences()  # refresh the backend too
 
     def _reset(self):
         self.setup_file.reset_setup()
