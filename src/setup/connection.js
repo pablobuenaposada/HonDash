@@ -189,6 +189,7 @@ function save() {
       function(setup) {
         schema["startval"] = setup;
         alert("setup saved");
+        location.reload();
       },
       function(e) {
         alert("sorry, an error occurred\n" + e.message);
@@ -205,6 +206,7 @@ function reset() {
     session.call("reset").then(
       function(setup) {
         alert("setup reseted");
+        location.reload();
       },
       function(e) {
         alert("sorry, an error occurred\n" + e.message);

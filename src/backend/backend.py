@@ -137,6 +137,8 @@ class Backend:
 
     def _reset(self):
         self.setup_file.reset_setup()
+        publish("refresh")  # refresh the frontend so the new changes are applied
+        self._load_user_preferences()  # refresh the backend too
 
     @classmethod
     def get(cls):
