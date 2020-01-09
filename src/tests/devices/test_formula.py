@@ -116,6 +116,13 @@ class TestFormula:
 
     @staticmethod
     @pytest.mark.parametrize(
+        "voltage, level", ((3.31, {"per cent": 0}), (0.24, {"per cent": 100}))
+    )
+    def test_mr2_w20_fuel_tank(voltage, level):
+        assert Formula.mr2_w20_fuel_tank(voltage) == level
+
+    @staticmethod
+    @pytest.mark.parametrize(
         "voltage, celsius, fahrenheit",
         (
             (4.314974654, -9.999999950263089, 14.000000089526441),
