@@ -20,7 +20,7 @@ class Kpro:
         self.version = 0
 
         # let's see if we can find a recognized kpro device
-        while self.kpro_device is None:
+        if self.kpro_device is None:
             if (
                 usb.core.find(
                     idVendor=constants.KPRO23_ID_VENDOR,
@@ -63,6 +63,10 @@ class Kpro:
                     # if there's an error while connecting to the usb device we just want to try again so let's ensure
                     # that we keep in the while loop condition
                     self.kpro_device = None
+
+    @property
+    def status(self):
+        return bool(self.kpro_device)
 
     def update(self):
         usb_status = True
