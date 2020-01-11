@@ -7,11 +7,11 @@ class Style{
         this.nightBackgroundColor = "black";
         this.nightTextColor = "white";
         this.nightBackgroundGaugeColor = "#edebeb";
-        this.currentStyle = null;
+        this.currentStyle = "day";
     }
 
-    refresh(value){
-        if (this.currentStyle == value){ return; }
+    refresh(value, force = false){
+        if (this.currentStyle == value && force == false){ return; }
         if (value == "night"){
             this.currentStyle = value;
             document.body.style.backgroundColor = this.nightBackgroundColor;
@@ -54,25 +54,31 @@ class Style{
 
     setDayBackgroundColor(color){
         this.dayBackgroundColor = color;
+        this.refresh(this.currentStyle, true);
     }
 
     setNightBackgroundColor(color){
         this.nightBackgroundColor = color;
+        this.refresh(this.currentStyle, true);
     }
 
     setDayTextColor(color){
         this.dayTextColor = color;
+        this.refresh(this.currentStyle, true);
     }
 
     setNightTextColor(color){
         this.nightTextColor = color;
+        this.refresh(this.currentStyle, true);
     }
 
     setDayBackgroundGaugeColor(color){
         this.dayBackgroundGaugeColor = color;
+        this.refresh(this.currentStyle, true);
     }
 
     setNightBackgroundGaugeColor(color){
         this.nightBackgroundGaugeColor = color;
+        this.refresh(this.currentStyle, true);
     }
 }
