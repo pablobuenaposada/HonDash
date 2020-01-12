@@ -30,11 +30,11 @@ def reset():
 
 class Backend:
     _instance = None
-    _resources_started = False
 
     def __init__(self):
         self._init_websocket()
         self._load_user_preferences()
+        self._init_resources()
 
     @staticmethod
     def _init_websocket():
@@ -49,7 +49,6 @@ class Backend:
         self.time = Time()
         self.odo = Odometer()
         self.kpro = Kpro()
-        self._resources_started = self.kpro.status
 
     def _load_user_preferences(self):
         """
@@ -89,46 +88,45 @@ class Backend:
         self.an7_formula = self.setup_file.get_formula("an7")
 
     def update(self):
-        if not self._resources_started:
-            self._init_resources()
-        else:
-            """ load the websocket with updated info """
-            self.odo.save(self.kpro.vss()["kmh"])
-            self.style.update(self.kpro.tps())
-            publish(
-                "data",
-                {
-                    "bat": self.kpro.bat(),
-                    "gear": self.kpro.gear(),
-                    "iat": self.kpro.iat()[self.iat_unit],
-                    "tps": self.kpro.tps(),
-                    "ect": self.kpro.ect()[self.ect_unit],
-                    "rpm": self.kpro.rpm(),
-                    "vss": self.kpro.vss()[self.vss_unit],
-                    "o2": self.kpro.o2()[self.o2_unit],
-                    "cam": self.kpro.cam(),
-                    "mil": self.kpro.mil(),
-                    "fan": self.kpro.fanc(),
-                    "bksw": self.kpro.bksw(),
-                    "flr": self.kpro.flr(),
-                    "eth": self.kpro.eth(),
-                    "scs": self.kpro.scs(),
-                    "fmw": self.kpro.firmware(),
-                    "map": self.kpro.map()[self.map_unit],
-                    "an0": self.an0_formula(self.kpro.analog_input(0))[self.an0_unit],
-                    "an1": self.an1_formula(self.kpro.analog_input(1))[self.an1_unit],
-                    "an2": self.an2_formula(self.kpro.analog_input(2))[self.an2_unit],
-                    "an3": self.an3_formula(self.kpro.analog_input(3))[self.an3_unit],
-                    "an4": self.an4_formula(self.kpro.analog_input(4))[self.an4_unit],
-                    "an5": self.an5_formula(self.kpro.analog_input(5))[self.an5_unit],
-                    "an6": self.an6_formula(self.kpro.analog_input(6))[self.an6_unit],
-                    "an7": self.an7_formula(self.kpro.analog_input(7))[self.an7_unit],
-                    "time": self.time.get_time(),
-                    "odo": self.odo.get_mileage()[self.odo_unit],
-                    "style": self.style.status,
-                    "ver": __version__,
-                },
-            )
+        """ load the websocket with updated info """
+        if not self.kpro.status:  # if kpro is down try to reconnect
+            self.kpro.find_and_connect()
+        self.odo.save(self.kpro.vss()["kmh"])
+        self.style.update(self.kpro.tps())
+        publish(
+            "data",
+            {
+                "bat": self.kpro.bat(),
+                "gear": self.kpro.gear(),
+                "iat": self.kpro.iat()[self.iat_unit],
+                "tps": self.kpro.tps(),
+                "ect": self.kpro.ect()[self.ect_unit],
+                "rpm": self.kpro.rpm(),
+                "vss": self.kpro.vss()[self.vss_unit],
+                "o2": self.kpro.o2()[self.o2_unit],
+                "cam": self.kpro.cam(),
+                "mil": self.kpro.mil(),
+                "fan": self.kpro.fanc(),
+                "bksw": self.kpro.bksw(),
+                "flr": self.kpro.flr(),
+                "eth": self.kpro.eth(),
+                "scs": self.kpro.scs(),
+                "fmw": self.kpro.firmware(),
+                "map": self.kpro.map()[self.map_unit],
+                "an0": self.an0_formula(self.kpro.analog_input(0))[self.an0_unit],
+                "an1": self.an1_formula(self.kpro.analog_input(1))[self.an1_unit],
+                "an2": self.an2_formula(self.kpro.analog_input(2))[self.an2_unit],
+                "an3": self.an3_formula(self.kpro.analog_input(3))[self.an3_unit],
+                "an4": self.an4_formula(self.kpro.analog_input(4))[self.an4_unit],
+                "an5": self.an5_formula(self.kpro.analog_input(5))[self.an5_unit],
+                "an6": self.an6_formula(self.kpro.analog_input(6))[self.an6_unit],
+                "an7": self.an7_formula(self.kpro.analog_input(7))[self.an7_unit],
+                "time": self.time.get_time(),
+                "odo": self.odo.get_mileage()[self.odo_unit],
+                "style": self.style.status,
+                "ver": __version__,
+            },
+        )
 
     def _setup(self):
         return self.setup_file.load_setup()

@@ -1,4 +1,5 @@
 from unittest import mock
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -20,6 +21,61 @@ class TestKpro:
         self.kpro.data1 = [None for _ in range(6)]
         self.kpro.data3 = [None for _ in range(82)]
         self.kpro.data4 = [None for _ in range(18)]
+
+    def test_init(self):
+        with mock.patch("usb.core.find"), mock.patch(
+            "threading.Thread.start"
+        ) as m_start:
+            self.kpro = Kpro()
+
+        assert self.kpro.status is True
+        # update method in a thread has been tried to start
+        assert m_start.called is True
+
+    @pytest.mark.parametrize(
+        "kpro_version, kpro_vendor_id, kpro_product_id",
+        (
+            (
+                constants.KPRO23_ID,
+                constants.KPRO23_ID_VENDOR,
+                constants.KPRO23_ID_PRODUCT,
+            ),
+            (constants.KPRO4_ID, constants.KPRO4_ID_VENDOR, constants.KPRO4_ID_PRODUCT),
+        ),
+    )
+    def test_init_with_all_kpro_versions(
+        self, kpro_version, kpro_vendor_id, kpro_product_id
+    ):
+        def found_device(idVendor, idProduct):
+            if idVendor == kpro_vendor_id and idProduct == kpro_product_id:
+                return MagicMock()
+            else:
+                return None
+
+        with mock.patch("usb.core.find") as m_find, mock.patch(
+            "threading.Thread.start"
+        ) as m_start:
+            m_find.side_effect = found_device
+            self.kpro = Kpro()
+
+        assert self.kpro.status is True
+        # update method in a thread has been tried to start
+        assert m_start.called is True
+        assert self.kpro.version == kpro_version
+
+    def test_init_no_kpro_connected(self):
+        with mock.patch("usb.core.find") as m_find, mock.patch(
+            "threading.Thread.start"
+        ) as m_start:
+            m_find.return_value = None
+            self.kpro = Kpro()
+
+        assert self.kpro.status is False
+        assert self.kpro.version is None
+        # update method in a thread has not been tried to start
+        assert m_start.called is False
+        # been trying to find the two kpro versions per 10 times, so 20 times calling usb find method
+        assert m_find.call_count == 20
 
     def test_battery_v4(self):
         self.kpro.version = constants.KPRO4_ID

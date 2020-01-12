@@ -7,94 +7,97 @@ from numpy import interp
 from devices.formula import Formula
 from devices.kpro import constants
 
+MAX_CONNECTION_RETRIES = 10
+
 
 class Kpro:
     def __init__(self):
-        self.data0 = []
-        self.data1 = []
-        self.data2 = []
-        self.data3 = []
-        self.data4 = []
-        self.data5 = []
-        self.kpro_device = None
-        self.version = 0
+        self.data0 = self.data1 = self.data2 = self.data3 = self.data4 = self.data5 = []
+        self.kpro_device = self.version = self.entry_point = None
+        self.status = False
 
-        # let's see if we can find a recognized kpro device
-        if self.kpro_device is None:
-            if (
-                usb.core.find(
-                    idVendor=constants.KPRO23_ID_VENDOR,
-                    idProduct=constants.KPRO23_ID_PRODUCT,
-                )
-                is not None
-            ):  # kpro v2/3
-                self.kpro_device = usb.core.find(
-                    idVendor=constants.KPRO23_ID_VENDOR,
-                    idProduct=constants.KPRO23_ID_PRODUCT,
-                )
-                self.version = constants.KPRO23_ID
-            elif (
-                usb.core.find(
-                    idVendor=constants.KPRO4_ID_VENDOR,
-                    idProduct=constants.KPRO4_ID_PRODUCT,
-                )
-                is not None
-            ):  # kpro v4
-                self.kpro_device = usb.core.find(
-                    idVendor=constants.KPRO4_ID_VENDOR,
-                    idProduct=constants.KPRO4_ID_PRODUCT,
-                )
-                self.version = constants.KPRO4_ID
+        self.find_and_connect()
 
-            if self.kpro_device is not None:  # if kpro device is found
+    def find_and_connect(self):
+        connection_tries = 0
+
+        while not self.status and connection_tries < MAX_CONNECTION_RETRIES:
+            connection_tries += 1
+            # let's see if we can find a recognized kpro device
+            self.kpro_device, self.version = self._find_device()
+
+            if self.kpro_device:  # if kpro device is found
                 try:
-                    self.kpro_device.set_configuration()
-                    cfg = self.kpro_device.get_active_configuration()
-                    intf = cfg[(0, 0)]
-                    self.ep = usb.util.find_descriptor(
-                        intf,
-                        custom_match=lambda e: usb.util.endpoint_direction(
-                            e.bEndpointAddress
-                        )
-                        == usb.util.ENDPOINT_OUT,
-                    )
-                    threading.Thread(target=self.update).start()
+                    self.entry_point = self._establish_connection(self.kpro_device)
                 except usb.core.USBError:
-                    # if there's an error while connecting to the usb device we just want to try again so let's ensure
-                    # that we keep in the while loop condition
-                    self.kpro_device = None
+                    # if there's an error while connecting to the usb device we just want to try again
+                    #  so let's ensure that we keep in the while loop
+                    self.status = False
+                else:
+                    self.status = True
+                    # connection is made, try to get the latest data forever
+                    threading.Thread(target=self._update).start()
 
-    @property
-    def status(self):
-        return bool(self.kpro_device)
+    @staticmethod
+    def _find_device():
+        device = version = None
+        # kpro v2 and v3
+        if usb.core.find(
+            idVendor=constants.KPRO23_ID_VENDOR, idProduct=constants.KPRO23_ID_PRODUCT,
+        ):
+            device = usb.core.find(
+                idVendor=constants.KPRO23_ID_VENDOR,
+                idProduct=constants.KPRO23_ID_PRODUCT,
+            )
+            version = constants.KPRO23_ID
+        # kpro v4
+        elif usb.core.find(
+            idVendor=constants.KPRO4_ID_VENDOR, idProduct=constants.KPRO4_ID_PRODUCT,
+        ):
+            device = usb.core.find(
+                idVendor=constants.KPRO4_ID_VENDOR,
+                idProduct=constants.KPRO4_ID_PRODUCT,
+            )
+            version = constants.KPRO4_ID
 
-    def update(self):
-        usb_status = True
-        while usb_status:
+        return device, version
+
+    @staticmethod
+    def _establish_connection(device):
+        device.set_configuration()
+        cfg = device.get_active_configuration()
+        intf = cfg[(0, 0)]
+        entry_point = usb.util.find_descriptor(
+            intf,
+            custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress)
+            == usb.util.ENDPOINT_OUT,
+        )
+        return entry_point
+
+    def _update(self):
+        while self.status:
             try:
-                assert self.ep is not None
-
                 if self.version == constants.KPRO4_ID:
-                    self.ep.write("\x40")
+                    self.entry_point.write("\x40")
                     self.data4 = self.kpro_device.read(0x82, 1000)  # kpro v4
                 else:
-                    self.ep.write("\x40")
+                    self.entry_point.write("\x40")
                     self.data4 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
 
-                self.ep.write("\x60")
+                self.entry_point.write("\x60")
                 if self.version == constants.KPRO23_ID:
                     self.data0 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
                 elif self.version == constants.KPRO4_ID:
                     self.data0 = self.kpro_device.read(0x82, 1000)  # kpro v4
 
-                self.ep.write("\x61")
+                self.entry_point.write("\x61")
                 # found on kpro2 that sometimes len=44, normally 16
                 if self.version == constants.KPRO23_ID:
                     self.data1 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
                 elif self.version == constants.KPRO4_ID:
                     self.data1 = self.kpro_device.read(0x82, 1000)  # kpro v4
 
-                self.ep.write("\x62")
+                self.entry_point.write("\x62")
                 if self.version == constants.KPRO23_ID:
                     temp = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
                     if len(temp) == 68:
@@ -105,21 +108,20 @@ class Kpro:
                         self.data2 = temp
 
                 if self.version == constants.KPRO4_ID:
-                    self.ep.write("\x65")
+                    self.entry_point.write("\x65")
                     self.data3 = self.kpro_device.read(0x82, 128, 1000)  # kpro v4
                 else:  # for v3 only, v2 will not return anything meaningful
-                    self.ep.clear_halt()
-                    self.ep.write("\xb0")
+                    self.entry_point.clear_halt()
+                    self.entry_point.write("\xb0")
                     self.data5 = self.kpro_device.read(0x81, 1000)
 
             except usb.core.USBError as e:
-                if (
-                    e.args[0] == 60
-                ):  # error 60 (operation timed out), just continue to try again
+                # error 60 (operation timed out), just continue to try again
+                if e.args[0] == 60:
                     pass
                 else:
                     # if there's an error while gathering the data, stop the update and try to reconnect usb again
-                    usb_status = False
+                    self.status = False  # redundant?
                     self.__init__()
 
     def bat(self):
