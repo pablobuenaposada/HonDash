@@ -1,6 +1,7 @@
 from time import sleep
 
-from autobahn_sync import publish, register, run
+from autobahn_sync import app, publish, register
+from autobahn_sync.core import AlreadyRunningError
 
 from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
@@ -40,8 +41,10 @@ class Backend:
     def _init_websocket():
         while True:
             try:
-                run()
+                app.run()
                 break
+            except AlreadyRunningError:
+                app.stop()
             except Exception:
                 pass  # don't give up mate, we have to start this thing no matter how
 
