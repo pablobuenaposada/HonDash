@@ -1,9 +1,9 @@
 # Optional sensors
 
 Optional analog sensors are also read from K-Pro and displayed in HonDash, you can read how to wire them in the official Hondata guide:
-* [Analog wideband](http://www.hondata.com/help/kmanager/index.html?analog_wideband.htm)
-* [Analog pressure](http://www.hondata.com/help/kmanager/index.html?analog_pressure.htm)
-* [Analog temperature](http://www.hondata.com/help/kmanager/index.html?analog_temperature.htm)
+* [Analog wideband](https://www.hondata.com/help/kmanager/index.html?analog_wideband.htm)
+* [Analog pressure](https://www.hondata.com/help/kmanager/index.html?analog_pressure.htm)
+* [Analog temperature](https://www.hondata.com/help/kmanager/index.html?analog_temperature.htm)
 
 Some digital ones also work with HonDash:
 * [Digital ethanol content](https://www.hondata.com/help/kmanager/index.html?flex_fuel.htm)
