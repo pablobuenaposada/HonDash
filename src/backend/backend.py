@@ -2,6 +2,8 @@ from time import sleep
 
 from autobahn_sync import app, publish, register
 from autobahn_sync.core import AlreadyRunningError
+from crochet._eventloop import TimeoutError
+from twisted.internet.error import ConnectionRefusedError
 
 from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
@@ -39,14 +41,16 @@ class Backend:
 
     @staticmethod
     def _init_websocket():
-        while True:
+        websocket_started = False
+        while not websocket_started:
             try:
                 app.run()
-                break
+                websocket_started = app._started
             except AlreadyRunningError:
                 app.stop()
-            except Exception:
-                pass  # don't give up mate, we have to start this thing no matter how
+            except (ConnectionRefusedError, TimeoutError):
+                # Crossbar router not yet accepting connections, let's try again
+                pass
 
     def _init_resources(self):
         self.time = Time()
