@@ -12,12 +12,12 @@ This is necessary because from factory fuel level signal is not sent to the ECU,
 
 Fuel tank | Resistor value | Cabin harness wire color | Specs
 ------- | -------------- | ------------- | -------------
-Civic EG | 56Ω 1/4 watt | yellow/white | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_eg.jpg)
-Civic EK | 56Ω 1/4 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_ek.png)
-S2000 | 56Ω 1/4 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/s2000.png)
-MR2 W20 | 56Ω 1/4 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w20.png)
-MR2 W30 | 56Ω 1/4 watt | N/A | N/A
-MX5 NA | 56Ω 1/4 watt | N/A | N/A
+Civic EG | 56Ω 1 watt | yellow/white | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_eg.jpg)
+Civic EK | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_ek.png)
+S2000 | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/s2000.png)
+MR2 W20 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w20.png)
+MR2 W30 | 56Ω 1 watt | N/A | N/A
+MX5 NA | 56Ω 1 watt | N/A | N/A
 
 <br/>
  

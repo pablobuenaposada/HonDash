@@ -2,6 +2,18 @@
 
 For those who do not want to assemble their own HonDash there is also the option to buy a ready to run kit, it comes with everything needed and requires minimum wiring.
 
+In detail this is what the kit contains:
+
+* 7" Display
+* Raspberry Pi 3B+ with casing + 16GB Micro SD (software already loaded)
+* 12v to 5v converter
+* HDMI cable
+* SD to Micro SD adapter
+* 56Ω resistor (optional fuel level gauge)
+* 2x E connector pins (optional sensors)
+* Display support rear bolts
+* Stickers
+
 The dimensions are `172x120x35mm` and it has `4xM5` threaded holes to create your own bracket.
 
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/hondash_kit_full.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/hondash_kit_full.png" height="300" />
