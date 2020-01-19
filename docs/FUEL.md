@@ -23,6 +23,8 @@ MX5 NA | 56Ω 1 watt | N/A | N/A
  
 E5 pin is usually empty in the engine harness, to get a wire in there you need an old pigtail from other harness or you can buy them new on-line fairly cheap, the manufacturer is `TE Connectivity` and the reference is `316836-1`.
 
+Check E5 location [here](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/prb.jpeg)
+
 ## K-manager setup
 Even though this step is not necessary for HonDash, is always good to setup the fuel level in K-manager too, just for troubleshoot problems in this part it's already worth it.
 
