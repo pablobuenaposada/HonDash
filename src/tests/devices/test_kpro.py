@@ -18,9 +18,10 @@ class TestKpro:
             m___init__.return_value = None
             self.kpro = Kpro()
         self.kpro.data0 = [None for _ in range(38)]
-        self.kpro.data1 = [None for _ in range(6)]
+        self.kpro.data1 = [None for _ in range(7)]
         self.kpro.data3 = [None for _ in range(82)]
         self.kpro.data4 = [None for _ in range(18)]
+        self.kpro.data5 = [None for _ in range(20)]
 
     def test_init(self):
         with mock.patch("usb.core.find"), mock.patch(
@@ -77,289 +78,366 @@ class TestKpro:
         # been trying to find the two kpro versions per 10 times, so 20 times calling usb find method
         assert m_find.call_count == 20
 
-    def test_battery_v4(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data1[4] = 123
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_BAT, 123, 12.3),
+            (constants.KPRO4_ID, constants.KPRO4_BAT, 123, 12.3),
+        ),
+    )
+    def test_bat(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data1[index] = value
 
-        assert self.kpro.bat() == 12.3
+        assert self.kpro.bat() == result
 
-    def test_rpm_v4(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[2] = 100
-        self.kpro.data0[3] = 100
+    @pytest.mark.parametrize(
+        "version, index1, index2, value1, value2, result",
+        (
+            (
+                constants.KPRO23_ID,
+                constants.KPRO23_RPM1,
+                constants.KPRO23_RPM2,
+                100,
+                100,
+                6425,
+            ),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_RPM1,
+                constants.KPRO4_RPM2,
+                100,
+                100,
+                6425,
+            ),
+        ),
+    )
+    def test_rpm(self, version, index1, index2, value1, value2, result):
+        self.kpro.version = version
+        self.kpro.data0[index1] = value1
+        self.kpro.data0[index2] = value2
 
-        assert self.kpro.rpm() == 6425
+        assert self.kpro.rpm() == result
 
-    def test_tps_v4(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[5] = 100
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_TPS, 100, 37),
+            (constants.KPRO4_ID, constants.KPRO4_TPS, 100, 37),
+        ),
+    )
+    def test_tps(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
-        assert self.kpro.tps() == 37
+        assert self.kpro.tps() == result
 
-    def test_o2_v4_valid(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_AFR1] = 0
-        self.kpro.data0[constants.KPRO4_AFR2] = 128
+    @pytest.mark.parametrize(
+        "version, index1, index2, value1, value2, result_afr, result_lambda",
+        (
+            (
+                constants.KPRO23_ID,
+                constants.KPRO23_AFR1,
+                constants.KPRO23_AFR2,
+                0,
+                128,
+                14.7,
+                1,
+            ),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_AFR1,
+                constants.KPRO4_AFR2,
+                0,
+                128,
+                14.7,
+                1,
+            ),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_AFR1,
+                constants.KPRO4_AFR2,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    )  # division by zero
+    def test_o2(
+        self, version, index1, index2, value1, value2, result_afr, result_lambda
+    ):
+        self.kpro.version = version
+        self.kpro.data0[index1] = value1
+        self.kpro.data0[index2] = value2
 
-        assert self.kpro.o2()["afr"] == 14.7
-        assert self.kpro.o2()["lambda"] == 1
+        assert self.kpro.o2()["afr"] == result_afr
+        assert self.kpro.o2()["lambda"] == result_lambda
 
-    def test_o2_v23_valid(self):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_AFR1] = 0
-        self.kpro.data0[constants.KPRO23_AFR2] = 128
+    @pytest.mark.parametrize(
+        "version, index, value, result_kmh, result_mph",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_VSS, 100, 100, 62),
+            (constants.KPRO4_ID, constants.KPRO4_VSS, 100, 100, 62),
+        ),
+    )
+    def test_vss(self, version, index, value, result_kmh, result_mph):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
-        assert self.kpro.o2()["afr"] == 14.7
-        assert self.kpro.o2()["lambda"] == 1
+        assert self.kpro.vss()["kmh"] == result_kmh
+        assert self.kpro.vss()["mph"] == result_mph
 
-    def test_o2_v4_division_by_zero(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_AFR1] = 0
-        self.kpro.data0[constants.KPRO4_AFR2] = 0
+    @pytest.mark.parametrize(
+        "version, index, values",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_ECT, temp_sensor_argvalues[0]),
+            (constants.KPRO23_ID, constants.KPRO23_ECT, temp_sensor_argvalues[1]),
+            (constants.KPRO23_ID, constants.KPRO23_ECT, temp_sensor_argvalues[2]),
+            (constants.KPRO4_ID, constants.KPRO4_ECT, temp_sensor_argvalues[0]),
+            (constants.KPRO4_ID, constants.KPRO4_ECT, temp_sensor_argvalues[1]),
+            (constants.KPRO4_ID, constants.KPRO4_ECT, temp_sensor_argvalues[2]),
+        ),
+    )
+    def test_ect(self, version, index, values):
+        self.kpro.version = version
+        self.kpro.data1[index] = values[0]
 
-        assert self.kpro.o2()["afr"] == 0
-        assert self.kpro.o2()["lambda"] == 0
+        assert self.kpro.ect()["celsius"] == values[1]
+        assert self.kpro.ect()["fahrenheit"] == values[2]
 
-    def test_vss_v4(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[4] = 100
+    @pytest.mark.parametrize(
+        "version, index, values",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_IAT, temp_sensor_argvalues[0]),
+            (constants.KPRO23_ID, constants.KPRO23_IAT, temp_sensor_argvalues[1]),
+            (constants.KPRO23_ID, constants.KPRO23_IAT, temp_sensor_argvalues[2]),
+            (constants.KPRO4_ID, constants.KPRO4_IAT, temp_sensor_argvalues[0]),
+            (constants.KPRO4_ID, constants.KPRO4_IAT, temp_sensor_argvalues[1]),
+            (constants.KPRO4_ID, constants.KPRO4_IAT, temp_sensor_argvalues[2]),
+        ),
+    )
+    def test_iat(self, version, index, values):
+        self.kpro.version = version
+        self.kpro.data1[index] = values[0]
 
-        assert self.kpro.vss()["kmh"] == 100
-        assert self.kpro.vss()["mph"] == 62
+        assert self.kpro.iat()["celsius"] == values[1]
+        assert self.kpro.iat()["fahrenheit"] == values[2]
 
-    def test_vss_v23(self):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[6] = 100
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_MAP, 100, (1, 1000, 14.503773773)),
+            (constants.KPRO4_ID, constants.KPRO4_MAP, 100, (1, 1000, 14.503773773)),
+        ),
+    )
+    def test_map(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
-        assert self.kpro.vss()["kmh"] == 100
-        assert self.kpro.vss()["mph"] == 62
+        assert self.kpro.map()["bar"] == result[0]
+        assert self.kpro.map()["mbar"] == result[1]
+        assert self.kpro.map()["psi"] == result[2]
 
-    @pytest.mark.parametrize("kpro_value, value_cls, value_fht", temp_sensor_argvalues)
-    def test_ect_v4(self, kpro_value, value_cls, value_fht):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data1[2] = kpro_value
-
-        assert self.kpro.ect()["celsius"] == value_cls
-        assert self.kpro.ect()["fahrenheit"] == value_fht
-
-    @pytest.mark.parametrize("kpro_value, value_cls, value_fht", temp_sensor_argvalues)
-    def test_ect_v23(self, kpro_value, value_cls, value_fht):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data1[4] = kpro_value
-
-        assert self.kpro.ect()["celsius"] == value_cls
-        assert self.kpro.ect()["fahrenheit"] == value_fht
-
-    @pytest.mark.parametrize("kpro_value, value_cls, value_fht", temp_sensor_argvalues)
-    def test_iat_v4(self, kpro_value, value_cls, value_fht):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data1[3] = kpro_value
-
-        assert self.kpro.iat()["celsius"] == value_cls
-        assert self.kpro.iat()["fahrenheit"] == value_fht
-
-    @pytest.mark.parametrize("kpro_value, value_cls, value_fht", temp_sensor_argvalues)
-    def test_iat_v23(self, kpro_value, value_cls, value_fht):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data1[5] = kpro_value
-
-        assert self.kpro.iat()["celsius"] == value_cls
-        assert self.kpro.iat()["fahrenheit"] == value_fht
-
-    def test_map_v4(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[6] = 100
-
-        assert self.kpro.map()["bar"] == 1
-        assert self.kpro.map()["mbar"] == 1000
-        assert self.kpro.map()["psi"] == 14.503773773
-
-    def test_map_v23(self):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[8] = 100
-
-        assert self.kpro.map()["bar"] == 1
-        assert self.kpro.map()["mbar"] == 1000
-        assert self.kpro.map()["psi"] == 14.503773773
-
-    @pytest.mark.parametrize("kpro_value, result", ((100, 30.0),))
-    def test_cam_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_CAM] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_CAM, 100, 30.0),
+            (constants.KPRO4_ID, constants.KPRO4_CAM, 100, 30.0),
+        ),
+    )
+    def test_cam(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.cam() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((100, 30.0),))
-    def test_cam_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_CAM] = kpro_value
-
-        assert self.kpro.cam() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, "N"), (1, 1)))
-    def test_gear_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_GEAR] = kpro_value
-
-        assert self.kpro.gear() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, "N"), (1, 1)))
-    def test_gear_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_GEAR] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_GEAR, 0, "N"),
+            (constants.KPRO23_ID, constants.KPRO23_GEAR, 1, 1),
+            (constants.KPRO4_ID, constants.KPRO4_GEAR, 0, "N"),
+            (constants.KPRO4_ID, constants.KPRO4_GEAR, 1, 1),
+        ),
+    )
+    def test_gear(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.gear() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (32, True)))
-    def test_eps_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_EPS] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_EPS, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_EPS, 32, True),
+            (constants.KPRO4_ID, constants.KPRO4_EPS, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_EPS, 32, True),
+        ),
+    )
+    def test_eps(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.eps() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (32, True)))
-    def test_eps_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_EPS] = kpro_value
-
-        assert self.kpro.eps() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (16, True)))
-    def test_scs_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_SCS] = kpro_value
-
-        assert self.kpro.scs() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (16, True)))
-    def test_scs_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_SCS] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_SCS, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_SCS, 16, True),
+            (constants.KPRO4_ID, constants.KPRO4_SCS, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_SCS, 16, True),
+        ),
+    )
+    def test_scs(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.scs() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (1, True)))
-    def test_rvslck_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_RVSLCK] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_RVSLCK, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_RVSLCK, 1, True),
+            (constants.KPRO4_ID, constants.KPRO4_RVSLCK, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_RVSLCK, 1, True),
+        ),
+    )
+    def test_rvslck(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.rvslck() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (1, True)))
-    def test_rvslck_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_RVSLCK] = kpro_value
-
-        assert self.kpro.rvslck() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (2, True)))
-    def test_bksw_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_BKSW] = kpro_value
-
-        assert self.kpro.bksw() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (2, True)))
-    def test_bksw_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_BKSW] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_BKSW, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_BKSW, 2, True),
+            (constants.KPRO4_ID, constants.KPRO4_BKSW, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_BKSW, 2, True),
+        ),
+    )
+    def test_bksw(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.bksw() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (4, True)))
-    def test_acsw_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_ACSW] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_ACSW, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_ACSW, 4, True),
+            (constants.KPRO4_ID, constants.KPRO4_ACSW, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_ACSW, 4, True),
+        ),
+    )
+    def test_acsw(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.acsw() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (4, True)))
-    def test_acsw_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_ACSW] = kpro_value
-
-        assert self.kpro.acsw() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (8, True)))
-    def test_accl_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_ACCL] = kpro_value
-
-        assert self.kpro.accl() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (8, True)))
-    def test_accl_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_ACCL] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_ACCL, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_ACCL, 8, True),
+            (constants.KPRO4_ID, constants.KPRO4_ACCL, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_ACCL, 8, True),
+        ),
+    )
+    def test_accl(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.accl() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (64, True)))
-    def test_flr_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_FLR] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_FLR, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_FLR, 64, True),
+            (constants.KPRO4_ID, constants.KPRO4_FLR, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_FLR, 64, True),
+        ),
+    )
+    def test_flr(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.flr() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (64, True)))
-    def test_flr_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_FLR] = kpro_value
-
-        assert self.kpro.flr() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (128, True)))
-    def test_fanc_v23(self, kpro_value, result):
-        self.kpro.version = constants.KPRO23_ID
-        self.kpro.data0[constants.KPRO23_FANC] = kpro_value
-
-        assert self.kpro.fanc() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (128, True)))
-    def test_fanc_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data0[constants.KPRO4_FANC] = kpro_value
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_FANC, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_FANC, 128, True),
+            (constants.KPRO4_ID, constants.KPRO4_FANC, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_FANC, 128, True),
+        ),
+    )
+    def test_fanc(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data0[index] = value
 
         assert self.kpro.fanc() == result
 
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (1, True)))
-    def test_ign_v23(self, kpro_value, result):
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_IGN, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_IGN, 1, True),
+            (constants.KPRO4_ID, constants.KPRO4_IGN, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_IGN, 1, True),
+        ),
+    )
+    def test_ign(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data4[index] = value
+
+        assert self.kpro.ign() == result
+
+    @pytest.mark.parametrize(
+        "index1, index2, value1, value2, channel, result",
+        (
+            (constants.KPRO4_AN0_1, constants.KPRO4_AN0_2, 3, 52, 0, 1.0009765625),
+            (constants.KPRO4_AN1_1, constants.KPRO4_AN1_2, 3, 52, 1, 1.0009765625),
+            (constants.KPRO4_AN2_1, constants.KPRO4_AN2_2, 3, 52, 2, 1.0009765625),
+            (constants.KPRO4_AN3_1, constants.KPRO4_AN3_2, 3, 52, 3, 1.0009765625),
+            (constants.KPRO4_AN4_1, constants.KPRO4_AN4_2, 3, 52, 4, 1.0009765625),
+            (constants.KPRO4_AN5_1, constants.KPRO4_AN5_2, 3, 52, 5, 1.0009765625),
+            (constants.KPRO4_AN6_1, constants.KPRO4_AN6_2, 3, 52, 6, 1.0009765625),
+            (constants.KPRO4_AN7_1, constants.KPRO4_AN7_2, 3, 52, 7, 1.0009765625),
+        ),
+    )
+    def test_analog_input_v4(self, index1, index2, value1, value2, channel, result):
+        self.kpro.version = constants.KPRO4_ID
+        self.kpro.data3[index2] = value2
+        self.kpro.data3[index1] = value1
+
+        assert self.kpro.analog_input(channel) == result
+
+    @pytest.mark.parametrize(
+        "index1, index2, value1, value2, channel, result",
+        (
+            (constants.KPRO3_AN0_1, constants.KPRO3_AN0_2, 3, 52, 0, 4.00390625),
+            (constants.KPRO3_AN1_1, constants.KPRO3_AN1_2, 3, 52, 1, 4.00390625),
+            (constants.KPRO3_AN2_1, constants.KPRO3_AN2_2, 3, 52, 2, 4.00390625),
+            (constants.KPRO3_AN3_1, constants.KPRO3_AN3_2, 3, 52, 3, 4.00390625),
+            (constants.KPRO3_AN4_1, constants.KPRO3_AN4_2, 3, 52, 4, 4.00390625),
+            (constants.KPRO3_AN5_1, constants.KPRO3_AN5_2, 3, 52, 5, 4.00390625),
+            (constants.KPRO3_AN6_1, constants.KPRO3_AN6_2, 3, 52, 6, 4.00390625),
+            (constants.KPRO3_AN7_1, constants.KPRO3_AN7_2, 3, 52, 7, 4.00390625),
+        ),
+    )
+    def test_analog_input_v3(self, index1, index2, value1, value2, channel, result):
         self.kpro.version = constants.KPRO23_ID
-        self.kpro.data4[constants.KPRO23_IGN] = kpro_value
+        self.kpro.data5[index2] = value2
+        self.kpro.data5[index1] = value1
 
-        assert self.kpro.ign() == result
-
-    @pytest.mark.parametrize("kpro_value, result", ((0, False), (1, True)))
-    def test_ign_v4(self, kpro_value, result):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data4[constants.KPRO4_IGN] = kpro_value
-
-        assert self.kpro.ign() == result
-
-    def test_analog_input_v4(self):
-        self.kpro.version = constants.KPRO4_ID
-        self.kpro.data3[66] = 52
-        self.kpro.data3[67] = 3
-        self.kpro.data3[68] = 52
-        self.kpro.data3[69] = 3
-        self.kpro.data3[70] = 52
-        self.kpro.data3[71] = 3
-        self.kpro.data3[72] = 52
-        self.kpro.data3[73] = 3
-        self.kpro.data3[74] = 52
-        self.kpro.data3[75] = 3
-        self.kpro.data3[76] = 52
-        self.kpro.data3[77] = 3
-        self.kpro.data3[78] = 52
-        self.kpro.data3[79] = 3
-        self.kpro.data3[80] = 52
-        self.kpro.data3[81] = 3
-
-        assert self.kpro.analog_input(0) == 1.0009765625
-        assert self.kpro.analog_input(1) == 1.0009765625
-        assert self.kpro.analog_input(2) == 1.0009765625
-        assert self.kpro.analog_input(3) == 1.0009765625
-        assert self.kpro.analog_input(4) == 1.0009765625
-        assert self.kpro.analog_input(5) == 1.0009765625
-        assert self.kpro.analog_input(6) == 1.0009765625
-        assert self.kpro.analog_input(7) == 1.0009765625
+        assert self.kpro.analog_input(channel) == result
