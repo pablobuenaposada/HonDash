@@ -4,10 +4,11 @@ For those who do not want to assemble their own HonDash there is also the option
 
 In detail this is what the kit contains:
 
-* 7" Display
+* 7" display
 * Raspberry Pi 3B+ with casing + 16GB Micro SD (software already loaded)
 * 12v to 5v converter
 * HDMI cable
+* 1.8 meters USB cable
 * SD to Micro SD adapter
 * 56Ω resistor (optional fuel level gauge)
 * 2x E connector pins (optional sensors)
