@@ -98,28 +98,28 @@ class Backend:
         """ load the websocket with updated info """
         if not self.kpro.status:  # if kpro is down try to reconnect
             self.kpro.find_and_connect()
-        self.odo.save(self.kpro.vss()["kmh"])
-        self.style.update(self.kpro.tps())
+        self.odo.save(self.kpro.vss["kmh"])
+        self.style.update(self.kpro.tps)
         publish(
             "data",
             {
-                "bat": self.kpro.bat(),
-                "gear": self.kpro.gear(),
-                "iat": self.kpro.iat()[self.iat_unit],
-                "tps": self.kpro.tps(),
-                "ect": self.kpro.ect()[self.ect_unit],
-                "rpm": self.kpro.rpm(),
-                "vss": self.kpro.vss()[self.vss_unit],
-                "o2": self.kpro.o2()[self.o2_unit],
-                "cam": self.kpro.cam(),
-                "mil": self.kpro.mil(),
-                "fan": self.kpro.fanc(),
-                "bksw": self.kpro.bksw(),
-                "flr": self.kpro.flr(),
-                "eth": self.kpro.eth(),
-                "scs": self.kpro.scs(),
-                "fmw": self.kpro.firmware(),
-                "map": self.kpro.map()[self.map_unit],
+                "bat": self.kpro.bat,
+                "gear": self.kpro.gear,
+                "iat": self.kpro.iat[self.iat_unit],
+                "tps": self.kpro.tps,
+                "ect": self.kpro.ect[self.ect_unit],
+                "rpm": self.kpro.rpm,
+                "vss": self.kpro.vss[self.vss_unit],
+                "o2": self.kpro.o2[self.o2_unit],
+                "cam": self.kpro.cam,
+                "mil": self.kpro.mil,
+                "fan": self.kpro.fanc,
+                "bksw": self.kpro.bksw,
+                "flr": self.kpro.flr,
+                "eth": self.kpro.eth,
+                "scs": self.kpro.scs,
+                "fmw": self.kpro.firmware,
+                "map": self.kpro.map[self.map_unit],
                 "an0": self.an0_formula(self.kpro.analog_input(0))[self.an0_unit],
                 "an1": self.an1_formula(self.kpro.analog_input(1))[self.an1_unit],
                 "an2": self.an2_formula(self.kpro.analog_input(2))[self.an2_unit],

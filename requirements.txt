@@ -10,3 +10,4 @@ freezegun==0.3.12
 pytest-cov
 isort
 flake8
+zlmdb==19.11.1 # this comes from crossbar, newer version of this fucks pytest

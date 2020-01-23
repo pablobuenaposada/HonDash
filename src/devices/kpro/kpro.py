@@ -124,11 +124,12 @@ class Kpro:
                     self.status = False  # redundant?
                     self.__init__()
 
+    @property
     def bat(self):
         """
         Battery voltage
+        return unit: volts
         """
-        # return unit: volts
         try:
             if self.version == constants.KPRO23_ID:
                 return self.data1[constants.KPRO23_BAT] * 0.1
@@ -137,18 +138,21 @@ class Kpro:
         except IndexError:
             return 0
 
+    @property
     def eth(self):
         """
         Ethanol content
+        return unit: per cent
         """
-        # return unit: per cent
         try:
             if self.version == constants.KPRO4_ID:
                 return self.data3[constants.KPRO4_ETH]
         except IndexError:
             return 0
 
+    @property
     def flt(self):
+        """Fuel temperature"""
         try:
             if self.version == constants.KPRO4_ID:
                 index = constants.KPRO4_FLT
@@ -160,11 +164,9 @@ class Kpro:
         except IndexError:
             return 0
 
+    @property
     def o2(self):
-        """
-        Oxygen sensor
-        """
-        # return unit: afr and lambda
+        """Oxygen sensor"""
         try:
             if self.version == constants.KPRO23_ID:
                 index_1 = constants.KPRO23_AFR2
@@ -180,11 +182,12 @@ class Kpro:
         except (IndexError, ZeroDivisionError):
             return {"afr": 0, "lambda": 0}
 
+    @property
     def tps(self):
         """
         Throttle position sensor
+        return unit: 0-100%
         """
-        # return unit: 0-100%
         try:
             if self.version == constants.KPRO23_ID:
                 return int(
@@ -197,11 +200,9 @@ class Kpro:
         except IndexError:
             return 0
 
+    @property
     def vss(self):
-        """
-        Vehicle speed sensor
-        """
-        # return unit: km/h and mph
+        """Vehicle speed sensor"""
         try:
             if self.version == constants.KPRO23_ID:
                 index = constants.KPRO23_VSS
@@ -215,8 +216,12 @@ class Kpro:
         except IndexError:
             return {"kmh": 0, "mph": 0}
 
+    @property
     def rpm(self):
-        # return unit: revs. per minute
+        """
+        Revs per minute
+        return unit: revs per minute
+        """
         try:
             if self.version == constants.KPRO23_ID:
                 return int(
@@ -237,8 +242,12 @@ class Kpro:
         except IndexError:
             return 0
 
+    @property
     def cam(self):
-        # return units: degree
+        """
+        VTC cam angle
+        return units: degrees
+        """
         try:
             if self.version == constants.KPRO23_ID:
                 return (self.data0[constants.KPRO23_CAM] - 40) * 0.5
@@ -247,12 +256,9 @@ class Kpro:
         except IndexError:
             return 0
 
+    @property
     def ect(self):
-        """
-        Engine coolant temperature
-        """
-        # return units: celsius and fahrenheit
-
+        """Engine coolant temperature"""
         try:
             if self.version == constants.KPRO23_ID:
                 index = constants.KPRO23_ECT
@@ -264,12 +270,9 @@ class Kpro:
         except IndexError:
             return {"celsius": 0, "fahrenheit": 0}
 
+    @property
     def iat(self):
-        """
-        Intake air temperature
-        """
-        # return units: celsius and fahrenheit
-
+        """Intake air temperature"""
         try:
             if self.version == constants.KPRO23_ID:
                 index = constants.KPRO23_IAT
@@ -281,7 +284,9 @@ class Kpro:
         except IndexError:
             return {"celsius": 0, "fahrenheit": 0}
 
+    @property
     def gear(self):
+        """Gear"""
         try:
             if self.version == constants.KPRO23_ID:
                 gear = self.data0[constants.KPRO23_GEAR]
@@ -297,59 +302,62 @@ class Kpro:
         except IndexError:
             return "N"
 
+    @property
     def eps(self):
-        """
-        Electric power steering
-        """
+        """Electric power steering"""
         mask = 0x20
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_EPS] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_EPS] & mask)
-        except IndexError:
+        if self.version == constants.KPRO23_ID:
+            return bool(self.data0[constants.KPRO23_EPS] & mask)
+        elif self.version == constants.KPRO4_ID:
+            return bool(self.data0[constants.KPRO4_EPS] & mask)
+        else:
             return False
 
+    @property
     def scs(self):
+        """Service connector"""
         mask = 0x10
         try:
             if self.version == constants.KPRO23_ID:
                 return bool(self.data0[constants.KPRO23_SCS] & mask)
             elif self.version == constants.KPRO4_ID:
                 return bool(self.data0[constants.KPRO4_SCS] & mask)
+            else:
+                return False
         except IndexError:
             return False
 
+    @property
     def rvslck(self):
-        """
-        Reverse gear lock
-        """
+        """Reverse gear lock"""
         mask = 0x01
         try:
             if self.version == constants.KPRO23_ID:
                 return bool(self.data0[constants.KPRO23_RVSLCK] & mask)
             elif self.version == constants.KPRO4_ID:
                 return bool(self.data0[constants.KPRO4_RVSLCK] & mask)
+            else:
+                return False
         except IndexError:
             return False
 
+    @property
     def bksw(self):
-        """
-        Brake switch
-        """
+        """Brake switch"""
         mask = 0x02
         try:
             if self.version == constants.KPRO23_ID:
                 return bool(self.data0[constants.KPRO23_BKSW] & mask)
             elif self.version == constants.KPRO4_ID:
                 return bool(self.data0[constants.KPRO4_BKSW] & mask)
+            else:
+                return False
         except IndexError:
             return False
 
+    @property
     def acsw(self):
-        """
-        Aircon switch
-        """
+        """A/C switch"""
         mask = 0x04
         try:
             if self.version == constants.KPRO23_ID:
@@ -359,7 +367,9 @@ class Kpro:
         except IndexError:
             return False
 
+    @property
     def accl(self):
+        """A/C clutch"""
         mask = 0x08
         try:
             if self.version == constants.KPRO23_ID:
@@ -369,10 +379,9 @@ class Kpro:
         except IndexError:
             return False
 
+    @property
     def flr(self):
-        """
-        Fuel relay
-        """
+        """Fuel relay"""
         mask = 0x40
         try:
             if self.version == constants.KPRO23_ID:
@@ -382,10 +391,9 @@ class Kpro:
         except IndexError:
             return False
 
+    @property
     def fanc(self):
-        """
-        Fan switch
-        """
+        """Fan switch"""
         mask = 0x80
         try:
             if self.version == constants.KPRO23_ID:
@@ -395,11 +403,9 @@ class Kpro:
         except IndexError:
             return False
 
+    @property
     def map(self):
-        """
-        Manifold absolute pressure
-        """
-        # return unit: bar, mbar and psi
+        """Manifold absolute pressure"""
         try:
             if self.version == constants.KPRO23_ID:
                 index = constants.KPRO23_MAP
@@ -414,10 +420,9 @@ class Kpro:
         except IndexError:
             return {"bar": 0, "mbar": 0, "psi": 0}
 
+    @property
     def mil(self):
-        """
-        Malfunction indicator light also known as check engine light
-        """
+        """Malfunction indicator light also known as check engine light"""
         try:
             if self.version == constants.KPRO23_ID:
                 mil = self.data0[constants.KPRO23_MIL]
@@ -436,7 +441,9 @@ class Kpro:
         except IndexError:
             return False
 
+    @property
     def ecu_type(self):
+        """Model of ECU"""
         try:
             if self.version == constants.KPRO23_ID:
                 type = self.data4[constants.KPRO23_ECU_TYPE]
@@ -452,10 +459,9 @@ class Kpro:
         except IndexError:
             return "unknown"
 
+    @property
     def ign(self):
-        """
-        Ignition timing
-        """
+        """Ignition status"""
         try:
             if self.version == constants.KPRO23_ID:
                 ign = self.data4[constants.KPRO23_IGN]
@@ -471,6 +477,7 @@ class Kpro:
         except IndexError:
             return False
 
+    @property
     def serial(self):
         try:
             if self.version == constants.KPRO23_ID:
@@ -486,7 +493,9 @@ class Kpro:
         except IndexError:
             return 0
 
+    @property
     def firmware(self):
+        """Firmware version"""
         try:
             if self.version == constants.KPRO23_ID:
                 firm1 = self.data4[constants.KPRO23_FIRM1]
@@ -502,7 +511,10 @@ class Kpro:
             return 0
 
     def analog_input(self, channel):
-        # return unit: volts
+        """
+        Analog inputs
+        return unit: volts
+        """
         if self.version == constants.KPRO4_ID:
             if channel == 0:
                 index_1 = constants.KPRO4_AN0_1

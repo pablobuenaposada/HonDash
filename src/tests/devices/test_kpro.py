@@ -19,7 +19,7 @@ class TestKpro:
             self.kpro = Kpro()
         self.kpro.data0 = [None for _ in range(38)]
         self.kpro.data1 = [None for _ in range(7)]
-        self.kpro.data3 = [None for _ in range(82)]
+        self.kpro.data3 = [None for _ in range(100)]
         self.kpro.data4 = [None for _ in range(18)]
         self.kpro.data5 = [None for _ in range(20)]
 
@@ -89,7 +89,19 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data1[index] = value
 
-        assert self.kpro.bat() == result
+        assert self.kpro.bat == result
+
+    def test_eth(self):
+        self.kpro.version = constants.KPRO4_ID
+        self.kpro.data3[constants.KPRO4_ETH] = 50
+
+        assert self.kpro.eth == 50
+
+    def test_flt(self):
+        self.kpro.version = constants.KPRO4_ID
+        self.kpro.data3[constants.KPRO4_FLT] = 50
+
+        assert self.kpro.flt == {"celsius": 50, "fahrenheit": 122.0}
 
     @pytest.mark.parametrize(
         "version, index1, index2, value1, value2, result",
@@ -117,7 +129,7 @@ class TestKpro:
         self.kpro.data0[index1] = value1
         self.kpro.data0[index2] = value2
 
-        assert self.kpro.rpm() == result
+        assert self.kpro.rpm == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -130,7 +142,7 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.tps() == result
+        assert self.kpro.tps == result
 
     @pytest.mark.parametrize(
         "version, index1, index2, value1, value2, result_afr, result_lambda",
@@ -163,7 +175,7 @@ class TestKpro:
                 0,
             ),
         ),
-    )  # division by zero
+    )
     def test_o2(
         self, version, index1, index2, value1, value2, result_afr, result_lambda
     ):
@@ -171,12 +183,13 @@ class TestKpro:
         self.kpro.data0[index1] = value1
         self.kpro.data0[index2] = value2
 
-        assert self.kpro.o2()["afr"] == result_afr
-        assert self.kpro.o2()["lambda"] == result_lambda
+        assert self.kpro.o2["afr"] == result_afr
+        assert self.kpro.o2["lambda"] == result_lambda
 
     @pytest.mark.parametrize(
         "version, index, value, result_kmh, result_mph",
         (
+            (None, 0, None, 0, 0),
             (constants.KPRO23_ID, constants.KPRO23_VSS, 100, 100, 62),
             (constants.KPRO4_ID, constants.KPRO4_VSS, 100, 100, 62),
         ),
@@ -185,12 +198,13 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.vss()["kmh"] == result_kmh
-        assert self.kpro.vss()["mph"] == result_mph
+        assert self.kpro.vss["kmh"] == result_kmh
+        assert self.kpro.vss["mph"] == result_mph
 
     @pytest.mark.parametrize(
         "version, index, values",
         (
+            (None, 0, (None, 0, 0)),
             (constants.KPRO23_ID, constants.KPRO23_ECT, temp_sensor_argvalues[0]),
             (constants.KPRO23_ID, constants.KPRO23_ECT, temp_sensor_argvalues[1]),
             (constants.KPRO23_ID, constants.KPRO23_ECT, temp_sensor_argvalues[2]),
@@ -203,12 +217,13 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data1[index] = values[0]
 
-        assert self.kpro.ect()["celsius"] == values[1]
-        assert self.kpro.ect()["fahrenheit"] == values[2]
+        assert self.kpro.ect["celsius"] == values[1]
+        assert self.kpro.ect["fahrenheit"] == values[2]
 
     @pytest.mark.parametrize(
         "version, index, values",
         (
+            (None, 0, (None, 0, 0)),
             (constants.KPRO23_ID, constants.KPRO23_IAT, temp_sensor_argvalues[0]),
             (constants.KPRO23_ID, constants.KPRO23_IAT, temp_sensor_argvalues[1]),
             (constants.KPRO23_ID, constants.KPRO23_IAT, temp_sensor_argvalues[2]),
@@ -221,12 +236,13 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data1[index] = values[0]
 
-        assert self.kpro.iat()["celsius"] == values[1]
-        assert self.kpro.iat()["fahrenheit"] == values[2]
+        assert self.kpro.iat["celsius"] == values[1]
+        assert self.kpro.iat["fahrenheit"] == values[2]
 
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, 0, 100, (0, 0, 0)),
             (constants.KPRO23_ID, constants.KPRO23_MAP, 100, (1, 1000, 14.503773773)),
             (constants.KPRO4_ID, constants.KPRO4_MAP, 100, (1, 1000, 14.503773773)),
         ),
@@ -235,9 +251,9 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.map()["bar"] == result[0]
-        assert self.kpro.map()["mbar"] == result[1]
-        assert self.kpro.map()["psi"] == result[2]
+        assert self.kpro.map["bar"] == result[0]
+        assert self.kpro.map["mbar"] == result[1]
+        assert self.kpro.map["psi"] == result[2]
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -250,7 +266,7 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.cam() == result
+        assert self.kpro.cam == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -265,11 +281,12 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.gear() == result
+        assert self.kpro.gear == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, 0, None, False),
             (constants.KPRO23_ID, constants.KPRO23_EPS, 0, False),
             (constants.KPRO23_ID, constants.KPRO23_EPS, 32, True),
             (constants.KPRO4_ID, constants.KPRO4_EPS, 0, False),
@@ -280,11 +297,12 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.eps() == result
+        assert self.kpro.eps == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, 0, None, False),
             (constants.KPRO23_ID, constants.KPRO23_SCS, 0, False),
             (constants.KPRO23_ID, constants.KPRO23_SCS, 16, True),
             (constants.KPRO4_ID, constants.KPRO4_SCS, 0, False),
@@ -295,11 +313,12 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.scs() == result
+        assert self.kpro.scs == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, 0, None, False),
             (constants.KPRO23_ID, constants.KPRO23_RVSLCK, 0, False),
             (constants.KPRO23_ID, constants.KPRO23_RVSLCK, 1, True),
             (constants.KPRO4_ID, constants.KPRO4_RVSLCK, 0, False),
@@ -310,11 +329,12 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.rvslck() == result
+        assert self.kpro.rvslck == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, 0, None, False),
             (constants.KPRO23_ID, constants.KPRO23_BKSW, 0, False),
             (constants.KPRO23_ID, constants.KPRO23_BKSW, 2, True),
             (constants.KPRO4_ID, constants.KPRO4_BKSW, 0, False),
@@ -325,7 +345,7 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.bksw() == result
+        assert self.kpro.bksw == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -340,7 +360,7 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.acsw() == result
+        assert self.kpro.acsw == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -355,7 +375,7 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.accl() == result
+        assert self.kpro.accl == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -370,7 +390,7 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.flr() == result
+        assert self.kpro.flr == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -385,11 +405,12 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data0[index] = value
 
-        assert self.kpro.fanc() == result
+        assert self.kpro.fanc == result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, 0, None, False),
             (constants.KPRO23_ID, constants.KPRO23_IGN, 0, False),
             (constants.KPRO23_ID, constants.KPRO23_IGN, 1, True),
             (constants.KPRO4_ID, constants.KPRO4_IGN, 0, False),
@@ -400,7 +421,7 @@ class TestKpro:
         self.kpro.version = version
         self.kpro.data4[index] = value
 
-        assert self.kpro.ign() == result
+        assert self.kpro.ign == result
 
     @pytest.mark.parametrize(
         "index1, index2, value1, value2, channel, result",
