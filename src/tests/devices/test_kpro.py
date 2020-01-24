@@ -81,6 +81,7 @@ class TestKpro:
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, 0, 666, 0),
             (constants.KPRO23_ID, constants.KPRO23_BAT, 123, 12.3),
             (constants.KPRO4_ID, constants.KPRO4_BAT, 123, 12.3),
         ),
