@@ -111,7 +111,6 @@ class Kpro:
                     self.entry_point.write("\x65")
                     self.data3 = self.kpro_device.read(0x82, 128, 1000)  # kpro v4
                 else:  # for v3 only, v2 will not return anything meaningful
-                    self.entry_point.clear_halt()
                     self.entry_point.write("\xb0")
                     self.data5 = self.kpro_device.read(0x81, 1000)
 
