@@ -252,8 +252,8 @@
     "nightBackgroundGaugeColor": "#808080",
     "nightTextColor": "#ffffff",
     "tag": "style",
-    "tpsLowerThreshold": 5,
-    "tpsUpperThreshold": 10
+    "tpsLowerThreshold": 20,
+    "tpsUpperThreshold": 30
   },
   "template": "basic",
   "time": {
