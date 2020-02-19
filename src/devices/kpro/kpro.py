@@ -123,19 +123,27 @@ class Kpro:
                     self.status = False  # redundant?
                     self.__init__()
 
+    def get_value_from_kpro(self, indexes, data, default=0):
+        """
+        Get the value from the chosen index and data array depending on the current K-Pro version.
+        If something goes wrong return a predefined default value.
+        """
+        try:
+            return data[indexes[self.version]]
+        except (KeyError, IndexError):
+            return default
+
     @property
     def bat(self):
         """
         Battery voltage
         return unit: volts
         """
-        try:
-            if self.version == constants.KPRO23_ID:
-                return self.data1[constants.KPRO23_BAT] * 0.1
-            elif self.version == constants.KPRO4_ID:
-                return self.data1[constants.KPRO4_BAT] * 0.1
-        except IndexError:
-            return 0
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_BAT,
+            constants.KPRO4_ID: constants.KPRO4_BAT,
+        }
+        return self.get_value_from_kpro(indexes, self.data1) * 0.1
 
     @property
     def eth(self):
@@ -143,25 +151,18 @@ class Kpro:
         Ethanol content
         return unit: per cent
         """
-        try:
-            if self.version == constants.KPRO4_ID:
-                return self.data3[constants.KPRO4_ETH]
-        except IndexError:
-            return 0
+        indexes = {
+            constants.KPRO4_ID: constants.KPRO4_ETH,
+        }
+        return self.get_value_from_kpro(indexes, self.data3)
 
     @property
     def flt(self):
         """Fuel temperature"""
-        try:
-            if self.version == constants.KPRO4_ID:
-                index = constants.KPRO4_FLT
-            else:
-                return {"celsius": 0, "fahrenheit": 0}
-            flt_celsius = self.data3[index]
-            flt_fahrenheit = Formula.celsius_to_fahrenheit(flt_celsius)
-            return {"celsius": flt_celsius, "fahrenheit": flt_fahrenheit}
-        except IndexError:
-            return 0
+        indexes = {constants.KPRO4_ID: constants.KPRO4_FLT}
+        flt_celsius = self.get_value_from_kpro(indexes, self.data3)
+        flt_fahrenheit = Formula.celsius_to_fahrenheit(flt_celsius)
+        return {"celsius": flt_celsius, "fahrenheit": flt_fahrenheit}
 
     @property
     def o2(self):
@@ -202,18 +203,13 @@ class Kpro:
     @property
     def vss(self):
         """Vehicle speed sensor"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                index = constants.KPRO23_VSS
-            elif self.version == constants.KPRO4_ID:
-                index = constants.KPRO4_VSS
-            else:
-                return {"kmh": 0, "mph": 0}
-            vss_kmh = self.data0[index]
-            vss_mph = Formula.kmh_to_mph(vss_kmh)
-            return {"kmh": vss_kmh, "mph": int(vss_mph)}
-        except IndexError:
-            return {"kmh": 0, "mph": 0}
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_VSS,
+            constants.KPRO4_ID: constants.KPRO4_VSS,
+        }
+        vss_kmh = self.get_value_from_kpro(indexes, self.data0)
+        vss_mph = Formula.kmh_to_mph(vss_kmh)
+        return {"kmh": vss_kmh, "mph": int(vss_mph)}
 
     @property
     def rpm(self):
@@ -221,25 +217,21 @@ class Kpro:
         Revs per minute
         return unit: revs per minute
         """
-        try:
-            if self.version == constants.KPRO23_ID:
-                return int(
-                    (
-                        (256 * self.data0[constants.KPRO23_RPM2])
-                        + self.data0[constants.KPRO23_RPM1]
-                    )
-                    * 0.25
-                )
-            elif self.version == constants.KPRO4_ID:
-                return int(
-                    (
-                        (256 * self.data0[constants.KPRO4_RPM2])
-                        + self.data0[constants.KPRO4_RPM1]
-                    )
-                    * 0.25
-                )
-        except IndexError:
-            return 0
+        indexes_1 = {
+            constants.KPRO23_ID: constants.KPRO23_RPM1,
+            constants.KPRO4_ID: constants.KPRO4_RPM1,
+        }
+        indexes_2 = {
+            constants.KPRO23_ID: constants.KPRO23_RPM2,
+            constants.KPRO4_ID: constants.KPRO4_RPM2,
+        }
+        return int(
+            (
+                (256 * self.get_value_from_kpro(indexes_2, self.data0))
+                + self.get_value_from_kpro(indexes_1, self.data0)
+            )
+            * 0.25
+        )
 
     @property
     def cam(self):
@@ -247,341 +239,315 @@ class Kpro:
         VTC cam angle
         return units: degrees
         """
-        try:
-            if self.version == constants.KPRO23_ID:
-                return (self.data0[constants.KPRO23_CAM] - 40) * 0.5
-            elif self.version == constants.KPRO4_ID:
-                return (self.data0[constants.KPRO4_CAM] - 40) * 0.5
-        except IndexError:
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_CAM,
+            constants.KPRO4_ID: constants.KPRO4_CAM,
+        }
+        data_from_kpro = self.get_value_from_kpro(indexes, self.data0, None)
+        if data_from_kpro is not None:
+            return (data_from_kpro - 40) * 0.5
+        else:
             return 0
 
     @property
     def ect(self):
         """Engine coolant temperature"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                index = constants.KPRO23_ECT
-            elif self.version == constants.KPRO4_ID:
-                index = constants.KPRO4_ECT
-            else:
-                return {"celsius": 0, "fahrenheit": 0}
-            return Formula.kpro_temp(self.data1[index])
-        except IndexError:
-            return {"celsius": 0, "fahrenheit": 0}
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_ECT,
+            constants.KPRO4_ID: constants.KPRO4_ECT,
+        }
+        data_from_kpro = self.get_value_from_kpro(
+            indexes, self.data1, {"celsius": 0, "fahrenheit": 0}
+        )
+        if isinstance(data_from_kpro, int):
+            return Formula.kpro_temp(data_from_kpro)
+        else:
+            return data_from_kpro
 
     @property
     def iat(self):
         """Intake air temperature"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                index = constants.KPRO23_IAT
-            elif self.version == constants.KPRO4_ID:
-                index = constants.KPRO4_IAT
-            else:
-                return {"celsius": 0, "fahrenheit": 0}
-            return Formula.kpro_temp(self.data1[index])
-        except IndexError:
-            return {"celsius": 0, "fahrenheit": 0}
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_IAT,
+            constants.KPRO4_ID: constants.KPRO4_IAT,
+        }
+        data_from_kpro = self.get_value_from_kpro(
+            indexes, self.data1, {"celsius": 0, "fahrenheit": 0}
+        )
+        if isinstance(data_from_kpro, int):
+            return Formula.kpro_temp(data_from_kpro)
+        else:
+            return data_from_kpro
 
     @property
     def gear(self):
         """Gear"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                gear = self.data0[constants.KPRO23_GEAR]
-            elif self.version == 4:
-                gear = self.data0[constants.KPRO4_GEAR]
-            else:
-                return "N"
-
-            if gear == 0:
-                return "N"
-            else:
-                return gear
-        except IndexError:
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_GEAR,
+            constants.KPRO4_ID: constants.KPRO4_GEAR,
+        }
+        gear = self.get_value_from_kpro(indexes, self.data0)
+        if gear == 0:
             return "N"
+        return gear
 
     @property
     def eps(self):
         """Electric power steering"""
         mask = 0x20
-        if self.version == constants.KPRO23_ID:
-            return bool(self.data0[constants.KPRO23_EPS] & mask)
-        elif self.version == constants.KPRO4_ID:
-            return bool(self.data0[constants.KPRO4_EPS] & mask)
-        else:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_EPS,
+            constants.KPRO4_ID: constants.KPRO4_EPS,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def scs(self):
         """Service connector"""
         mask = 0x10
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_SCS] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_SCS] & mask)
-            else:
-                return False
-        except IndexError:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_SCS,
+            constants.KPRO4_ID: constants.KPRO4_SCS,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def rvslck(self):
         """Reverse gear lock"""
         mask = 0x01
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_RVSLCK] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_RVSLCK] & mask)
-            else:
-                return False
-        except IndexError:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_RVSLCK,
+            constants.KPRO4_ID: constants.KPRO4_RVSLCK,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def bksw(self):
         """Brake switch"""
         mask = 0x02
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_BKSW] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_BKSW] & mask)
-            else:
-                return False
-        except IndexError:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_BKSW,
+            constants.KPRO4_ID: constants.KPRO4_BKSW,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def acsw(self):
         """A/C switch"""
         mask = 0x04
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_ACSW] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_ACSW] & mask)
-        except IndexError:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_ACSW,
+            constants.KPRO4_ID: constants.KPRO4_ACSW,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def accl(self):
         """A/C clutch"""
         mask = 0x08
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_ACCL] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_ACCL] & mask)
-        except IndexError:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_ACCL,
+            constants.KPRO4_ID: constants.KPRO4_ACCL,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def flr(self):
         """Fuel relay"""
         mask = 0x40
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_FLR] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_FLR] & mask)
-        except IndexError:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_FLR,
+            constants.KPRO4_ID: constants.KPRO4_FLR,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def fanc(self):
         """Fan switch"""
         mask = 0x80
-        try:
-            if self.version == constants.KPRO23_ID:
-                return bool(self.data0[constants.KPRO23_FANC] & mask)
-            elif self.version == constants.KPRO4_ID:
-                return bool(self.data0[constants.KPRO4_FANC] & mask)
-        except IndexError:
-            return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_FANC,
+            constants.KPRO4_ID: constants.KPRO4_FANC,
+        }
+        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
 
     @property
     def map(self):
         """Manifold absolute pressure"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                index = constants.KPRO23_MAP
-            elif self.version == constants.KPRO4_ID:
-                index = constants.KPRO4_MAP
-            else:
-                return {"bar": 0, "mbar": 0, "psi": 0}
-            map_bar = self.data0[index] / 100.0
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_MAP,
+            constants.KPRO4_ID: constants.KPRO4_MAP,
+        }
+        data_from_kpro = self.get_value_from_kpro(
+            indexes, self.data0, {"bar": 0, "mbar": 0, "psi": 0}
+        )
+        if isinstance(data_from_kpro, int):
+            map_bar = data_from_kpro / 100.0
             map_mbar = map_bar * 1000
             map_psi = Formula.bar_to_psi(map_bar)
             return {"bar": map_bar, "mbar": map_mbar, "psi": map_psi}
-        except IndexError:
-            return {"bar": 0, "mbar": 0, "psi": 0}
+        return data_from_kpro
 
     @property
     def mil(self):
         """Malfunction indicator light also known as check engine light"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                mil = self.data0[constants.KPRO23_MIL]
-                if mil == 9:
-                    return True
-                elif mil == 1:
-                    return False
-            elif self.version == constants.KPRO4_ID:
-                mil = self.data3[constants.KPRO4_MIL]
-                if mil >= 36:
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        except IndexError:
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_MIL,
+            constants.KPRO4_ID: constants.KPRO4_MIL,
+        }
+        if self.version == constants.KPRO23_ID:
+            data_from_kpro = self.get_value_from_kpro(indexes, self.data0)
+            if data_from_kpro == 9:
+                return True
+            return False
+        elif self.version == constants.KPRO4_ID:
+            data_from_kpro = self.get_value_from_kpro(indexes, self.data3)
+            if data_from_kpro >= 36:
+                return True
             return False
 
     @property
     def ecu_type(self):
         """Model of ECU"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                type = self.data4[constants.KPRO23_ECU_TYPE]
-            elif self.version == constants.KPRO4_ID:
-                type = self.data4[constants.KPRO4_ECU_TYPE]
-            else:
-                return "unknown"
-
-            if type == 3:  # TODO the rest of ecu types
-                return "RSX - PRB"
-            else:
-                return "unknown"
-        except IndexError:
-            return "unknown"
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_ECU_TYPE,
+            constants.KPRO4_ID: constants.KPRO4_ECU_TYPE,
+        }
+        data_from_kpro = self.get_value_from_kpro(indexes, self.data4)
+        if data_from_kpro == 3:  # TODO the rest of ecu types
+            return "RSX - PRB"
+        return "unknown"
 
     @property
     def ign(self):
         """Ignition status"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                ign = self.data4[constants.KPRO23_IGN]
-            elif self.version == constants.KPRO4_ID:
-                ign = self.data4[constants.KPRO4_IGN]
-            else:
-                return False
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_IGN,
+            constants.KPRO4_ID: constants.KPRO4_IGN,
+        }
+        data_from_kpro = self.get_value_from_kpro(indexes, self.data4, 0)
 
-            if ign == 1:
-                return True
-            else:
-                return False
-        except IndexError:
-            return False
+        if data_from_kpro == 1:
+            return True
+        return False
 
     @property
     def serial(self):
-        try:
-            if self.version == constants.KPRO23_ID:
-                serial1 = self.data4[constants.KPRO23_SERIAL1]
-                serial2 = self.data4[constants.KPRO23_SERIAL2]
-            elif self.version == constants.KPRO4_ID:
-                serial1 = self.data4[constants.KPRO4_SERIAL1]
-                serial2 = self.data4[constants.KPRO4_SERIAL2]
-            else:
-                return 0
-
-            return (256 * serial2) + serial1
-        except IndexError:
-            return 0
+        """K-Pro serial number"""
+        indexes_1 = {
+            constants.KPRO23_ID: constants.KPRO23_SERIAL1,
+            constants.KPRO4_ID: constants.KPRO4_SERIAL1,
+        }
+        indexes_2 = {
+            constants.KPRO23_ID: constants.KPRO23_SERIAL2,
+            constants.KPRO4_ID: constants.KPRO4_SERIAL2,
+        }
+        return (
+            256 * self.get_value_from_kpro(indexes_2, self.data4, 0)
+        ) + self.get_value_from_kpro(indexes_1, self.data4, 0)
 
     @property
     def firmware(self):
         """Firmware version"""
-        try:
-            if self.version == constants.KPRO23_ID:
-                firm1 = self.data4[constants.KPRO23_FIRM1]
-                firm2 = self.data4[constants.KPRO23_FIRM2]
-            elif self.version == constants.KPRO4_ID:
-                firm1 = self.data4[constants.KPRO4_FIRM1]
-                firm2 = self.data4[constants.KPRO4_FIRM2]
-            else:
-                return 0
+        indexes_1 = {
+            constants.KPRO23_ID: constants.KPRO23_FIRM1,
+            constants.KPRO4_ID: constants.KPRO4_FIRM1,
+        }
+        indexes_2 = {
+            constants.KPRO23_ID: constants.KPRO23_FIRM2,
+            constants.KPRO4_ID: constants.KPRO4_FIRM2,
+        }
 
-            return "{}.{:02d}".format(firm2, firm1)
-        except IndexError:
-            return 0
+        return "{}.{:02d}".format(
+            self.get_value_from_kpro(indexes_2, self.data4, 0),
+            self.get_value_from_kpro(indexes_1, self.data4, 0),
+        )
 
     def analog_input(self, channel):
         """
         Analog inputs
         return unit: volts
         """
+        indexes_1 = (
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN0_1,
+                constants.KPRO4_ID: constants.KPRO4_AN0_1,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN1_1,
+                constants.KPRO4_ID: constants.KPRO4_AN1_1,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN2_1,
+                constants.KPRO4_ID: constants.KPRO4_AN2_1,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN3_1,
+                constants.KPRO4_ID: constants.KPRO4_AN3_1,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN4_1,
+                constants.KPRO4_ID: constants.KPRO4_AN4_1,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN5_1,
+                constants.KPRO4_ID: constants.KPRO4_AN5_1,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN6_1,
+                constants.KPRO4_ID: constants.KPRO4_AN6_1,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN7_1,
+                constants.KPRO4_ID: constants.KPRO4_AN7_1,
+            },
+        )
+        indexes_2 = (
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN0_2,
+                constants.KPRO4_ID: constants.KPRO4_AN0_2,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN1_2,
+                constants.KPRO4_ID: constants.KPRO4_AN1_2,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN2_2,
+                constants.KPRO4_ID: constants.KPRO4_AN2_2,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN3_2,
+                constants.KPRO4_ID: constants.KPRO4_AN3_2,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN4_2,
+                constants.KPRO4_ID: constants.KPRO4_AN4_2,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN5_2,
+                constants.KPRO4_ID: constants.KPRO4_AN5_2,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN6_2,
+                constants.KPRO4_ID: constants.KPRO4_AN6_2,
+            },
+            {
+                constants.KPRO23_ID: constants.KPRO3_AN7_2,
+                constants.KPRO4_ID: constants.KPRO4_AN7_2,
+            },
+        )
+
         if self.version == constants.KPRO4_ID:
-            if channel == 0:
-                index_1 = constants.KPRO4_AN0_1
-                index_2 = constants.KPRO4_AN0_2
-            elif channel == 1:
-                index_1 = constants.KPRO4_AN1_1
-                index_2 = constants.KPRO4_AN1_2
-            elif channel == 2:
-                index_1 = constants.KPRO4_AN2_1
-                index_2 = constants.KPRO4_AN2_2
-            elif channel == 3:
-                index_1 = constants.KPRO4_AN3_1
-                index_2 = constants.KPRO4_AN3_2
-            elif channel == 4:
-                index_1 = constants.KPRO4_AN4_1
-                index_2 = constants.KPRO4_AN4_2
-            elif channel == 5:
-                index_1 = constants.KPRO4_AN5_1
-                index_2 = constants.KPRO4_AN5_2
-            elif channel == 6:
-                index_1 = constants.KPRO4_AN6_1
-                index_2 = constants.KPRO4_AN6_2
-            elif channel == 7:
-                index_1 = constants.KPRO4_AN7_1
-                index_2 = constants.KPRO4_AN7_2
-            else:
-                return 0
-
-            try:
-                return interp(
-                    (256 * self.data3[index_1]) + self.data3[index_2], [0, 4096], [0, 5]
-                )
-            except IndexError:
-                return 0
-
+            return interp(
+                (256 * self.get_value_from_kpro(indexes_1[channel], self.data3, 0))
+                + self.get_value_from_kpro(indexes_2[channel], self.data3, 0),
+                [0, 4096],
+                [0, 5],
+            )
         elif self.version == constants.KPRO23_ID:
-            if channel == 0:
-                index_1 = constants.KPRO3_AN0_1
-                index_2 = constants.KPRO3_AN0_2
-            elif channel == 1:
-                index_1 = constants.KPRO3_AN1_1
-                index_2 = constants.KPRO3_AN1_2
-            elif channel == 2:
-                index_1 = constants.KPRO3_AN2_1
-                index_2 = constants.KPRO3_AN2_2
-            elif channel == 3:
-                index_1 = constants.KPRO3_AN3_1
-                index_2 = constants.KPRO3_AN3_2
-            elif channel == 4:
-                index_1 = constants.KPRO3_AN4_1
-                index_2 = constants.KPRO3_AN4_2
-            elif channel == 5:
-                index_1 = constants.KPRO3_AN5_1
-                index_2 = constants.KPRO3_AN5_2
-            elif channel == 6:
-                index_1 = constants.KPRO3_AN6_1
-                index_2 = constants.KPRO3_AN6_2
-            elif channel == 7:
-                index_1 = constants.KPRO3_AN7_1
-                index_2 = constants.KPRO3_AN7_2
-            else:
-                return 0
-
-            try:
-                return interp(
-                    (256 * self.data5[index_1]) + self.data5[index_2], [0, 1024], [0, 5]
-                )
-            except IndexError:
-                return 0
-        else:
-            return 0
+            return interp(
+                (256 * self.get_value_from_kpro(indexes_1[channel], self.data5, 0))
+                + self.get_value_from_kpro(indexes_2[channel], self.data5, 0),
+                [0, 1024],
+                [0, 5],
+            )

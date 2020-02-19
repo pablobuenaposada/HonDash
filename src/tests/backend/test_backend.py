@@ -30,7 +30,7 @@ class TestBackend:
 
     def test_update(self):
         expected_data = {
-            "bat": 0,
+            "bat": 0.0,
             "gear": "N",
             "iat": 0,
             "tps": 0,
@@ -43,9 +43,9 @@ class TestBackend:
             "fan": False,
             "bksw": False,
             "flr": False,
-            "eth": None,
+            "eth": 0,
             "scs": False,
-            "fmw": 0,
+            "fmw": "0.00",
             "map": 0,
             "an0": 104,
             "an1": 205.7905145,
