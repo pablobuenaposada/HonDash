@@ -167,20 +167,23 @@ class Kpro:
     @property
     def o2(self):
         """Oxygen sensor"""
+        indexes_1 = {
+            constants.KPRO23_ID: constants.KPRO23_AFR1,
+            constants.KPRO4_ID: constants.KPRO4_AFR1,
+        }
+        indexes_2 = {
+            constants.KPRO23_ID: constants.KPRO23_AFR2,
+            constants.KPRO4_ID: constants.KPRO4_AFR2,
+        }
         try:
-            if self.version == constants.KPRO23_ID:
-                index_1 = constants.KPRO23_AFR2
-                index_2 = constants.KPRO23_AFR1
-            elif self.version == constants.KPRO4_ID:
-                index_1 = constants.KPRO4_AFR2
-                index_2 = constants.KPRO4_AFR1
-            else:
-                return {"afr": 0, "lambda": 0}
-            o2_lambda = 32768.0 / ((256 * self.data0[index_1]) + self.data0[index_2])
-            o2_afr = o2_lambda * 14.7
-            return {"afr": o2_afr, "lambda": o2_lambda}
-        except (IndexError, ZeroDivisionError):
+            o2_lambda = 32768.0 / (
+                256 * self.get_value_from_kpro(indexes_2, self.data0)
+                + self.get_value_from_kpro(indexes_1, self.data0)
+            )
+        except ZeroDivisionError:  # something happen collecting the value then return 0
             return {"afr": 0, "lambda": 0}
+        o2_afr = o2_lambda * 14.7
+        return {"afr": o2_afr, "lambda": o2_lambda}
 
     @property
     def tps(self):

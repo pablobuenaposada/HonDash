@@ -175,6 +175,7 @@ class TestKpro:
                 0,
                 0,
             ),
+            (None, 0, 0, 666, 666, 0, 0,),
         ),
     )
     def test_o2(
