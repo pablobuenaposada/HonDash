@@ -137,6 +137,7 @@ class TestKpro:
         (
             (constants.KPRO23_ID, constants.KPRO23_TPS, 100, 37),
             (constants.KPRO4_ID, constants.KPRO4_TPS, 100, 37),
+            (None, constants.KPRO4_TPS, 666, 0),
         ),
     )
     def test_tps(self, version, index, value, result):
@@ -462,5 +463,14 @@ class TestKpro:
         self.kpro.version = constants.KPRO23_ID
         self.kpro.data5[index2] = value2
         self.kpro.data5[index1] = value1
+
+        assert self.kpro.analog_input(channel) == result
+
+    @pytest.mark.parametrize(
+        "channel, result",
+        ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),),
+    )
+    def test_analog_input_no_version(self, channel, result):
+        self.kpro.version = None
 
         assert self.kpro.analog_input(channel) == result
