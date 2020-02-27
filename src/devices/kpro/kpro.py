@@ -191,17 +191,13 @@ class Kpro:
         Throttle position sensor
         return unit: 0-100%
         """
-        try:
-            if self.version == constants.KPRO23_ID:
-                return int(
-                    interp(self.data0[constants.KPRO23_TPS], [21, 229], [0, 100])
-                )
-            elif self.version == constants.KPRO4_ID:
-                return int(interp(self.data0[constants.KPRO4_TPS], [21, 229], [0, 100]))
-            else:
-                return 0
-        except IndexError:
-            return 0
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_TPS,
+            constants.KPRO4_ID: constants.KPRO4_TPS,
+        }
+        return int(
+            interp(self.get_value_from_kpro(indexes, self.data0), [21, 229], [0, 100])
+        )
 
     @property
     def vss(self):
@@ -554,3 +550,5 @@ class Kpro:
                 [0, 1024],
                 [0, 5],
             )
+        else:
+            return 0
