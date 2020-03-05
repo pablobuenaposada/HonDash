@@ -72,10 +72,11 @@ run_rpi:
 	chromium-browser --kiosk --incognito src/frontend/index.html &
 
 dummy:
+	cp -n default_setup.json setup.json || true
 	$(CROSSBAR) start &
 	sleep 5
 	pkill python dummy_backend.py || true
-	$(PYTHON) src/bench/dummy_backend.py &
+	PYTHONPATH=src $(PYTHON) src/bench/dummy_backend.py &
 	open -a "Google Chrome" src/frontend/index.html
 
 test: lint
