@@ -20,7 +20,7 @@ class Bar {
         this.sectors = args.sectors || [];
 
         // Raphael paper object
-        this.paper = Raphael(args.id, "100%", "100%");
+        this.paper = Raphael(args.id);
 
         // Background
         this.background = this.paper.rect(this.x, this.y, this.width, this.height);

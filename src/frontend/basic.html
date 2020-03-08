@@ -2,6 +2,10 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="../../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
   </head>
   <body>
     <script src="lib/autobahn-js-browser/autobahn.min.js"></script>
@@ -13,90 +17,66 @@
     <script src="components/gauge.js"></script>
     <script src="components/style.js"></script>
 
-    <div class="row">
-      <div class="col-12" style="height:20px"></div>
-    </div>
+    <div class="container-fluid h-100">
+      <div class="row" style="height: 1%"></div>
 
-    <div class="row">
-      <div class="col-1"></div>
-      <div id="bar1" class="col-10" style="height:100px"></div>
-      <div class="col-1"></div>
-    </div>
+      <div class="row no-gutters" style="height: 15%">
+        <div class="col-1"></div>
+        <div class="col-10" id="bar1"></div>
+        <div class="col-1"></div>
+      </div>
 
-    <div class="row">
-      <div class="col-12" style="height:30px"></div>
-    </div>
+      <div class="row d-flex flex-nowrap" style="height: 30%">
+        <div class="col-2 align-self-center" id="gear"></div>
+        <div class="col-2"></div>
+        <div class="col-4 align-self-center" id="speed"></div>
+        <div class="col-2">
+          <div class="row" style="height: 33.3%">
+            <div class="col-6 align-self-center" id="icon1"></div>
+            <div class="col-6 align-self-center" id="icon2"></div>
+          </div>
+          <div class="row" style="height: 33.3%">
+            <div class="col-6 align-self-center" id="icon3"></div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row" style="height: 33.3%">
+            <div class="col-6"></div>
+            <div class="col-6"></div>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="row" style="height: 33.3%">
+            <div class="col-12 align-self-center" id="time"></div>
+          </div>
+          <div class="row" style="height: 33.3%">
+            <div class="col-12 align-self-center" id="odo"></div>
+          </div>
+          <div class="row no-gutters py-2" style="height: 33.3%">
+            <div class="col-12" id="bar2"></div>
+          </div>
+        </div>
+      </div>
 
-    <div class="row">
-      <div id="gear" class="col-2"></div>
-      <div class="col-2"></div>
-      <div id="speed" class="col-3" style="text-align: right;"></div>
-      <div class="col-1">
-        <div class="col-12"></div>
-        <div class="col-12"></div>
-        <div class="col-12"></div>
-        <div class="col-12"></div>
+      <div class="row no-gutters" style="height: 25%">
+        <div class="col" id="gauge1" style="margin-top: -2%"></div>
+        <div class="col" id="gauge2" style="margin-top: -2%"></div>
+        <div class="col" id="gauge3" style="margin-top: -2%"></div>
+        <div class="col" id="gauge4" style="margin-top: -2%"></div>
+        <div class="col" id="gauge5" style="margin-top: -2%"></div>
       </div>
-      <div class="col-2">
-        <div class="row">
-          <div id="icon1" class="icon"></div>
-          <div id="icon2" class="icon"></div>
-        </div>
-        <div class="row">
-          <div id="icon3" class="icon"></div>
-        </div>
+
+      <div class="row no-gutters" style="height: 25%">
+        <div class="col" id="gauge6" style="margin-top: -2%"></div>
+        <div class="col" id="gauge7" style="margin-top: -2%"></div>
+        <div class="col" id="gauge8" style="margin-top: -2%"></div>
+        <div class="col" id="gauge9" style="margin-top: -2%"></div>
+        <div class="col" id="gauge10" style="margin-top: -2%"></div>
       </div>
-      <div class="col-2">
-        <div id="time" class="col-12"></div>
-        <div id="odo" class="col-12"></div>
-        <div id="bar2" class="col-12" style="height:40px"></div>
+
+      <div class="row" style="height: 3%">
+        <div class="col-6 align-self-center" id="version"></div>
+        <div class="col-6 align-self-center" id="firmware_version"></div>
       </div>
-    </div>
-    <div class="col-2">
-      <div class="row">
-        <div id="icon1" class="icon"></div>
-        <div id="icon2" class="icon"></div>
-      </div>
-    </div>
-    <div style="height:10px"></div>
-    <div class="row" style="position: absolute; bottom: 5px; width: 99%">
-      <div
-        style="text-align: right; margin-right: 8px;"
-        id="version"
-        class="col-6"
-      ></div>
-      <div
-        style="text-align: left; margin-left: 8px;"
-        id="firmware_version"
-        class="col-6"
-      ></div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="row">
-          <div id="gauge1" class="col-2 gauge"></div>
-          <div id="gauge2" class="col-2 gauge"></div>
-          <div id="gauge3" class="col-2 gauge"></div>
-          <div id="gauge4" class="col-2 gauge"></div>
-          <div id="gauge5" class="col-2 gauge"></div>
-        </div>
-        <div style="height:10px"></div>
-        <div class="row">
-          <div id="gauge6" class="col-2 gauge"></div>
-          <div id="gauge7" class="col-2 gauge"></div>
-          <div id="gauge8" class="col-2 gauge"></div>
-          <div id="gauge9" class="col-2 gauge"></div>
-          <div id="gauge10" class="col-2 gauge"></div>
-        </div>
-      </div>
-    </div>
-    <div style="height:10px"></div>
-    <div class="row">
-      <div
-        style="position: fixed; bottom: 5px;"
-        id="version"
-        class="col-12"
-      ></div>
     </div>
 
     <script src="components.js"></script>

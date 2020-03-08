@@ -29,7 +29,8 @@ SYSTEM_DEPENDENCIES_UBUNTU= \
 SYSTEM_DEPENDENCIES_RASPBIAN= \
     libatlas-base-dev \
     libsnappy-dev \
-    virtualenv
+    virtualenv \
+    npm
 SYSTEM_DEPENDENCIES_MACOS= \
     snappy \
     npm
