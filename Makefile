@@ -79,6 +79,10 @@ dummy:
 	PYTHONPATH=src $(PYTHON) src/bench/dummy_backend.py &
 	open -a "Google Chrome" src/frontend/index.html
 
+kill:
+	pkill backend || true
+	pkill crossbar || true
+
 test: lint
 	PYTHONPATH=src $(PYTEST) --cov src/ src/tests
 	@if [ -n "$$CI" ] && [ -f $(COVERALLS) ]; then $(COVERALLS); fi \
