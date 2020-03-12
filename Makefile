@@ -48,14 +48,14 @@ clean:
 	py3clean .
 	rm -rf $(VIRTUAL_ENV)
 
-$(VIRTUAL_ENV):
+npm:
+	npm install
+
+$(VIRTUAL_ENV): npm
 	virtualenv --python=$(PYTHON_WITH_VERSION) $(VIRTUAL_ENV)
 	$(PIP) install -r requirements.txt
 
 virtualenv: $(VIRTUAL_ENV)
-
-npm:
-	npm install
 
 run: virtualenv
 	cp -n default_setup.json setup.json

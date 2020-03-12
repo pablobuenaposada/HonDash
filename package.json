@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bootstrap": "^3.4.1",
     "prettier": "1.18.2"
   },
   "name": "hondash",
