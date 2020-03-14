@@ -1,3 +1,11 @@
+function internal_grid() {
+  return { grid_columns: 12 };
+}
+
+function external_grid() {
+  return { grid_columns: 4 };
+}
+
 /* units */
 var temp_units = ["celsius", "fahrenheit"];
 var speed_units = ["kmh", "mph"];
@@ -8,7 +16,7 @@ var distance_units = ["km", "miles"];
 
 /* util functions */
 function unit(units) {
-  return { type: "string", enum: units };
+  return { type: "string", enum: units, options: internal_grid() };
 }
 function simple_value_no_units() {
   var config = simple_value();
@@ -30,6 +38,7 @@ function simple_value(units) {
   return {
     type: "object",
     required: ["tag", "unit"],
+    options: external_grid(),
     properties: {
       tag: tag,
       unit: unit(units),
@@ -45,6 +54,7 @@ function simple_value(units) {
 /* fields */
 var tag = {
   type: "string",
+  options: internal_grid(),
   enum: [
     "not use",
     "gauge1",
@@ -70,6 +80,7 @@ var tag = {
 };
 var formula = {
   type: "string",
+  options: internal_grid(),
   enum: [
     "autometer_2246",
     "vdo_323_057",
@@ -89,20 +100,26 @@ var time = {
   required: ["tag"],
   properties: {
     tag: tag
-  }
+  },
+  options: external_grid()
 };
 var screen = {
   type: "object",
   required: ["rotate"],
   properties: {
-    rotate: { type: "boolean" }
-  }
+    rotate: {
+      type: "boolean",
+      options: internal_grid()
+    }
+  },
+  options: external_grid()
 };
 var sectors = {
   type: "array",
   format: "table",
   items: {
     type: "object",
+    options: internal_grid(),
     properties: {
       lo: {
         type: "integer"
@@ -120,53 +137,59 @@ var sectors = {
 var odo = {
   type: "object",
   required: ["tag", "unit"],
+  options: external_grid(),
   properties: {
     tag: tag,
     unit: unit(distance_units),
     suffix: suffix,
-    value: { type: "number" }
+    value: { type: "number", options: internal_grid() }
   }
 };
 var rpm = {
   type: "object",
   required: ["tag"],
+  options: external_grid(),
   properties: {
     tag: tag,
     suffix: suffix,
-    max: { type: "integer" },
+    max: { type: "integer", options: internal_grid() }, // this fucker should use the max var but doesn't work
     sectors: sectors
   }
 };
 var mil = {
   type: "object",
   required: ["tag"],
+  options: external_grid(),
   properties: {
     tag: tag,
-    pathon: { type: "string" },
-    pathoff: { type: "string" }
+    pathon: { type: "string", options: internal_grid() },
+    pathoff: { type: "string", options: internal_grid() }
   }
 };
 var fan = {
   type: "object",
   required: ["tag"],
+  options: external_grid(),
   properties: {
     tag: tag,
-    pathon: { type: "string" },
-    pathoff: { type: "string" }
+    pathon: { type: "string", options: internal_grid() },
+    pathoff: { type: "string", options: internal_grid() }
   }
 };
 var scs = {
   type: "object",
   required: ["tag"],
+  options: external_grid(),
   properties: {
     tag: tag,
-    pathon: { type: "string" },
-    pathoff: { type: "string" }
+    pathon: { type: "string", options: internal_grid() },
+    pathoff: { type: "string", options: internal_grid() }
   }
 };
 var gear = {
   type: "object",
   required: ["tag"],
+  options: external_grid(),
   properties: {
     tag: tag
   }
@@ -175,15 +198,17 @@ var template = {
   type: "string",
   required: true,
   enum: ["basic", "animalillo"],
+  options: external_grid(),
   links: [{ mediaType: "image", href: "templates/{{self}}.png" }]
 };
-var label = { type: "string" };
-var max = { type: "integer" };
-var decimals = { type: "integer" };
-var suffix = { type: "string" };
+var label = { type: "string", options: internal_grid() };
+var max = { type: "integer", options: internal_grid() };
+var decimals = { type: "integer", options: internal_grid() };
+var suffix = { type: "string", options: internal_grid() };
 var analog = {
   type: "object",
   required: ["tag", "unit", "formula"],
+  options: external_grid(),
   properties: {
     tag: tag,
     formula: formula,
@@ -216,38 +241,48 @@ var style = {
     },
     dayBackgroundColor: {
       type: "string",
-      format: "color"
+      format: "color",
+      options: internal_grid()
     },
     nightBackgroundColor: {
       type: "string",
-      format: "color"
+      format: "color",
+      options: internal_grid()
     },
     dayTextColor: {
       type: "string",
-      format: "color"
+      format: "color",
+      options: internal_grid()
     },
     nightTextColor: {
       type: "string",
-      format: "color"
+      format: "color",
+      options: internal_grid()
     },
     dayBackgroundGaugeColor: {
       type: "string",
-      format: "color"
+      format: "color",
+      options: internal_grid()
     },
     nightBackgroundGaugeColor: {
       type: "string",
-      format: "color"
+      format: "color",
+      options: internal_grid()
     },
     tpsLowerThreshold: {
-      type: "integer"
+      type: "integer",
+      options: internal_grid()
     },
     tpsUpperThreshold: {
-      type: "integer"
+      type: "integer",
+      options: internal_grid()
     },
     elapsedSeconds: {
-      type: "integer"
+      type: "integer",
+      options: internal_grid()
     }
-  }
+  },
+  options: external_grid()
 };
 
 var schema = {
@@ -291,5 +326,6 @@ var schema = {
   disable_properties: true,
   disable_array_delete_last_row: true,
   disable_array_reorder: true,
-  theme: "bootstrap3"
+  theme: "bootstrap4",
+  object_layout: "grid"
 };
