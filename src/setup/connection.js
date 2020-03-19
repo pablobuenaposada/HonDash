@@ -1,3 +1,16 @@
+// utils
+var formulas = "contains(., '[an') and contains(., '[formula]')";
+var formulaVsUnits = {
+  vdo_323_057: ["celsius", "fahrenheit"],
+  autometer_2246: ["psi", "bar"],
+  aem_30_2012: ["celsius", "fahrenheit"],
+  ebay_150_psi: ["psi", "bar"],
+  bosch_0280130039_0280130026: ["celsius", "fahrenheit"]
+};
+var otherUnits = ["per cent"];
+var enabledBackgroundColorDiv = "#ddfae2";
+var disabledBackgroundColorDiv = "#ffdddd";
+
 function getElementsByXPath(xpath, parent) {
   let results = [];
   let query = document.evaluate(
@@ -13,10 +26,6 @@ function getElementsByXPath(xpath, parent) {
   return results;
 }
 
-function disableField(xpath) {
-  getElementsByXPath(xpath)[0].disabled = true;
-}
-
 function disableFromSelectByValue(select, value) {
   for (var option in select[0].options) {
     if (select[0].options[option].label == value) {
@@ -26,78 +35,9 @@ function disableFromSelectByValue(select, value) {
   }
 }
 
-function checkTagValues() {
-  // get currently used tags
-  var usedTags = [];
-  var divs = getElementsByXPath(
-    "//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']"
-  );
-  for (var div in divs) {
-    var select = getElementsByXPath(
-      "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]",
-      divs[div]
-    );
-    try {
-      var selectedOption = select[0].options[select[0].selectedIndex].label;
-    } catch (err) {} // some of the values doesn't have tag field
-
-    if (selectedOption != "not use") {
-      usedTags.push(selectedOption);
-    }
-  }
-
-  // update the tag field with the free tags available
-  var divs = getElementsByXPath(
-    "//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']"
-  );
-  for (var div in divs) {
-    var select = getElementsByXPath(
-      "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]",
-      divs[div]
-    );
-    if (select.length > 0) {
-      // if we found the 'tag' select
-      var selectedOption = select[0].options[select[0].selectedIndex].label;
-      try {
-        for (var tag in usedTags) {
-          if (select != undefined && selectedOption != usedTags[tag]) {
-            disableFromSelectByValue(select, usedTags[tag]);
-          }
-        }
-      } catch (err) {} // some of the values doesn't have tag field
-    }
-  }
-}
-
-function checkDivColor() {
-  var divs = getElementsByXPath(
-    "//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']"
-  );
-  for (var div in divs) {
-    var select = getElementsByXPath(
-      "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[tag]')]]",
-      divs[div]
-    );
-    try {
-      var selectedOption = select[0].options[select[0].selectedIndex].label;
-    } catch (err) {} // some of the values doesn't have tag field
-
-    if (selectedOption == "not use") {
-      divs[div].style.backgroundColor = "#ffdddd";
-      var nodes = divs[div].getElementsByTagName("*");
-      for (var i = 0; i < nodes.length; i++) {
-        var nodeName = nodes[i].name;
-        if (typeof nodeName !== "undefined" && !nodeName.includes("tag")) {
-          nodes[i].disabled = true;
-        }
-      }
-    } else {
-      divs[div].style.backgroundColor = "#ddfae2";
-      var nodes = divs[div].getElementsByTagName("*");
-      for (var i = 0; i < nodes.length; i++) {
-        nodes[i].disabled = false;
-      }
-    }
+function enableAllSelectOptions(select) {
+  for (var option in select[0].options) {
+    select[0].options[option].disabled = false;
   }
 }
 
@@ -119,40 +59,157 @@ function enforceAllowedUnits(unitsSelect, allowedUnits) {
   }
 }
 
-var formulas = "contains(., '[an') and contains(., '[formula]')";
-var formulaVsUnits = {
-  vdo_323_057: ["celsius", "fahrenheit"],
-  autometer_2246: ["psi", "bar"],
-  aem_30_2012: ["celsius", "fahrenheit"],
-  ebay_150_psi: ["psi", "bar"],
-  bosch_0280130039_0280130026: ["celsius", "fahrenheit"]
-};
-var otherUnits = ["per cent"];
-
-function checkUnitValues() {
-  var divs = getElementsByXPath(
-    "//*[@id='editor_holder']/div/div[@class='well well-sm']/div/div/*[@class='row']/div/div[@class='well well-sm']"
+function checkTagValues() {
+  var usedTags = [];
+  var rowsPerValue = getElementsByXPath(
+    "//*[@id='editor_holder']/div/div[@class='card card-body mb-3 bg-light']/div/div/*[@class='row']"
   );
 
-  for (var div in divs) {
-    var formula = getElementsByXPath(
-      "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[" +
-        formulas +
-        "]]",
-      divs[div]
-    );
-    if (formula.length > 0) {
-      var selectedFormula = formula[0].options[formula[0].selectedIndex].value;
-      var unitsSelect = getElementsByXPath(
-        "div/div/*[@class='row']/div[@data-schemapath[starts-with(., 'root.')]]/div/select[@name[contains(., '[unit]')]]",
+  // fill list of used tags
+  for (var row in rowsPerValue) {
+    var divs = getElementsByXPath("div", rowsPerValue[row]);
+    for (var div in divs) {
+      var valueDiv = getElementsByXPath(
+        "div[@class='card card-body mb-3 bg-light']",
+        divs[div]
+      );
+      var rowContainingTag = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[contains(., 'tag')]]",
+        valueDiv[0]
+      );
+      for (var row in rowContainingTag) {
+        var select = getElementsByXPath("div/select", rowContainingTag[row]);
+        var selectedOption = select[0].options[select[0].selectedIndex].label;
+        if (selectedOption != "not use") {
+          usedTags.push(selectedOption);
+        }
+      }
+    }
+  }
+
+  // update the tag field with the free tags available
+  for (var row in rowsPerValue) {
+    var divs = getElementsByXPath("div", rowsPerValue[row]);
+    for (var div in divs) {
+      var valueDiv = getElementsByXPath(
+        "div[@class='card card-body mb-3 bg-light']",
+        divs[div]
+      );
+      var rowContainingTag = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[contains(., 'tag')]]",
+        valueDiv[0]
+      );
+      for (var row in rowContainingTag) {
+        var select = getElementsByXPath("div/select", rowContainingTag[row]);
+        var selectedOption = select[0].options[select[0].selectedIndex].label;
+        enableAllSelectOptions(select);
+        for (var tag in usedTags) {
+          if (select != undefined && selectedOption != usedTags[tag]) {
+            disableFromSelectByValue(select, usedTags[tag]);
+          }
+        }
+      }
+    }
+  }
+}
+
+function checkDivColor() {
+  var rowsPerValue = getElementsByXPath(
+    "//*[@id='editor_holder']/div/div[@class='card card-body mb-3 bg-light']/div/div/*[@class='row']"
+  );
+
+  for (var row in rowsPerValue) {
+    var divs = getElementsByXPath("div", rowsPerValue[row]);
+    for (var div in divs) {
+      var valueDiv = getElementsByXPath(
+        "div[@class='card card-body mb-3 bg-light']",
         divs[div]
       );
 
-      // if the formula is a recognized one
-      if (selectedFormula in formulaVsUnits) {
-        enforceAllowedUnits(unitsSelect, formulaVsUnits[selectedFormula]);
-      } else {
-        enforceAllowedUnits(unitsSelect, otherUnits);
+      // starting by putting all the divs in green
+      if (valueDiv[0] !== undefined) {
+        valueDiv[0].style.setProperty(
+          "background-color",
+          enabledBackgroundColorDiv,
+          "important"
+        );
+      }
+      var rowContainingTag = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[contains(., 'tag')]]",
+        valueDiv[0]
+      );
+      for (var row in rowContainingTag) {
+        var select = getElementsByXPath("div/select", rowContainingTag[row]);
+        var selectedOption = select[0].options[select[0].selectedIndex].label;
+
+        // paint the div and enable or disable the boxes
+        if (selectedOption == "not use") {
+          valueDiv[0].style.setProperty(
+            "background-color",
+            disabledBackgroundColorDiv,
+            "important"
+          );
+          var nodes = valueDiv[0].getElementsByTagName("*");
+          for (var i = 0; i < nodes.length; i++) {
+            var nodeName = nodes[i].name;
+            if (typeof nodeName !== "undefined" && !nodeName.includes("tag")) {
+              nodes[i].disabled = true;
+            }
+          }
+        } else {
+          valueDiv[0].style.setProperty(
+            "background-color",
+            enabledBackgroundColorDiv,
+            "important"
+          );
+          var nodes = divs[div].getElementsByTagName("*");
+          for (var i = 0; i < nodes.length; i++) {
+            nodes[i].disabled = false;
+          }
+        }
+      }
+    }
+  }
+}
+
+function checkUnitValues() {
+  var rowsPerValue = getElementsByXPath(
+    "//*[@id='editor_holder']/div/div[@class='card card-body mb-3 bg-light']/div/div/*[@class='row']"
+  );
+
+  for (var row in rowsPerValue) {
+    var divs = getElementsByXPath("div", rowsPerValue[row]);
+    for (var div in divs) {
+      var valueDiv = getElementsByXPath(
+        "div[@class='card card-body mb-3 bg-light']",
+        divs[div]
+      );
+      var rowContainingFormula = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[contains(., 'formula')]]",
+        valueDiv[0]
+      );
+      for (var row in rowContainingFormula) {
+        var select = getElementsByXPath(
+          "div/select",
+          rowContainingFormula[row]
+        );
+        var selectedFormula = select[0].options[select[0].selectedIndex].label;
+        var rowContainingUnit = getElementsByXPath(
+          "div/div/*[@class='row']/div[@data-schemapath[contains(., 'unit')]]",
+          valueDiv[0]
+        );
+        select = getElementsByXPath("div/select", rowContainingUnit[row]);
+
+        // if the formula is a recognized one
+        if (selectedFormula in formulaVsUnits) {
+          enforceAllowedUnits(select, formulaVsUnits[selectedFormula]);
+        } else {
+          enforceAllowedUnits(select, otherUnits);
+        }
+
+        // force json editor library to notice that we did nasty things in the unit select
+        var selectNode = document.getElementById(select[0].name);
+        selectNode.dispatchEvent(new Event("change"));
       }
     }
   }
