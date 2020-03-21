@@ -10,6 +10,7 @@ class Text {
         this.element.style.fontFamily = args.font || "arial";
         this.element.style.fontWeight = args.weight || "bold";
         this.element.style.fontStyle = args.style || "";
+        this.element.style.textAlign = args.textAlign || "";
     }
 
     refresh(value){
