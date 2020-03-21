@@ -67,15 +67,7 @@ var tag = {
     "gauge8",
     "gauge9",
     "gauge10",
-    "time",
-    "odo",
-    "bar1",
-    "bar2",
-    "icon1",
-    "icon2",
-    "icon3",
-    "gear",
-    "speed"
+    "bar2"
   ]
 };
 var formula = {
@@ -94,14 +86,6 @@ var formula = {
     "mr2_w30_fuel_tank",
     "mx5_na_fuel_tank"
   ]
-};
-var time = {
-  type: "object",
-  required: ["tag"],
-  properties: {
-    tag: tag
-  },
-  options: external_grid()
 };
 var screen = {
   type: "object",
@@ -139,7 +123,11 @@ var odo = {
   required: ["tag", "unit"],
   options: external_grid(),
   properties: {
-    tag: tag,
+    tag: {
+      type: "string",
+      enum: ["odo"],
+      options: internal_grid()
+    },
     unit: unit(distance_units),
     suffix: suffix,
     value: { type: "number", options: internal_grid() }
@@ -150,48 +138,13 @@ var rpm = {
   required: ["tag"],
   options: external_grid(),
   properties: {
-    tag: tag,
-    suffix: suffix,
+    tag: {
+      type: "string",
+      enum: ["bar1"],
+      options: internal_grid()
+    },
     max: { type: "integer", options: internal_grid() }, // this fucker should use the max var but doesn't work
     sectors: sectors
-  }
-};
-var mil = {
-  type: "object",
-  required: ["tag"],
-  options: external_grid(),
-  properties: {
-    tag: tag,
-    pathon: { type: "string", options: internal_grid() },
-    pathoff: { type: "string", options: internal_grid() }
-  }
-};
-var fan = {
-  type: "object",
-  required: ["tag"],
-  options: external_grid(),
-  properties: {
-    tag: tag,
-    pathon: { type: "string", options: internal_grid() },
-    pathoff: { type: "string", options: internal_grid() }
-  }
-};
-var scs = {
-  type: "object",
-  required: ["tag"],
-  options: external_grid(),
-  properties: {
-    tag: tag,
-    pathon: { type: "string", options: internal_grid() },
-    pathoff: { type: "string", options: internal_grid() }
-  }
-};
-var gear = {
-  type: "object",
-  required: ["tag"],
-  options: external_grid(),
-  properties: {
-    tag: tag
   }
 };
 var template = {
@@ -218,6 +171,19 @@ var analog = {
     suffix: suffix,
     max: max,
     sectors: sectors
+  }
+};
+var vss = {
+  type: "object",
+  required: ["tag", "unit"],
+  options: external_grid(),
+  properties: {
+    tag: {
+      type: "string",
+      enum: ["speed"],
+      options: internal_grid()
+    },
+    unit: unit(speed_units)
   }
 };
 var style = {
@@ -293,16 +259,11 @@ var schema = {
     properties: {
       template: template,
       screen: screen,
-      time: time,
       style: style,
       odo: odo,
-      gear: gear,
       rpm: rpm,
-      mil: mil,
-      fan: fan,
-      scs: scs,
       eth: simple_value_no_units_no_decimals(),
-      vss: simple_value_no_decimals(speed_units),
+      vss: vss,
       cam: simple_value_no_units_no_decimals(),
       bat: simple_value_no_units(),
       tps: simple_value_no_units_no_decimals(),

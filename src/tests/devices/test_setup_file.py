@@ -108,7 +108,7 @@ class TestSetupFile:
         """
         Check that an update of an attribute is performed but the rest is not
         """
-        assert self.setup.get_value("vss")["label"] == ""
-        self.setup.save_setup({"vss": {"label": "display text"}})
-        assert self.setup.get_value("vss")["label"] == "display text"
+        assert self.setup.get_value("tps")["label"] == "TPS"
+        self.setup.save_setup({"tps": {"label": "display text"}})
+        assert self.setup.get_value("tps")["label"] == "display text"
         assert self.setup.get_value("screen") is not None
