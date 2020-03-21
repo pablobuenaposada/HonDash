@@ -277,10 +277,6 @@
   },
   "version": "2.3.2",
   "vss": {
-    "label": "",
-    "max": 300,
-    "sectors": [],
-    "suffix": "",
     "tag": "speed",
     "unit": "kmh"
   }
