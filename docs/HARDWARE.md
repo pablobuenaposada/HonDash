@@ -4,7 +4,7 @@ This is the list of recommended components you would need to install HonDash in 
 
 Component | Link | Price
 ------- | -------- |-----
-Raspberry Pi 3 Model B+ | http://a.co/d/is4HSYJ | $40
+Raspberry Pi 3 Model B+ or Raspberry Pi 4 | http://a.co/d/is4HSYJ | $40
 SanDisk Ultra microSDHC 16GB class 10 | http://a.co/d/0LzsUWC | $7
 Raspberry plastic case | http://a.co/d/8z8Me8D | $7
 Micro usb DC Converter 12V to 5V 3A | http://a.co/d/adrZTSE | $5

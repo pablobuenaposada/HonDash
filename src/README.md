@@ -1,7 +1,7 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
 ## How to run this project in a Raspberry Pi?
-Get Raspbian (release date 2019-09-26) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
+Get Raspbian (release date 2020-02-13) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspbian/)
 
 ### SSH
 Enable SSH through:
