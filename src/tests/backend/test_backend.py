@@ -58,7 +58,7 @@ class TestBackend:
             "time": "00:00:00",
             "odo": 0,
             "style": "day",
-            "ver": "2.3.2",
+            "ver": "2.4.0",
         }
 
         with mock.patch("usb.core.find"), mock.patch(

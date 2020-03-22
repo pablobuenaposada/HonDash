@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2020-03-22
+### Changed
+- Fronted more adaptative to other screen resolutions (Bootstrap 4)
+- Fixed bug in setup with formulas
+- Simplified setup (deleted scs, fan, mil, gear and time configurations)
+
 ## [2.3.2] - 2020-02-01
 ### Changed
 - Bugfix for analogs inputs in K-Pro V3
