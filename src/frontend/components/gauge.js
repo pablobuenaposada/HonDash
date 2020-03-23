@@ -28,11 +28,8 @@ class Gauge {
     }
 
     setLabel(label){
-        // patching justgage library to add dynamic labeling
-        this.gauge.refresh(null, null, label);
         this.gauge.config.label = label;
         this.gauge.txtLabel.attr({"text": this.gauge.config.label});
-        setDy(this.gauge.txtLabel, this.gauge.params.labelFontSize, this.gauge.params.labelY);
     }
 
     setMax(max){

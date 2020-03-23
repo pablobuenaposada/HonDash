@@ -29,7 +29,7 @@ sudo apt -y install vim
 Clone this project:
 ```sh
 cd /home/pi/Desktop/
-git clone --recursive https://github.com/pablobuenaposada/HonDash.git
+git clone https://github.com/pablobuenaposada/HonDash.git
 cd HonDash/
 ```
 
