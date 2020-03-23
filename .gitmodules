@@ -1,3 +1,0 @@
-[submodule "src/frontend/lib/raphael"]
-	path = src/frontend/lib/raphael
-	url = https://github.com/DmitryBaranovskiy/raphael.git
