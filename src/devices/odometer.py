@@ -13,6 +13,9 @@ class Odometer:
 
         try:
             self.mileage = self.setup_file.get_value("odo").get("value")
+            unit = self.setup_file.get_value("odo").get("unit")
+            if unit == "miles":  # if mileage is in miles let's convert it to km
+                self.mileage = self._miles_to_km(self.mileage)
         except AttributeError:
             pass
         self.last_mileage_stored = self.mileage
@@ -37,4 +40,12 @@ class Odometer:
             self.last_mileage_stored = int(self.mileage)
 
     def get_mileage(self):
-        return {"km": int(self.mileage), "miles": int(self.mileage * 0.6214)}
+        return {"km": int(self.mileage), "miles": self._km_to_miles(self.mileage)}
+
+    @staticmethod
+    def _km_to_miles(km):
+        return int(km * 0.6214)
+
+    @staticmethod
+    def _miles_to_km(miles):
+        return int(miles * 1.609)

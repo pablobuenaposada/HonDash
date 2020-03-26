@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+import pytest
 from freezegun import freeze_time
 
 from devices.odometer import Odometer
@@ -8,16 +9,20 @@ from devices.setup_file import DEFAULT_CONFIG_FILE_NAME
 
 @patch("devices.setup_file.FILE_NAME", DEFAULT_CONFIG_FILE_NAME)
 class TestOdometer:
-    def test_get_mileage(self):
+    @pytest.mark.parametrize(
+        "unit, value, expected_km, expected_miles",
+        (("km", 666, 666, 413), ("miles", 666, 1071, 665)),
+    )
+    def test_get_mileage(self, unit, value, expected_km, expected_miles):
         """
         Checks that the odometer reads the correct mileage after setting the value in the json setup file.
         """
 
         with patch("devices.odometer.SetupFile.get_value") as m_get_value:
-            m_get_value.return_value = {"value": 666}
+            m_get_value.return_value = {"value": value, "unit": unit}
             odo = Odometer()
 
-        assert odo.get_mileage() == {"km": 666, "miles": 413}
+        assert odo.get_mileage() == {"km": expected_km, "miles": expected_miles}
 
     def test_get_mileage_no_mileage_found(self):
         """
