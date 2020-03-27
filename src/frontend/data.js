@@ -8,7 +8,7 @@ try {
 }
 
 var webSocketUrl =
-  "ws://" + (window.location.hostname || "127.0.0.1") + ":8080/ws";
+  "ws://" + (window.location.hostname || "hondash.local") + ":8080/ws";
 
 var connection = new autobahn.Connection({
   url: webSocketUrl,
