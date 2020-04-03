@@ -59,8 +59,9 @@ $(VIRTUAL_ENV): npm
 virtualenv: $(VIRTUAL_ENV)
 
 run: virtualenv
-	cp -n default_setup.json setup.json
+	cp -n default_setup.json setup.json || true
 	$(CROSSBAR) start &
+	sleep 5
 	pkill python backend.py || true
 	PYTHONPATH=src $(PYTHON) src/backend/backend.py &
 	open -a "Google Chrome" src/frontend/index.html &
