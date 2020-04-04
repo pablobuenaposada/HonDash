@@ -60,10 +60,10 @@ virtualenv: $(VIRTUAL_ENV)
 
 run: virtualenv
 	cp -n default_setup.json setup.json || true
-	$(CROSSBAR) start &
-	sleep 5
 	pkill python backend.py || true
 	PYTHONPATH=src $(PYTHON) src/backend/backend.py &
+	$(CROSSBAR) start &
+	sleep 5
 	open -a "Google Chrome" src/frontend/index.html &
 
 run_rpi:
