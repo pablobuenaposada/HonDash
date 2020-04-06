@@ -1,38 +1,16 @@
-var setup;
+var setup = undefined;
+var ws = new WebSocket(
+  "ws://" + (window.location.hostname || "127.0.0.1") + ":5678/"
+);
 
-try {
-  var autobahn = require("autobahn");
-} catch (e) {
-  // when running in browser, AutobahnJS will
-  // be included without a module system
-}
+ws.onmessage = function(event) {
+  var data = JSON.parse(event.data);
+  var keys = Object.keys(data);
 
-var webSocketUrl =
-  "ws://" + (window.location.hostname || "127.0.0.1") + ":8080/ws";
-
-var connection = new autobahn.Connection({
-  url: webSocketUrl,
-  realm: "realm1"
-});
-
-connection.onopen = function(session) {
-  function onevent1(args) {
-    for (var key in args[0]) {
-      // for all values
-      try {
-        // if it's associated to a frontend tag
-        window[setup[key]["tag"]]["refresh"](args[0][key]);
-      } catch (e) {}
-    }
-  }
-
-  function refresh(args) {
-    location.reload();
-  }
-
-  session.call("setup").then(
-    function(res) {
-      setup = res;
+  // if the setup has not been received
+  if (setup === undefined) {
+    if (keys[0] == "setup") {
+      setup = data["setup"];
       for (var value in setup) {
         for (var option in setup[value]) {
           var method = "set" + option.charAt(0).toUpperCase() + option.slice(1);
@@ -43,15 +21,33 @@ connection.onopen = function(session) {
           }
         }
       }
-    },
-    function(err) {
-      // an error getting the setup? reload the page and try again
-      location.reload();
     }
-  );
-
-  session.subscribe("data", onevent1);
-  session.subscribe("refresh", refresh); // register a function for refreshing the frontend from the backend
+  } else {
+    if (keys[0] == "data") {
+      for (var key in data["data"]) {
+        // for all values
+        try {
+          // if it's associated to a frontend tag
+          window[setup[key]["tag"]]["refresh"](data["data"][key]);
+        } catch (e) {}
+      }
+    } else if (keys[0] == "action") {
+      if (data["action"] == "refresh") {
+        location.reload();
+      }
+    }
+  }
 };
 
-connection.open();
+// asks for the setup as soon as possible
+ws.onopen = function(e) {
+  ws.send(JSON.stringify({ action: "setup" }));
+};
+
+// in case something blows up or connection gets close, keep trying
+ws.onerror = function(e) {
+  location.reload();
+};
+ws.onclose = function(e) {
+  location.reload();
+};
