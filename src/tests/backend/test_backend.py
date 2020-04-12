@@ -1,5 +1,4 @@
 import os
-import subprocess
 from shutil import copyfile
 from unittest import mock
 
@@ -11,22 +10,24 @@ class TestBackend:
     def setup_method(self):
         # prepare the setup file where the backend expects it
         copyfile(setup_file.DEFAULT_CONFIG_FILE_NAME, setup_file.FILE_NAME)
-        subprocess.Popen(["venv/bin/crossbar", "start"])  # start websocket
-        Backend._instance = None  # we want to force new class instance
 
     def teardown_method(self):
         os.remove("setup.json")  # delete setup file
-        subprocess.Popen(["venv/bin/crossbar", "stop"]).wait()  # close websocket
-        Backend._instance = None  # we want to force new class instance
 
     def test_run_backend(self):
         with mock.patch("usb.core.find"), mock.patch(
+            "threading.Thread.start"
+        ), mock.patch(
+            "backend.backend.Websocket.__init__"
+        ) as m_ws___init__, mock.patch(
             "devices.kpro.kpro.Kpro.__init__"
         ) as m___init__:
             # mocking kpro device since for tests is not available
             m___init__.return_value = None
+            # mocking websocket
+            m_ws___init__.return_value = None
 
-            assert type(Backend.get()) == Backend
+            assert type(Backend()) == Backend
 
     def test_update(self):
         expected_data = {
@@ -63,9 +64,13 @@ class TestBackend:
 
         with mock.patch("usb.core.find"), mock.patch(
             "usb.util.find_descriptor"
-        ), mock.patch("threading.Thread.start"), mock.patch(
-            "backend.backend.publish"
-        ) as m_publish:
-            backend = Backend.get()
-            backend.update()
-            m_publish.assert_called_with("data", expected_data)
+        ), mock.patch(
+            "backend.backend.Websocket.__init__"
+        ) as m_ws___init__, mock.patch(
+            "threading.Thread.start"
+        ):
+            # mocking websocket
+            m_ws___init__.return_value = None
+            backend = Backend()
+
+        assert backend.update() == expected_data

@@ -1,22 +1,14 @@
 import random
-from time import sleep
-from unittest import mock
 
 from backend.backend import Backend
 
-with mock.patch("usb.core.find"), mock.patch(
-    "devices.kpro.kpro.Kpro.__init__"
-) as m___init__:
-    m___init__.return_value = None
-    backend = Backend.get()
-    backend.kpro.status = True
-    backend.kpro.version = 4
+backend = Backend()
+backend.kpro.status = True
+backend.kpro.version = 4
 
-    while True:
-        backend.kpro.data0 = [random.randint(0, 255) for _ in range(38)]
-        backend.kpro.data1 = [random.randint(0, 255) for _ in range(7)]
-        backend.kpro.data3 = [random.randint(0, 255) for _ in range(100)]
-        backend.kpro.data4 = [random.randint(0, 255) for _ in range(18)]
-        backend.kpro.data5 = [random.randint(0, 255) for _ in range(20)]
-        backend.update()
-        sleep(0.1)  # TODO: not use sleep :(
+while True:
+    backend.kpro.data0 = [random.randint(0, 255) for _ in range(38)]
+    backend.kpro.data1 = [random.randint(0, 255) for _ in range(7)]
+    backend.kpro.data3 = [random.randint(0, 255) for _ in range(100)]
+    backend.kpro.data4 = [random.randint(0, 255) for _ in range(18)]
+    backend.kpro.data5 = [random.randint(0, 255) for _ in range(20)]

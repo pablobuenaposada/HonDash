@@ -235,63 +235,50 @@ function download() {
   }
 }
 
-var webSocketUrl =
-  "ws://" + (window.location.hostname || "127.0.0.1") + ":8080/ws";
-
 function save() {
-  var c = new autobahn.Connection({ url: webSocketUrl, realm: "realm1" });
-
-  c.onopen = function(session) {
-    session.call("save", [editor.getValue()]).then(
-      function(setup) {
-        schema["startval"] = setup;
-        alert("setup saved");
-        location.reload();
-      },
-      function(e) {
-        alert("sorry, an error occurred\n" + e.message);
-      }
-    );
-  };
-  c.open();
+  ws.send(JSON.stringify({ action: "save", data: editor.getValue() }));
+  alert("setup saved");
+  location.reload();
 }
 
 function reset() {
-  var c = new autobahn.Connection({ url: webSocketUrl, realm: "realm1" });
-
-  c.onopen = function(session) {
-    session.call("reset").then(
-      function(setup) {
-        alert("setup reseted");
-        location.reload();
-      },
-      function(e) {
-        alert("sorry, an error occurred\n" + e.message);
-      }
-    );
-  };
-  c.open();
+  try {
+    ws.send(JSON.stringify({ action: "reset" }));
+    alert("setup reset");
+    location.reload();
+  } catch (e) {
+    alert(e);
+  }
 }
 
-try {
-  var autobahn = require("autobahn");
-} catch (e) {
-  // when running in browser, AutobahnJS will
-  // be included without a module system
-}
+var editor;
+var ws = new WebSocket(
+  "ws://" + (window.location.hostname || "127.0.0.1") + ":5678/"
+);
 
-var connection = new autobahn.Connection({
-  url: webSocketUrl,
-  realm: "realm1"
-});
+ws.onmessage = function(event) {
+  var data = JSON.parse(event.data);
+  var keys = Object.keys(data);
 
-connection.onopen = function(session) {
-  session.call("setup").then(function(setup) {
-    schema["startval"] = setup;
-    editor = new JSONEditor(document.getElementById("editor_holder"), schema);
-    editor.on("change", updateFields); // for every change in the fields, trigger this function
-  });
+  // if the setup has not been received
+  if (schema["startval"] === undefined) {
+    if (keys[0] == "setup") {
+      schema["startval"] = data["setup"];
+      editor = new JSONEditor(document.getElementById("editor_holder"), schema);
+      editor.on("change", updateFields); // for every change in the fields, trigger this function
+    }
+  }
 };
 
-connection.open();
-var editor;
+// asks for the setup as soon as possible
+ws.onopen = function(e) {
+  ws.send(JSON.stringify({ action: "setup" }));
+};
+
+// in case something blows up or connection gets close, keep trying
+ws.onerror = function(e) {
+  location.reload();
+};
+ws.onclose = function(e) {
+  location.reload();
+};

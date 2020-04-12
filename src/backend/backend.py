@@ -1,9 +1,8 @@
-from time import sleep
+import asyncio
+import json
+import threading
 
-from autobahn_sync import app, publish, register
-from autobahn_sync.core import AlreadyRunningError
-from crochet._eventloop import TimeoutError
-from twisted.internet.error import ConnectionRefusedError
+import websockets
 
 from devices.kpro.kpro import Kpro
 from devices.odometer import Odometer
@@ -13,44 +12,14 @@ from devices.time import Time
 from version import __version__
 
 
-@register(u"setup")
-def setup():
-    """ Remote Procedure Call used from the frontend """
-    return Backend.setup()
-
-
-@register(u"save")
-def save(new_setup):
-    """ Remote Procedure Call used from the frontend """
-    Backend.save(new_setup)
-
-
-@register(u"reset")
-def reset():
-    """ Remote Procedure Call used from the frontend """
-    Backend.reset()
-
-
 class Backend:
-    _instance = None
-
     def __init__(self):
-        self._init_websocket()
         self._load_user_preferences()
         self._init_resources()
+        self._init_websocket()
 
-    @staticmethod
-    def _init_websocket():
-        websocket_started = False
-        while not websocket_started:
-            try:
-                app.run()
-                websocket_started = app._started
-            except AlreadyRunningError:
-                app.stop()
-            except (ConnectionRefusedError, TimeoutError):
-                # Crossbar router not yet accepting connections, let's try again
-                pass
+    def _init_websocket(self):
+        Websocket(self)
 
     def _init_resources(self):
         self.time = Time()
@@ -100,78 +69,105 @@ class Backend:
             self.kpro.find_and_connect()
         self.odo.save(self.kpro.vss["kmh"])
         self.style.update(self.kpro.tps)
-        publish(
-            "data",
-            {
-                "bat": self.kpro.bat,
-                "gear": self.kpro.gear,
-                "iat": self.kpro.iat[self.iat_unit],
-                "tps": self.kpro.tps,
-                "ect": self.kpro.ect[self.ect_unit],
-                "rpm": self.kpro.rpm,
-                "vss": self.kpro.vss[self.vss_unit],
-                "o2": self.kpro.o2[self.o2_unit],
-                "cam": self.kpro.cam,
-                "mil": self.kpro.mil,
-                "fan": self.kpro.fanc,
-                "bksw": self.kpro.bksw,
-                "flr": self.kpro.flr,
-                "eth": self.kpro.eth,
-                "scs": self.kpro.scs,
-                "fmw": self.kpro.firmware,
-                "map": self.kpro.map[self.map_unit],
-                "an0": self.an0_formula(self.kpro.analog_input(0))[self.an0_unit],
-                "an1": self.an1_formula(self.kpro.analog_input(1))[self.an1_unit],
-                "an2": self.an2_formula(self.kpro.analog_input(2))[self.an2_unit],
-                "an3": self.an3_formula(self.kpro.analog_input(3))[self.an3_unit],
-                "an4": self.an4_formula(self.kpro.analog_input(4))[self.an4_unit],
-                "an5": self.an5_formula(self.kpro.analog_input(5))[self.an5_unit],
-                "an6": self.an6_formula(self.kpro.analog_input(6))[self.an6_unit],
-                "an7": self.an7_formula(self.kpro.analog_input(7))[self.an7_unit],
-                "time": self.time.get_time(),
-                "odo": self.odo.get_mileage()[self.odo_unit],
-                "style": self.style.status,
-                "ver": __version__,
-            },
-        )
+        return {
+            "bat": self.kpro.bat,
+            "gear": self.kpro.gear,
+            "iat": self.kpro.iat[self.iat_unit],
+            "tps": self.kpro.tps,
+            "ect": self.kpro.ect[self.ect_unit],
+            "rpm": self.kpro.rpm,
+            "vss": self.kpro.vss[self.vss_unit],
+            "o2": self.kpro.o2[self.o2_unit],
+            "cam": self.kpro.cam,
+            "mil": self.kpro.mil,
+            "fan": self.kpro.fanc,
+            "bksw": self.kpro.bksw,
+            "flr": self.kpro.flr,
+            "eth": self.kpro.eth,
+            "scs": self.kpro.scs,
+            "fmw": self.kpro.firmware,
+            "map": self.kpro.map[self.map_unit],
+            "an0": self.an0_formula(self.kpro.analog_input(0))[self.an0_unit],
+            "an1": self.an1_formula(self.kpro.analog_input(1))[self.an1_unit],
+            "an2": self.an2_formula(self.kpro.analog_input(2))[self.an2_unit],
+            "an3": self.an3_formula(self.kpro.analog_input(3))[self.an3_unit],
+            "an4": self.an4_formula(self.kpro.analog_input(4))[self.an4_unit],
+            "an5": self.an5_formula(self.kpro.analog_input(5))[self.an5_unit],
+            "an6": self.an6_formula(self.kpro.analog_input(6))[self.an6_unit],
+            "an7": self.an7_formula(self.kpro.analog_input(7))[self.an7_unit],
+            "time": self.time.get_time(),
+            "odo": self.odo.get_mileage()[self.odo_unit],
+            "style": self.style.status,
+            "ver": __version__,
+        }
 
-    def _setup(self):
+    def setup(self):
+        """Return the current setup"""
         return self.setup_file.load_setup()
 
-    def _save(self, new_setup):
+    def save(self, new_setup):
+        """Save a new setup"""
         self.setup_file.save_setup(new_setup)
         self.setup_file.rotate_screen(new_setup["screen"]["rotate"])
-        publish("refresh")  # refresh the frontend so the new changes are applied
         self._load_user_preferences()  # refresh the backend too
 
-    def _reset(self):
+    def reset(self):
+        """Reset to the default setup"""
         self.setup_file.reset_setup()
-        publish("refresh")  # refresh the frontend so the new changes are applied
         self._load_user_preferences()  # refresh the backend too
 
-    @classmethod
-    def get(cls):
-        """ get the running instance of Backend class or instantiate it for first time """
-        if cls._instance is None:
-            cls._instance = cls()
-        return cls._instance
 
-    @classmethod
-    def setup(cls):
-        return cls.get()._setup()
+class Websocket:
+    clients_connected = set()
+    backend = None
 
-    @classmethod
-    def save(cls, new_setup):
-        cls.get()._save(new_setup)
+    def __init__(self, backend):
+        self.backend = backend
+        start_server = websockets.serve(self._websocket_handler, "0.0.0.0", 5678)
+        asyncio.get_event_loop().run_until_complete(start_server)
+        threading.Thread(target=asyncio.get_event_loop().run_forever).start()
 
-    @classmethod
-    def reset(cls):
-        cls.get()._reset()
+    async def _websocket_handler(self, websocket, path):
+        await self._register(websocket)  # register this client to keep tracking of it
+        consumer_task = asyncio.ensure_future(self._consumer_handler(websocket))
+        producer_task = asyncio.ensure_future(self._producer_handler(websocket))
+        done, pending = await asyncio.wait(
+            [consumer_task, producer_task], return_when=asyncio.FIRST_COMPLETED
+        )
+        for task in pending:
+            task.cancel()
+
+    async def _consumer_handler(self, websocket):
+        """Here is where messages from clients are processed"""
+        async for message in websocket:
+            data = json.loads(message)
+            if data["action"] == "setup":
+                await websocket.send(json.dumps({"setup": self.backend.setup()}))
+            elif data["action"] == "save":
+                self.backend.save(data["data"])
+                # send refresh action to all the frontends so the new changes are applied
+                await self._send_all_clients(json.dumps({"action": "refresh"}))
+            elif data["action"] == "reset":
+                self.backend.reset()
+                # send refresh action to all the frontends so the new changes are applied
+                await self._send_all_clients(json.dumps({"action": "refresh"}))
+
+    async def _producer_handler(self, websocket):
+        """Keeps sending updated kpro data forever"""
+        while True:
+            await websocket.send(json.dumps({"data": self.backend.update()}))
+            await asyncio.sleep(0.1)
+
+    async def _send_all_clients(self, message):
+        """Broadcast to all the clients"""
+        if self.clients_connected:  # asyncio.wait doesn't accept an empty list
+            await asyncio.wait([user.send(message) for user in self.clients_connected])
+
+    async def _register(self, websocket):
+        """Appends a new client to the connected clients list"""
+        self.clients_connected.add(websocket)
 
 
 if __name__ == "__main__":
     # if the file is getting executed then start the backend behaviour
-    backend = Backend.get()
-    while True:
-        backend.update()
-        sleep(0.1)  # TODO: not use sleep :(
+    backend = Backend()

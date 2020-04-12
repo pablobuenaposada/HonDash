@@ -4,10 +4,8 @@ pytest==4.3.0
 pyusb==1.0.2
 numpy==1.17.2
 reprint==0.5.1
-crossbar==19.6.1
-autobahn_sync==0.3.2
 freezegun==0.3.12
 pytest-cov
 isort
 flake8
-zlmdb==19.11.1 # this comes from crossbar, newer version of this fucks pytest
+websockets

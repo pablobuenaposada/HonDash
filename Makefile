@@ -7,7 +7,6 @@ FLAKE8=$(VIRTUAL_ENV)/bin/flake8
 COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 BLACK=$(VIRTUAL_ENV)/bin/black
 PRETTIER=node_modules/.bin/prettier
-CROSSBAR=$(VIRTUAL_ENV)/bin/crossbar
 PYTHON_VERSION=3.7
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
 DOCKER_IMAGE=pablobuenaposada/hondash
@@ -60,30 +59,22 @@ virtualenv: $(VIRTUAL_ENV)
 
 run: virtualenv
 	cp -n default_setup.json setup.json || true
-	pkill python backend.py || true
 	PYTHONPATH=src $(PYTHON) src/backend/backend.py &
-	$(CROSSBAR) start &
-	sleep 5
 	open -a "Google Chrome" src/frontend/index.html &
 
 run_rpi:
 	cp -n default_setup.json setup.json
-	$(CROSSBAR) start &
 	sudo PYTHONPATH=src $(PYTHON) src/backend/backend.py &
 	sleep 5
 	chromium-browser --kiosk --incognito src/frontend/index.html &
 
 dummy:
 	cp -n default_setup.json setup.json || true
-	$(CROSSBAR) start &
-	sleep 5
-	pkill python dummy_backend.py || true
 	PYTHONPATH=src $(PYTHON) src/bench/dummy_backend.py &
 	open -a "Google Chrome" src/frontend/index.html
 
 kill:
-	pkill backend || true
-	pkill crossbar || true
+	sudo pkill -f backend || true
 
 test: lint
 	PYTHONPATH=src $(PYTEST) --cov src/ src/tests

@@ -9,11 +9,11 @@ class Odometer:
         self.lastSpeed = 0
         self.mileage = 0  # always stored in km
         self.last_mileage_stored = 0
-        self.setup_file = SetupFile()
+        setup_file = SetupFile()
 
         try:
-            self.mileage = self.setup_file.get_value("odo").get("value")
-            unit = self.setup_file.get_value("odo").get("unit")
+            self.mileage = setup_file.get_value("odo").get("value")
+            unit = setup_file.get_value("odo").get("unit")
             if unit == "miles":  # if mileage is in miles let's convert it to km
                 self.mileage = self._miles_to_km(self.mileage)
         except AttributeError:
@@ -36,7 +36,8 @@ class Odometer:
         if (
             int(self.mileage) > self.last_mileage_stored
         ):  # only store when we ran one km more
-            self.setup_file.update_key("odo", {"value": int(self.mileage)})
+            setup_file = SetupFile()
+            setup_file.update_key("odo", {"value": int(self.mileage)})
             self.last_mileage_stored = int(self.mileage)
 
     def get_mileage(self):
