@@ -18,8 +18,11 @@ class Backend:
         self._init_resources()
         self._init_websocket()
 
+    def stop(self):
+        self.websocket.stop()
+
     def _init_websocket(self):
-        Websocket(self)
+        self.websocket = Websocket(self)
 
     def _init_resources(self):
         self.time = Time()
@@ -123,9 +126,10 @@ class Websocket:
 
     def __init__(self, backend):
         self.backend = backend
-        start_server = websockets.serve(self._websocket_handler, "0.0.0.0", 5678)
-        asyncio.get_event_loop().run_until_complete(start_server)
-        threading.Thread(target=asyncio.get_event_loop().run_forever).start()
+        self.websocket = websockets.serve(self._websocket_handler, "0.0.0.0", 5678)
+        self.loop = asyncio.get_event_loop()
+        self.loop.run_until_complete(self.websocket)
+        threading.Thread(target=self.loop.run_forever).start()
 
     async def _websocket_handler(self, websocket, path):
         await self._register(websocket)  # register this client to keep tracking of it
@@ -166,6 +170,10 @@ class Websocket:
     async def _register(self, websocket):
         """Appends a new client to the connected clients list"""
         self.clients_connected.add(websocket)
+
+    def stop(self):
+        self.websocket.ws_server.close()
+        self.loop.call_soon_threadsafe(self.loop.stop)
 
 
 if __name__ == "__main__":

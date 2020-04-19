@@ -1,3 +1,4 @@
+import json
 import os
 from shutil import copyfile
 from unittest import mock
@@ -28,6 +29,41 @@ class TestBackend:
             m_ws___init__.return_value = None
 
             assert type(Backend()) == Backend
+
+    def test_stop(self):
+        """
+        You should be able to run the backend twice without any problem calling stop() between them
+        """
+        with mock.patch("usb.core.find"):
+            b = Backend()
+            b.stop()
+            b = Backend()
+            b.stop()
+
+    def test_setup(self):
+        """
+        Setup method should return in this case the default setup json loaded previously
+        """
+        with mock.patch("usb.core.find"):
+            b = Backend()
+        setup_from_backend = b.setup()
+        with open(setup_file.DEFAULT_CONFIG_FILE_NAME) as file:
+            default_setup = json.load(file)
+        assert setup_from_backend == default_setup
+        b.stop()
+
+    def test_save(self):
+        """
+        Save a new setup and retrieve it
+        """
+        with mock.patch("usb.core.find"):
+            b = Backend()
+        with open(setup_file.DEFAULT_CONFIG_FILE_NAME) as file:
+            default_setup = json.load(file)
+        default_setup["tps"]["label"] = "test"
+        b.save(default_setup)
+        assert b.setup() == default_setup
+        b.stop()
 
     def test_update(self):
         expected_data = {
