@@ -111,7 +111,7 @@ add this line:
 
 ### Wallpaper
 ```sh
-env DISPLAY=:0.0 pcmanfm -w /home/pi/Desktop/HonDash/docs/logo/hondash.png --wallpaper-mode=fit
+env DISPLAY=:0.0 pcmanfm -w /home/pi/Desktop/HonDash/docs/wallpaper/wallpaper.png --wallpaper-mode=stretch
 ```
 
 ### Disable screen saver
