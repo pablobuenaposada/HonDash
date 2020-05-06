@@ -4,6 +4,7 @@
 Download the latest image:
 * [HonDash v. 2.4.0](https://www.dropbox.com/s/5jogzpbemktr2hk/HonDash_v2.4.0.img?dl=0)
     * `MD5: 42698fa76636905167d0d39a62f4001c`
+* [Release notes](https://github.com/pablobuenaposada/HonDash/blob/master/CHANGELOG.md)
 
 Old images:
 * [HonDash v. 2.3.2](https://www.dropbox.com/s/1466muxb1fzv9tu/hondash_v2.3.2.img?dl=0)
@@ -16,10 +17,8 @@ Old images:
 * [HonDash v. 2.1.2](https://www.dropbox.com/s/wo2zu6usjs9alvh/HonDash_v2.1.2.img?dl=0)
 * [HonDash v. 2.1.1](https://www.dropbox.com/s/eajdt88avvtk086/HonDash_v2.1.1.img?dl=0)
 * [HonDash v. 2.1.0](https://www.dropbox.com/s/509qwhykxto52ex/HonDash_2.1.img?dl=0)
-* [Release notes](https://github.com/pablobuenaposada/HonDash/blob/master/CHANGELOG.md)
 
-Download also _[Etcher](https://www.balena.io/etcher/)_ and install it.
-Use a **16GB** microSD card, for now not other sizes are compatible, we recommend _SanDisk Ultra Class 10_ 
+Download also _[Etcher](https://www.balena.io/etcher/)_ and install it (we recommend _SanDisk Ultra Class 10_) 
 
 Follow this 3 steps:
 1. Source your downloaded HonDash .img file
@@ -27,3 +26,6 @@ Follow this 3 steps:
 3. Press flash
 
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/etcher.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/etcher.png" height="300"/>
+
+## License
+This software is licensed under the [GNU Affero General Public License v3.0](https://github.com/pablobuenaposada/HonDash/blob/master/LICENSE)
