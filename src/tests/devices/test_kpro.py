@@ -413,6 +413,39 @@ class TestKpro:
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (constants.KPRO23_ID, constants.KPRO23_MIL, 0, False),
+            (constants.KPRO23_ID, constants.KPRO23_MIL, 9, True),
+            (constants.KPRO4_ID, constants.KPRO4_MIL, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_MIL, 36, True),
+        ),
+    )
+    def test_mil(self, version, index, value, result):
+        self.kpro.version = version
+        if version == constants.KPRO23_ID:
+            self.kpro.data0[index] = value
+        elif version == constants.KPRO4_ID:
+            self.kpro.data3[index] = value
+
+        assert self.kpro.mil == result
+
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (constants.KPRO23_ID, constants.KPRO23_ECU_TYPE, 3, "RSX - PRB"),
+            (constants.KPRO23_ID, constants.KPRO23_ECU_TYPE, 0, "unknown"),
+            (constants.KPRO4_ID, constants.KPRO4_ECU_TYPE, 3, "RSX - PRB"),
+            (constants.KPRO4_ID, constants.KPRO4_ECU_TYPE, 0, "unknown"),
+        ),
+    )
+    def test_ecu_type(self, version, index, value, result):
+        self.kpro.version = version
+        self.kpro.data4[index] = value
+
+        assert self.kpro.ecu_type == result
+
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
             (None, 0, None, False),
             (constants.KPRO23_ID, constants.KPRO23_IGN, 0, False),
             (constants.KPRO23_ID, constants.KPRO23_IGN, 1, True),
@@ -425,6 +458,34 @@ class TestKpro:
         self.kpro.data4[index] = value
 
         assert self.kpro.ign == result
+
+    @pytest.mark.parametrize(
+        "version, index1, index2, value1, value2, result",
+        (
+            (
+                constants.KPRO23_ID,
+                constants.KPRO23_SERIAL1,
+                constants.KPRO23_SERIAL2,
+                210,
+                4,
+                1234,
+            ),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_SERIAL1,
+                constants.KPRO4_SERIAL2,
+                210,
+                4,
+                1234,
+            ),
+        ),
+    )
+    def test_serial(self, version, index1, index2, value1, value2, result):
+        self.kpro.version = version
+        self.kpro.data4[index1] = value1
+        self.kpro.data4[index2] = value2
+
+        assert self.kpro.serial == result
 
     @pytest.mark.parametrize(
         "index1, index2, value1, value2, channel, result",
