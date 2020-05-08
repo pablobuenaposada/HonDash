@@ -2,6 +2,8 @@ import os
 from shutil import copyfile
 from tempfile import NamedTemporaryFile
 
+import pytest
+
 from devices import setup_file
 from devices.formula import Formula
 
@@ -70,26 +72,26 @@ class TestRotateScreen:
 
             self.setup.rotate_screen(False)
 
-            assert fp.read() == b""  # now it contains the rotation option
+            assert fp.read() == b""  # no changes expected
 
     def test_disable_rotate_screen(self):
         """
         Assuming that config.txt have the option enabled we are gonna deactivate it
         """
         with NamedTemporaryFile() as fp:
-            fp.write(b"display_rotate=2\n")
+            fp.write(b"display_rotate=2\nfoo=bar\n")
             fp.flush()
             setup_file.OS_CONFIG_FILE = fp.name
 
             with open(fp.name) as f:
                 assert (
-                    f.read() == "display_rotate=2\n"
+                    f.read() == "display_rotate=2\nfoo=bar\n"
                 )  # config.txt contains this option
 
             self.setup.rotate_screen(False)
 
             with open(fp.name) as f:
-                assert f.read() == ""  # now is gone
+                assert f.read() == "foo=bar\n"  # now is gone but the rest is maintained
 
 
 class TestSetupFile:
@@ -147,6 +149,9 @@ class TestSetupFile:
             "tag": "gauge8",
         }
 
-    def test_get_formula_non_existent(self):
-        """If not formula found return voltage one"""
-        assert self.setup.get_formula(None) == Formula.voltage
+    @pytest.mark.parametrize(
+        "value, formula", ((None, Formula.voltage), ("cam", Formula.voltage))
+    )
+    def test_get_formula_non_existent(self, value, formula):
+        """If wrong value or the value has no formula, the voltage one should be returned"""
+        assert self.setup.get_formula(value) == formula

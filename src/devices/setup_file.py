@@ -60,7 +60,9 @@ class SetupFile:
                         lines = f.readlines()
                     with open(OS_CONFIG_FILE, "w") as f:
                         for line in lines:
-                            if "display_rotate" not in line:
+                            if (
+                                "display_rotate" not in line
+                            ):  # this is just for not writing the rotate line
                                 f.write(line)
         except FileNotFoundError:
             pass
