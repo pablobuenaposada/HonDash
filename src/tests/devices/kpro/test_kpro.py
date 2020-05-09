@@ -1,10 +1,11 @@
 from unittest import mock
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, call
 
 import pytest
+import usb
 
 from devices.kpro import constants
-from devices.kpro.kpro import Kpro
+from devices.kpro.kpro import MAX_CONNECTION_RETRIES, Kpro
 
 
 class TestKpro:
@@ -77,6 +78,103 @@ class TestKpro:
         assert m_start.called is False
         # been trying to find the two kpro versions per 10 times, so 20 times calling usb find method
         assert m_find.call_count == 20
+
+    @pytest.mark.parametrize(
+        "version, read_calls, write_calls",
+        (
+            (
+                constants.KPRO4_ID,
+                [
+                    call.read(0x82, 1000),
+                    call.read(0x82, 1000),
+                    call.read(0x82, 1000),
+                    call.read(0x82, 1000),
+                    call.read(0x82, 128, 1000),
+                ],
+                [
+                    call.write("\x40"),
+                    call.write("\x60"),
+                    call.write("\x61"),
+                    call.write("\x62"),
+                    call.write("\x65"),
+                ],
+            ),
+            (
+                constants.KPRO23_ID,
+                [
+                    call.read(0x81, 1000),
+                    call.read(0x81, 1000),
+                    call.read(0x81, 1000),
+                    call.read(0x81, 1000),
+                    call.read(0x81, 1000),
+                ],
+                [
+                    call.write("\x40"),
+                    call.write("\x60"),
+                    call.write("\x61"),
+                    call.write("\x62"),
+                    call.write("\xb0"),
+                ],
+            ),
+            (
+                None,
+                [call.read(0x81, 1000), call.read(0x81, 1000)],
+                [
+                    call.write("\x40"),
+                    call.write("\x60"),
+                    call.write("\x61"),
+                    call.write("\x62"),
+                    call.write("\xb0"),
+                ],
+            ),
+        ),
+    )
+    def test__read_from_device(self, version, read_calls, write_calls):
+        device = MagicMock()
+        device.read = MagicMock(return_value=[])
+        entry_point = MagicMock()
+
+        assert ([], [], [], [], [], []) == self.kpro._read_from_device(
+            version, device, entry_point
+        )
+        assert device.mock_calls == read_calls
+        assert entry_point.mock_calls == write_calls
+
+    def test_find_and_connect_exception(self):
+        """usb exception should be caught and retry device connection MAX_CONNECTION_RETRIES times"""
+        self.kpro.status = False
+        with mock.patch("threading.Thread.start") as m_start, mock.patch(
+            "devices.kpro.kpro.Kpro._establish_connection"
+        ) as m__establish_connection, mock.patch(
+            "devices.kpro.kpro.Kpro._find_device"
+        ) as m__find_device:
+            m__establish_connection.side_effect = usb.core.USBError("foo")
+            m__find_device.return_value = (MagicMock(), None)
+            self.kpro.find_and_connect()
+        assert self.kpro.status is False
+        assert m__establish_connection.call_count == MAX_CONNECTION_RETRIES
+        assert m_start.called is False
+
+    @pytest.mark.parametrize(
+        "error, status_result, init_called_result",
+        (
+            (usb.core.USBError("foo"), False, True),
+            # "(usb.core.USBError("foo", errno=60), True, False)
+        ),
+    )
+    def test__update_excption(self, error, status_result, init_called_result):
+        """in case any usb error while fetching the data"""
+        self.kpro.status = True
+        self.kpro.version = self.kpro.kpro_device = self.kpro.entry_point = None
+        with mock.patch(
+            "devices.kpro.kpro.Kpro._read_from_device"
+        ) as m__read_from_device, mock.patch(
+            "devices.kpro.kpro.Kpro.__init__"
+        ) as m___init__:
+            m__read_from_device.side_effect = error
+            self.kpro._update()
+        assert self.kpro.status is status_result
+        assert m___init__.called is init_called_result
 
     @pytest.mark.parametrize(
         "version, index, value, result",
@@ -413,6 +511,7 @@ class TestKpro:
     @pytest.mark.parametrize(
         "version, index, value, result",
         (
+            (None, None, None, False),
             (constants.KPRO23_ID, constants.KPRO23_MIL, 0, False),
             (constants.KPRO23_ID, constants.KPRO23_MIL, 9, True),
             (constants.KPRO4_ID, constants.KPRO4_MIL, 0, False),

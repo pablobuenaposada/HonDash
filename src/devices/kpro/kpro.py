@@ -74,51 +74,61 @@ class Kpro:
         )
         return entry_point
 
+    @staticmethod
+    def _read_from_device(version, device, entry_point):
+        data0 = data1 = data2 = data3 = data5 = []
+
+        if version == constants.KPRO4_ID:
+            entry_point.write("\x40")
+            data4 = device.read(0x82, 1000)  # kpro v4
+        else:
+            entry_point.write("\x40")
+            data4 = device.read(0x81, 1000)  # kpro v2 & v3
+
+        entry_point.write("\x60")
+        if version == constants.KPRO23_ID:
+            data0 = device.read(0x81, 1000)  # kpro v2 & v3
+        elif version == constants.KPRO4_ID:
+            data0 = device.read(0x82, 1000)  # kpro v4
+
+        entry_point.write("\x61")
+        # found on kpro2 that sometimes len=44, normally 16
+        if version == constants.KPRO23_ID:
+            data1 = device.read(0x81, 1000)  # kpro v2 & v3
+        elif version == constants.KPRO4_ID:
+            data1 = device.read(0x82, 1000)  # kpro v4
+
+        entry_point.write("\x62")
+        if version == constants.KPRO23_ID:
+            data2 = device.read(0x81, 1000)  # kpro v2 & v3
+        elif version == constants.KPRO4_ID:
+            data2 = device.read(0x82, 1000)  # kpro v4
+
+        if version == constants.KPRO4_ID:
+            entry_point.write("\x65")
+            data3 = device.read(0x82, 128, 1000)  # kpro v4
+        else:  # for v3 only, v2 will not return anything meaningful
+            entry_point.write("\xb0")
+            data5 = device.read(0x81, 1000)
+
+        return data0, data1, data2, data3, data4, data5
+
     def _update(self):
         while self.status:
             try:
-                if self.version == constants.KPRO4_ID:
-                    self.entry_point.write("\x40")
-                    self.data4 = self.kpro_device.read(0x82, 1000)  # kpro v4
-                else:
-                    self.entry_point.write("\x40")
-                    self.data4 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
-
-                self.entry_point.write("\x60")
-                if self.version == constants.KPRO23_ID:
-                    self.data0 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
-                elif self.version == constants.KPRO4_ID:
-                    self.data0 = self.kpro_device.read(0x82, 1000)  # kpro v4
-
-                self.entry_point.write("\x61")
-                # found on kpro2 that sometimes len=44, normally 16
-                if self.version == constants.KPRO23_ID:
-                    self.data1 = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
-                elif self.version == constants.KPRO4_ID:
-                    self.data1 = self.kpro_device.read(0x82, 1000)  # kpro v4
-
-                self.entry_point.write("\x62")
-                if self.version == constants.KPRO23_ID:
-                    temp = self.kpro_device.read(0x81, 1000)  # kpro v2 & v3
-                    if len(temp) == 68:
-                        self.data2 = temp
-                elif self.version == constants.KPRO4_ID:
-                    temp = self.kpro_device.read(0x82, 1000)  # kpro v4
-                    if len(temp) == 25:
-                        self.data2 = temp
-
-                if self.version == constants.KPRO4_ID:
-                    self.entry_point.write("\x65")
-                    self.data3 = self.kpro_device.read(0x82, 128, 1000)  # kpro v4
-                else:  # for v3 only, v2 will not return anything meaningful
-                    self.entry_point.write("\xb0")
-                    self.data5 = self.kpro_device.read(0x81, 1000)
-
+                (
+                    self.data0,
+                    self.data1,
+                    self.data2,
+                    self.data3,
+                    self.data4,
+                    self.data5,
+                ) = self._read_from_device(
+                    self.version, self.kpro_device, self.entry_point
+                )
             except usb.core.USBError as e:
                 # error 60 (operation timed out), just continue to try again
-                if e.args[0] == 60:
-                    pass
-                else:
+                if e.args[0] != 60:
                     # if there's an error while gathering the data, stop the update and try to reconnect usb again
                     self.status = False  # redundant?
                     self.__init__()
@@ -404,6 +414,7 @@ class Kpro:
             if data_from_kpro >= 36:
                 return True
             return False
+        return False
 
     @property
     def ecu_type(self):
