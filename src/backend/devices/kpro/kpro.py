@@ -4,8 +4,8 @@ import usb.core
 import usb.util
 from numpy import interp
 
-from devices.formula import Formula
-from devices.kpro import constants
+from backend.devices.formula import Formula
+from backend.devices.kpro import constants
 
 MAX_CONNECTION_RETRIES = 10
 

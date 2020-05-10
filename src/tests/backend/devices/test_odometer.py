@@ -3,11 +3,11 @@ from unittest.mock import patch
 import pytest
 from freezegun import freeze_time
 
-from devices.odometer import Odometer
-from devices.setup_file import DEFAULT_CONFIG_FILE_NAME
+from backend.devices.odometer import Odometer
+from backend.devices.setup_file import DEFAULT_CONFIG_FILE_NAME
 
 
-@patch("devices.setup_file.FILE_NAME", DEFAULT_CONFIG_FILE_NAME)
+@patch("backend.devices.setup_file.FILE_NAME", DEFAULT_CONFIG_FILE_NAME)
 class TestOdometer:
     @pytest.mark.parametrize(
         "unit, value, expected_km, expected_miles",
@@ -18,7 +18,7 @@ class TestOdometer:
         Checks that the odometer reads the correct mileage after setting the value in the json setup file.
         """
 
-        with patch("devices.odometer.SetupFile.get_value") as m_get_value:
+        with patch("backend.devices.odometer.SetupFile.get_value") as m_get_value:
             m_get_value.return_value = {"value": value, "unit": unit}
             odo = Odometer()
 
@@ -29,7 +29,7 @@ class TestOdometer:
         If no mileage is found in the setup file, the odometer should start from 0
         """
 
-        with patch("devices.odometer.SetupFile.get_value") as m_get_value:
+        with patch("backend.devices.odometer.SetupFile.get_value") as m_get_value:
             m_get_value.side_effect = AttributeError
             odo = Odometer()
 
@@ -42,7 +42,7 @@ class TestOdometer:
 
         with freeze_time("00:00:00"):
             # setting the starting mileage
-            with patch("devices.odometer.SetupFile.get_value") as get_value:
+            with patch("backend.devices.odometer.SetupFile.get_value") as get_value:
                 get_value.return_value = {"value": 0}
                 odo = Odometer()
 
@@ -50,7 +50,7 @@ class TestOdometer:
 
         with freeze_time("01:00:00"):
             # after an hour we will notify the odometer that we have been going to 100km/h
-            with patch("devices.odometer.SetupFile.update_key") as m_update_key:
+            with patch("backend.devices.odometer.SetupFile.update_key") as m_update_key:
                 odo.save(100)
                 # checking that we tried to save the new mileage into the setup file
                 m_update_key.assert_called_with("odo", {"value": 100})
@@ -65,7 +65,7 @@ class TestOdometer:
 
         with freeze_time("00:00:00"):
             # setting the starting mileage
-            with patch("devices.odometer.SetupFile.get_value") as get_value:
+            with patch("backend.devices.odometer.SetupFile.get_value") as get_value:
                 get_value.return_value = {"value": 0}
                 odo = Odometer()
 
@@ -73,7 +73,7 @@ class TestOdometer:
 
         with freeze_time("00:00:30"):
             # after 30 secs we will notify the odometer that we have been going to 100km/h
-            with patch("devices.odometer.SetupFile.update_key") as m_update_key:
+            with patch("backend.devices.odometer.SetupFile.update_key") as m_update_key:
                 odo.save(100)
                 # checking that we couldn't reach one km more so no update to the setup file is needed
                 m_update_key.assert_not_called()

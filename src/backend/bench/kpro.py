@@ -3,7 +3,7 @@ from __future__ import print_function
 
 from reprint import output
 
-from devices.kpro.kpro import Kpro
+from backend.devices.kpro.kpro import Kpro
 
 kpro = Kpro()
 with output(output_type="dict", initial_len=1, interval=0) as output_list:

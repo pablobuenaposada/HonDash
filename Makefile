@@ -59,18 +59,18 @@ virtualenv: $(VIRTUAL_ENV)
 
 run: virtualenv
 	cp -n default_setup.json setup.json || true
-	PYTHONPATH=src $(PYTHON) src/backend/backend.py &
+	PYTHONPATH=src $(PYTHON) src/backend/main.py &
 	open -a "Google Chrome" src/frontend/index.html &
 
 run_rpi:
 	cp -n default_setup.json setup.json
-	sudo PYTHONPATH=src $(PYTHON) src/backend/backend.py &
+	sudo PYTHONPATH=src $(PYTHON) src/backend/main.py &
 	sleep 5
 	chromium-browser --kiosk --incognito src/frontend/index.html &
 
 dummy:
 	cp -n default_setup.json setup.json || true
-	PYTHONPATH=src $(PYTHON) src/bench/dummy_backend.py &
+	PYTHONPATH=src $(PYTHON) src/backend/bench/dummy_backend.py &
 	open -a "Google Chrome" src/frontend/index.html
 
 kill:
