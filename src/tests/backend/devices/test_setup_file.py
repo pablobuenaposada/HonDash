@@ -4,8 +4,8 @@ from tempfile import NamedTemporaryFile
 
 import pytest
 
-from devices import setup_file
-from devices.formula import Formula
+from backend.devices import setup_file
+from backend.devices.formula import Formula
 
 
 def setup_method(self):

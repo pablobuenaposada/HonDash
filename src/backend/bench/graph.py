@@ -1,7 +1,7 @@
 # pip install matplotlib
 import matplotlib
 import matplotlib.pyplot as plt
-from devices.formula import Formula
+from backend.devices.formula import Formula
 
 matplotlib.use("TkAgg")
 temperature = [

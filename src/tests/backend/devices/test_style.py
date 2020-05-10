@@ -2,7 +2,7 @@ import datetime
 
 from freezegun import freeze_time
 
-from devices.style import AVAILABLE_STATUSES, Style
+from backend.devices.style import AVAILABLE_STATUSES, Style
 
 
 class TestStyle:

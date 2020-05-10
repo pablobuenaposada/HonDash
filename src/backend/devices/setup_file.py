@@ -1,6 +1,6 @@
 import json
 
-from devices.formula import Formula
+from backend.devices.formula import Formula
 
 DEFAULT_CONFIG_FILE_NAME = "default_setup.json"
 FILE_NAME = "setup.json"

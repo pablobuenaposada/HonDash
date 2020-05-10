@@ -1,6 +1,6 @@
 import pytest
 
-from devices.formula import Formula
+from backend.devices.formula import Formula
 
 
 class TestFormula:

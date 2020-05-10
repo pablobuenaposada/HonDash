@@ -4,11 +4,11 @@ import threading
 
 import websockets
 
-from devices.kpro.kpro import Kpro
-from devices.odometer import Odometer
-from devices.setup_file import SetupFile
-from devices.style import Style
-from devices.time import Time
+from backend.devices.kpro.kpro import Kpro
+from backend.devices.odometer import Odometer
+from backend.devices.setup_file import SetupFile
+from backend.devices.style import Style
+from backend.devices.time import Time
 from version import __version__
 
 

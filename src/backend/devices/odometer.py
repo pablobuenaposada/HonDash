@@ -1,6 +1,6 @@
 import datetime
 
-from devices.setup_file import SetupFile
+from backend.devices.setup_file import SetupFile
 
 
 class Odometer:

@@ -11,7 +11,7 @@ server {
         }
 
         location /setup {
-                root /home/pi/Desktop/HonDash/src;
+                root /home/pi/Desktop/HonDash/src/frontend;
         }
 
         location /node_modules {

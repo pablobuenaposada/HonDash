@@ -3,11 +3,11 @@ import os
 from shutil import copyfile
 from unittest import mock
 
-from backend.backend import Backend
-from devices import setup_file
+from backend.devices import setup_file
+from backend.main import Backend
 
 
-class TestBackend:
+class TestMain:
     def setup_method(self):
         # prepare the setup file where the backend expects it
         copyfile(setup_file.DEFAULT_CONFIG_FILE_NAME, setup_file.FILE_NAME)
@@ -18,10 +18,8 @@ class TestBackend:
     def test_run_backend(self):
         with mock.patch("usb.core.find"), mock.patch(
             "threading.Thread.start"
-        ), mock.patch(
-            "backend.backend.Websocket.__init__"
-        ) as m_ws___init__, mock.patch(
-            "devices.kpro.kpro.Kpro.__init__"
+        ), mock.patch("backend.main.Websocket.__init__") as m_ws___init__, mock.patch(
+            "backend.devices.kpro.kpro.Kpro.__init__"
         ) as m___init__:
             # mocking kpro device since for tests is not available
             m___init__.return_value = None
@@ -100,9 +98,7 @@ class TestBackend:
 
         with mock.patch("usb.core.find"), mock.patch(
             "usb.util.find_descriptor"
-        ), mock.patch(
-            "backend.backend.Websocket.__init__"
-        ) as m_ws___init__, mock.patch(
+        ), mock.patch("backend.main.Websocket.__init__") as m_ws___init__, mock.patch(
             "threading.Thread.start"
         ):
             # mocking websocket

@@ -4,8 +4,8 @@ from unittest.mock import MagicMock, call
 import pytest
 import usb
 
-from devices.kpro import constants
-from devices.kpro.kpro import MAX_CONNECTION_RETRIES, Kpro
+from backend.devices.kpro import constants
+from backend.devices.kpro.kpro import MAX_CONNECTION_RETRIES, Kpro
 
 
 class TestKpro:
@@ -15,7 +15,7 @@ class TestKpro:
     def setup_method(self):
         # we are not unit testing USB features so it may raise a
         # `usb.core.NoBackendError` e.g. on Docker
-        with mock.patch("devices.kpro.kpro.Kpro.__init__") as m___init__:
+        with mock.patch("backend.devices.kpro.kpro.Kpro.__init__") as m___init__:
             m___init__.return_value = None
             self.kpro = Kpro()
         self.kpro.data0 = [None for _ in range(38)]
@@ -144,9 +144,9 @@ class TestKpro:
         """usb exception should be caught and retry device connection MAX_CONNECTION_RETRIES times"""
         self.kpro.status = False
         with mock.patch("threading.Thread.start") as m_start, mock.patch(
-            "devices.kpro.kpro.Kpro._establish_connection"
+            "backend.devices.kpro.kpro.Kpro._establish_connection"
         ) as m__establish_connection, mock.patch(
-            "devices.kpro.kpro.Kpro._find_device"
+            "backend.devices.kpro.kpro.Kpro._find_device"
         ) as m__find_device:
             m__establish_connection.side_effect = usb.core.USBError("foo")
             m__find_device.return_value = (MagicMock(), None)
@@ -167,9 +167,9 @@ class TestKpro:
         self.kpro.status = True
         self.kpro.version = self.kpro.kpro_device = self.kpro.entry_point = None
         with mock.patch(
-            "devices.kpro.kpro.Kpro._read_from_device"
+            "backend.devices.kpro.kpro.Kpro._read_from_device"
         ) as m__read_from_device, mock.patch(
-            "devices.kpro.kpro.Kpro.__init__"
+            "backend.devices.kpro.kpro.Kpro.__init__"
         ) as m___init__:
             m__read_from_device.side_effect = error
             self.kpro._update()

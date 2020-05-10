@@ -1,6 +1,6 @@
 import random
 
-from backend.backend import Backend
+from backend.main import Backend
 
 backend = Backend()
 backend.kpro.status = True
