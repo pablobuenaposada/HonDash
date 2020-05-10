@@ -295,10 +295,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_GEAR,
             constants.KPRO4_ID: constants.KPRO4_GEAR,
         }
-        gear = self.get_value_from_kpro(indexes, self.data0)
-        if gear == 0:
-            return "N"
-        return gear
+        return self.get_value_from_kpro(indexes, self.data0)
 
     @property
     def eps(self):

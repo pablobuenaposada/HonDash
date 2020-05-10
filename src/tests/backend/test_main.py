@@ -66,7 +66,7 @@ class TestMain:
     def test_update(self):
         expected_data = {
             "bat": 0.0,
-            "gear": "N",
+            "gear": 0,
             "iat": 0,
             "tps": 0,
             "ect": 0,
