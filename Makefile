@@ -98,10 +98,10 @@ lint/black-check: virtualenv
 lint: lint/isort-check lint/flake8 lint/black-check lint/prettier-check
 
 lint/prettier-check: npm
-	$(PRETTIER) --check "src/frontend/*" "src/setup/*"
+	$(PRETTIER) --check "src/frontend/**"
 
 lint/prettier-fix: npm
-	$(PRETTIER) --write "src/frontend/*" "src/setup/*"
+	$(PRETTIER) --write "src/frontend/**"
 
 docker/build:
 	docker build --cache-from=$(DOCKER_IMAGE):latest --tag=$(DOCKER_IMAGE) .
