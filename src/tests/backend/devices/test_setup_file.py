@@ -124,13 +124,11 @@ class TestSetupFile:
         assert self.setup.get_value("vss") == vss_config
 
     def test_save_setup(self):
-        """
-        Check that an update of an attribute is performed but the rest is not
-        """
-        assert self.setup.get_value("tps")["label"] == "TPS"
-        self.setup.save_setup({"tps": {"label": "display text"}})
-        assert self.setup.get_value("tps")["label"] == "display text"
-        assert self.setup.get_value("screen") is not None
+        """save_setup method should overwrite current setup"""
+        fake_setup = {"foo": "bar"}
+        assert self.setup.load_setup() != fake_setup
+        self.setup.save_setup(fake_setup)
+        assert self.setup.load_setup() == fake_setup
 
     def test_update_key(self):
         assert self.setup.get_value("tps") == {

@@ -251,6 +251,114 @@ var style = {
   options: external_grid()
 };
 
+// constant attributes not shown in the editor
+var ver = {
+  type: "object",
+  required: ["tag"],
+  properties: {
+    tag: {
+      type: "string",
+      const: "version"
+    }
+  },
+  options: { hidden: true }
+};
+var fan = {
+  type: "object",
+  required: ["tag", "pathon", "pathoff"],
+  properties: {
+    tag: {
+      type: "string",
+      enum: ["icon2"]
+    },
+    pathon: {
+      type: "string",
+      const: "fan_on.svg"
+    },
+    pathoff: {
+      type: "string",
+      comst: "fan_off.svg"
+    }
+  },
+  options: { hidden: true }
+};
+var mil = {
+  type: "object",
+  required: ["tag", "pathon", "pathoff"],
+  properties: {
+    tag: {
+      type: "string",
+      enum: ["icon1"]
+    },
+    pathon: {
+      type: "string",
+      const: "check_engine_on.svg"
+    },
+    pathoff: {
+      type: "string",
+      comst: "check_engine_off.svg"
+    }
+  },
+  options: { hidden: true }
+};
+var scs = {
+  type: "object",
+  required: ["tag", "pathon", "pathoff"],
+  properties: {
+    tag: {
+      type: "string",
+      enum: ["icon3"]
+    },
+    pathon: {
+      type: "string",
+      const: "scs_on.png"
+    },
+    pathoff: {
+      type: "string",
+      comst: "scs_off.png"
+    }
+  },
+  options: { hidden: true }
+};
+var gear = {
+  type: "object",
+  required: ["tag"],
+  properties: {
+    tag: {
+      type: "string",
+      const: "gear"
+    }
+  },
+  options: { hidden: true }
+};
+var fmw = {
+  type: "object",
+  required: ["tag"],
+  properties: {
+    tag: {
+      type: "string",
+      const: "firmware_version"
+    }
+  },
+  options: { hidden: true }
+};
+var time = {
+  type: "object",
+  required: ["tag"],
+  properties: {
+    tag: {
+      type: "string",
+      const: "time"
+    }
+  },
+  options: { hidden: true }
+};
+var version = {
+  type: "string",
+  const: "2.4.0",
+  options: { hidden: true }
+};
+
 var schema = {
   schema: {
     type: "object",
@@ -278,7 +386,15 @@ var schema = {
       an4: analog,
       an5: analog,
       an6: analog,
-      an7: analog
+      an7: analog,
+      ver: ver,
+      fan: fan,
+      mil: mil,
+      scs: scs,
+      gear: gear,
+      fmw: fmw,
+      time: time,
+      version: version
     }
   },
   no_additional_properties: true,

@@ -7,6 +7,7 @@ import websockets
 from backend.devices.kpro.kpro import Kpro
 from backend.devices.odometer import Odometer
 from backend.devices.setup_file import SetupFile
+from backend.devices.setup_validator.setup_validator import SetupValidator
 from backend.devices.style import Style
 from backend.devices.time import Time
 from version import __version__
@@ -110,6 +111,7 @@ class Backend:
 
     def save(self, new_setup):
         """Save a new setup"""
+        SetupValidator().validate(new_setup)
         self.setup_file.save_setup(new_setup)
         self.setup_file.rotate_screen(new_setup["screen"]["rotate"])
         self._load_user_preferences()  # refresh the backend too
@@ -148,9 +150,22 @@ class Websocket:
             if data["action"] == "setup":
                 await websocket.send(json.dumps({"setup": self.backend.setup()}))
             elif data["action"] == "save":
-                self.backend.save(data["data"])
-                # send refresh action to all the frontends so the new changes are applied
-                await self._send_all_clients(json.dumps({"action": "refresh"}))
+                try:
+                    self.backend.save(data["data"])
+                except SetupValidator.ValidationError as e:
+                    await self._send_all_clients(
+                        json.dumps(
+                            {"action": "alert", "message": f"ERROR: {e.message}"}
+                        )
+                    )
+                else:
+                    # send refresh action to all the frontends so the new changes are applied
+                    await self._send_all_clients(json.dumps({"action": "refresh"}))
+                    await self._send_all_clients(
+                        json.dumps(
+                            {"action": "alert", "message": "SUCCESS: setup saved!"}
+                        )
+                    )
             elif data["action"] == "reset":
                 self.backend.reset()
                 # send refresh action to all the frontends so the new changes are applied

@@ -3,7 +3,10 @@ import os
 from shutil import copyfile
 from unittest import mock
 
+import pytest
+
 from backend.devices import setup_file
+from backend.devices.setup_validator.setup_validator import SetupValidator
 from backend.main import Backend
 
 
@@ -61,6 +64,16 @@ class TestMain:
         default_setup["tps"]["label"] = "test"
         b.save(default_setup)
         assert b.setup() == default_setup
+        b.stop()
+
+    def test_save_invalid(self):
+        """
+        Trying to save an invalid setup should raise ValidationError
+        """
+        with mock.patch("usb.core.find"):
+            b = Backend()
+        with pytest.raises(SetupValidator.ValidationError):
+            b.save({})
         b.stop()
 
     def test_update(self):

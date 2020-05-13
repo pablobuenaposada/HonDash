@@ -79,6 +79,10 @@ function checkTagValues() {
       );
       for (var row in rowContainingTag) {
         var select = getElementsByXPath("div/select", rowContainingTag[row]);
+        if (select.length <= 0) {
+          // if no select found just skip
+          break;
+        }
         var selectedOption = select[0].options[select[0].selectedIndex].label;
         if (selectedOption != "not use") {
           usedTags.push(selectedOption);
@@ -101,6 +105,10 @@ function checkTagValues() {
       );
       for (var row in rowContainingTag) {
         var select = getElementsByXPath("div/select", rowContainingTag[row]);
+        if (select.length <= 0) {
+          // if no select found just skip
+          break;
+        }
         var selectedOption = select[0].options[select[0].selectedIndex].label;
         enableAllSelectOptions(select);
         for (var tag in usedTags) {
@@ -140,6 +148,10 @@ function checkDivColor() {
       );
       for (var row in rowContainingTag) {
         var select = getElementsByXPath("div/select", rowContainingTag[row]);
+        if (select.length <= 0) {
+          // if no select found just skip
+          break;
+        }
         var selectedOption = select[0].options[select[0].selectedIndex].label;
 
         // paint the div and enable or disable the boxes
@@ -237,8 +249,6 @@ function download() {
 
 function save() {
   ws.send(JSON.stringify({ action: "save", data: editor.getValue() }));
-  alert("setup saved");
-  location.reload();
 }
 
 function reset() {
@@ -266,6 +276,13 @@ ws.onmessage = function(event) {
       schema["startval"] = data["setup"];
       editor = new JSONEditor(document.getElementById("editor_holder"), schema);
       editor.on("change", updateFields); // for every change in the fields, trigger this function
+    }
+  } else {
+    if (keys.indexOf("action") > -1) {
+      // it's an action?
+      if (data["action"] == "alert") {
+        alert(data["message"]);
+      }
     }
   }
 };
