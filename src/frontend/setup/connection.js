@@ -233,6 +233,23 @@ function updateFields() {
   checkUnitValues();
 }
 
+// file uploader shit
+function clickFileUploader() {
+  document.getElementById("file_id").click();
+}
+
+function onFileUploaderChange(event) {
+  var reader = new FileReader();
+  reader.onload = onReaderLoad;
+  reader.readAsText(event.target.files[0]);
+}
+
+function onReaderLoad(event) {
+  var uploadedJson = JSON.parse(event.target.result);
+  ws.send(JSON.stringify({ action: "save", data: uploadedJson }));
+}
+
+// buttons related functions
 function download() {
   try {
     var dataStr =
@@ -265,6 +282,9 @@ var editor;
 var ws = new WebSocket(
   "ws://" + (window.location.hostname || "127.0.0.1") + ":5678/"
 );
+document
+  .getElementById("file_id")
+  .addEventListener("change", onFileUploaderChange);
 
 ws.onmessage = function(event) {
   var data = JSON.parse(event.data);
@@ -291,7 +311,6 @@ ws.onmessage = function(event) {
 ws.onopen = function(e) {
   ws.send(JSON.stringify({ action: "setup" }));
 };
-
 // in case something blows up or connection gets close, keep trying
 ws.onerror = function(e) {
   location.reload();
