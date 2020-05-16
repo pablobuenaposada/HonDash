@@ -9,3 +9,4 @@ pytest-cov
 isort
 flake8
 websockets
+jsonschema==3.2.0

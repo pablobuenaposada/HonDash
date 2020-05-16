@@ -17,6 +17,7 @@ class SetupFile:
         return self.json.get(key)
 
     def update_key(self, key, value):
+        """Update only the selected key from the setup"""
         self.json.get(key).update(value)
         self.save_setup(self.json)
 
@@ -38,9 +39,9 @@ class SetupFile:
         return self.json
 
     def save_setup(self, setup):
-        self.json.update(setup)
+        """Overwrite setup file"""
         with open(self.file_name, "w") as file:
-            json.dump(self.json, file, indent=2, sort_keys=True)
+            json.dump(setup, file, indent=2, sort_keys=True)
         self.__init__(self.file_name)
 
     def reset_setup(self):
