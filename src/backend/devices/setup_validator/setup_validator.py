@@ -9,6 +9,7 @@ class SetupValidator:
             jsonschema.validate(instance=setup, schema=SCHEMA)
         except jsonschema.exceptions.ValidationError as e:
             raise self.ValidationError(e.message)
+        self._check_version(setup)
         self._check_tag_uniqueness(setup)
         self._check_formula(setup)
 
@@ -42,6 +43,10 @@ class SetupValidator:
                 raise self.ValidationError(
                     f"{setup[value]['unit']} not allowed for {setup[value]['formula']}"
                 )
+
+    def _check_version(self, setup):
+        if setup["version"] != "2.4.0":
+            raise self.ValidationError("setup file should be version 2.4.0")
 
     class ValidationError(Exception):
         def __init__(self, *args):
