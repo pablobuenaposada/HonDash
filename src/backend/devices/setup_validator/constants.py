@@ -157,8 +157,8 @@ SCHEMA = {
             "additionalProperties": False,
             "required": ["lo", "hi", "color"],
             "properties": {
-                "hi": {"type": "integer"},
-                "lo": {"type": "integer"},
+                "hi": {"type": "number"},
+                "lo": {"type": "number"},
                 "color": {"type": "string"},
             },
         },

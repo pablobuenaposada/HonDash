@@ -106,10 +106,10 @@ var sectors = {
     options: internal_grid(),
     properties: {
       lo: {
-        type: "integer"
+        type: "number"
       },
       hi: {
-        type: "integer"
+        type: "number"
       },
       color: {
         type: "string",
