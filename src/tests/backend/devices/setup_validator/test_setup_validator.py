@@ -57,5 +57,13 @@ class TestSetupValidator:
             )
         assert str(excinfo.value) == f"{formula} not found"
 
+    def test__check_version_success(self):
+        SetupValidator()._check_version({"version": "2.4.0"})
+
+    def test__check_version_fail(self):
+        with pytest.raises(SetupValidator.ValidationError) as excinfo:
+            SetupValidator()._check_version({"version": {"1.0.0"}})
+        assert str(excinfo.value) == "setup file should be version 2.4.0"
+
     def test_validation_error(self):
         SetupValidator.ValidationError()
