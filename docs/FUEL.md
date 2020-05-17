@@ -45,6 +45,8 @@ MX5 NA | 3,14 | 0,55
 
 <br/>
 
+Note that the order of the rows is important, first row should contain the 100% and second one 0%, check the previous picture in detail.
+
 After reuploading the calibration, you should be able to see your current fuel level in the display window after adding this new parameter.
 
 ## ⚠ Warning

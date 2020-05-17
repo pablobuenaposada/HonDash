@@ -1,6 +1,6 @@
 # Ready to run kit
 
-For those who do not want to assemble their own HonDash there is also the option to buy a ready to run kit, it comes with everything needed and requires minimum wiring.
+For those who do not want to assemble their own HonDash there is also the option to buy a ready to run kit, it comes with everything needed and requires minimum wiring installation.
 
 In detail this is what the kit contains:
 
