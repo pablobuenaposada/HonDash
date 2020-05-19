@@ -170,6 +170,9 @@ class Websocket:
                 self.backend.reset()
                 # send refresh action to all the frontends so the new changes are applied
                 await self._send_all_clients(json.dumps({"action": "refresh"}))
+                await self._send_all_clients(
+                    json.dumps({"action": "alert", "message": "SUCCESS: setup reset!"})
+                )
 
     async def _producer_handler(self, websocket):
         """Keeps sending updated kpro data forever"""
