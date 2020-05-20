@@ -269,13 +269,7 @@ function save() {
 }
 
 function reset() {
-  try {
-    ws.send(JSON.stringify({ action: "reset" }));
-    alert("setup reset");
-    location.reload();
-  } catch (e) {
-    alert(e);
-  }
+  ws.send(JSON.stringify({ action: "reset" }));
 }
 
 var editor;

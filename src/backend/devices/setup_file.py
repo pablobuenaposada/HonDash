@@ -47,6 +47,7 @@ class SetupFile:
     def reset_setup(self):
         setup = self.load_setup(DEFAULT_CONFIG_FILE_NAME)
         self.save_setup(setup)
+        self.rotate_screen(False)
 
     @staticmethod
     def rotate_screen(enable):
