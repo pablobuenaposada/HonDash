@@ -33,7 +33,7 @@ ws.onmessage = function(event) {
       }
     } else if (keys[0] == "action") {
       if (data["action"] == "refresh") {
-        location.reload();
+        window.location.replace("index.html");
       }
     }
   }
