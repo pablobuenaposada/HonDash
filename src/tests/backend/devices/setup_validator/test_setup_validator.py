@@ -16,6 +16,17 @@ class TestSetupValidator:
         """An empty json should fail validating"""
         with pytest.raises(SetupValidator.ValidationError) as excinfo:
             SetupValidator().validate({})
+        assert str(excinfo.value) == "version tag not found"
+
+    def test_only_with_version(self):
+        """An almost empty json with only the version tag should fail validating"""
+        with pytest.raises(SetupValidator.ValidationError) as excinfo:
+            SetupValidator().validate(
+                {
+                    "version": "2.3.2",
+                    "vss": {"label": "", "max": "", "sectors": "", "suffix": ""},
+                }
+            )
         assert str(excinfo.value) == "'ect' is a required property"
 
     def test__check_tag_uniqueness_success(self):
@@ -63,7 +74,7 @@ class TestSetupValidator:
     def test__check_version_fail(self):
         with pytest.raises(SetupValidator.ValidationError) as excinfo:
             SetupValidator()._check_version({"version": {"1.0.0"}})
-        assert str(excinfo.value) == "setup file should be version 2.4.0"
+        assert str(excinfo.value) == "setup file should be at least 2.3.2"
 
     def test_validation_error(self):
         SetupValidator.ValidationError()
