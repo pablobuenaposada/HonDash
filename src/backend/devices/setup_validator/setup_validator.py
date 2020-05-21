@@ -1,17 +1,24 @@
 import jsonschema
 
+from backend.devices.setup_updater import SetupUpdater
 from backend.devices.setup_validator.constants import FORMULA_VS_UNITS, SCHEMA
 
 
 class SetupValidator:
     def validate(self, setup):
+        self._check_version(setup)
+        setup = self._update(setup)
         try:
             jsonschema.validate(instance=setup, schema=SCHEMA)
         except jsonschema.exceptions.ValidationError as e:
             raise self.ValidationError(e.message)
-        self._check_version(setup)
         self._check_tag_uniqueness(setup)
         self._check_formula(setup)
+
+    @staticmethod
+    def _update(setup):
+        """Update to the last version if necessary"""
+        return SetupUpdater().update(setup)
 
     def _check_tag_uniqueness(self, setup):
         """tag values should be unique"""
@@ -45,8 +52,11 @@ class SetupValidator:
                 )
 
     def _check_version(self, setup):
-        if setup["version"] != "2.4.0":
-            raise self.ValidationError("setup file should be version 2.4.0")
+        try:
+            if setup["version"] not in ("2.3.2", "2.4.0"):
+                raise self.ValidationError("setup file should be at least 2.3.2")
+        except KeyError:
+            raise self.ValidationError("version tag not found")
 
     class ValidationError(Exception):
         def __init__(self, *args):

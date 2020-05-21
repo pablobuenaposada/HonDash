@@ -1,0 +1,287 @@
+{
+  "an0": {
+    "decimals": 0,
+    "formula": "civic_eg_fuel_tank",
+    "label": "",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "suffix": "%",
+    "tag": "bar2",
+    "unit": "per cent"
+  },
+  "an1": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an2": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an3": {
+    "decimals": 1,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an4": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an5": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an6": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an7": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "bat": {
+    "decimals": 1,
+    "label": "BATTERY",
+    "max": 20,
+    "sectors": [
+      {
+        "color": "#cc2c24",
+        "hi": 12,
+        "lo": 0
+      },
+      {
+        "color": "#46877f",
+        "hi": 20,
+        "lo": 12
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge6"
+  },
+  "cam": {
+    "label": "CAM",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge7"
+  },
+  "ect": {
+    "label": "ECT",
+    "max": 150,
+    "sectors": [
+      {
+        "color": "#cc2c24",
+        "hi": 150,
+        "lo": 94
+      },
+      {
+        "color": "#46877f",
+        "hi": 94,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge1",
+    "unit": "celsius"
+  },
+  "eth": {
+    "label": "ETH",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge4"
+  },
+  "fan": {
+    "pathoff": "fan_off.svg",
+    "pathon": "fan_on.svg",
+    "tag": "icon2"
+  },
+  "fmw": {
+    "tag": "firmware_version"
+  },
+  "gear": {
+    "tag": "gear"
+  },
+  "iat": {
+    "label": "IAT",
+    "max": 50,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 70,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge2",
+    "unit": "celsius"
+  },
+  "map": {
+    "decimals": 1,
+    "label": "MAP",
+    "max": 3,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 3,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge5",
+    "unit": "bar"
+  },
+  "mil": {
+    "pathoff": "check_engine_off.svg",
+    "pathon": "check_engine_on.svg",
+    "tag": "icon1"
+  },
+  "o2": {
+    "decimals": 1,
+    "label": "AFR",
+    "max": 30,
+    "sectors": [
+      {
+        "color": "#cc2c24",
+        "hi": 12,
+        "lo": 0
+      },
+      {
+        "color": "#46877f",
+        "hi": 16,
+        "lo": 12
+      },
+      {
+        "color": "#cc2c24",
+        "hi": 30,
+        "lo": 16
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge3",
+    "unit": "afr"
+  },
+  "odo": {
+    "tag": "odo",
+    "unit": "km",
+    "value": 0
+  },
+  "rpm": {
+    "max": 9000,
+    "sectors": [
+      {
+        "color": "#d64d8a",
+        "hi": 9000,
+        "lo": 0
+      }
+    ],
+    "tag": "bar1"
+  },
+  "screen": {
+    "rotate": false
+  },
+  "scs": {
+    "pathoff": "scs_off.png",
+    "pathon": "scs_on.png",
+    "tag": "icon3"
+  },
+  "style": {
+    "dayBackgroundColor": "#ffffff",
+    "dayBackgroundGaugeColor": "#edebeb",
+    "dayTextColor": "#000000",
+    "elapsedSeconds": 3,
+    "nightBackgroundColor": "#000000",
+    "nightBackgroundGaugeColor": "#808080",
+    "nightTextColor": "#ffffff",
+    "tag": "style",
+    "tpsLowerThreshold": 20,
+    "tpsUpperThreshold": 30
+  },
+  "template": "basic",
+  "time": {
+    "tag": "time"
+  },
+  "tps": {
+    "label": "TPS",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge8"
+  },
+  "ver": {
+    "tag": "version"
+  },
+  "version": "2.3.2",
+  "vss": {
+    "label": "",
+    "max": 300,
+    "sectors": [],
+    "suffix": "",
+    "tag": "speed",
+    "unit": "kmh"
+  }
+}
