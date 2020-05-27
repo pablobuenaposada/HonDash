@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2020-05-27
+### Changed
+- Fixed bug with odometer units (thanks @acolonnh)
+- Removed neutral from gear indicator since K-pro is not able to sense neutral
+- More colorful RPM bar by default
+
+### Added
+- Possibility to upload the configuration from previous versions (from 2.3.2 and on) so no need to reconfigure everything again
+- Color sectors now allow decimal point ranges
+
 ## [2.4.0] - 2020-03-22
 ### Changed
 - Fronted more adaptative to other screen resolutions (Bootstrap 4)
