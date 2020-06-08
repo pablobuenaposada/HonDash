@@ -25,7 +25,7 @@ HonDash is an open source instrument cluster developed for Honda engines managed
 - Raspberry Pi 3 Model B+ / Raspberry Pi 4
 - HDMI/DSI/composite compatible screen
 
-\* v2 only if it has on board datalogging, check [here](https://www.hondata.com/kpro2)
+\* v2 only if it has on board data logging, check [here](https://www.hondata.com/kpro2)
 
 ```diff
 - K-Pro must have the latest firmware from Kmanager V4.4.1
@@ -38,6 +38,11 @@ HonDash is an open source instrument cluster developed for Honda engines managed
 ## Can I build my own?
 
 Yes, the [software](https://hondash.com/SOFTWARE.html) is open source and the [hardware](https://hondash.com/HARDWARE.html) is commercial and easy to get.
+
+## Known issues
+
+- With Hondata K-pro v2/v3 data logging should be disabled to run HonDash
+- Map sensor would only show up to 1.8 bar
 
 ## Ready to run kit
 
