@@ -43,6 +43,7 @@ Yes, the [software](https://hondash.com/SOFTWARE.html) is open source and the [h
 
 - With Hondata K-pro v2/v3 data logging should be disabled to run HonDash
 - Map sensor would only show up to 1.8 bar
+- Raspberry Pi 4 with old firmware could have WiFi connectivity problems while using the HDMI port, if this is happening for you please update the firmware https://www.youtube.com/watch?v=FZ2Kfg8xnBw
 
 ## Ready to run kit
 

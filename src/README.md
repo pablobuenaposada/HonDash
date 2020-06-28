@@ -25,6 +25,13 @@ Install vim because reasons:
 sudo apt -y install vim
 ```
 
+### Update firmware
+```sh
+sudo apt update
+sudo apt upgrade
+sudo apt install rpi-eeprom rpi-eeprom-images
+```
+
 ### Install the project
 Clone this project:
 ```sh
