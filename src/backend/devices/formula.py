@@ -8,6 +8,10 @@ class Formula:
     @staticmethod
     def adc_to_volts(adc):
         return (adc / 4095.000) * 5.0
+    
+    @staticmethod
+    def adc16_to_volts(adc):
+        return (adc / 51)
 
     @staticmethod
     def psi_to_bar(psi):
@@ -32,7 +36,7 @@ class Formula:
         Linear regression made with https://arachnoid.com/polysolve/
         """
         celsius = (
-            -2.7168631716148286 * pow(10, 0) * kpro_value
+            - 2.7168631716148286 * pow(10, 0) * kpro_value
             + 3.5250001884568352 * pow(10, -2) * pow(kpro_value, 2)
             - 4.6668312213461976 * pow(10, -4) * pow(kpro_value, 3)
             + 6.2314622546038854 * pow(10, -6) * pow(kpro_value, 4)
@@ -46,7 +50,7 @@ class Formula:
             "celsius": round(celsius),
             "fahrenheit": round(Formula.celsius_to_fahrenheit(celsius)),
         }
-
+        
     # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     @staticmethod
     def vdo_323_057(volts):
@@ -174,3 +178,27 @@ class Formula:
                 + 121.3158219
             )
         }
+
+    
+    """New Formulas I added go below here"""
+    @staticmethod
+    def baro_to_altitude(mbar):
+        """
+        Converts atmospheric pressure to an estimate of current altitude
+        
+        f(x) =  1.0122606586519291e+003 * x^0
+            + -3.6314307415162637e-002 * x^1
+            +  5.1305184908867147e-007 * x^2
+            + -3.3434645625136091e-012 * x^3
+            +  7.9573171598406508e-018 * x^4
+        """
+        alt_ft = (
+            - 3.6314307415162637 * pow(10, -2) * mbar
+            + 5.1305184908867147 * pow(10, -7) * pow(mbar, 2)
+            - 3.3434645625136091 * pow(10, -12) * pow(mbar, 3)
+            + 7.9573171598406508 * pow(10, -18) * pow(mbar, 4)
+            + 1.0122606586519291 * pow(10, 3)
+        )
+        alt_m = round(alt_ft * .3048)
+        return{"Alt_ft": round(alt_ft), "Alt_m": alt_m}
+        

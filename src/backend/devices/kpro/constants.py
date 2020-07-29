@@ -6,6 +6,11 @@ KPRO4_ID_PRODUCT = 0x0434
 KPRO23_ID = 23  # v2 and v3 works equally so I mixed both version numbers
 KPRO4_ID = 4
 
+# s300 device ids
+S300V3_ID_VENDOR = 0x1C40
+S300V3_ID_PRODUCT = 0x0432
+S300V3_ID = 3003
+
 # command 0x40
 KPRO23_ECU_TYPE = 12
 KPRO23_IGN = 17
@@ -20,6 +25,12 @@ KPRO4_SERIAL1 = 4
 KPRO4_SERIAL2 = 5
 KPRO4_FIRM1 = 6
 KPRO4_FIRM2 = 7
+
+S300V3_IGN = 2 #maybe
+S300V3_SERIAL1 = 4 #maybe
+S300V3_SERIAL2 = 5 #maybe
+S300V3_FIRM1 = 6 #maybe
+S300V3_FIRM2 = 7 #maybe
 
 # command 0x60
 KPRO23_TPS = 7
@@ -105,4 +116,103 @@ KPRO3_AN5_2 = 14
 KPRO3_AN6_1 = 17
 KPRO3_AN6_2 = 16
 KPRO3_AN7_1 = 19
-KPRO3_AN7_2 = 18
+KPRO3_AN7_2 = 18 
+
+S300V3_AN0_1 = 3
+S300V3_AN0_2 = 2
+S300V3_AN1_1 = 5
+S300V3_AN1_2 = 4
+S300V3_AN2_1 = 7
+S300V3_AN2_2 = 6
+S300V3_AN3_1 = 9
+S300V3_AN3_2 = 8
+S300V3_AN4_1 = 11
+S300V3_AN4_2 = 10
+S300V3_AN5_1 = 13
+S300V3_AN5_2 = 12
+S300V3_AN6_1 = 15
+S300V3_AN6_2 = 14
+S300V3_AN7_1 = 17
+S300V3_AN7_2 = 16
+
+# Command 0x90
+S300V3_RPM1 = 3  # done
+S300V3_RPM2 = 4  # done
+S300V3_VSS1 = 5  # done
+S300V3_VSS2 = 6  # done
+S300V3_MAP1 = 7  # done
+S300V3_MAP2 = 8  # done
+S300V3_TPS = 9  # done
+S300V3_INJ1 = 10  # done
+S300V3_INJ2 = 11  # done
+S300V3_IGADV = 12  # done
+S300V3_KLEVEL = 15 #maybe
+S300V3_O2V = 16  # done
+
+S300V3_DISTERR = 17 # bit1 (0x40)
+S300V3_SCS = 17 # bit2 (0x20)
+S300V3_PSP = 17 # bit3 (0x10)
+S300V3_REVL = 17 # bit4 (0x08)
+S300V3_BKSW = 17 # bit5 (0X04)
+S300V3_ACSW = 17 # bit6 (0X02)
+S300V3_VTP = 17 # bit7 (0x01)
+
+S300V3_ALTC = 18 # bit0 (0x80); done
+S300V3_IAB = 18 # bit1 (0x40); done
+S300V3_MIL = 18 # bit2 (0x20); done
+S300V3_PCS = 18 # bit3 (0x10); done
+S300V3_ACCL = 18 # bit4 (0x08); done
+S300V3_FLR = 18 # bit6 (0x02)
+S300V3_VTS = 18 # bit7 (0x01); done
+
+S300V3_LNCHC = 19  # bit0 (0x80); done
+S300V3_LNCHR = 19  # bit1 (0x40); done
+S300V3_IGNC = 19  # bit2 (0x20); done
+S300V3_SHFTC = 19  # bit3 (0x10); done
+S300V3_BSTC = 19  # bit4 (0x08); done
+
+S300V3_SECTBL = 20  # bit0 (0x80); done
+S300V3_DL = 20  # bit3 (0x10); done
+S300V3_N2ON = 20  # bit4 (0x08); done
+S300V3_N2ARM = 20 # bit5 (0x04); done
+S300V3_N1ON = 20  # bit6 (0x02); done
+S300V3_N1ARM = 20 # bit7 (0x01); done
+
+S300V3_DUTY1 = 21  # done
+S300V3_DUTY2 = 22  # done
+S300V3_GEAR = 27  # done
+S300V3_STRIM = 29  # done
+S300V3_LTRIM = 31 # maybe; needs verification in-car
+S300V3_BARO = 32 # done
+S300V3_ECT = 33  # done
+S300V3_IAT = 34  # done
+S300V3_ELD = 35  # done
+S300V3_BAT = 36  # done
+S300V3_EGRLV = 44  # done
+S300V3_IATC = 45  # done
+S300V3_ECTC = 46  # done
+S300V3_PWM = 48  # done
+
+S300V3_SECINJ = 49 # bit2 (0x20); done
+S300V3_A10 = 49 # bit3 (0x10); done
+S300V3_CL = 49 # bit5 (0x04); done
+S300V3_FANC = 49 # bit7 (0x01); done
+
+S300V3_N3ARM = 50 # bit7 (0x01); done
+S300V3_N3ON = 50  # bit6 (0x02); done
+
+S300V3_B6V = 53  # done
+S300V3_AFR = 55  # done
+S300V3_WBV = 56  # done
+
+#Unfound S300 Channels:
+S300V3_ECU_TYPE = 0
+S300V3_KRTD = 0
+S300V3_FRAME = 0
+
+S300V3_ANALOG1 = 0
+S300V3_ANALOG2 = 0
+
+S300V3_ETH = 0
+S300V3_FLT = 0
+
