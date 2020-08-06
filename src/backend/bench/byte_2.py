@@ -23,29 +23,38 @@ if dev is not None:
         )
     except Exception:
         pass
-    
-    i = int(input("enter a dec message to send to S300: "))
 
-    while True:
-        ep.write(bytes([i]))
-#        ep.write("\x90")
+i = bytes([176])
+    
+while True:
+    print(str(i))
+    ep.write(i)
+#    ep.write("\xb0")
+    try:
         if version == 2:
             temp = dev.read(0x81, 10000, 1000)  # kpro2
             print(temp)
-        # elif version == 4:
-        #     temp = dev.read(0x82, 10000, 1000)  # kpro4
-        #     print(temp)
-
-        # ep.write('\x65')
-        # if version == 2:
-        #     temp = dev.read(0x81, 10000, 1000)  # kpro2
-        #     print(temp)
-        # elif version == 4:
-        #     temp = dev.read(0x82, 128, 1000)  # kpro4
-        #     print(temp)
+            # elif version == 4:
+            #     temp = dev.read(0x82, 10000, 1000)  # kpro4
+            #     print(temp)
+            # ep.write('\x65')
+            # if version == 2:
+            #     temp = dev.read(0x81, 10000, 1000)  # kpro2
+            #     print(temp)
+            # elif version == 4:
+            #     temp = dev.read(0x82, 128, 1000)  # kpro4
+            #     print(temp)
         elif version == 3003:
             temp = dev.read(0x82, 256, 1000)  # s300v3
             print(temp)
-
-
+        f = open('/home/pi/Desktop/AN_Responses.txt', 'a')
+        f.write("Msg: " + str(i) + "\r\n")
+        f.write("Reply: \r\n")
+        f.write(str(temp))
+        f.write("\r\n")
+    except:
+        print("No Response")
+#    time.sleep(.0001)
+        
+f.close
                 

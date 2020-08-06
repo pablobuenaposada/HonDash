@@ -10,7 +10,7 @@ function external_grid() {
 var temp_units = ["celsius", "fahrenheit"];
 var speed_units = ["kmh", "mph"];
 var mixture_units = ["afr", "lambda"];
-var pressure_units = ["psi", "bar"];
+var pressure_units = ["psi", "mbar", "bar"];
 var per_cent_units = ["per cent"];
 var distance_units = ["km", "miles"];
 

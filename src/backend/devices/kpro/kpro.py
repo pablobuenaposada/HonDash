@@ -7,8 +7,6 @@ from numpy import interp
 from backend.devices.formula import Formula
 from backend.devices.kpro import constants
 
-from time import sleep
-
 MAX_CONNECTION_RETRIES = 10
 
 
@@ -84,6 +82,13 @@ class Kpro:
         )
         return entry_point
 
+    """
+    Note on sending messages to the S300 - Not sure if this is something
+    I'm doing wrong but the S300 doesn't like when I send messages in byte 
+    format "\x00"... I get either no reply or just a single decimal [240] reply.
+    Sending them as bytes([dec]) seems to work perfectly though.
+    """
+
     @staticmethod
     def _read_from_device(version, device, entry_point):
         data0 = data1 = data2 = data3 = data4 = data5 = data6 = []
@@ -94,49 +99,59 @@ class Kpro:
             entry_point.write("\x40")
             data4 = device.read(0x81, 1000)  # kpro v2 & v3
         elif version == constants.S300V3_ID:
-            entry_point.write("\x40")
-            data4 = device.read(0x82, 1000)  # s300 v3
-        
-        entry_point.write("\x60")
+           entry_point.write(bytes([64]))
+#            entry_point.write("\x40")
+        data4 = device.read(0x82, 1000)  # s300 v3
+   
+        """
+        These next three messages (\x60 - \x62) cause the S300 to send a 
+        garbage packet that causes data dropouts, so I modified the code to 
+        only request a packet if the device is a kpro.
+        """
+
         if version == constants.KPRO23_ID:
+            entry_point.write("\x60")
             data0 = device.read(0x81, 1000)  # kpro v3
         elif version == constants.KPRO4_ID:
+            entry_point.write("\x60")
             data0 = device.read(0x82, 1000)  # kpro v4
 
-        entry_point.write("\x61")
         # found on kpro2 that sometimes len=44, normally 16
         if version == constants.KPRO23_ID:
+            entry_point.write("\x61")
             data1 = device.read(0x81, 1000)  # kpro v2 & v3
         elif version == constants.KPRO4_ID:
+            entry_point.write("\x61")
             data1 = device.read(0x82, 1000)  # kpro v4
 
-        entry_point.write("\x62")
         if version == constants.KPRO23_ID:
+            entry_point.write("\x62")
             data2 = device.read(0x81, 1000)  # kpro v2 & v3
         elif version == constants.KPRO4_ID:
+            entry_point.write("\x62")
             data2 = device.read(0x82, 1000)  # kpro v4
 
         if version == constants.KPRO4_ID:
             entry_point.write("\x65")
             data3 = device.read(0x82, 128, 1000)  # kpro v4
         elif version == constants.S300V3_ID:
+#            entry_point.write("\xb0")
             entry_point.write(bytes([176]))
             data5 = device.read(0x82, 128, 1000)  # s300 v3
         else:  # for v3 only, v2 will not return anything meaningful
             entry_point.write("\xb0")
             data5 = device.read(0x81, 1000)
-#            
-#        print("data5: ")
-#        print(str(data5))
-#        print('\n')
+        
+        """
+        No \x90 message for Kpro, so I added one. This is the main data laden
+        packet for S300v3
+        """
         
 #        entry_point.write("\x90")
         entry_point.write(bytes([144]))
         if version == constants.S300V3_ID:
             data6 = device.read(0x82, 1000, 1000)  # s300 v3
-        
-#        sleep(1)
-        
+                
         return data0, data1, data2, data3, data4, data5, data6
 
     def _update(self):
@@ -181,9 +196,8 @@ class Kpro:
             constants.KPRO4_ID: constants.KPRO4_BAT,
             constants.S300V3_ID: constants.S300V3_BAT,
         }
-#        return self.get_value_from_kpro(indexes, self.data1) * 0.1
         if self.version == constants.S300V3_ID:
-            return self.get_value_from_kpro(indexes, self.data6) * 0.0963
+            return self.get_value_from_kpro(indexes, self.data6) * 0.1
         else:
             return self.get_value_from_kpro(indexes, self.data1) * 0.1
 
@@ -197,15 +211,20 @@ class Kpro:
             constants.KPRO4_ID: constants.KPRO4_ETH,
             constants.S300V3_ID: constants.S300V3_ETH,
         }
-        return self.get_value_from_kpro(indexes, self.data3)
+        if self.version == constants.S300V3_ID:
+            return self.get_value_from_kpro(indexes, self.data5)
+        else:   return self.get_value_from_kpro(indexes, self.data3)
 
     @property
     def flt(self):
         """Fuel temperature"""
         indexes = {constants.KPRO4_ID: constants.KPRO4_FLT,
-                   constants.S300V3_ID: constants.S300V3_FLT,
+                   constants.S300V3_ID: constants.S300V3_FLT
        }
-        flt_celsius = self.get_value_from_kpro(indexes, self.data3)
+        if self.version == constants.S300V3_ID:
+                #not sure why the offset on S300 but the formula works
+                flt_celsius = self.get_value_from_kpro(indexes, self.data5) -40
+        else:   flt_celsius = self.get_value_from_kpro(indexes, self.data3)        
         flt_fahrenheit = Formula.celsius_to_fahrenheit(flt_celsius)
         return {"celsius": flt_celsius, "fahrenheit": flt_fahrenheit}
 
@@ -220,9 +239,12 @@ class Kpro:
         indexes_2 = {
             constants.KPRO23_ID: constants.KPRO23_AFR2,
             constants.KPRO4_ID: constants.KPRO4_AFR2,
+            # TODO byte 54 may be the extra byte I need:
 #            constants.S300V3_ID: constants.S300V3_54
         }
         if self.version == constants.S300V3_ID:
+            # TODO this formula is totally garbage but works. I think I'm missing
+            # a hi byte somewhere. Need to revisit.
             o2_lambda = (self.get_value_from_kpro(indexes_1, self.data6) - 1.1588)/126.35
 #            try:
 #                    o2_lambda = 32768.0 / (
@@ -277,6 +299,7 @@ class Kpro:
         }
         
         if self.version == constants.S300V3_ID:
+            # TODO this needs fixing with dividebyzero exception as above (O2)
             if self.get_value_from_kpro(indexes_2, self.data6) == 255:
                 vss_kmh = 0
             elif self.get_value_from_kpro(indexes_2, self.data6) == 0:
@@ -484,9 +507,9 @@ class Kpro:
 
         }
         if self.version == constants.S300V3_ID:
-            #engine always in 'run' with this sim, need to test in car
-            mask = 0x02
-            return bool(self.get_value_from_kpro(indexes, self.data6) & mask)
+            #Output inverted on S300?
+            mask = 0x04
+            return not bool(self.get_value_from_kpro(indexes, self.data6) & mask)
         else:
             mask = 0x04
             return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
@@ -756,7 +779,7 @@ class Kpro:
     @property 
     def injduty(self):
         """Injector Duty Cycle, in %; S300"""
-        # This formula is close but not 100% right
+        # TODO This formula is close but not 100% right
         indexes_1 = {constants.S300V3_ID: constants.S300V3_DUTY1
         }
         indexes_2 = {constants.S300V3_ID: constants.S300V3_DUTY2
@@ -799,7 +822,7 @@ class Kpro:
     @property
     def ltrim(self):
         """Long Term Fuel Trim; S300"""
-        #Untested - having trouble stimulating on bench
+        # TODO Untested - having trouble stimulating on bench
         indexes = {constants.S300V3_ID: constants.S300V3_LTRIM,
         }
         data_from_kpro = self.get_value_from_kpro(
@@ -938,7 +961,6 @@ class Kpro:
             constants.S300V3_ID: constants.S300V3_CL,            
         }
         if self.version == constants.S300V3_ID:
-#            mask = 0x04
             mask = 0x01
             return bool(self.get_value_from_kpro(indexes, self.data6) & mask)
 
@@ -969,7 +991,7 @@ class Kpro:
             constants.S300V3_ID: constants.S300V3_PCS,            
         }
         if self.version == constants.S300V3_ID:
-            mask = 0x10 #Might be on a different bitfield 
+            mask = 0x10
             return bool(self.get_value_from_kpro(indexes, self.data6) & mask)
         
     @property
@@ -1051,6 +1073,7 @@ class Kpro:
         if self.version == constants.S300V3_ID:            
             mask = 0x40
             return bool(self.get_value_from_kpro(indexes, self.data6) & mask)
+
     @property
     def sectbl(self):
         """Secondary Tables Active Flag; S300"""
@@ -1153,4 +1176,44 @@ class Kpro:
         )
         if isinstance(data_from_kpro, int):
             return round(interp(data_from_kpro, [0, 255], [0, 100]), 2)
- 
+
+    """Functions for benchtesting below here"""
+        
+    @property
+    def byte(self):
+        """
+        For polling single bytes within a packet. Grabs a single byte from a
+        packet for analysis. Update constants.S300V3_BYTE and select data
+        packet below to use; S300
+        """
+        indexes = {
+            constants.S300V3_ID: constants.S300V3_BYTE,            
+        }
+        if self.version == constants.S300V3_ID:
+            return self.get_value_from_kpro(indexes, self.data4) 
+        
+    @property
+    def packet(self):
+        """
+        For polling an entire packet - to use just select which packet you
+        want to show below; S300
+        """
+        if self.version == constants.S300V3_ID:
+            return self.data4
+        
+    @property
+    def bits(self):
+        """
+        For polling bitfields. Update constants.S300V3_BITS and select data
+        packet below to use; S300
+        """
+        indexes = {
+            constants.S300V3_ID: constants.S300V3_BITS,            
+        }
+        if self.version == constants.S300V3_ID:  
+            bits = []
+            masks = [0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01]
+            for mask in masks:
+#                print(hex(mask))
+                bits.append(bool(self.get_value_from_kpro(indexes, self.data6) & mask))
+            return bits

@@ -1,0 +1,376 @@
+{
+  "an0": {
+    "decimals": 0,
+    "formula": "bosch_0280130039_0280130026",
+    "label": "TFuel",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "suffix": "F",
+    "tag": "gauge4",
+    "unit": "fahrenheit"
+  },
+  "an1": {
+    "decimals": 1,
+    "formula": "ebay_150_psi",
+    "label": "pOil",
+    "max": 10,
+    "sectors": [
+      {
+        "color": "#ff0000",
+        "hi": 1.5,
+        "lo": 0
+      },
+      {
+        "color": "#2af901",
+        "hi": 6.5,
+        "lo": 1.5
+      },
+      {
+        "color": "#ffff00",
+        "hi": 10,
+        "lo": 6.5
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge8",
+    "unit": "bar"
+  },
+  "an2": {
+    "decimals": 0,
+    "formula": "bosch_0280130039_0280130026",
+    "label": "TOil",
+    "max": 250,
+    "sectors": [
+      {
+        "color": "#0000ff",
+        "hi": 150,
+        "lo": 0
+      },
+      {
+        "color": "#00ff00",
+        "hi": 220,
+        "lo": 150
+      },
+      {
+        "color": "#ff0000",
+        "hi": 250,
+        "lo": 220
+      }
+    ],
+    "suffix": "F",
+    "tag": "gauge3",
+    "unit": "fahrenheit"
+  },
+  "an3": {
+    "decimals": 1,
+    "formula": "civic_ek_fuel_tank",
+    "label": "",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#ff0000",
+        "hi": 10,
+        "lo": 0
+      },
+      {
+        "color": "#ffff00",
+        "hi": 30,
+        "lo": 10
+      },
+      {
+        "color": "#00ff00",
+        "hi": 100,
+        "lo": 30
+      }
+    ],
+    "suffix": "",
+    "tag": "bar2",
+    "unit": "per cent"
+  },
+  "an4": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an5": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an6": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "an7": {
+    "decimals": 0,
+    "formula": "vdo_323_057",
+    "label": "",
+    "max": 0,
+    "sectors": [],
+    "suffix": "",
+    "tag": "not use",
+    "unit": "celsius"
+  },
+  "bat": {
+    "decimals": 1,
+    "label": "VBattery",
+    "max": 20,
+    "sectors": [
+      {
+        "color": "#0000ff",
+        "hi": 12,
+        "lo": 0
+      },
+      {
+        "color": "#00ff00",
+        "hi": 14.5,
+        "lo": 12
+      },
+      {
+        "color": "#ff0000",
+        "hi": 20,
+        "lo": 14.5
+      }
+    ],
+    "suffix": "V",
+    "tag": "gauge10"
+  },
+  "cam": {
+    "label": "CAM",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "not use"
+  },
+  "ect": {
+    "label": "TWater",
+    "max": 250,
+    "sectors": [
+      {
+        "color": "#0000ff",
+        "hi": 160,
+        "lo": 50
+      },
+      {
+        "color": "#00ff00",
+        "hi": 200,
+        "lo": 160
+      },
+      {
+        "color": "#ff0000",
+        "hi": 250,
+        "lo": 200
+      }
+    ],
+    "suffix": "F",
+    "tag": "gauge2",
+    "unit": "fahrenheit"
+  },
+  "eth": {
+    "label": "rEthanol",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#00ff00",
+        "hi": 15,
+        "lo": 0
+      },
+      {
+        "color": "#ff00ff",
+        "hi": 70,
+        "lo": 15
+      },
+      {
+        "color": "#00ffff",
+        "hi": 100,
+        "lo": 70
+      }
+    ],
+    "suffix": "%",
+    "tag": "gauge9"
+  },
+  "fan": {
+    "pathoff": "fan_off.svg",
+    "pathon": "fan_on.svg",
+    "tag": "icon2"
+  },
+  "fmw": {
+    "tag": "firmware_version"
+  },
+  "gear": {
+    "tag": "gear"
+  },
+  "iat": {
+    "label": "TAir",
+    "max": 200,
+    "sectors": [
+      {
+        "color": "#2a02f2",
+        "hi": 80,
+        "lo": 0
+      },
+      {
+        "color": "#44ff00",
+        "hi": 130,
+        "lo": 80
+      },
+      {
+        "color": "#ffff00",
+        "hi": 200,
+        "lo": 130
+      }
+    ],
+    "suffix": "F",
+    "tag": "gauge1",
+    "unit": "fahrenheit"
+  },
+  "map": {
+    "decimals": 1,
+    "label": "pManifold",
+    "max": 3,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 3,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge7",
+    "unit": "bar"
+  },
+  "mil": {
+    "pathoff": "check_engine_off.svg",
+    "pathon": "check_engine_on.svg",
+    "tag": "icon1"
+  },
+  "o2": {
+    "decimals": 2,
+    "label": "rLambda",
+    "max": 2,
+    "sectors": [
+      {
+        "color": "#0000ff",
+        "hi": 0.88,
+        "lo": 0
+      },
+      {
+        "color": "#00ff00",
+        "hi": 1,
+        "lo": 0.88
+      },
+      {
+        "color": "#ffff00",
+        "hi": 1.1,
+        "lo": 1
+      },
+      {
+        "color": "#ff0000",
+        "hi": 2,
+        "lo": 1.1
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge5",
+    "unit": "lambda"
+  },
+  "odo": {
+    "tag": "odo",
+    "unit": "miles",
+    "value": 2324
+  },
+  "rpm": {
+    "max": 9000,
+    "sectors": [
+      {
+        "color": "#00ff00",
+        "hi": 6500,
+        "lo": 0
+      },
+      {
+        "color": "#00ffff",
+        "hi": 7200,
+        "lo": 6500
+      },
+      {
+        "color": "#ff0000",
+        "hi": 9000,
+        "lo": 7200
+      }
+    ],
+    "tag": "bar1"
+  },
+  "screen": {
+    "rotate": false
+  },
+  "scs": {
+    "pathoff": "scs_off.png",
+    "pathon": "scs_on.png",
+    "tag": "icon3"
+  },
+  "style": {
+    "dayBackgroundColor": "#d6d6d6",
+    "dayBackgroundGaugeColor": "#767474",
+    "dayTextColor": "#000000",
+    "elapsedSeconds": 10,
+    "nightBackgroundColor": "#000000",
+    "nightBackgroundGaugeColor": "#808080",
+    "nightTextColor": "#f6f4f4",
+    "tag": "style",
+    "tpsLowerThreshold": 20,
+    "tpsUpperThreshold": 30
+  },
+  "template": "animalillo",
+  "time": {
+    "tag": "time"
+  },
+  "tps": {
+    "label": "rThrottle",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ],
+    "suffix": "",
+    "tag": "gauge6"
+  },
+  "ver": {
+    "tag": "version"
+  },
+  "version": "2.5.0",
+  "vss": {
+    "tag": "speed",
+    "unit": "mph"
+  }
+}

@@ -2,9 +2,9 @@
 var formulas = "contains(., '[an') and contains(., '[formula]')";
 var formulaVsUnits = {
   vdo_323_057: ["celsius", "fahrenheit"],
-  autometer_2246: ["psi", "bar"],
+  autometer_2246: ["psi", "mbar", "bar"],
   aem_30_2012: ["celsius", "fahrenheit"],
-  ebay_150_psi: ["psi", "bar"],
+  ebay_150_psi: ["psi", "mbar", "bar"],
   bosch_0280130039_0280130026: ["celsius", "fahrenheit"]
 };
 var otherUnits = ["per cent"];
