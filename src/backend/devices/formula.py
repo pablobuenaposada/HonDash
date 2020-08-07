@@ -10,8 +10,8 @@ class Formula:
         return (adc / 4095.000) * 5.0
     
     @staticmethod
-    def adc16_to_volts(adc):
-        return (adc / 51)
+    def adc8_to_volts(adc):
+        return (adc / 255) * 5.0
 
     @staticmethod
     def psi_to_bar(psi):
@@ -178,9 +178,7 @@ class Formula:
                 + 121.3158219
             )
         }
-
     
-    """New Formulas I added go below here"""
     @staticmethod
     def baro_to_altitude(mbar):
         """

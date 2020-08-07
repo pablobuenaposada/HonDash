@@ -1,10 +1,10 @@
 # sudo python bench/test.py
 from __future__ import print_function
+
 from reprint import output
 
-import sys
-sys.path.append('/home/pi/Desktop/HonDash/src/')
-#sys.path
+#import sys
+#sys.path.append('/home/pi/Desktop/HonDash/src/')
 
 from backend.devices.kpro.kpro import Kpro
 
@@ -13,7 +13,7 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
     while True:
 #        output_list["ETH"] = str(kpro.eth)
 #        output_list["FLT"] = str(kpro.flt)
-#        output_list["BAT"] = str(kpro.bat)
+        output_list["BAT"] = str(kpro.bat)
 #        output_list["CAM"] = str(kpro.cam)  # NA for S300
 #        output_list["O2"] = str(kpro.o2)
 #        output_list["IAT"] = str(kpro.iat)

@@ -1,5 +1,4 @@
 import usb
-import time
 
 if usb.core.find(idVendor=0x403, idProduct=0xF5F8) is not None:
     dev = usb.core.find(idVendor=0x403, idProduct=0xF5F8)

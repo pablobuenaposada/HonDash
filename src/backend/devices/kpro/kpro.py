@@ -860,7 +860,7 @@ class Kpro:
                 indexes, self.data6
         )
         if isinstance(data_from_kpro, int):
-            return Formula.adc16_to_volts(data_from_kpro)
+            return Formula.adc8_to_volts(data_from_kpro)
 
     @property
     def egrlv(self):
@@ -871,7 +871,7 @@ class Kpro:
                 indexes_1, self.data6
         )
         if isinstance(data_from_kpro, int):
-            return Formula.adc16_to_volts(data_from_kpro) 
+            return Formula.adc8_to_volts(data_from_kpro) 
 
 
     @property
@@ -883,7 +883,7 @@ class Kpro:
                 indexes_1, self.data6
         )
         if isinstance(data_from_kpro, int):
-            return Formula.adc16_to_volts(data_from_kpro)
+            return Formula.adc8_to_volts(data_from_kpro)
         
     @property
     def baro(self):
@@ -920,7 +920,7 @@ class Kpro:
                 indexes_1, self.data6
         )
         if isinstance(data_from_kpro, int):
-            eldv = Formula.adc16_to_volts(data_from_kpro)
+            eldv = Formula.adc8_to_volts(data_from_kpro)
         elda = (-17.5 * eldv) + 78.5
         return {"eld_v": eldv, "eld_a": elda}
                     
