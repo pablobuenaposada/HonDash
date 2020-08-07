@@ -5,7 +5,9 @@ from backend.devices.formula import Formula
 
 class TestFormula:
     @staticmethod
-    @pytest.mark.parametrize("adc, voltage", ((0, 0), (2047.5, 2.5), (4095, 5)))
+    @pytest.mark.parametrize(
+        "adc, voltage", ((0, 0), (2047, 2.4993894993894994), (2047.5, 2.5), (4095, 5))
+    )
     def test_adc_to_volts(adc, voltage):
         assert Formula.adc_to_volts(adc) == voltage
 
