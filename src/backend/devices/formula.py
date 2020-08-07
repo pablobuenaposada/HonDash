@@ -7,7 +7,7 @@ class Formula:
 
     @staticmethod
     def adc_to_volts(adc):
-        return (adc / 4095.000) * 5.0
+        return (adc / 4095) * 5
 
     @staticmethod
     def psi_to_bar(psi):

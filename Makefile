@@ -84,7 +84,7 @@ lint/isort-fix: virtualenv
 	$(ISORT) -rc src
 
 lint/isort-check: virtualenv
-	$(ISORT) -rc -c src
+	$(ISORT) --diff -c src
 
 lint/flake8: virtualenv
 	$(FLAKE8) src
@@ -95,13 +95,15 @@ lint/black-fix: virtualenv
 lint/black-check: virtualenv
 	$(BLACK) --exclude $(VIRTUAL_ENV) src --check
 
-lint: lint/isort-check lint/flake8 lint/black-check lint/prettier-check
-
 lint/prettier-check: npm
 	$(PRETTIER) --check "src/frontend/**"
 
 lint/prettier-fix: npm
 	$(PRETTIER) --write "src/frontend/**"
+
+lint-fix: lint/isort-fix lint/black-fix lint/prettier-fix
+
+lint: lint/isort-check lint/flake8 lint/black-check lint/prettier-check
 
 docker/build:
 	docker build --cache-from=$(DOCKER_IMAGE):latest --tag=$(DOCKER_IMAGE) .

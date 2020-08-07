@@ -1,6 +1,7 @@
 # pip install matplotlib
 import matplotlib
 import matplotlib.pyplot as plt
+
 from backend.devices.formula import Formula
 
 matplotlib.use("TkAgg")
