@@ -33,12 +33,19 @@ var version = new Text({
   prefix: "HonDash v ",
   textAlign: "right"
 });
+var ecu_name = new Text({
+  id: "ecu_name",
+  value: "",
+  size: 1,
+  style: "italic",
+  textAlign: "right",
+  suffix: " v"
+});
 var firmware_version = new Text({
   id: "firmware_version",
   value: "",
   size: 1,
-  style: "italic",
-  prefix: "K-Pro v "
+  style: "italic"
 });
 
 // Icons

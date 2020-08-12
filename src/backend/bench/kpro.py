@@ -1,4 +1,4 @@
-# sudo python bench/test.py
+# PYTHONPATH=src python src/backend/bench/kpro.py
 from __future__ import print_function
 
 from reprint import output

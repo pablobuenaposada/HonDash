@@ -21,11 +21,7 @@ class TestMain:
     def test_run_backend(self):
         with mock.patch("usb.core.find"), mock.patch(
             "threading.Thread.start"
-        ), mock.patch("backend.main.Websocket.__init__") as m_ws___init__, mock.patch(
-            "backend.devices.kpro.kpro.Kpro.__init__"
-        ) as m___init__:
-            # mocking kpro device since for tests is not available
-            m___init__.return_value = None
+        ), mock.patch("backend.main.Websocket.__init__") as m_ws___init__:
             # mocking websocket
             m_ws___init__.return_value = None
 
@@ -107,6 +103,7 @@ class TestMain:
             "odo": 0,
             "style": "day",
             "ver": "2.6.0",
+            "name": "K-Pro",
         }
 
         with mock.patch("usb.core.find"), mock.patch(

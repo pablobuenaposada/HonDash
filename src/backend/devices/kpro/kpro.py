@@ -11,6 +11,8 @@ MAX_CONNECTION_RETRIES = 10
 
 
 class Kpro:
+    NAME = "K-Pro"
+
     def __init__(self):
         self.data0 = self.data1 = self.data2 = self.data3 = self.data4 = self.data5 = []
         self.kpro_device = self.version = self.entry_point = None
@@ -170,7 +172,9 @@ class Kpro:
 
     @property
     def flt(self):
-        """Fuel temperature"""
+        """Fuel temperature
+        TODO: RETURN {"celsius": 0, "fahrenheit": 0} if fails
+        """
         indexes = {constants.KPRO4_ID: constants.KPRO4_FLT}
         flt_celsius = self.get_value_from_kpro(indexes, self.data3)
         flt_fahrenheit = Formula.celsius_to_fahrenheit(flt_celsius)
