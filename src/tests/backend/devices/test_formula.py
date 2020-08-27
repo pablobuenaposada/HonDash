@@ -125,6 +125,14 @@ class TestFormula:
 
     @staticmethod
     @pytest.mark.parametrize(
+        "voltage, level",
+        ((3.51, {"per cent": 0}), (2.15, {"per cent": 50}), (0.82, {"per cent": 100})),
+    )
+    def test_integra_dc5_fuel_tank(voltage, level):
+        assert Formula.integra_dc5_fuel_tank(voltage) == level
+
+    @staticmethod
+    @pytest.mark.parametrize(
         "voltage, celsius, fahrenheit",
         (
             (4.314974654, -9.999999950263089, 14.000000089526441),
