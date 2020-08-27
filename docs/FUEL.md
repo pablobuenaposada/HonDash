@@ -15,6 +15,7 @@ Fuel tank | Resistor value | Cabin harness wire color | Specs
 Civic EG | 56Ω 1 watt | yellow/white | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_eg.jpg)
 Civic EK | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_ek.png)
 S2000 | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/s2000.png)
+Integra DC5 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/dc5.png)
 MR2 W20 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w20.png)
 MR2 W30 | 56Ω 1 watt | N/A | N/A
 MX5 NA | 56Ω 1 watt | N/A | N/A
@@ -39,6 +40,7 @@ Fuel tank | Voltage at 0% | Voltage at 100%
 Civic EG | 3,31 | 0,17
 Civic EK | 3,29 | 0,29
 S2000 | 3,5 | 0,9
+Integra DC5 | 3,51 | 0,82
 MR2 W20 | 3,31 | 0,24
 MR2 W30 | 1,13 | 3,9
 MX5 NA | 3,14 | 0,55

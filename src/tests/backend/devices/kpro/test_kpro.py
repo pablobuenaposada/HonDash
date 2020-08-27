@@ -274,7 +274,15 @@ class TestKpro:
                 0,
                 0,
             ),
-            (None, 0, 0, 666, 666, 0, 0,),
+            (
+                None,
+                0,
+                0,
+                666,
+                666,
+                0,
+                0,
+            ),
         ),
     )
     def test_o2(
@@ -626,7 +634,16 @@ class TestKpro:
 
     @pytest.mark.parametrize(
         "channel, result",
-        ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),),
+        (
+            (0, 0),
+            (1, 0),
+            (2, 0),
+            (3, 0),
+            (4, 0),
+            (5, 0),
+            (6, 0),
+            (7, 0),
+        ),
     )
     def test_analog_input_no_version(self, channel, result):
         self.kpro.version = None

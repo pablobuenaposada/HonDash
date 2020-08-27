@@ -43,7 +43,8 @@ class Kpro:
         device = version = None
         # kpro v2 and v3
         if usb.core.find(
-            idVendor=constants.KPRO23_ID_VENDOR, idProduct=constants.KPRO23_ID_PRODUCT,
+            idVendor=constants.KPRO23_ID_VENDOR,
+            idProduct=constants.KPRO23_ID_PRODUCT,
         ):
             device = usb.core.find(
                 idVendor=constants.KPRO23_ID_VENDOR,
@@ -52,7 +53,8 @@ class Kpro:
             version = constants.KPRO23_ID
         # kpro v4
         elif usb.core.find(
-            idVendor=constants.KPRO4_ID_VENDOR, idProduct=constants.KPRO4_ID_PRODUCT,
+            idVendor=constants.KPRO4_ID_VENDOR,
+            idProduct=constants.KPRO4_ID_PRODUCT,
         ):
             device = usb.core.find(
                 idVendor=constants.KPRO4_ID_VENDOR,

@@ -174,3 +174,15 @@ class Formula:
                 + 121.3158219
             )
         }
+
+    @staticmethod
+    def integra_dc5_fuel_tank(volts):
+        """
+        Specs of this tank from RSX workshop manual
+        (http://www.mediafire.com/file/dwm2qkmzy2n/%2528LINKED_Edition%252902-06_Acura_RSX_Shop_Manual.pdf/file)
+        Empty: 132 ohms
+        Full: 11 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        return {"per cent": int(-37.17472119 * volts + 130.4832714)}
