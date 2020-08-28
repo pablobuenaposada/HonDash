@@ -186,3 +186,15 @@ class Formula:
         Vin: 5v
         """
         return {"per cent": int(-37.17472119 * volts + 130.4832714)}
+
+    @staticmethod
+    def accord_cl9_fuel_tank(volts):
+        """
+        Specs of this tank from TSX workshop manual
+        (http://www.hondahookup.com/forums/downloads.php?do=file&id=158)
+        Empty: 790 ohms
+        Full: 19 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        return {"per cent": int(-29.38583603 * volts + 137.2024684)}

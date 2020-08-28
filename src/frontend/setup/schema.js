@@ -83,6 +83,7 @@ var formula = {
     "civic_ek_fuel_tank",
     "s2000_fuel_tank",
     "integra_dc5_fuel_tank",
+    "accord_cl9_fuel_tank",
     "mr2_w20_fuel_tank",
     "mr2_w30_fuel_tank",
     "mx5_na_fuel_tank"

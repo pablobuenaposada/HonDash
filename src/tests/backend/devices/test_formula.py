@@ -133,6 +133,14 @@ class TestFormula:
 
     @staticmethod
     @pytest.mark.parametrize(
+        "voltage, level",
+        ((4.669, {"per cent": 0}), (2.95, {"per cent": 50}), (1.25, {"per cent": 100})),
+    )
+    def test_accord_cl9_fuel_tank(voltage, level):
+        assert Formula.accord_cl9_fuel_tank(voltage) == level
+
+    @staticmethod
+    @pytest.mark.parametrize(
         "voltage, celsius, fahrenheit",
         (
             (4.314974654, -9.999999950263089, 14.000000089526441),
