@@ -18,7 +18,7 @@ S2000 | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobue
 Integra DC5 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/dc5.png)
 Accord CL9 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/cl9.jpeg)
 MR2 W20 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w20.png)
-MR2 W30 | 56Ω 1 watt | N/A | N/A
+MR2 W30 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w30.png)
 MX5 NA | 56Ω 1 watt | N/A | N/A
 
 <br/>
