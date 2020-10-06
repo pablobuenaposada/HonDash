@@ -148,9 +148,16 @@ class Formula:
             )
         }
 
-    # toyota mr2 w30 fuel tank powered by 5v and a 56ohms voltage divider
     @staticmethod
     def mr2_w30_fuel_tank(volts):
+        """
+        Specs of this tank (http://www.testroete.com/car/Toyota/mr2%20spyder/Repair%20Information/Repair%20Manual/
+        20%20-%20Body%20Electrical/21%20-%20Combination%20Meter%20-%20Inspection.pdf)
+        Empty: 192.7 ohms
+        Full: 16.4 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
         return {"per cent": int(36.4757313 * volts - 41.31229235)}
 
     @staticmethod
