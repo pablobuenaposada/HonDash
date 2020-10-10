@@ -111,7 +111,7 @@ class TestFormula:
 
     @staticmethod
     @pytest.mark.parametrize(
-        "voltage, level", ((1.13, {"per cent": 0}), (3.9, {"per cent": 100}))
+        "voltage, level", ((3.87, {"per cent": 0}), (1.1, {"per cent": 100}))
     )
     def test_mr2_w30_fuel_tank(voltage, level):
         assert Formula.mr2_w30_fuel_tank(voltage) == level

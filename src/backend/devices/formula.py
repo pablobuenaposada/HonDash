@@ -153,12 +153,12 @@ class Formula:
         """
         Specs of this tank (http://www.testroete.com/car/Toyota/mr2%20spyder/Repair%20Information/Repair%20Manual/
         20%20-%20Body%20Electrical/21%20-%20Combination%20Meter%20-%20Inspection.pdf)
-        Empty: 192.7 ohms
-        Full: 16.4 ohms
+        Empty: 192 ohms
+        Full: 16 ohms
         Resistance used for voltage divider: 56 ohms
         Vin: 5v
         """
-        return {"per cent": int(36.4757313 * volts - 41.31229235)}
+        return {"per cent": int(-36.23188406 * volts + 140.2173913)}
 
     @staticmethod
     def mr2_w20_fuel_tank(volts):
