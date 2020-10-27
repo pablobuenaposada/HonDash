@@ -77,6 +77,7 @@ var formula = {
     "autometer_2246",
     "vdo_323_057",
     "aem_30_2012",
+    "ebay_30_psi",
     "ebay_150_psi",
     "bosch_0280130039_0280130026",
     "civic_eg_fuel_tank",

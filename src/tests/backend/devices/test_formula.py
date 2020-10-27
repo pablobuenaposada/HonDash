@@ -71,6 +71,14 @@ class TestFormula:
 
     @staticmethod
     @pytest.mark.parametrize(
+        "voltage, bar, psi",
+        ((0.5, 0.0, 0.0), (2.5, 1.034214, 15.0), (4.5, 2.068428, 30.0)),
+    )
+    def test_ebay_30_psi(voltage, bar, psi):
+        assert Formula.ebay_30_psi(voltage) == {"bar": bar, "psi": psi}
+
+    @staticmethod
+    @pytest.mark.parametrize(
         "voltage, level",
         (
             (3.313253012, {"per cent": 0}),
