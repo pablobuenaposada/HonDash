@@ -108,10 +108,24 @@ class Formula:
         psi = 25 * volts - 12.5
         return {"psi": psi, "bar": Formula.psi_to_bar(psi)}
 
-    # ebay 150 psi oil pressure sensor
     @staticmethod
     def ebay_150_psi(volts):
+        """
+        150 psi fluid pressure transducer sensor
+        0 psi = 0.5v
+        150 psi = 4.5v
+        """
         psi = 37.5 * volts - 18.75
+        return {"psi": psi, "bar": Formula.psi_to_bar(psi)}
+
+    @staticmethod
+    def ebay_30_psi(volts):
+        """
+        30 psi fluid pressure transducer sensor
+        0 psi = 0.5v
+        30 psi = 4.5v
+        """
+        psi = 7.5 * volts - 3.75
         return {"psi": psi, "bar": Formula.psi_to_bar(psi)}
 
     # civic eg fuel tank powered by 5v and a 56ohms voltage divider
