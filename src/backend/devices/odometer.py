@@ -1,23 +1,18 @@
 import datetime
 
-from backend.devices.setup_file import SetupFile
-
 
 class Odometer:
-    def __init__(self):
+    def __init__(self, initial_mileage=0, unit="km"):
         self.lastTime = datetime.datetime.now()
         self.lastSpeed = 0
-        self.mileage = 0  # always stored in km
+        self.mileage = initial_mileage
+        self.preferred_unit = unit
         self.last_mileage_stored = 0
-        setup_file = SetupFile()
 
-        try:
-            self.mileage = setup_file.get_value("odo").get("value")
-            unit = setup_file.get_value("odo").get("unit")
-            if unit == "miles":  # if mileage is in miles let's convert it to km
-                self.mileage = self._miles_to_km(self.mileage)
-        except AttributeError:
-            pass
+        if (
+            self.preferred_unit == "miles"
+        ):  # if mileage is in miles let's convert it to km
+            self.mileage = self._miles_to_km(self.mileage)
         self.last_mileage_stored = self.mileage
 
     def save(self, speed):
@@ -33,20 +28,24 @@ class Odometer:
         self.lastSpeed = speed
         self.mileage += km_traveled
 
-        if (
-            int(self.mileage) > self.last_mileage_stored
-        ):  # only store when we ran one km more
-            setup_file = SetupFile()
-            setup_file.update_key("odo", {"value": int(self.mileage)})
+        # only store when we ran one km more
+        if int(self.mileage) > self.last_mileage_stored:
             self.last_mileage_stored = int(self.mileage)
+            return True
+        else:
+            return False
 
     def get_mileage(self):
         return {"km": int(self.mileage), "miles": self._km_to_miles(self.mileage)}
 
+    @property
+    def preferred_mileage(self):
+        return self.get_mileage()[self.preferred_unit]
+
     @staticmethod
     def _km_to_miles(km):
-        return int(km * 0.6214)
+        return int(km * 0.621371)
 
     @staticmethod
     def _miles_to_km(miles):
-        return int(miles * 1.609)
+        return int(miles * 1.609344)
