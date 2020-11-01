@@ -27,7 +27,10 @@ class Backend:
 
     def _init_resources(self):
         self.time = Time()
-        self.odo = Odometer()
+        self.odo = Odometer(
+            self.setup_file.get_value("odo").get("value"),
+            self.setup_file.get_value("odo").get("unit"),
+        )
         self.kpro = Kpro()
 
     def _load_user_preferences(self):
@@ -71,7 +74,8 @@ class Backend:
         """ load the websocket with updated info """
         if not self.kpro.status:  # if kpro is down try to reconnect
             self.kpro.find_and_connect()
-        self.odo.save(self.kpro.vss["kmh"])
+        if self.odo.save(self.kpro.vss["kmh"]):
+            self.setup_file.update_key("odo", {"value": self.odo.preferred_mileage})
         self.style.update(self.kpro.tps)
         return {
             "bat": self.kpro.bat,
@@ -100,7 +104,7 @@ class Backend:
             "an6": self.an6_formula(self.kpro.analog_input(6))[self.an6_unit],
             "an7": self.an7_formula(self.kpro.analog_input(7))[self.an7_unit],
             "time": self.time.get_time(),
-            "odo": self.odo.get_mileage()[self.odo_unit],
+            "odo": self.odo.preferred_mileage,
             "style": self.style.status,
             "ver": __version__,
         }
@@ -114,12 +118,16 @@ class Backend:
         SetupValidator().validate(new_setup)
         self.setup_file.save_setup(new_setup)
         self.setup_file.rotate_screen(new_setup["screen"]["rotate"])
-        self._load_user_preferences()  # refresh the backend too
+        # refresh the backend too
+        self._load_user_preferences()
+        self._init_resources()
 
     def reset(self):
         """Reset to the default setup"""
         self.setup_file.reset_setup()
-        self._load_user_preferences()  # refresh the backend too
+        # refresh the backend too
+        self._load_user_preferences()
+        self._init_resources()
 
 
 class Websocket:
