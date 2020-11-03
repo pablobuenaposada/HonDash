@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2020-11-03
+### Changed
+- Corrected MR2 W30 fuel tank formula
+- Odometer has been revised to be more precise and no reboot needed after changes
+
+### Added
+- Integra DC5 fuel tank formula
+- Accord CL9 fuel tank formula
+- 30 psi fluid pressure transducer formula
+
 ## [2.5.0] - 2020-05-27
 ### Changed
 - Fixed bug with odometer units (thanks @acolonnh)
