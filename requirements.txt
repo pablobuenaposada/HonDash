@@ -1,5 +1,4 @@
 black
-coveralls
 pytest
 pyusb==1.0.2
 numpy==1.18.3
