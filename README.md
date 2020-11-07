@@ -1,7 +1,6 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
 ![Build Status](https://github.com/pablobuenaposada/HonDash/workflows/Build/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/pablobuenaposada/HonDash/badge.svg?branch=master)](https://coveralls.io/github/pablobuenaposada/HonDash?branch=master)
 
 Start from checking [hondash.com](https://hondash.com)!
 
