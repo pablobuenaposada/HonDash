@@ -47,11 +47,11 @@ class TestMain:
         """
         with mock.patch("usb.core.find"):
             b = Backend()
-        setup_from_backend = b.setup()
-        with open(setup_file.DEFAULT_CONFIG_FILE_NAME) as file:
-            default_setup = json.load(file)
-        assert setup_from_backend == default_setup
-        b.stop()
+            setup_from_backend = b.setup()
+            with open(setup_file.DEFAULT_CONFIG_FILE_NAME) as file:
+                default_setup = json.load(file)
+            assert setup_from_backend == default_setup
+            b.stop()
 
     def test_save(self):
         """
@@ -59,12 +59,12 @@ class TestMain:
         """
         with mock.patch("usb.core.find"):
             b = Backend()
-        with open(setup_file.DEFAULT_CONFIG_FILE_NAME) as file:
-            default_setup = json.load(file)
-        default_setup["tps"]["label"] = "test"
-        b.save(default_setup)
-        assert b.setup() == default_setup
-        b.stop()
+            with open(setup_file.DEFAULT_CONFIG_FILE_NAME) as file:
+                default_setup = json.load(file)
+            default_setup["tps"]["label"] = "test"
+            b.save(default_setup)
+            assert b.setup() == default_setup
+            b.stop()
 
     def test_save_invalid(self):
         """

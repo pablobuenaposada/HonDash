@@ -4,7 +4,6 @@ PIP=$(VIRTUAL_ENV)/bin/pip
 PYTEST=$(VIRTUAL_ENV)/bin/pytest
 ISORT=$(VIRTUAL_ENV)/bin/isort
 FLAKE8=$(VIRTUAL_ENV)/bin/flake8
-COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 BLACK=$(VIRTUAL_ENV)/bin/black
 PRETTIER=node_modules/.bin/prettier
 PYTHON_VERSION=3.7
@@ -78,7 +77,6 @@ kill:
 
 test: lint
 	PYTHONPATH=src $(PYTEST) --cov src/ src/tests
-	@if [ -n "$$CI" ] && [ -f $(COVERALLS) ]; then $(COVERALLS); fi \
 
 lint/isort-fix: virtualenv
 	$(ISORT) -rc src
