@@ -76,7 +76,7 @@ kill:
 	sudo pkill -f backend || true
 
 test: lint
-	PYTHONPATH=src $(PYTEST) --cov src/ src/tests
+	PYTHONPATH=src $(PYTEST) src/tests
 
 lint/isort-fix: virtualenv
 	$(ISORT) -rc src

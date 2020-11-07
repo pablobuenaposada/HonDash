@@ -3,10 +3,7 @@
 venv/
 .cache/
 .idea/
-.crossbar/node.pid
 .pytest_cache/
-.coverage
 pishrink.sh
 *.img
 node_modules/
-.coverage*
