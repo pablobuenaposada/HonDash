@@ -7,3 +7,4 @@ venv/
 pishrink.sh
 *.img
 node_modules/
+.coverage

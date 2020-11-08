@@ -17,3 +17,8 @@ jobs:
     - name: Run lint and unit tests
       run: |
         make docker/run/test
+    - name: Coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: |
+        make docker/run/coveralls
