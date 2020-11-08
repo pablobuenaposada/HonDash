@@ -4,6 +4,7 @@ PIP=$(VIRTUAL_ENV)/bin/pip
 PYTEST=$(VIRTUAL_ENV)/bin/pytest
 ISORT=$(VIRTUAL_ENV)/bin/isort
 FLAKE8=$(VIRTUAL_ENV)/bin/flake8
+COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 BLACK=$(VIRTUAL_ENV)/bin/black
 PRETTIER=node_modules/.bin/prettier
 PYTHON_VERSION=3.7
@@ -103,6 +104,9 @@ lint-fix: lint/isort-fix lint/black-fix lint/prettier-fix
 
 lint: lint/isort-check lint/flake8 lint/black-check lint/prettier-check
 
+coveralls: virtualenv
+	$(COVERALLS)
+
 docker/build:
 	docker build --cache-from=$(DOCKER_IMAGE):latest --tag=$(DOCKER_IMAGE) .
 
@@ -110,13 +114,16 @@ docker/pull:
 	docker pull $(DOCKER_IMAGE)
 
 docker/run/test:
-	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make test'
+	docker run $(DOCKER_IMAGE) /bin/sh -c 'make test'
 
 docker/run/shell:
 	docker run -it --rm $(DOCKER_IMAGE)
 
 docker/run/lint:
 	docker run $(DOCKER_IMAGE) /bin/sh -c 'make lint'
+
+docker/run/coveralls:
+	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make coveralls'
 
 sd-image/create:
 	sudo dd bs=1024 if=$(path) of=full_size_image.img
