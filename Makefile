@@ -77,7 +77,8 @@ kill:
 	sudo pkill -f backend || true
 
 test: lint
-	PYTHONPATH=src $(PYTEST) src/tests
+	PYTHONPATH=src $(PYTEST) --cov src/ src/tests
+	@if [ -n "$$COVERALLS_REPO_TOKEN" ] && [ -f $(COVERALLS) ]; then $(COVERALLS); fi \
 
 lint/isort-fix: virtualenv
 	$(ISORT) -rc src
@@ -114,16 +115,13 @@ docker/pull:
 	docker pull $(DOCKER_IMAGE)
 
 docker/run/test:
-	docker run $(DOCKER_IMAGE) /bin/sh -c 'make test'
+	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make test'
 
 docker/run/shell:
 	docker run -it --rm $(DOCKER_IMAGE)
 
 docker/run/lint:
 	docker run $(DOCKER_IMAGE) /bin/sh -c 'make lint'
-
-docker/run/coveralls:
-	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make coveralls'
 
 sd-image/create:
 	sudo dd bs=1024 if=$(path) of=full_size_image.img
