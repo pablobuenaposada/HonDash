@@ -44,13 +44,13 @@ class TestSetupValidator:
 
     def test__check_formula_success(self):
         SetupValidator()._check_formula(
-            {"foo": {"formula": "autometer_2246", "unit": "bar"}}
+            {"foo": {"formula": "vdo_323_057", "unit": "celsius"}}
         )
 
     def test__check_formula_fail(self):
         """Invalid unit for specific formula should fail"""
-        formula = "autometer_2246"
-        unit = "celsius"
+        formula = "vdo_323_057"
+        unit = "bar"
         with pytest.raises(SetupValidator.ValidationError) as excinfo:
             SetupValidator()._check_formula({"foo": {"formula": formula, "unit": unit}})
         assert str(excinfo.value) == f"{unit} not allowed for {formula}"

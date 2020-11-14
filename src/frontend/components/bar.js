@@ -16,6 +16,7 @@ class Bar {
     this.textSize = args.textSize || 20;
     this.backgroundColor = args.backgroundColor || "#edebeb";
     this.sectors = args.sectors || [];
+    this.decimals = args.decimals || 0;
 
     // Raphael paper object
     this.paper = Raphael(args.id);
@@ -40,6 +41,8 @@ class Bar {
       this.y + this.height / 2,
       ""
     );
+
+    this.refresh(0);
   }
 
   getFillColor(value) {
@@ -54,6 +57,8 @@ class Bar {
 
   refresh(value) {
     value += 0; // Casting to int just in case
+
+    value = value.toFixed(this.decimals);
 
     value =
       value > this.maxValue
@@ -84,6 +89,10 @@ class Bar {
         "font-weight": this.textWeight,
         text: value + this.suffix
       });
+  }
+
+  setDecimals(decimals) {
+    this.decimals = decimals;
   }
 
   setMax(max) {

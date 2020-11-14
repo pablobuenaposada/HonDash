@@ -5,7 +5,8 @@ var formulaVsUnits = {
   autometer_2246: ["psi", "bar"],
   aem_30_2012: ["celsius", "fahrenheit"],
   ebay_150_psi: ["psi", "bar"],
-  bosch_0280130039_0280130026: ["celsius", "fahrenheit"]
+  bosch_0280130039_0280130026: ["celsius", "fahrenheit"],
+  custom: ["celsius", "fahrenheit", "psi", "bar", "per cent"]
 };
 var otherUnits = ["per cent"];
 var enabledBackgroundColorDiv = "#ddfae2";
@@ -164,7 +165,10 @@ function checkDivColor() {
           var nodes = valueDiv[0].getElementsByTagName("*");
           for (var i = 0; i < nodes.length; i++) {
             var nodeName = nodes[i].name;
-            if (typeof nodeName !== "undefined" && !nodeName.includes("tag")) {
+            if (
+              typeof nodeName !== "undefined" &&
+              (!nodeName.includes("tag") || nodeName.includes("voltage"))
+            ) {
               nodes[i].disabled = true;
             }
           }
@@ -227,8 +231,72 @@ function checkUnitValues() {
   }
 }
 
+function checkCustomFormula() {
+  var rowsPerValue = getElementsByXPath(
+    "//*[@id='editor_holder']/div/div[@class='card card-body mb-3 bg-light']/div/div/*[@class='row']"
+  );
+
+  for (var row in rowsPerValue) {
+    var divs = getElementsByXPath("div", rowsPerValue[row]);
+    for (var div in divs) {
+      var valueDiv = getElementsByXPath(
+        "div[@class='card card-body mb-3 bg-light']",
+        divs[div]
+      );
+      var rowContainingFormula = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[contains(., 'formula')]]",
+        valueDiv[0]
+      );
+      var rowContainingTag = getElementsByXPath(
+        "div/div/*[@class='row']/div[@data-schemapath[contains(., 'tag')]]",
+        valueDiv[0]
+      );
+
+      for (var row in rowContainingFormula) {
+        var select = getElementsByXPath("div/select", rowContainingTag[row]);
+        if (select.length > 0) {
+          var selectedOption = select[0].options[select[0].selectedIndex].label;
+        }
+
+        var select = getElementsByXPath(
+          "div/select",
+          rowContainingFormula[row]
+        );
+        var selectedFormula = select[0].options[select[0].selectedIndex].label;
+        var customBoxes = [
+          "min_voltage",
+          "max_voltage",
+          "min_value",
+          "max_value"
+        ];
+        for (var customBox in customBoxes) {
+          var rowContainingUnit = getElementsByXPath(
+            "div/div/*[@class='row']/div[@data-schemapath[contains(., '" +
+              customBoxes[customBox] +
+              "')]]",
+            valueDiv[0]
+          );
+          select = getElementsByXPath("div/input", rowContainingUnit[row]);
+
+          // if the value is not even used
+          if (selectedOption == "not use") {
+            select[0].disabled = true;
+          }
+          // if the formula is custom
+          else if (selectedFormula == "custom") {
+            select[0].disabled = false;
+          } else {
+            select[0].disabled = true;
+          }
+        }
+      }
+    }
+  }
+}
+
 function updateFields() {
   checkDivColor();
+  checkCustomFormula();
   checkTagValues();
   checkUnitValues();
 }

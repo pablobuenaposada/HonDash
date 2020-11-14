@@ -3,7 +3,7 @@ class Formula:
     # Backup formula method to use when no formula is found
     @staticmethod
     def voltage(value):
-        return {"volts": value}
+        return value
 
     @staticmethod
     def adc_to_volts(adc):
@@ -47,20 +47,39 @@ class Formula:
             "fahrenheit": round(Formula.celsius_to_fahrenheit(celsius)),
         }
 
-    # VDO 323-057 sensor powered by 5v and a 56ohms voltage divider
     @staticmethod
-    def vdo_323_057(volts):
+    def custom(voltage, min_voltage, max_voltage, min_value, max_value):
+        """
+        This function calculates the equation of the straight line given 2 points (y=mx+b), in this case we are
+        gonna use the axis voltage (0-5v) and whatever other range and unit the sensor outputs
+        """
+        try:
+            m = (min_value - max_value) / (min_voltage - max_voltage)  # slope
+            b = (min_voltage * max_value - max_voltage * min_value) / (
+                min_voltage - max_voltage
+            )  # Y-intercept
+        except ZeroDivisionError:
+            return 0
+        return m * voltage + b
+
+    @staticmethod
+    def vdo_323_057(voltage):
+        """
+        VDO 323-057 oil temperature sensor
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
         celsius = (
-            -2.183715894 * pow(10, -1) * pow(volts, 10)
-            + 5.613288037 * pow(volts, 9)
-            - 62.2205559 * pow(volts, 8)
-            + 389.2848412 * pow(volts, 7)
-            - 1510.989619 * pow(volts, 6)
-            + 3764.608696 * pow(volts, 5)
-            - 6013.228539 * pow(volts, 4)
-            + 5943.529221 * pow(volts, 3)
-            - 3309.957466 * pow(volts, 2)
-            + 750.5177822 * volts
+            -2.183715894 * pow(10, -1) * pow(voltage, 10)
+            + 5.613288037 * pow(voltage, 9)
+            - 62.2205559 * pow(voltage, 8)
+            + 389.2848412 * pow(voltage, 7)
+            - 1510.989619 * pow(voltage, 6)
+            + 3764.608696 * pow(voltage, 5)
+            - 6013.228539 * pow(voltage, 4)
+            + 5943.529221 * pow(voltage, 3)
+            - 3309.957466 * pow(voltage, 2)
+            + 750.5177822 * voltage
             + 205.7905145
         )
         return {
@@ -68,9 +87,14 @@ class Formula:
             "fahrenheit": Formula.celsius_to_fahrenheit(celsius),
         }
 
-    # AEM 30-2012 / Delphi 12160855 sensor powered by 5v and a 1500ohms voltage divider
     @staticmethod
     def aem_30_2012(volts):
+        """
+        AEM 30-2012 / Delphi 12160855 oil temperature sensors
+        https://www.aemelectronics.com/sites/default/files/aem_product_instructions/30-2012%20Water%20Temp%20Sensor%20Kit.pdf
+        Resistance used for voltage divider: 1500 ohms
+        Vin: 5v
+        """
         celsius = (
             -9.800565802 * pow(10, -2) * pow(volts, 10)
             + 2.47857492 * pow(volts, 9)
@@ -89,9 +113,18 @@ class Formula:
             "fahrenheit": Formula.celsius_to_fahrenheit(celsius),
         }
 
-    # Bosch 0280130039 / 0280130026 sensor powered by 5v and a 1500ohms voltage divider
     @staticmethod
     def bosch_0280130039_0280130026(volts):
+        """
+        Bosch 0280130039 / 0280130026 oil temperature sensors
+        For 0280130039 this are the specs:
+        https://www.bosch-motorsport.com/content/downloads/Raceparts/Resources/pdf/Data%20sheet_70129803_Temperature_Sensor_NTC_M12-L.pdf
+        For 0280130026 this are the specs:
+        https://www.bosch-motorsport.com/content/downloads/Raceparts/Resources/pdf/Data%20sheet_70101387_Temperature_Sensor_NTC_M12.pdf
+        The specs are the same for both
+        Resistance used for voltage divider: 1500 ohms
+        Vin: 5v
+        """
         celsius = (
             4.303155022 * pow(10, -1) * pow(volts, 2)
             - 28.49330639 * volts
@@ -101,121 +134,3 @@ class Formula:
             "celsius": celsius,
             "fahrenheit": Formula.celsius_to_fahrenheit(celsius),
         }
-
-    # Autometer #2246 (4590-0023-12) 100 psi oil pressure sensor or ebay 100 psi
-    @staticmethod
-    def autometer_2246(volts):
-        psi = 25 * volts - 12.5
-        return {"psi": psi, "bar": Formula.psi_to_bar(psi)}
-
-    @staticmethod
-    def ebay_150_psi(volts):
-        """
-        150 psi fluid pressure transducer sensor
-        0 psi = 0.5v
-        150 psi = 4.5v
-        """
-        psi = 37.5 * volts - 18.75
-        return {"psi": psi, "bar": Formula.psi_to_bar(psi)}
-
-    @staticmethod
-    def ebay_30_psi(volts):
-        """
-        30 psi fluid pressure transducer sensor
-        0 psi = 0.5v
-        30 psi = 4.5v
-        """
-        psi = 7.5 * volts - 3.75
-        return {"psi": psi, "bar": Formula.psi_to_bar(psi)}
-
-    # civic eg fuel tank powered by 5v and a 56ohms voltage divider
-    @staticmethod
-    def civic_eg_fuel_tank(volts):
-        return {
-            "per cent": int(
-                -1.209083604 * pow(volts, 2) - 27.62416175 * volts + 104.7987284
-            )
-        }
-
-    @staticmethod
-    def civic_ek_fuel_tank(volts):
-        """
-        Specs of this tank
-        Empty: 105-108 ohms
-        Half: 29.5-35.5 ohms
-        Full: 3.5-5 ohms
-        Resistance used for voltage divider: 56 ohms
-        Vin: 5v
-        """
-        return {
-            "per cent": int(
-                -0.6348765014 * pow(volts, 2) - 31.07210689 * volts + 109.1937751
-            )
-        }
-
-    # s2000 fuel tank powered by 5v and a 56ohms voltage divider
-    @staticmethod
-    def s2000_fuel_tank(volts):
-        return {
-            "per cent": int(
-                -6.163413263 * pow(volts, 2) - 11.48794404 * volts + 116.2915039
-            )
-        }
-
-    @staticmethod
-    def mr2_w30_fuel_tank(volts):
-        """
-        Specs of this tank (http://www.testroete.com/car/Toyota/mr2%20spyder/Repair%20Information/Repair%20Manual/
-        20%20-%20Body%20Electrical/21%20-%20Combination%20Meter%20-%20Inspection.pdf)
-        Empty: 192 ohms
-        Full: 16 ohms
-        Resistance used for voltage divider: 56 ohms
-        Vin: 5v
-        """
-        return {"per cent": int(-36.23188406 * volts + 140.2173913)}
-
-    @staticmethod
-    def mr2_w20_fuel_tank(volts):
-        """
-        Specs of this tank (http://mr2.ie/mr2/bgb/mk2/mechanical/6_015.html)
-        Empty: 110 ohms
-        Full: 3 ohms
-        Resistance used for voltage divider: 56 ohms
-        Vin: 5v
-        """
-        return {"per cent": int(-32.67973856 * volts + 108.1699346)}
-
-    # mazda mx5 na fuel tank powered by 5v and a 56ohms voltage divider
-    @staticmethod
-    def mx5_na_fuel_tank(volts):
-        return {
-            "per cent": int(
-                -7.612787523 * pow(10, -2) * pow(volts, 2)
-                - 38.32618618 * volts
-                + 121.3158219
-            )
-        }
-
-    @staticmethod
-    def integra_dc5_fuel_tank(volts):
-        """
-        Specs of this tank from RSX workshop manual
-        (http://www.mediafire.com/file/dwm2qkmzy2n/%2528LINKED_Edition%252902-06_Acura_RSX_Shop_Manual.pdf/file)
-        Empty: 132 ohms
-        Full: 11 ohms
-        Resistance used for voltage divider: 56 ohms
-        Vin: 5v
-        """
-        return {"per cent": int(-37.17472119 * volts + 130.4832714)}
-
-    @staticmethod
-    def accord_cl9_fuel_tank(volts):
-        """
-        Specs of this tank from TSX workshop manual
-        (http://www.hondahookup.com/forums/downloads.php?do=file&id=158)
-        Empty: 790 ohms
-        Full: 19 ohms
-        Resistance used for voltage divider: 56 ohms
-        Vin: 5v
-        """
-        return {"per cent": int(-29.38583603 * volts + 137.2024684)}
