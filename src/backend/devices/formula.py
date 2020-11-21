@@ -1,3 +1,6 @@
+from backend.devices.kpro.constants import TEMP
+
+
 class Formula:
 
     # Backup formula method to use when no formula is found
@@ -28,20 +31,9 @@ class Formula:
     @staticmethod
     def kpro_temp(kpro_value):
         """
-        Conversion of whatever temperature unit kpro outputs into celsius and fahrenheit units.
-        Linear regression made with https://arachnoid.com/polysolve/
+        Conversion of whatever temperature unit K-Pro outputs into celsius and fahrenheit units.
         """
-        celsius = (
-            -2.7168631716148286 * pow(10, 0) * kpro_value
-            + 3.5250001884568352 * pow(10, -2) * pow(kpro_value, 2)
-            - 4.6668312213461976 * pow(10, -4) * pow(kpro_value, 3)
-            + 6.2314622546038854 * pow(10, -6) * pow(kpro_value, 4)
-            - 5.5155685454381802 * pow(10, -8) * pow(kpro_value, 5)
-            + 2.6888773098684158 * pow(10, -10) * pow(kpro_value, 6)
-            - 6.5904712075799765 * pow(10, -13) * pow(kpro_value, 7)
-            + 6.3467552343485511 * pow(10, -16) * pow(kpro_value, 8)
-            + 1.5037636674235824 * pow(10, 2)
-        )
+        celsius = TEMP[kpro_value]
         return {
             "celsius": round(celsius),
             "fahrenheit": round(Formula.celsius_to_fahrenheit(celsius)),

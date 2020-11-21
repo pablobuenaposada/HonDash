@@ -10,7 +10,7 @@ from backend.devices.kpro.kpro import MAX_CONNECTION_RETRIES, Kpro
 
 class TestKpro:
 
-    temp_sensor_argvalues = ((51, 69, 156), (40, 80, 175), (31, 91, 195))
+    temp_sensor_argvalues = ((51, 70, 158), (40, 80, 176), (31, 90, 194))
 
     def setup_method(self):
         # we are not unit testing USB features so it may raise a
