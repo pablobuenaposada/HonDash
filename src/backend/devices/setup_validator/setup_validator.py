@@ -1,15 +1,21 @@
+import json
+
 import jsonschema
 
 from backend.devices.setup_updater import SetupUpdater
-from backend.devices.setup_validator.constants import FORMULA_VS_UNITS, SCHEMA
+from backend.devices.setup_validator.constants import FORMULA_VS_UNITS
 
 
 class SetupValidator:
+    def _load_json(self):
+        with open("src/backend/devices/setup_validator/schema.json") as json_file:
+            return json.load(json_file)
+
     def validate(self, setup):
         self._check_version(setup)
         setup = self._update(setup)
         try:
-            jsonschema.validate(instance=setup, schema=SCHEMA)
+            jsonschema.validate(instance=setup, schema=self._load_json()["schema"])
         except jsonschema.exceptions.ValidationError as e:
             raise self.ValidationError(e.message)
         self._check_tag_uniqueness(setup)

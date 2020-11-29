@@ -59,8 +59,9 @@ virtualenv: $(VIRTUAL_ENV)
 
 run: virtualenv
 	cp -n default_setup.json setup.json || true
+	$(PYTHON) -m http.server &
 	PYTHONPATH=src $(PYTHON) src/backend/main.py &
-	open -a "Google Chrome" src/frontend/index.html &
+	open http://localhost:8000/src/frontend/ &
 
 run_rpi:
 	cp -n default_setup.json setup.json
@@ -75,6 +76,7 @@ dummy:
 
 kill:
 	sudo pkill -f backend || true
+	sudo pkill -f http.server || true
 
 test: lint
 	PYTHONPATH=src $(PYTEST) --cov src/ src/tests

@@ -27,7 +27,7 @@ class TestSetupValidator:
                     "vss": {"label": "", "max": "", "sectors": "", "suffix": ""},
                 }
             )
-        assert str(excinfo.value) == "'ect' is a required property"
+        assert str(excinfo.value) == "'tag' is a required property"
 
     def test__check_tag_uniqueness_success(self):
         SetupValidator()._check_tag_uniqueness(
