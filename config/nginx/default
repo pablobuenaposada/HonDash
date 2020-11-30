@@ -17,4 +17,7 @@ server {
         location /node_modules {
                 root /home/pi/Desktop/HonDash;
         }
+        location /backend/devices/setup_validator/schema.json {
+                alias /home/pi/Desktop/HonDash/src/backend/devices/setup_validator/schema.json;
+        }
 }

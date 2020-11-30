@@ -272,6 +272,11 @@ function reset() {
   ws.send(JSON.stringify({ action: "reset" }));
 }
 
+fetch("../../backend/devices/setup_validator/schema.json")
+  .then(response => response.json())
+  .then(data => {
+    schema = data;
+  }); // load json schema
 var editor;
 var ws = new WebSocket(
   "ws://" + (window.location.hostname || "127.0.0.1") + ":5678/"
