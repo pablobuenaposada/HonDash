@@ -67,7 +67,7 @@ run_rpi:
 	cp -n default_setup.json setup.json
 	sudo PYTHONPATH=src $(PYTHON) src/backend/main.py &
 	sleep 5
-	chromium-browser --kiosk --incognito src/frontend/index.html &
+	chromium-browser --kiosk --check-for-update-interval=604800 --incognito src/frontend/index.html &
 
 dummy:
 	cp -n default_setup.json setup.json || true
