@@ -4,7 +4,7 @@ import threading
 
 import websockets
 
-from backend.devices.kpro.kpro import Kpro
+from backend.devices.ecu import Ecu
 from backend.devices.odometer import Odometer
 from backend.devices.setup_file import SetupFile
 from backend.devices.setup_validator.setup_validator import SetupValidator
@@ -31,7 +31,7 @@ class Backend:
             self.setup_file.get_value("odo").get("value"),
             self.setup_file.get_value("odo").get("unit"),
         )
-        self.kpro = Kpro()
+        self.ecu = Ecu()
 
     def _load_user_preferences(self):
         """
@@ -72,40 +72,39 @@ class Backend:
 
     def update(self):
         """ load the websocket with updated info """
-        if not self.kpro.status:  # if kpro is down try to reconnect
-            self.kpro.find_and_connect()
-        if self.odo.save(self.kpro.vss["kmh"]):
+        if self.odo.save(self.ecu.vss["kmh"]):
             self.setup_file.update_key("odo", {"value": self.odo.preferred_mileage})
-        self.style.update(self.kpro.tps)
+        self.style.update(self.ecu.tps)
         return {
-            "bat": self.kpro.bat,
-            "gear": self.kpro.gear,
-            "iat": self.kpro.iat[self.iat_unit],
-            "tps": self.kpro.tps,
-            "ect": self.kpro.ect[self.ect_unit],
-            "rpm": self.kpro.rpm,
-            "vss": self.kpro.vss[self.vss_unit],
-            "o2": self.kpro.o2[self.o2_unit],
-            "cam": self.kpro.cam,
-            "mil": self.kpro.mil,
-            "fan": self.kpro.fanc,
-            "bksw": self.kpro.bksw,
-            "flr": self.kpro.flr,
-            "eth": self.kpro.eth,
-            "scs": self.kpro.scs,
-            "fmw": self.kpro.firmware,
-            "map": self.kpro.map[self.map_unit],
-            "an0": self.an0_formula(self.kpro.analog_input(0))[self.an0_unit],
-            "an1": self.an1_formula(self.kpro.analog_input(1))[self.an1_unit],
-            "an2": self.an2_formula(self.kpro.analog_input(2))[self.an2_unit],
-            "an3": self.an3_formula(self.kpro.analog_input(3))[self.an3_unit],
-            "an4": self.an4_formula(self.kpro.analog_input(4))[self.an4_unit],
-            "an5": self.an5_formula(self.kpro.analog_input(5))[self.an5_unit],
-            "an6": self.an6_formula(self.kpro.analog_input(6))[self.an6_unit],
-            "an7": self.an7_formula(self.kpro.analog_input(7))[self.an7_unit],
+            "bat": self.ecu.bat,
+            "gear": self.ecu.gear,
+            "iat": self.ecu.iat[self.iat_unit],
+            "tps": self.ecu.tps,
+            "ect": self.ecu.ect[self.ect_unit],
+            "rpm": self.ecu.rpm,
+            "vss": self.ecu.vss[self.vss_unit],
+            "o2": self.ecu.o2[self.o2_unit],
+            "cam": self.ecu.cam,
+            "mil": self.ecu.mil,
+            "fan": self.ecu.fanc,
+            "bksw": self.ecu.bksw,
+            "flr": self.ecu.flr,
+            "eth": self.ecu.eth,
+            "scs": self.ecu.scs,
+            "fmw": self.ecu.firmware,
+            "map": self.ecu.map[self.map_unit],
+            "an0": self.an0_formula(self.ecu.analog_input(0))[self.an0_unit],
+            "an1": self.an1_formula(self.ecu.analog_input(1))[self.an1_unit],
+            "an2": self.an2_formula(self.ecu.analog_input(2))[self.an2_unit],
+            "an3": self.an3_formula(self.ecu.analog_input(3))[self.an3_unit],
+            "an4": self.an4_formula(self.ecu.analog_input(4))[self.an4_unit],
+            "an5": self.an5_formula(self.ecu.analog_input(5))[self.an5_unit],
+            "an6": self.an6_formula(self.ecu.analog_input(6))[self.an6_unit],
+            "an7": self.an7_formula(self.ecu.analog_input(7))[self.an7_unit],
             "time": self.time.get_time(),
             "odo": self.odo.preferred_mileage,
             "style": self.style.status,
+            "name": self.ecu.name,
             "ver": __version__,
         }
 
@@ -183,7 +182,7 @@ class Websocket:
                 )
 
     async def _producer_handler(self, websocket):
-        """Keeps sending updated kpro data forever"""
+        """Keeps sending updated ecu data forever"""
         while True:
             await websocket.send(json.dumps({"data": self.backend.update()}))
             await asyncio.sleep(0.1)

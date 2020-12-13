@@ -194,6 +194,9 @@
     "pathon": "check_engine_on.svg",
     "tag": "icon1"
   },
+  "name": {
+    "tag": "ecu_name"
+  },
   "o2": {
     "decimals": 1,
     "label": "AFR",
