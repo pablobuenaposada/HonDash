@@ -7,11 +7,20 @@ Component | Link | Price
 Raspberry Pi 3 Model B+ or Raspberry Pi 4 | http://a.co/d/is4HSYJ | $40
 SanDisk Ultra microSDHC 16GB class 10 | http://a.co/d/0LzsUWC | $7
 Raspberry plastic case | http://a.co/d/8z8Me8D | $7
-Micro usb DC Converter 12V to 5V 3A | http://a.co/d/adrZTSE | $5
-HSD070PWW1 1280x800 screen + HDMI driver | https://www.ebay.com/sch/i.html?_nkw=HSD070PWW1+hdmi | $65
-HDMI male-male cable | | $10
-DC Power plug 5.5x2.1mm | | $1
 USB A-Male to B-Male cable | | $5
+Micro usb DC Converter 12V to 5V 3A | http://a.co/d/adrZTSE | $5
+
+Tested screens that work fine:
+
+Display |  Link | Price
+------- | ----- |-----
+7" HSD070PWW1 1280x800 screen + HDMI driver | https://www.ebay.com/sch/i.html?_nkw=HSD070PWW1+hdmi | $65
+DC Power plug 5.5x2.1mm | | $1
+HDMI male-male cable | | $10
+
+Display |  Link | Price
+------- | ----- |-----
+7" Official Raspberry Pi Touch Display | https://www.raspberrypi.org/products/raspberry-pi-touch-display/ | $65
 
 <br/>
 
