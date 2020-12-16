@@ -7,6 +7,8 @@ class SetupUpdater:
             setup = self._update_to_2_5_0(setup)
         if setup["version"] == "2.5.0":
             setup = self._update_to_2_6_0(setup)
+        if setup["version"] == "2.6.0":
+            setup = self._update_to_3_0_0(setup)
         return setup
 
     @staticmethod
@@ -29,4 +31,11 @@ class SetupUpdater:
     def _update_to_2_6_0(setup):
         """From 2.5.0 to 2.6.0"""
         setup["version"] = "2.6.0"
+        return setup
+
+    @staticmethod
+    def _update_to_3_0_0(setup):
+        """From 2.6.0 to 3.0.0"""
+        setup["version"] = "3.0.0"
+        setup.update({"name": {"tag": "ecu_name"}})
         return setup

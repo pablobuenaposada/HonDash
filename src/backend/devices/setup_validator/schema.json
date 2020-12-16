@@ -841,7 +841,22 @@
          },
          "version":{
             "type":"string",
-            "const":"2.6.0",
+            "const":"3.0.0",
+            "options":{
+               "hidden":true
+            }
+         },
+         "name":{
+            "type":"object",
+            "required":[
+               "tag"
+            ],
+            "properties":{
+               "tag":{
+                  "type":"string",
+                  "const":"ecu_name"
+               }
+            },
             "options":{
                "hidden":true
             }
