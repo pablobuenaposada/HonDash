@@ -11,9 +11,9 @@ HonDash is an open source instrument cluster developed for Honda engines.
 
 ## Requirements (minimum)
 
-- Hondata K-Pro ECU v2* / v3 / v4
-- Raspberry Pi 3 Model B/B+
-- HDMI screen
+- Hondata K-Pro ECU v2* / v3 / v4 or Hondata S300 v3
+- Raspberry Pi 3 Model B+ / Raspberry Pi 4
+- HDMI/DSI/composite compatible screen
 
 \* v2 only if it has on board datalogging, check [here](https://www.hondata.com/kpro2)
 

@@ -21,14 +21,14 @@ HonDash is an open source instrument cluster developed for Honda engines managed
 
 ## Requirements (minimum)
 
-- Hondata K-Pro* ECU v2 / v3 / v4
+- Hondata K-Pro v2* / v3 / v4 or Hondata S300 v3
 - Raspberry Pi 3 Model B+ / Raspberry Pi 4
 - HDMI/DSI/composite compatible screen
 
 \* v2 only if it has on board data logging, check [here](https://www.hondata.com/kpro2)
 
 ```diff
-- K-Pro must have the latest firmware from Kmanager V4.4.1
+- K-Pro must have the latest firmware from at least Kmanager V4.4.1
 ```
 
 ## Setup diagram
@@ -41,8 +41,8 @@ Yes, the [software](https://hondash.com/SOFTWARE.html) is open source and the [h
 
 ## Known issues
 
-- With Hondata K-pro v2/v3 data logging should be disabled to run HonDash
-- Map sensor would only show up to 1.8 bar
+- With K-Pro v2/v3 data logging should be disabled to run HonDash
+- In K-Pro map sensor would only show up to 1.8 bar
 - Raspberry Pi 4 with old firmware could have WiFi connectivity problems while using the HDMI port, if this is happening to you please update the firmware <https://www.youtube.com/watch?v=FZ2Kfg8xnBw>
 
 ## Ready to run kit
