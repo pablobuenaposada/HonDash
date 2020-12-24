@@ -106,13 +106,7 @@ class TestMain:
             "name": "K-Pro",
         }
 
-        with mock.patch("usb.core.find"), mock.patch(
-            "usb.util.find_descriptor"
-        ), mock.patch("backend.main.Websocket.__init__") as m_ws___init__, mock.patch(
-            "threading.Thread.start"
-        ):
-            # mocking websocket
-            m_ws___init__.return_value = None
+        with mock.patch("usb.core.find"), mock.patch("threading.Thread.start"):
             backend = Backend()
 
         assert backend.update() == expected_data

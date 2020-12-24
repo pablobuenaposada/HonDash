@@ -10,6 +10,12 @@ from backend.devices.kpro import constants
 MAX_CONNECTION_RETRIES = 10
 
 
+class KproException(Exception):
+    """Base class for other exceptions"""
+
+    pass
+
+
 class Kpro:
     NAME = "K-Pro"
 
@@ -145,7 +151,7 @@ class Kpro:
         try:
             return data[indexes[self.version]]
         except (KeyError, IndexError):
-            return default
+            raise KproException()
 
     @property
     def bat(self):

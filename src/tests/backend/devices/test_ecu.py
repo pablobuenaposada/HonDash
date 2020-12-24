@@ -17,22 +17,22 @@ class TestEcu:
             (
                 kpro_constants.KPRO23_ID_VENDOR,
                 kpro_constants.KPRO23_ID_PRODUCT,
-                (Kpro, type(None)),
+                Kpro,
             ),
             (
                 kpro_constants.KPRO4_ID_VENDOR,
                 kpro_constants.KPRO4_ID_PRODUCT,
-                (Kpro, type(None)),
+                Kpro,
             ),
             (
                 s300_constants.S3003_ID_VENDOR,
                 s300_constants.S3003_ID_PRODUCT,
-                (Kpro, S300),
+                S300,
             ),
             (
                 None,
                 None,
-                (Kpro, S300),
+                type(None),
             ),
         ),
     )
@@ -49,33 +49,4 @@ class TestEcu:
             m_find.side_effect = found_device
             ecu = Ecu()
 
-        assert isinstance(ecu.kpro, result[0])
-        assert isinstance(ecu.s300, result[1])
-
-    @pytest.mark.parametrize(
-        "vendor_id, product_id, value, result",
-        (
-            (kpro_constants.KPRO4_ID_VENDOR, kpro_constants.KPRO4_ID_PRODUCT, "tps", 0),
-            (
-                kpro_constants.KPRO4_ID_VENDOR,
-                kpro_constants.KPRO4_ID_PRODUCT,
-                "foo",
-                666,
-            ),
-            (s300_constants.S3003_ID_VENDOR, s300_constants.S3003_ID_PRODUCT, "tps", 0),
-            (None, None, "tps", 666),
-        ),
-    )
-    def test__get_value_from_ecu(self, vendor_id, product_id, value, result):
-        def found_device(idVendor, idProduct):
-            if idVendor == vendor_id and idProduct == product_id:
-                return MagicMock()
-            else:
-                return None
-
-        with mock.patch("usb.core.find") as m_find, mock.patch(
-            "threading.Thread.start"
-        ):
-            m_find.side_effect = found_device
-            ecu = Ecu()
-            assert ecu._get_value_from_ecu(value, fallback=666) == result
+        assert isinstance(ecu.ecu, result)
