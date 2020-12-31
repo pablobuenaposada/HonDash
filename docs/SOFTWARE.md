@@ -2,8 +2,8 @@
 
 ## Burn SD card
 Download the latest image:
-* [HonDash v. 3.0.0](https://www.dropbox.com/s/89zpf3dilt2j642/HonDash_v3.0.0.img?dl=0)
-    * `MD5: bb164e556529b42221dfb4dc8abfb20f`
+* [HonDash v. 3.0.0](https://www.dropbox.com/s/gzga908fpmny1g9/HonDash_v3.0.0.img?dl=0)
+    * `MD5: 640fe0d1e5e92739a6c45dcb8470182f`
 * [Release notes](https://github.com/pablobuenaposada/HonDash/blob/master/CHANGELOG.md)
 
 Old images:
