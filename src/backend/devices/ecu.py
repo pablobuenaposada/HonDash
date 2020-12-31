@@ -1,25 +1,30 @@
 from backend.devices.kpro.kpro import Kpro
 from backend.devices.s300.s300 import S300
 
+WAIT_FOR_RECONNECTION = 100
+
 
 class Ecu:
     def __init__(self):
-        self.kpro = Kpro()
-        self.s300 = None
-        if not self.kpro.status:
-            self.s300 = S300()
+        self.retries = 0
+        kpro = Kpro()
+        if kpro.status:
+            self.ecu = kpro
+        else:
+            s300 = S300()
+            self.ecu = s300 if s300.status else None
 
     def _get_value_from_ecu(self, value, fallback=0):
-        if self.kpro.status:
-            ecu = self.kpro
-        elif self.s300 is not None and self.s300.status:
-            ecu = self.s300
-        else:  # no ecu online? try again and return a fallback value for now
-            self.__init__()
-            return fallback
-        try:
-            return getattr(ecu, value)
-        except AttributeError:  # maybe the ecu doesn't have that value
+        if self.ecu is not None and self.ecu.status:
+            try:
+                return getattr(self.ecu, value)
+            except AttributeError:  # maybe the ecu doesn't have that value
+                return fallback
+        else:
+            if self.retries > WAIT_FOR_RECONNECTION:
+                self.__init__()
+            else:
+                self.retries += 1
             return fallback
 
     @property
@@ -124,10 +129,8 @@ class Ecu:
 
     @property
     def name(self):
-        if self.kpro is not None and self.kpro.status:
-            return self.kpro.NAME
-        elif self.s300 is not None and self.s300.status:
-            return self.s300.NAME
+        if self.ecu is not None and self.ecu.status:
+            return self.ecu.NAME
         else:
             return "unknown"
 
