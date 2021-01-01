@@ -114,15 +114,15 @@ class TestS300:
         """usb exception should be caught and retry device connection MAX_CONNECTION_RETRIES times"""
         self.s300.status = False
         with mock.patch("threading.Thread.start") as m_start, mock.patch(
-            "backend.devices.s300.s300.S300._establish_connection"
-        ) as m__establish_connection, mock.patch(
-            "backend.devices.s300.s300.S300._find_device"
-        ) as m__find_device:
-            m__establish_connection.side_effect = usb.core.USBError("foo")
-            m__find_device.return_value = (MagicMock(), None)
+            "backend.devices.s300.s300.establish_connection"
+        ) as m_establish_connection, mock.patch(
+            "backend.devices.s300.s300.find_device"
+        ) as m_find_device:
+            m_establish_connection.side_effect = usb.core.USBError("foo")
+            m_find_device.return_value = (MagicMock(), None)
             self.s300.find_and_connect()
         assert self.s300.status is False
-        assert m__establish_connection.call_count == MAX_CONNECTION_RETRIES
+        assert m_establish_connection.call_count == MAX_CONNECTION_RETRIES
         assert m_start.called is False
 
     @pytest.mark.parametrize(
