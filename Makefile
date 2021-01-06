@@ -83,7 +83,7 @@ test: lint
 	@if [ -n "$$COVERALLS_REPO_TOKEN" ] && [ -f $(COVERALLS) ]; then $(COVERALLS); fi \
 
 lint/isort-fix: virtualenv
-	$(ISORT) -rc src
+	$(ISORT) src
 
 lint/isort-check: virtualenv
 	$(ISORT) --diff -c src

@@ -4,10 +4,27 @@ import usb.core
 import usb.util
 from numpy import interp
 
+from backend.devices.ecu_utils import (
+    establish_connection,
+    find_device,
+    get_value_from_ecu,
+)
 from backend.devices.formula import Formula
 from backend.devices.kpro import constants
 
 MAX_CONNECTION_RETRIES = 10
+USB_IDS = (
+    {
+        "version": constants.KPRO23_ID,
+        "id_vendor": constants.KPRO23_ID_VENDOR,
+        "id_product": constants.KPRO23_ID_PRODUCT,
+    },
+    {
+        "version": constants.KPRO4_ID,
+        "id_vendor": constants.KPRO4_ID_VENDOR,
+        "id_product": constants.KPRO4_ID_PRODUCT,
+    },
+)
 
 
 class Kpro:
@@ -26,11 +43,11 @@ class Kpro:
         while not self.status and connection_tries < MAX_CONNECTION_RETRIES:
             connection_tries += 1
             # let's see if we can find a recognized kpro device
-            self.kpro_device, self.version = self._find_device()
+            self.kpro_device, self.version = find_device(USB_IDS)
 
             if self.kpro_device:  # if kpro device is found
                 try:
-                    self.entry_point = self._establish_connection(self.kpro_device)
+                    self.entry_point = establish_connection(self.kpro_device)
                 except usb.core.USBError:
                     # if there's an error while connecting to the usb device we just want to try again
                     #  so let's ensure that we keep in the while loop
@@ -39,44 +56,6 @@ class Kpro:
                     self.status = True
                     # connection is made, try to get the latest data forever
                     threading.Thread(target=self._update).start()
-
-    @staticmethod
-    def _find_device():
-        device = version = None
-        # kpro v2 and v3
-        if usb.core.find(
-            idVendor=constants.KPRO23_ID_VENDOR,
-            idProduct=constants.KPRO23_ID_PRODUCT,
-        ):
-            device = usb.core.find(
-                idVendor=constants.KPRO23_ID_VENDOR,
-                idProduct=constants.KPRO23_ID_PRODUCT,
-            )
-            version = constants.KPRO23_ID
-        # kpro v4
-        elif usb.core.find(
-            idVendor=constants.KPRO4_ID_VENDOR,
-            idProduct=constants.KPRO4_ID_PRODUCT,
-        ):
-            device = usb.core.find(
-                idVendor=constants.KPRO4_ID_VENDOR,
-                idProduct=constants.KPRO4_ID_PRODUCT,
-            )
-            version = constants.KPRO4_ID
-
-        return device, version
-
-    @staticmethod
-    def _establish_connection(device):
-        device.set_configuration()
-        cfg = device.get_active_configuration()
-        intf = cfg[(0, 0)]
-        entry_point = usb.util.find_descriptor(
-            intf,
-            custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress)
-            == usb.util.ENDPOINT_OUT,
-        )
-        return entry_point
 
     @staticmethod
     def _read_from_device(version, device, entry_point):
@@ -137,16 +116,6 @@ class Kpro:
                     self.status = False  # redundant?
                     self.__init__()
 
-    def get_value_from_kpro(self, indexes, data, default=0):
-        """
-        Get the value from the chosen index and data array depending on the current K-Pro version.
-        If something goes wrong return a predefined default value.
-        """
-        try:
-            return data[indexes[self.version]]
-        except (KeyError, IndexError):
-            return default
-
     @property
     def bat(self):
         """
@@ -157,7 +126,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_BAT,
             constants.KPRO4_ID: constants.KPRO4_BAT,
         }
-        return self.get_value_from_kpro(indexes, self.data1) * 0.1
+        return get_value_from_ecu(self.version, indexes, self.data1) * 0.1
 
     @property
     def eth(self):
@@ -168,7 +137,7 @@ class Kpro:
         indexes = {
             constants.KPRO4_ID: constants.KPRO4_ETH,
         }
-        return self.get_value_from_kpro(indexes, self.data3)
+        return get_value_from_ecu(self.version, indexes, self.data3)
 
     @property
     def flt(self):
@@ -176,7 +145,7 @@ class Kpro:
         TODO: RETURN {"celsius": 0, "fahrenheit": 0} if fails
         """
         indexes = {constants.KPRO4_ID: constants.KPRO4_FLT}
-        flt_celsius = self.get_value_from_kpro(indexes, self.data3)
+        flt_celsius = get_value_from_ecu(self.version, indexes, self.data3)
         flt_fahrenheit = Formula.celsius_to_fahrenheit(flt_celsius)
         return {"celsius": flt_celsius, "fahrenheit": flt_fahrenheit}
 
@@ -193,8 +162,8 @@ class Kpro:
         }
         try:
             o2_lambda = 32768.0 / (
-                256 * self.get_value_from_kpro(indexes_2, self.data0)
-                + self.get_value_from_kpro(indexes_1, self.data0)
+                256 * get_value_from_ecu(self.version, indexes_2, self.data0)
+                + get_value_from_ecu(self.version, indexes_1, self.data0)
             )
         except ZeroDivisionError:  # something happen collecting the value then return 0
             return {"afr": 0, "lambda": 0}
@@ -212,7 +181,11 @@ class Kpro:
             constants.KPRO4_ID: constants.KPRO4_TPS,
         }
         return int(
-            interp(self.get_value_from_kpro(indexes, self.data0), [21, 229], [0, 100])
+            interp(
+                get_value_from_ecu(self.version, indexes, self.data0),
+                [21, 229],
+                [0, 100],
+            )
         )
 
     @property
@@ -222,7 +195,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_VSS,
             constants.KPRO4_ID: constants.KPRO4_VSS,
         }
-        vss_kmh = self.get_value_from_kpro(indexes, self.data0)
+        vss_kmh = get_value_from_ecu(self.version, indexes, self.data0)
         vss_mph = Formula.kmh_to_mph(vss_kmh)
         return {"kmh": vss_kmh, "mph": int(vss_mph)}
 
@@ -242,8 +215,8 @@ class Kpro:
         }
         return int(
             (
-                (256 * self.get_value_from_kpro(indexes_2, self.data0))
-                + self.get_value_from_kpro(indexes_1, self.data0)
+                (256 * get_value_from_ecu(self.version, indexes_2, self.data0))
+                + get_value_from_ecu(self.version, indexes_1, self.data0)
             )
             * 0.25
         )
@@ -258,7 +231,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_CAM,
             constants.KPRO4_ID: constants.KPRO4_CAM,
         }
-        data_from_kpro = self.get_value_from_kpro(indexes, self.data0, None)
+        data_from_kpro = get_value_from_ecu(self.version, indexes, self.data0, None)
         if data_from_kpro is not None:
             return (data_from_kpro - 40) * 0.5
         else:
@@ -271,8 +244,8 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_ECT,
             constants.KPRO4_ID: constants.KPRO4_ECT,
         }
-        data_from_kpro = self.get_value_from_kpro(
-            indexes, self.data1, {"celsius": 0, "fahrenheit": 0}
+        data_from_kpro = get_value_from_ecu(
+            self.version, indexes, self.data1, {"celsius": 0, "fahrenheit": 0}
         )
         if isinstance(data_from_kpro, int):
             return Formula.kpro_temp(data_from_kpro)
@@ -286,8 +259,8 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_IAT,
             constants.KPRO4_ID: constants.KPRO4_IAT,
         }
-        data_from_kpro = self.get_value_from_kpro(
-            indexes, self.data1, {"celsius": 0, "fahrenheit": 0}
+        data_from_kpro = get_value_from_ecu(
+            self.version, indexes, self.data1, {"celsius": 0, "fahrenheit": 0}
         )
         if isinstance(data_from_kpro, int):
             return Formula.kpro_temp(data_from_kpro)
@@ -301,7 +274,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_GEAR,
             constants.KPRO4_ID: constants.KPRO4_GEAR,
         }
-        return self.get_value_from_kpro(indexes, self.data0)
+        return get_value_from_ecu(self.version, indexes, self.data0)
 
     @property
     def eps(self):
@@ -311,7 +284,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_EPS,
             constants.KPRO4_ID: constants.KPRO4_EPS,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def scs(self):
@@ -321,7 +294,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_SCS,
             constants.KPRO4_ID: constants.KPRO4_SCS,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def rvslck(self):
@@ -331,7 +304,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_RVSLCK,
             constants.KPRO4_ID: constants.KPRO4_RVSLCK,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def bksw(self):
@@ -341,7 +314,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_BKSW,
             constants.KPRO4_ID: constants.KPRO4_BKSW,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def acsw(self):
@@ -351,7 +324,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_ACSW,
             constants.KPRO4_ID: constants.KPRO4_ACSW,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def accl(self):
@@ -361,7 +334,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_ACCL,
             constants.KPRO4_ID: constants.KPRO4_ACCL,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def flr(self):
@@ -371,7 +344,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_FLR,
             constants.KPRO4_ID: constants.KPRO4_FLR,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def fanc(self):
@@ -381,7 +354,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_FANC,
             constants.KPRO4_ID: constants.KPRO4_FANC,
         }
-        return bool(self.get_value_from_kpro(indexes, self.data0) & mask)
+        return bool(get_value_from_ecu(self.version, indexes, self.data0) & mask)
 
     @property
     def map(self):
@@ -390,8 +363,8 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_MAP,
             constants.KPRO4_ID: constants.KPRO4_MAP,
         }
-        data_from_kpro = self.get_value_from_kpro(
-            indexes, self.data0, {"bar": 0, "mbar": 0, "psi": 0}
+        data_from_kpro = get_value_from_ecu(
+            self.version, indexes, self.data0, {"bar": 0, "mbar": 0, "psi": 0}
         )
         if isinstance(data_from_kpro, int):
             map_bar = data_from_kpro / 100.0
@@ -408,12 +381,12 @@ class Kpro:
             constants.KPRO4_ID: constants.KPRO4_MIL,
         }
         if self.version == constants.KPRO23_ID:
-            data_from_kpro = self.get_value_from_kpro(indexes, self.data0)
+            data_from_kpro = get_value_from_ecu(self.version, indexes, self.data0)
             if data_from_kpro == 9:
                 return True
             return False
         elif self.version == constants.KPRO4_ID:
-            data_from_kpro = self.get_value_from_kpro(indexes, self.data3)
+            data_from_kpro = get_value_from_ecu(self.version, indexes, self.data3)
             if data_from_kpro >= 36:
                 return True
             return False
@@ -426,7 +399,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_ECU_TYPE,
             constants.KPRO4_ID: constants.KPRO4_ECU_TYPE,
         }
-        data_from_kpro = self.get_value_from_kpro(indexes, self.data4)
+        data_from_kpro = get_value_from_ecu(self.version, indexes, self.data4)
         if data_from_kpro == 3:  # TODO the rest of ecu types
             return "RSX - PRB"
         return "unknown"
@@ -438,7 +411,7 @@ class Kpro:
             constants.KPRO23_ID: constants.KPRO23_IGN,
             constants.KPRO4_ID: constants.KPRO4_IGN,
         }
-        data_from_kpro = self.get_value_from_kpro(indexes, self.data4, 0)
+        data_from_kpro = get_value_from_ecu(self.version, indexes, self.data4, 0)
 
         if data_from_kpro == 1:
             return True
@@ -456,8 +429,8 @@ class Kpro:
             constants.KPRO4_ID: constants.KPRO4_SERIAL2,
         }
         return (
-            256 * self.get_value_from_kpro(indexes_2, self.data4, 0)
-        ) + self.get_value_from_kpro(indexes_1, self.data4, 0)
+            256 * get_value_from_ecu(self.version, indexes_2, self.data4, 0)
+        ) + get_value_from_ecu(self.version, indexes_1, self.data4, 0)
 
     @property
     def firmware(self):
@@ -472,8 +445,8 @@ class Kpro:
         }
 
         return "{}.{:02d}".format(
-            self.get_value_from_kpro(indexes_2, self.data4, 0),
-            self.get_value_from_kpro(indexes_1, self.data4, 0),
+            get_value_from_ecu(self.version, indexes_2, self.data4, 0),
+            get_value_from_ecu(self.version, indexes_1, self.data4, 0),
         )
 
     def analog_input(self, channel):
@@ -552,15 +525,25 @@ class Kpro:
 
         if self.version == constants.KPRO4_ID:
             return interp(
-                (256 * self.get_value_from_kpro(indexes_1[channel], self.data3, 0))
-                + self.get_value_from_kpro(indexes_2[channel], self.data3, 0),
+                (
+                    256
+                    * get_value_from_ecu(
+                        self.version, indexes_1[channel], self.data3, 0
+                    )
+                )
+                + get_value_from_ecu(self.version, indexes_2[channel], self.data3, 0),
                 [0, 4096],
                 [0, 5],
             )
         elif self.version == constants.KPRO23_ID:
             return interp(
-                (256 * self.get_value_from_kpro(indexes_1[channel], self.data5, 0))
-                + self.get_value_from_kpro(indexes_2[channel], self.data5, 0),
+                (
+                    256
+                    * get_value_from_ecu(
+                        self.version, indexes_1[channel], self.data5, 0
+                    )
+                )
+                + get_value_from_ecu(self.version, indexes_2[channel], self.data5, 0),
                 [0, 1024],
                 [0, 5],
             )
