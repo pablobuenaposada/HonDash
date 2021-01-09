@@ -10,16 +10,16 @@ This is necessary because from factory fuel level signal is not sent to the ECU,
 <br/>
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel.png" height="400"/>
 
-Fuel tank | Resistor value | Cabin harness wire color | Specs
-------- | -------------- | ------------- | -------------
-Civic EG | 56Ω 1 watt | yellow/white | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_eg.jpg)
-Civic EK | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_ek.png)
-S2000 | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/s2000.png)
-Integra DC5 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/dc5.png)
-Accord CL9 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/cl9.jpeg)
-MR2 W20 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w20.png)
-MR2 W30 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w30.png)
-MX5 NA | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mx5_na.png)
+Fuel tank | Resistor value | Cabin harness wire color | Specs | Voltage (V) at 0% | Voltage (V) at 100%
+------- | -------------- | ------------- | ------------- | ------------- | -------------
+Civic EG | 56Ω 1 watt | yellow/white | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_eg.jpg) | 3,31 | 0,17
+Civic EK | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/civic_ek.png) | 3,29 | 0,29
+S2000 | 56Ω 1 watt | yellow/black | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/s2000.png) | 3,5 | 0,9
+Integra DC5 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/dc5.png) | 3,51 | 0,82
+Accord CL9 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/cl9.jpeg) | 4,66 | 1,25
+MR2 W20 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w20.png) | 3,31 | 0,24
+MR2 W30 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w30.png) | 3,87 | 1,1
+MX5 NA | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mx5_na.png) | 3,14 | 0,55
 
 <br/>
  
@@ -34,24 +34,21 @@ Go to `Parameters` -> `Analog Inputs` and fill the chosen analog port like this:
 
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/kpro_fuel.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/kpro_fuel.png" height="600"/>
 
-The values within the red square should be filled according to this table (use comma as decimal separator):
-
-Fuel tank | Voltage at 0% | Voltage at 100%
---------- | ------------- | -------------
-Civic EG | 3,31 | 0,17
-Civic EK | 3,29 | 0,29
-S2000 | 3,5 | 0,9
-Integra DC5 | 3,51 | 0,82
-Accord CL9 | 4,66 | 1,25
-MR2 W20 | 3,31 | 0,24
-MR2 W30 | 3,87 | 1,1
-MX5 NA | 3,14 | 0,55
-
 <br/>
+The values within the red square (Civic EG example) should be filled according the previous table (<u>use comma as decimal separator</u>).
 
 Note that the order of the rows is important, first row should contain the 100% and second one 0%, check the previous picture in detail.
 
 After reuploading the calibration, you should be able to see your current fuel level in the display window after adding this new parameter.
+
+## HonDash setup
+Open your [configuration](/HonDash/SETUP.html)
+
+Go to your desired analog channel and select `custom` as formula and fill min and max voltage as described in the previous table (<u>use dot as decimal separator</u>) and min value as 0 and max value as 100.
+
+Here is an example for Civic EG:
+
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel_analog.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel_analog.png"/>
 
 ## ⚠ Warning
 K-Pro inputs are rate up to 5v max, double check this installation otherwise you will end damaging the K-Pro board and possibly the entire ECU.
