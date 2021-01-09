@@ -30,7 +30,17 @@ class SetupFile:
         if formula is None:  # value exists but no formula found
             formula = "voltage"
 
-        return getattr(Formula, formula)
+        if formula == "custom":
+            extra_params = {
+                "min_voltage": self.json.get(value).get("min_voltage"),
+                "max_voltage": self.json.get(value).get("max_voltage"),
+                "min_value": self.json.get(value).get("min_value"),
+                "max_value": self.json.get(value).get("max_value"),
+            }
+        else:
+            extra_params = None
+
+        return getattr(Formula, formula), extra_params
 
     def load_setup(self, file_name=None):
         file_name = file_name or self.file_name

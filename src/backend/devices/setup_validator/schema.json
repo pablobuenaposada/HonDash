@@ -72,22 +72,16 @@
                      "grid_columns":12
                   },
                   "enum":[
-                     "autometer_2246",
                      "vdo_323_057",
                      "aem_30_2012",
-                     "ebay_30_psi",
-                     "ebay_150_psi",
                      "bosch_0280130039_0280130026",
-                     "civic_eg_fuel_tank",
-                     "civic_ek_fuel_tank",
-                     "s2000_fuel_tank",
-                     "integra_dc5_fuel_tank",
-                     "accord_cl9_fuel_tank",
-                     "mr2_w20_fuel_tank",
-                     "mr2_w30_fuel_tank",
-                     "mx5_na_fuel_tank"
+                     "custom"
                   ]
                },
+               "min_voltage":{"type": "number"},
+               "max_voltage":{"type": "number"},
+               "min_value":{"type": "number"},
+               "max_value":{"type": "number"},
                "unit":{
                   "type":"string",
                   "enum":[

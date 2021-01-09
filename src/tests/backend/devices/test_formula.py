@@ -17,9 +17,7 @@ class TestFormula:
         assert Formula.psi_to_bar(psi) == bar
 
     @staticmethod
-    @pytest.mark.parametrize(
-        "voltage, result", ((0, {"volts": 0}), (2.5, {"volts": 2.5}), (5, {"volts": 5}))
-    )
+    @pytest.mark.parametrize("voltage, result", ((0, 0), (2.5, 2.5), (5, 5)))
     def test_voltage(voltage, result):
         assert Formula.voltage(voltage) == result
 
@@ -55,97 +53,171 @@ class TestFormula:
 
     @staticmethod
     @pytest.mark.parametrize(
-        "voltage, bar, psi",
-        ((0.5, 0.0, 0.0), (2.5, 3.44738, 50.0), (4.5, 6.89476, 100.0)),
+        "voltage, psi",
+        ((0.5, 0.0), (2.5, 50.0), (4.5, 100.0)),
     )
-    def test_autometer_2246(voltage, bar, psi):
-        assert Formula.autometer_2246(voltage) == {"bar": bar, "psi": psi}
+    def test_autometer_2246(voltage, psi):
+        """
+        https://www.autometer.com/sensor_specs
+        100 psi fluid pressure transducer sensor, could be also known as ebay 100 psi
+        0 psi = 0.5v
+        100 psi = 4.5v
+        """
+        assert Formula.custom(voltage, 0.5, 4.5, 0, 100) == psi
 
     @staticmethod
     @pytest.mark.parametrize(
-        "voltage, bar, psi",
-        ((0.5, 0.0, 0.0), (2.5, 5.17107, 75.0), (4.5, 10.34214, 150.0)),
+        "voltage, psi",
+        ((0.5, 0.0), (2.5, 75.0), (4.5, 150.0)),
     )
-    def test_ebay_150_psi(voltage, bar, psi):
-        assert Formula.ebay_150_psi(voltage) == {"bar": bar, "psi": psi}
+    def test_ebay_150_psi(voltage, psi):
+        """
+        150 psi fluid pressure transducer sensor
+        0 psi = 0.5v
+        150 psi = 4.5v
+        """
+        assert Formula.custom(voltage, 0.5, 4.5, 0, 150) == psi
 
     @staticmethod
     @pytest.mark.parametrize(
-        "voltage, bar, psi",
-        ((0.5, 0.0, 0.0), (2.5, 1.034214, 15.0), (4.5, 2.068428, 30.0)),
+        "voltage, psi",
+        ((0.5, 0.0), (2.5, 15.0), (4.5, 30.0)),
     )
-    def test_ebay_30_psi(voltage, bar, psi):
-        assert Formula.ebay_30_psi(voltage) == {"bar": bar, "psi": psi}
+    def test_ebay_30_psi(voltage, psi):
+        """
+        30 psi fluid pressure transducer sensor
+        0 psi = 0.5v
+        30 psi = 4.5v
+        """
+        assert Formula.custom(voltage, 0.5, 4.5, 0, 30) == psi
 
     @staticmethod
     @pytest.mark.parametrize(
         "voltage, level",
         (
-            (3.313253012, {"per cent": 0}),
-            (1.836158192, {"per cent": 50}),
-            (0.1724137931, {"per cent": 100}),
+            (3.313, 0),
+            (1.72, 50),
+            (0.172, 100),
         ),
     )
     def test_civic_eg_fuel_tank(voltage, level):
-        assert Formula.civic_eg_fuel_tank(voltage) == level
+        """
+        Specs of this tank
+        Empty: 110 ohms
+        Full: 2 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 3.313, 0.172, 0, 100)) == level
 
     @staticmethod
     @pytest.mark.parametrize(
         "voltage, level",
         (
-            (3.292682927, {"per cent": 0}),
-            (1.836158192, {"per cent": 50}),
-            (0.294117647, {"per cent": 100}),
+            (3.292, 0),
+            (1.77, 50),
+            (0.294, 100),
         ),
     )
     def test_civic_ek_fuel_tank(voltage, level):
-        assert Formula.civic_ek_fuel_tank(voltage) == level
+        """
+        Specs of this tank
+        Empty: 108 ohms
+        Full: 3.5 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 3.292, 0.294, 0, 100)) == level
 
     @staticmethod
     @pytest.mark.parametrize(
         "voltage, level",
-        ((3.5, {"per cent": 0}), (2.47, {"per cent": 50}), (0.9, {"per cent": 100})),
+        ((3.5, 0), (2.15, 50), (0.81, 100)),
     )
     def test_s2000_fuel_tank(voltage, level):
-        assert Formula.s2000_fuel_tank(voltage) == level
+        """
+        Specs of this tank
+        Empty: 11 ohms
+        Full: 132 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 3.51, 0.82, 0, 100)) == level
 
     @staticmethod
     @pytest.mark.parametrize(
         "voltage, level",
-        ((3.14, {"per cent": 0}), (1.85, {"per cent": 50}), (0.55, {"per cent": 100})),
+        ((3.31, 0), (1.77, 50), (0.24, 100)),
     )
     def test_mx5_na_fuel_tank(voltage, level):
-        assert Formula.mx5_na_fuel_tank(voltage) == level
+        """
+        Specs of this tank (https://www.manualslib.com/download/814242/Mazda-Mx-5.html
+        Empty: 110 ohms
+        Full: 3 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 3.313, 0.254, 0, 100)) == level
 
     @staticmethod
-    @pytest.mark.parametrize(
-        "voltage, level", ((3.87, {"per cent": 0}), (1.1, {"per cent": 100}))
-    )
+    @pytest.mark.parametrize("voltage, level", ((3.87, 0), (1.1, 100)))
     def test_mr2_w30_fuel_tank(voltage, level):
-        assert Formula.mr2_w30_fuel_tank(voltage) == level
+        """
+        Specs of this tank (http://www.testroete.com/car/Toyota/mr2%20spyder/Repair%20Information/Repair%20Manual/
+        20%20-%20Body%20Electrical/21%20-%20Combination%20Meter%20-%20Inspection.pdf)
+        Empty: 192 ohms
+        Full: 16 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 3.87, 1.111, 0, 100)) == level
 
     @staticmethod
     @pytest.mark.parametrize(
-        "voltage, level", ((3.31, {"per cent": 0}), (0.24, {"per cent": 100}))
+        "voltage, level",
+        ((3.31, 0), (1.77, 50), (0.24, 100)),
     )
     def test_mr2_w20_fuel_tank(voltage, level):
-        assert Formula.mr2_w20_fuel_tank(voltage) == level
+        """
+        Specs of this tank (http://mr2.ie/mr2/bgb/mk2/mechanical/6_015.html)
+        Empty: 110 ohms
+        Full: 3 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 3.313, 0.254, 0, 100)) == level
 
     @staticmethod
     @pytest.mark.parametrize(
         "voltage, level",
-        ((3.51, {"per cent": 0}), (2.15, {"per cent": 50}), (0.82, {"per cent": 100})),
+        ((3.51, 0), (2.15, 50), (0.82, 100)),
     )
     def test_integra_dc5_fuel_tank(voltage, level):
-        assert Formula.integra_dc5_fuel_tank(voltage) == level
+        """
+        Specs of this tank from RSX workshop manual
+        (http://www.mediafire.com/file/dwm2qkmzy2n/%2528LINKED_Edition%252902-06_Acura_RSX_Shop_Manual.pdf/file)
+        Empty: 132 ohms
+        Full: 11 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 3.510, 0.82, 0, 100)) == level
 
     @staticmethod
     @pytest.mark.parametrize(
         "voltage, level",
-        ((4.669, {"per cent": 0}), (2.95, {"per cent": 50}), (1.25, {"per cent": 100})),
+        ((4.669, 0), (2.95, 50), (1.25, 100)),
     )
     def test_accord_cl9_fuel_tank(voltage, level):
-        assert Formula.accord_cl9_fuel_tank(voltage) == level
+        """
+        Specs of this tank from TSX workshop manual
+        (http://www.hondahookup.com/forums/downloads.php?do=file&id=158)
+        Empty: 790 ohms
+        Full: 19 ohms
+        Resistance used for voltage divider: 56 ohms
+        Vin: 5v
+        """
+        assert int(Formula.custom(voltage, 4.669, 1.266, 0, 100)) == level
 
     @staticmethod
     @pytest.mark.parametrize(
@@ -190,3 +262,31 @@ class TestFormula:
             "celsius": celsius,
             "fahrenheit": fahrenheit,
         }
+
+    @staticmethod
+    @pytest.mark.parametrize(
+        "min_voltage, max_voltage, min_value, max_value, test_value, expected_value",
+        (
+            (0, 0, 0, 0, 0, 0),
+            (0, 5, 0, 100, 0, 0),
+            (0, 5, 0, 100, 2.5, 50),
+            (0, 5, 0, 100, 5, 100),
+            (0, 5, 100, 0, 0, 100),
+            (0, 5, 100, 0, 2.5, 50),
+            (0, 5, 100, 0, 5, 0),
+            (5, 0, 0, 100, 0, 100),
+            (5, 0, 0, 100, 2.5, 50),
+            (5, 0, 0, 100, 5, 0),
+            (5, 0, 100, 0, 0, 0),
+            (5, 0, 100, 0, 2.5, 50),
+            (5, 0, 100, 0, 5, 100),
+            (0, 5, 0, 100, 5.1, 102.0),
+        ),
+    )
+    def test_custom(
+        min_voltage, max_voltage, min_value, max_value, test_value, expected_value
+    ):
+        assert (
+            Formula.custom(test_value, min_voltage, max_voltage, min_value, max_value)
+            == expected_value
+        )

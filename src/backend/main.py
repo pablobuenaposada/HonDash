@@ -56,14 +56,26 @@ class Backend:
         self.an6_unit = self.setup_file.json.get("an6", {}).get("unit", "volts")
         self.an7_unit = self.setup_file.json.get("an7", {}).get("unit", "volts")
 
-        self.an0_formula = self.setup_file.get_formula("an0")
-        self.an1_formula = self.setup_file.get_formula("an1")
-        self.an2_formula = self.setup_file.get_formula("an2")
-        self.an3_formula = self.setup_file.get_formula("an3")
-        self.an4_formula = self.setup_file.get_formula("an4")
-        self.an5_formula = self.setup_file.get_formula("an5")
-        self.an6_formula = self.setup_file.get_formula("an6")
-        self.an7_formula = self.setup_file.get_formula("an7")
+        self.an0_formula, self.an0_extra_params = self.setup_file.get_formula("an0")
+        self.an1_formula, self.an1_extra_params = self.setup_file.get_formula("an1")
+        self.an2_formula, self.an2_extra_params = self.setup_file.get_formula("an2")
+        self.an3_formula, self.an3_extra_params = self.setup_file.get_formula("an3")
+        self.an4_formula, self.an4_extra_params = self.setup_file.get_formula("an4")
+        self.an5_formula, self.an5_extra_params = self.setup_file.get_formula("an5")
+        self.an6_formula, self.an6_extra_params = self.setup_file.get_formula("an6")
+        self.an7_formula, self.an7_extra_params = self.setup_file.get_formula("an7")
+
+    def _call_analog_input(self, port):
+        voltage = self.ecu.analog_input(port)
+        extra_params = getattr(self, f"an{port}_extra_params")
+        formula = getattr(self, f"an{port}_formula")
+
+        if extra_params is None:
+            return formula(**{"voltage": voltage})[getattr(self, f"an{port}_unit")]
+        else:
+            args = {"voltage": voltage}
+            args.update(extra_params)
+            return formula(**args)
 
     def update(self):
         """ load the websocket with updated info """
@@ -88,14 +100,14 @@ class Backend:
             "scs": self.ecu.scs,
             "fmw": self.ecu.firmware,
             "map": self.ecu.map[self.map_unit],
-            "an0": self.an0_formula(self.ecu.analog_input(0))[self.an0_unit],
-            "an1": self.an1_formula(self.ecu.analog_input(1))[self.an1_unit],
-            "an2": self.an2_formula(self.ecu.analog_input(2))[self.an2_unit],
-            "an3": self.an3_formula(self.ecu.analog_input(3))[self.an3_unit],
-            "an4": self.an4_formula(self.ecu.analog_input(4))[self.an4_unit],
-            "an5": self.an5_formula(self.ecu.analog_input(5))[self.an5_unit],
-            "an6": self.an6_formula(self.ecu.analog_input(6))[self.an6_unit],
-            "an7": self.an7_formula(self.ecu.analog_input(7))[self.an7_unit],
+            "an0": self._call_analog_input(0),
+            "an1": self._call_analog_input(1),
+            "an2": self._call_analog_input(2),
+            "an3": self._call_analog_input(3),
+            "an4": self._call_analog_input(4),
+            "an5": self._call_analog_input(5),
+            "an6": self._call_analog_input(6),
+            "an7": self._call_analog_input(7),
             "time": self.time.get_time(),
             "odo": self.odo.preferred_mileage,
             "style": self.style.status,

@@ -19,7 +19,7 @@ Integra DC5 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposad
 Accord CL9 | 56Ω 1 watt | | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/cl9.jpeg)
 MR2 W20 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w20.png)
 MR2 W30 | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mr2_w30.png)
-MX5 NA | 56Ω 1 watt | N/A | N/A
+MX5 NA | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/fuel_gauges/mx5_na.png)
 
 <br/>
  

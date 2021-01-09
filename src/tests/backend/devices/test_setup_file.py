@@ -152,4 +152,4 @@ class TestSetupFile:
     )
     def test_get_formula_non_existent(self, value, formula):
         """If wrong value or the value has no formula, the voltage one should be returned"""
-        assert self.setup.get_formula(value) == formula
+        assert self.setup.get_formula(value) == (formula, None)
