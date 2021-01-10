@@ -82,7 +82,7 @@ class Backend:
             return formula(**args)
 
     def update(self):
-        """ load the websocket with updated info """
+        """load the websocket with updated info"""
         if self.odo.save(self.ecu.vss["kmh"]):
             self.setup_file.update_key("odo", {"value": self.odo.preferred_mileage})
         self.style.update(self.ecu.tps)

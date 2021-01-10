@@ -109,7 +109,7 @@ class TestSetupFile:
         assert vss_params  # checks that the dict return is not empty
 
     def test_reset_setup(self):
-        """ Checks that the reset setup loads the default json """
+        """Checks that the reset setup loads the default json"""
         # get the initial value for vss
         vss_config = self.setup.get_value("vss")
 
