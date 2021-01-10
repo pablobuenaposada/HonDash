@@ -26,7 +26,11 @@ class Backend:
             self.setup_file.get_value("odo").get("value"),
             self.setup_file.get_value("odo").get("unit"),
         )
-        self.ecu = Ecu()
+        # if we are here because a reset don't re-init the ecu
+        try:
+            self.ecu
+        except AttributeError:
+            self.ecu = Ecu()
 
     def _load_user_preferences(self):
         """
