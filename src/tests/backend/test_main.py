@@ -109,7 +109,7 @@ class TestMain:
             "time": "00:00:00",
             "odo": 0,
             "style": "day",
-            "ver": "3.0.0",
+            "ver": "3.1.0",
             "name": "K-Pro",
         }
 

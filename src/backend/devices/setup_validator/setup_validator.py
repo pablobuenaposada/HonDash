@@ -59,7 +59,14 @@ class SetupValidator:
 
     def _check_version(self, setup):
         try:
-            if setup["version"] not in ("2.3.2", "2.4.0", "2.5.0", "2.6.0", "3.0.0"):
+            if setup["version"] not in (
+                "2.3.2",
+                "2.4.0",
+                "2.5.0",
+                "2.6.0",
+                "3.0.0",
+                "3.1.0",
+            ):
                 raise self.ValidationError("setup file should be at least 2.3.2")
         except KeyError:
             raise self.ValidationError("version tag not found")
