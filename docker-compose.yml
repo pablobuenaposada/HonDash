@@ -1,0 +1,41 @@
+version: '3'
+
+volumes:
+  frontend-volume:
+  node-modules-volume:
+  schema-volume:
+
+services:
+  nginx:
+    image: nginx
+    ports:
+     - "8080:80"
+    environment:
+     - NGINX_HOST=foobar.com
+     - NGINX_PORT=80
+    volumes:
+      - frontend-volume:/usr/share/nginx/html/
+      - node-modules-volume:/usr/share/nginx/html/node_modules/
+      - schema-volume:/usr/share/nginx/html/backend/devices/setup_validator/
+  app:
+    image: pablobuenaposada/hondash
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5678:5678"
+    tty: true
+    environment:
+      - UDEV=1
+    volumes:
+      - frontend-volume:/app/src/frontend/
+      - node-modules-volume:/app/node_modules/
+      - schema-volume:/app/src/backend/devices/setup_validator/
+    privileged: true
+    devices:
+      - '/dev:/dev'
+
+#networks:
+#  app-network:
+#    driver: bridge
+

@@ -23,3 +23,5 @@ RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
 	make system_dependencies
 COPY . /app
 RUN make virtualenv
+RUN make run_rpi
+

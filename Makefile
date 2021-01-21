@@ -17,6 +17,7 @@ SYSTEM_DEPENDENCIES_UBUNTU= \
     git \
     libsnappy-dev \
     libssl1.0-dev \
+    libusb-1.0-0 \
     lsb-release \
     node-gyp \
     nodejs-dev \
@@ -66,8 +67,6 @@ run: virtualenv
 run_rpi:
 	cp -n default_setup.json setup.json
 	sudo PYTHONPATH=src $(PYTHON) src/backend/main.py &
-	sleep 5
-	chromium-browser --kiosk --check-for-update-interval=604800 --incognito src/frontend/index.html &
 
 dummy:
 	cp -n default_setup.json setup.json || true
@@ -115,6 +114,9 @@ docker/build:
 
 docker/pull:
 	docker pull $(DOCKER_IMAGE)
+
+docker/run:
+	docker-compose up -d app nginx
 
 docker/run/test:
 	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make test'
