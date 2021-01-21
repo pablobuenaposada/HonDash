@@ -1,9 +1,25 @@
 ![alt tag](https://raw.github.com/pablobuenaposada/HonDash/master/docs/logo/hondash.png)
 
 ## How to run this project in a Raspberry Pi?
+
+### With Docker
+for the first time:
+```sh
+make docker/system_dependencies
+```
+then just only:
+```sh
+make docker/run
+```
+to stop the project
+```sh
+make docker/stop
+```
+
+### Without Docker
 Get Raspberry Pi OS (release date 2020-08-20) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
 
-### SSH
+#### SSH
 Enable SSH through:
 ```sh
 sudo raspi-config
@@ -25,14 +41,14 @@ Install vim because reasons:
 sudo apt -y install vim
 ```
 
-### Update firmware
+#### Update firmware
 ```sh
 sudo apt update
 sudo apt upgrade
 sudo apt install rpi-eeprom rpi-eeprom-images
 ```
 
-### Install the project
+#### Install the project
 Clone this project:
 ```sh
 cd /home/pi/Desktop/
@@ -54,13 +70,13 @@ Later you can just run the project:
 make run_rpi
 ```
 
-### Hostname
+#### Hostname
 Change the hostname from raspberrypi to hondash
 ```sh
 sudo sed -i 's/raspberrypi/hondash/g' /etc/hostname /etc/hosts
 ```
 
-### Enable hotspot
+#### Enable hotspot
 ```sh
 sudo apt install network-manager network-manager-gnome openvpn \
 openvpn-systemd-resolved network-manager-openvpn \
@@ -82,7 +98,7 @@ Reboot
 
 Right click on the network manager and add a WiFi connection type, connection name: HonDash, ssid: HonDash, mode: Hotspot
 
-### Nginx for enable the setup tool
+#### Nginx for enable the setup tool
 ```sh
 sudo apt -y install nginx
 ```
@@ -95,18 +111,18 @@ sudo cp /home/pi/Desktop/HonDash/config/nginx/default /etc/nginx/sites-enabled/d
 sudo /etc/init.d/nginx start
 ```
 
-## Optional tricks
-### HonDash at startup
+### Optional tricks
+#### HonDash at startup
 ```sh
 crontab /home/pi/Desktop/HonDash/config/cron/cron
 ```
 
-### Remove wizard setup message
+#### Remove wizard setup message
 ```sh
 sudo rm /etc/xdg/autostart/piwiz.desktop
 ```
 
-### Hide mouse pointer
+#### Hide mouse pointer
 ```sh
 sudo apt install unclutter
 sudo vim /etc/xdg/lxsession/LXDE-pi/autostart
@@ -116,26 +132,26 @@ add this line:
 @unclutter -idle 0.1
 ```
 
-### Wallpaper
+#### Wallpaper
 ```sh
 env DISPLAY=:0.0 pcmanfm -w /home/pi/Desktop/HonDash/docs/wallpaper/wallpaper.png --wallpaper-mode=stretch
 ```
 
-### Disable screen saver
+#### Disable screen saver
 ```sh
 sudo apt -y install xscreensaver
 ```
 Go to Preferences --> Screensaver --> disable screensaver.
 
-### Disable SSH warning
+#### Disable SSH warning
 ```sh
 sudo rm /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
 ```
-### Boot faster
+#### Boot faster
 rcconf
 disable bluethoot, alsa...
 
-### Create SD card image file
+#### Create SD card image file
 Check your sd card path with:
 ```sh
 diskutil list
