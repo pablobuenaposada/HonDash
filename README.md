@@ -21,6 +21,10 @@ HonDash is an open source instrument cluster developed for Honda engines.
 
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/setup.png" height="300" />
 
+## Easy install
+
+[This is most likely what your are looking for](https://hondash.com/SOFTWARE.html)
+
 ## Advanced software installation notes
 
 check [here](https://github.com/pablobuenaposada/HonDash/tree/master/src)
