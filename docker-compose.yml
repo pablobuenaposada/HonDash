@@ -1,0 +1,28 @@
+version: '3'
+
+volumes:
+  frontend-volume:
+  node-modules-volume:
+  schema-volume:
+
+services:
+  nginx:
+    image: nginx
+    ports:
+     - "8080:80"
+    volumes:
+      - frontend-volume:/usr/share/nginx/html/frontend/
+      - node-modules-volume:/usr/share/nginx/html/node_modules/
+      - schema-volume:/usr/share/nginx/html/backend/devices/setup_validator/
+  app:
+    image: pablobuenaposada/hondash
+    build:
+      context: .
+    ports:
+      - "5678:5678"
+    volumes:
+      - frontend-volume:/app/src/frontend/
+      - node-modules-volume:/app/node_modules/
+      - schema-volume:/app/src/backend/devices/setup_validator/
+    devices:
+      - '/dev:/dev'

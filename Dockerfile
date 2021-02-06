@@ -23,3 +23,5 @@ RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
 	make system_dependencies
 COPY . /app
 RUN make virtualenv
+RUN cp -n default_setup.json setup.json
+CMD sudo PYTHONPATH=src venv/bin/python src/backend/main.py

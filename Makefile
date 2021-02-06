@@ -17,6 +17,7 @@ SYSTEM_DEPENDENCIES_UBUNTU= \
     git \
     libsnappy-dev \
     libssl1.0-dev \
+    libusb-1.0-0 \
     lsb-release \
     node-gyp \
     nodejs-dev \
@@ -110,11 +111,41 @@ lint: lint/isort-check lint/flake8 lint/black-check lint/prettier-check
 coveralls: virtualenv
 	$(COVERALLS)
 
+docker/system_dependencies:
+ifeq ($(OS), Darwin)
+	brew install docker-machine
+	docker-machine create --driver virtualbox default
+	docker-machine stop
+	@echo Add the USB device to the VM through VirtualBox GUI then run make docker/run
+endif
+
+docker/pre_run:
+ifeq ($(OS), Darwin)
+# Docker on macOS doesn't really like to map USB devices https://mil.ad/docker/2018/05/06/access-usb-devices-in-container-in-mac.html
+	docker-machine stop || true
+	docker-machine start
+	eval "$(docker-machine env default)"
+endif
+
 docker/build:
 	docker build --cache-from=$(DOCKER_IMAGE):latest --tag=$(DOCKER_IMAGE) .
 
 docker/pull:
 	docker pull $(DOCKER_IMAGE)
+
+docker/run: docker/pre_run
+	docker-compose up -d app nginx
+ifeq ($(OS), Darwin)
+	$(eval CONTAINER_IP=$(shell sh -c "docker-machine ip default"))
+	@echo Access http://$(CONTAINER_IP):8080/frontend/ for dashboard
+	@echo Access http://$(CONTAINER_IP):8080/frontend/setup/ for setup
+else
+	@echo Access http://localhost:8080/frontend/ for dashboard
+	@echo Access http://localhost:8080/frontend/setup/ for setup
+endif
+
+docker/stop:
+	docker-compose down --volume
 
 docker/run/test:
 	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make test'
