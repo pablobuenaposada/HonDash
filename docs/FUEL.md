@@ -56,4 +56,15 @@ K-Pro inputs are rate up to 5v max, double check this installation otherwise you
 A common practice for stock clusters in cars is to supply the fuel level unit with 12v from the actual cluster, so in order to run the fuel level in HonDash you will need to be completely sure that non other device is supplying power to the fuel level sender, check you car schematics, **disconnect the fuel level sender from your original cluster plugs** and use a multimeter to verify that the signal sent to K-Pro does not exceed 5v at all.
 
 ## Your fuel tank not in the list?
-Get your fuel level sender specs (resistance when empty & full) and [contact](/CONTACT.html) me.
+Get your fuel level sender specs (resistance when empty & full) and calculate the voltage that the hondata should recieve:
+<br/>
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/voltage_divider.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/voltage_divider.png"/>
+<br/>
+and use the next formula for calculate the voltage:
+<br/>
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/tank_formula.svg" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/tank_formula.svg"/>
+<br/>
+for example, for a Civic EG with an empty tank:
+<br/>
+<img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/tank_formula_civic_eg.svg" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/tank_formula_civic_eg.svg"/>
+<br/>
