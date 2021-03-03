@@ -1,10 +1,10 @@
 TEMP_UNITS = ["celsius", "fahrenheit"]
-PRESSURE_UNITS = ["psi", "bar"]
+PRESSURE_UNITS = ["psi", "bar", "mbar"]
 PER_CENT_UNITS = ["per cent"]
 SPEED_UNITS = ["kmh", "mph"]
 DISTANCE_UNITS = ["km", "miles"]
 MIXTURE_UNITS = ["afr", "lambda"]
-TEMPLATES = ["basic", "animalillo"]
+TEMPLATES = ["basic", "animalillo", "allvals"]
 FORMULAS = [
     "vdo_323_057",
     "aem_30_2012",
