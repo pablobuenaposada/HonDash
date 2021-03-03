@@ -132,7 +132,7 @@
             "enum":[
                "basic",
                "animalillo",
-               "allvals",
+               "allvals"
             ],
             "options":{
                "grid_columns":4
@@ -652,7 +652,7 @@
                   "enum":[
                      "psi",
                      "bar",
-                     "mbar",
+                     "mbar"
                   ],
                   "options":{
                      "grid_columns":12
