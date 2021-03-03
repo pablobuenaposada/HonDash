@@ -442,7 +442,7 @@ class S300:
         }
         data_from_ecu = get_value_from_ecu(self.version, indexes, self.data6)
         if isinstance(data_from_ecu, int):
-            return Formula.adc_to_volts(256 * data_from_ecu)
+            return Formula.adc_to_volts(16 * data_from_ecu)
         
     @property
     def strim(self):
@@ -489,7 +489,7 @@ class S300:
         }
         data_from_ecu = get_value_from_ecu(self.version, indexes, self.data6)
         if isinstance(data_from_ecu, int):
-            return Formula.adc_to_volts(256 * data_from_ecu)
+            return Formula.adc_to_volts(16 * data_from_ecu)
 
     @property
     def egrlv(self):
@@ -500,7 +500,7 @@ class S300:
         data_from_ecu = get_value_from_ecu(slef.version, indexes_1, self.data6
         )
         if isinstance(data_from_ecu, int):
-            return Formula.adc_to_volts(256 * data_from_ecu) 
+            return Formula.adc_to_volts(16 * data_from_ecu) 
 
     @property
     def b6v(self):
@@ -510,7 +510,7 @@ class S300:
         }
         data_from_ecu = get_value_from_ecu(self.version, indexes_1, self.data6)
         if isinstance(data_from_ecu, int):
-            return Formula.adc_to_volts(256 * data_from_ecu)
+            return Formula.adc_to_volts(16 * data_from_ecu)
         
     @property
     def baro(self):
@@ -544,7 +544,7 @@ class S300:
         data_from_ecu = get_value_from_ecu(self.version, indexes_1, self.data6
         )
         if isinstance(data_from_ecu, int):
-            eldv = Formula.adc_to_volts(256 * data_from_ecu)
+            eldv = Formula.adc_to_volts(16 * data_from_ecu)
         #TODO elda = (-17.5 * eldv) + 78.5
         return (eldv)
                     
