@@ -489,7 +489,7 @@ class S300:
         }
         data_from_ecu = get_value_from_ecu(self.version, indexes, self.data6)
         if isinstance(data_from_ecu, int):
-            return Formula.adc8_to_volts(data_from_ecu)
+            return Formula.adc_to_volts(256 * data_from_ecu)
 
     @property
     def egrlv(self):
@@ -500,7 +500,7 @@ class S300:
         data_from_ecu = get_value_from_ecu(slef.version, indexes_1, self.data6
         )
         if isinstance(data_from_ecu, int):
-            return Formula.adc8_to_volts(data_from_ecu) 
+            return Formula.adc_to_volts(256 * data_from_ecu) 
 
     @property
     def b6v(self):
@@ -510,7 +510,7 @@ class S300:
         }
         data_from_ecu = get_value_from_ecu(self.version, indexes_1, self.data6)
         if isinstance(data_from_ecu, int):
-            return Formula.adc8_to_volts(data_from_ecu)
+            return Formula.adc_to_volts(256 * data_from_ecu)
         
     @property
     def baro(self):
@@ -529,10 +529,7 @@ class S300:
             baro_bar = round((baro_mbar / 1000), 2)
             baro_psi = round(Formula.bar_to_psi(baro_bar), 2)
         #TODO    baro_alt = Formula.baro_to_altitude(baro_mbar)
-        return{
-                "mbar": baro_mbar, "kPa": baro_kpa, "bar": baro_bar, 
-                "psi": baro_psi, "Alt": baro_alt
-        }         
+        return {"bar": baro_bar, "mbar": baro_mbar, "psi": baro_psi}         
     
     @property
     def eld(self):
