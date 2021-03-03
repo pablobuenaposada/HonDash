@@ -89,6 +89,7 @@
                      "fahrenheit",
                      "psi",
                      "bar",
+                     "mbar",
                      "per cent"
                   ],
                   "options":{
@@ -130,7 +131,8 @@
             "type":"string",
             "enum":[
                "basic",
-               "animalillo"
+               "animalillo",
+               "allvals",
             ],
             "options":{
                "grid_columns":4
@@ -649,7 +651,8 @@
                   "type":"string",
                   "enum":[
                      "psi",
-                     "bar"
+                     "bar",
+                     "mbar",
                   ],
                   "options":{
                      "grid_columns":12
