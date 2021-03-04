@@ -121,7 +121,7 @@ class Backend:
             "acsw": self.ecu.acsw,
             "accl": self.ecu.accl,
             "inj": self.ecu.inj,
-            "injduty": self.ecu.injduty
+            "injduty": self.ecu.injduty,
             "igadv": self.ecu.igadv,
             "pho2sv": self.ecu.pho2sv,
             "strim": self.ecu.strim,
