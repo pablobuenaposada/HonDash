@@ -293,4 +293,4 @@ class Ecu:
 
     @property
     def pwm(self):           
-        return self._get_value_from_ecu("pwm", False)
+        return self._get_value_from_ecu("pwm")
