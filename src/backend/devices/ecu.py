@@ -237,60 +237,60 @@ class Ecu:
 
     @property
     def n2arm(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("n2arm", False)
 
     @property
     def n2on(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("n2on", False)
 
     @property
     def n3arm(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("n3arm", False)
 
     @property
     def n3on(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("n3on", False)
 
     @property
     def disterr(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("disterr", False)
 
     @property
     def sectbl(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("sectbl", False)
 
     @property
     def secinj(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("secinj", False)
 
     @property
     def revl(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("revl", False)
 
     @property
     def lnchc(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("lnchc", False)
 
     @property
     def lnchr(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("lnchr", False)
 
     @property
     def bstc(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("bstc", False)
 
     @property
     def shftc(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("shftc", False)
 
     @property
     def ignc(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("ignc", False)
 
     @property
     def obdl(self):
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("obdl", False)
 
     @property
     def pwm(self):           
-        return self._get_value_from_ecu("", False)
+        return self._get_value_from_ecu("pwm", False)
