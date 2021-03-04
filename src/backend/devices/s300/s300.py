@@ -251,7 +251,7 @@ class S300:
         data_from_s300 = (
             256 * get_value_from_ecu(self.version, indexes_2, self.data6)
         ) + get_value_from_ecu(self.version, indexes_1, self.data6)
-        map_bar = data_from_s300 / 100.0
+        map_bar = data_from_s300 / 1000
         map_mbar = map_bar * 1000
         map_psi = Formula.bar_to_psi(map_bar)
         return {"bar": map_bar, "mbar": map_mbar, "psi": map_psi}
