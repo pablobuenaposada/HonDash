@@ -497,7 +497,7 @@ class S300:
         indexes_1 = {
             constants.S3003_ID: constants.S3003_EGRLV
         }
-        data_from_ecu = get_value_from_ecu(slef.version, indexes_1, self.data6
+        data_from_ecu = get_value_from_ecu(self.version, indexes_1, self.data6
         )
         if isinstance(data_from_ecu, int):
             return Formula.adc_to_volts(16 * data_from_ecu) 
