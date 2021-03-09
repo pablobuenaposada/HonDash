@@ -319,6 +319,12 @@
   "name": {
     "tag": "ecu_name"
   },
+  "inj": {
+    "tag": "inj"
+  },
+  "injduty": {
+    "tag": "injduty"
+  },
   "igadv": {
     "tag": "igadv"
   }

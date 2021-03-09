@@ -145,7 +145,7 @@ class Ecu:
     """
     @property
     def inj(self):
-        return self._get_value_from_ecu("inj")   #TODO Needs Units
+        return self._get_value_from_ecu("inj")   #TODO Needs Units? ms
 
     @property
     def injduty(self):

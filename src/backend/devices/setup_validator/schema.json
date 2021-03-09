@@ -858,6 +858,36 @@
                "hidden":true
             }
          },
+         "inj":{
+            "type":"object",
+            "required":[
+               "tag"
+            ],
+            "properties":{
+               "tag":{
+                  "type":"string",
+                  "const":"inj"
+               }
+            },
+            "options":{
+               "hidden":true
+            }
+         },
+         "injduty":{
+            "type":"object",
+            "required":[
+               "tag"
+            ],
+            "properties":{
+               "tag":{
+                  "type":"string",
+                  "const":"injduty"
+               }
+            },
+            "options":{
+               "hidden":true
+            }
+         },
          "igadv":{
             "type":"object",
             "required":[

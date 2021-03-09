@@ -203,6 +203,12 @@
   "igadv": {
     "tag": "igadv"
   },
+  "inj": {
+    "tag": "inj"
+  },
+  "injduty": {
+    "tag": "injduty"
+  },
   "map": {
     "decimals": 1,
     "label": "MAP",
@@ -254,7 +260,7 @@
   "odo": {
     "tag": "odo",
     "unit": "km",
-    "value": 387
+    "value": 338
   },
   "rpm": {
     "max": 9000,

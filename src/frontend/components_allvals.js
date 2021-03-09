@@ -11,13 +11,30 @@ var speed = new Text({
   style: "italic",
   textAlign: "center"
 });
-var igadv = new Text({
+var inj = new Text({  //Aj Add-in
+  id: "inj",
+  value: "inj",
+  size: 3,
+  style: "italic",
+  // suffix: "ms",
+  textAlign: "center"
+});
+var injduty = new Text({  //Aj Add-in
+  id: "injduty",
+  value: "injduty",
+  size: 3,
+  style: "italic",
+  // suffix: "%",
+  textAlign: "center"
+});
+var igadv = new Text({  //Aj Add-in
   id: "igadv",
   value: "-",
-  size: 15,
+  size: 3,
   style: "italic",
+  suffix: "*",
   textAlign: "center"
-})
+});
 var gear = new Text({ id: "gear", value: "N", textAlign: "center", size: 15 });
 var time = new Text({
   id: "time",
