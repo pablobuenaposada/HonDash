@@ -11,6 +11,13 @@ var speed = new Text({
   style: "italic",
   textAlign: "center"
 });
+var igadv = new Text({
+  id: "igadv",
+  value: "-",
+  size: 15,
+  style: "italic",
+  textAlign: "center"
+})
 var gear = new Text({ id: "gear", value: "N", textAlign: "center", size: 15 });
 var time = new Text({
   id: "time",

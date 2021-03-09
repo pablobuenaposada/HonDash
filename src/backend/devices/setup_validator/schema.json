@@ -857,6 +857,21 @@
             "options":{
                "hidden":true
             }
+         },
+         "igadv":{
+            "type":"object",
+            "required":[
+               "tag"
+            ],
+            "properties":{
+               "tag":{
+                  "type":"string",
+                  "const":"igadv"
+               }
+            },
+            "options":{
+               "hidden":true
+            }
          }
       }
    },
