@@ -260,7 +260,7 @@
   "odo": {
     "tag": "odo",
     "unit": "km",
-    "value": 338
+    "value": 1929
   },
   "rpm": {
     "max": 9000,
@@ -303,7 +303,7 @@
     "tpsLowerThreshold": 20,
     "tpsUpperThreshold": 30
   },
-  "template": "allvals",
+  "template": "basic",
   "time": {
     "tag": "time"
   },
