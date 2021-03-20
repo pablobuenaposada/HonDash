@@ -6,6 +6,7 @@ from unittest import mock
 import pytest
 
 from backend.devices import setup_file
+from backend.devices.formula import Formula
 from backend.devices.setup_validator.setup_validator import SetupValidator
 from backend.main import Backend
 
@@ -72,11 +73,50 @@ class TestMain:
             b.save({})
         b.stop()
 
-    @pytest.mark.parametrize("port", (0, 1, 2, 3, 4, 5, 6, 7))
-    def test__call_analog_input(self, port):
+    @pytest.mark.parametrize(
+        "port, formula, unit, extra_params, expected_value",
+        (
+            (0, "aem_30_2012", "celsius", None, 149.2065268),
+            (1, "vdo_323_057", "celsius", None, 205.7905145),
+            (2, "bosch_0280130039_0280130026", "celsius", None, 104.9358479),
+            (
+                3,
+                "custom",
+                "bar",
+                {
+                    "min_voltage": 0.5,
+                    "max_voltage": 4.5,
+                    "min_value": 0,
+                    "max_value": 100,
+                },
+                -12.5,
+            ),
+            (4, "aem_30_2012", "fahrenheit", None, 300.57174824000003),
+            (5, "vdo_323_057", "fahrenheit", None, 402.4229261),
+            (6, "bosch_0280130039_0280130026", "fahrenheit", None, 220.88452622),
+            (
+                7,
+                "custom",
+                "psi",
+                {
+                    "min_voltage": 0.5,
+                    "max_voltage": 4.5,
+                    "min_value": 0,
+                    "max_value": 100,
+                },
+                -12.5,
+            ),
+        ),
+    )
+    def test__call_analog_input(
+        self, port, formula, unit, extra_params, expected_value
+    ):
         with mock.patch("usb.core.find"):
             b = Backend()
-        assert b._call_analog_input(port) == 0.0
+            setattr(b, f"an{port}_extra_params", extra_params)
+            setattr(b, f"an{port}_formula", getattr(Formula, formula))
+            setattr(b, f"an{port}_unit", unit)
+        assert b._call_analog_input(port) == expected_value
         b.stop()
 
     def test_update(self):
