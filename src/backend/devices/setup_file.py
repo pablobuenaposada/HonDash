@@ -1,4 +1,5 @@
 import json
+from json.decoder import JSONDecodeError
 
 from backend.devices.formula import Formula
 
@@ -11,7 +12,10 @@ class SetupFile:
     def __init__(self, file_name=None):
         self.file_name = file_name or FILE_NAME
         with open(self.file_name) as file:
-            self.json = json.load(file)
+            try:
+                self.json = json.load(file)
+            except JSONDecodeError:  # if there's a problem within the file let's load the default setup
+                self.reset_setup()
 
     def get_value(self, key):
         return self.json.get(key)
