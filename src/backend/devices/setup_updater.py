@@ -23,6 +23,8 @@ class SetupUpdater:
             setup = self._update_to_3_0_0(setup)
         if setup["version"] == "3.0.0":
             setup = self._update_to_3_1_0(setup)
+        if setup["version"] == "3.1.0":
+            setup = self._update_to_3_2_0(setup)
         return setup
 
     @staticmethod
@@ -73,4 +75,10 @@ class SetupUpdater:
                     setup[tag]["formula"] = "custom"
             except (TypeError, KeyError):
                 pass
+        return setup
+
+    @staticmethod
+    def _update_to_3_2_0(setup):
+        """From 3.1.0 to 3.2.0"""
+        setup["version"] = "3.2.0"
         return setup
