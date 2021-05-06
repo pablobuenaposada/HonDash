@@ -838,7 +838,7 @@
          },
          "version":{
             "type":"string",
-            "const":"3.1.0",
+            "const":"3.2.0",
             "options":{
                "hidden":true
             }
