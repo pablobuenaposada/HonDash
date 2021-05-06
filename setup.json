@@ -200,6 +200,15 @@
     "tag": "gauge2",
     "unit": "celsius"
   },
+  "igadv": {
+    "tag": "igadv"
+  },
+  "inj": {
+    "tag": "inj"
+  },
+  "injduty": {
+    "tag": "injduty"
+  },
   "map": {
     "decimals": 1,
     "label": "MAP",
@@ -251,7 +260,7 @@
   "odo": {
     "tag": "odo",
     "unit": "km",
-    "value": 4
+    "value": 2570
   },
   "rpm": {
     "max": 9000,
@@ -294,7 +303,7 @@
     "tpsLowerThreshold": 20,
     "tpsUpperThreshold": 30
   },
-  "template": "basic",
+  "template": "allvals",
   "time": {
     "tag": "time"
   },
