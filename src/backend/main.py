@@ -74,8 +74,8 @@ class Backend:
         extra_params = getattr(self, f"an{port}_extra_params")
         formula = getattr(self, f"an{port}_formula")
 
-        if extra_params is None:
-            return formula(**{"voltage": voltage})[getattr(self, f"an{port}_unit")]
+        if extra_params is None:  # then is a specific formula
+            return formula(voltage)[getattr(self, f"an{port}_unit")]
         else:
             args = {"voltage": voltage}
             args.update(extra_params)

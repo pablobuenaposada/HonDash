@@ -88,7 +88,7 @@ class Formula:
         }
 
     @staticmethod
-    def aem_30_2012(volts):
+    def aem_30_2012(voltage):
         """
         AEM 30-2012 / Delphi 12160855 oil temperature sensors
         https://www.aemelectronics.com/sites/default/files/aem_product_instructions/30-2012%20Water%20Temp%20Sensor%20Kit.pdf
@@ -96,16 +96,16 @@ class Formula:
         Vin: 5v
         """
         celsius = (
-            -9.800565802 * pow(10, -2) * pow(volts, 10)
-            + 2.47857492 * pow(volts, 9)
-            - 27.05872375 * pow(volts, 8)
-            + 167.0212269 * pow(volts, 7)
-            - 641.3215599 * pow(volts, 6)
-            + 1587.480011 * pow(volts, 5)
-            - 2536.694771 * pow(volts, 4)
-            + 2537.216736 * pow(volts, 3)
-            - 1457.917408 * pow(volts, 2)
-            + 342.4844189 * volts
+            -9.800565802 * pow(10, -2) * pow(voltage, 10)
+            + 2.47857492 * pow(voltage, 9)
+            - 27.05872375 * pow(voltage, 8)
+            + 167.0212269 * pow(voltage, 7)
+            - 641.3215599 * pow(voltage, 6)
+            + 1587.480011 * pow(voltage, 5)
+            - 2536.694771 * pow(voltage, 4)
+            + 2537.216736 * pow(voltage, 3)
+            - 1457.917408 * pow(voltage, 2)
+            + 342.4844189 * voltage
             + 149.2065268
         )
         return {
@@ -114,7 +114,7 @@ class Formula:
         }
 
     @staticmethod
-    def bosch_0280130039_0280130026(volts):
+    def bosch_0280130039_0280130026(voltage):
         """
         Bosch 0280130039 / 0280130026 oil temperature sensors
         For 0280130039 this are the specs:
@@ -126,8 +126,8 @@ class Formula:
         Vin: 5v
         """
         celsius = (
-            4.303155022 * pow(10, -1) * pow(volts, 2)
-            - 28.49330639 * volts
+            4.303155022 * pow(10, -1) * pow(voltage, 2)
+            - 28.49330639 * voltage
             + 104.9358479
         )
         return {
