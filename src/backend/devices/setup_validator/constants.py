@@ -1,10 +1,10 @@
 TEMP_UNITS = ["celsius", "fahrenheit"]
-PRESSURE_UNITS = ["psi", "bar"]
+PRESSURE_UNITS = ["psi", "bar", "mbar"]
 PER_CENT_UNITS = ["per cent"]
 SPEED_UNITS = ["kmh", "mph"]
 DISTANCE_UNITS = ["km", "miles"]
 MIXTURE_UNITS = ["afr", "lambda"]
-TEMPLATES = ["basic", "animalillo"]
+TEMPLATES = ["basic", "animalillo", "allvals"]
 FORMULAS = [
     "vdo_323_057",
     "aem_30_2012",
@@ -62,4 +62,47 @@ FIELDS = [
     "an5",
     "an6",
     "an7",
+    #AJ Edits below:
+    "bksw",
+    "flr",
+    "acs",
+    "accl",
+    "inj",
+    "injduty",
+    "igadv",
+    "pho2sv",
+    "strim",
+    "ltrim",
+    "iatc",
+    "ectc",
+    "wbv",
+    "egrlv",
+    "b6v",
+    "baro",
+    "eldv",
+    "psp",
+    "vtp",
+    "a10",
+    "cl",
+    "altc",
+    "iab",
+    "pcs",
+    "vts",
+    "n1arm",
+    "n1on",
+    "n2arm",
+    "n2on",
+    "n3arm",
+    "n3on",
+    "disterr",
+    "sectbl",
+    "secinj",
+    "revl",
+    "lnchc",
+    "lnchr",
+    "bstc",
+    "shftc",
+    "ignc",
+    "obdl",
+    "pwm"
 ]

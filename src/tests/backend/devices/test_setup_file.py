@@ -130,6 +130,15 @@ class TestSetupFile:
         self.setup.save_setup(fake_setup)
         assert self.setup.load_setup() == fake_setup
 
+    def test_empty_setup(self):
+        """if setup file is empty the default setup should be taken"""
+        temp_file = NamedTemporaryFile()
+        temp_file_name = temp_file.name
+
+        assert os.stat(temp_file_name).st_size == 0  # empty file
+        assert setup_file.SetupFile(temp_file_name).json == self.setup.json
+        assert os.stat(temp_file_name).st_size > 0  # now it's filled
+
     def test_update_key(self):
         assert self.setup.get_value("tps") == {
             "label": "TPS",
