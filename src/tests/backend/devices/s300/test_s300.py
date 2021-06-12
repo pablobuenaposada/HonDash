@@ -276,20 +276,88 @@ class TestS300:
         assert self.s300.iat["fahrenheit"] == values[2]
 
     @pytest.mark.parametrize(
-        "channel, result",
+        "version, index1, index2, value1, value2, channel, result",
         (
-            (0, 0),
-            (1, 0),
-            (2, 0),
-            (3, 0),
-            (4, 0),
-            (5, 0),
-            (6, 0),
-            (7, 0),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN0_1,
+                constants.S3003_AN0_2,
+                3,
+                52,
+                0,
+                1.0009765625,
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN1_1,
+                constants.S3003_AN1_2,
+                3,
+                52,
+                1,
+                1.0009765625,
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN2_1,
+                constants.S3003_AN2_2,
+                3,
+                52,
+                2,
+                1.0009765625,
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN3_1,
+                constants.S3003_AN3_2,
+                3,
+                52,
+                3,
+                1.0009765625,
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN4_1,
+                constants.S3003_AN4_2,
+                3,
+                52,
+                4,
+                1.0009765625,
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN5_1,
+                constants.S3003_AN5_2,
+                3,
+                52,
+                5,
+                1.0009765625,
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN6_1,
+                constants.S3003_AN6_2,
+                3,
+                52,
+                6,
+                1.0009765625,
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_AN7_1,
+                constants.S3003_AN7_2,
+                3,
+                52,
+                7,
+                1.0009765625,
+            ),
         ),
     )
-    def test_analog(self, channel, result):
-        self.s300.version = constants.S3003_ID
+    def test_analog_input(
+        self, version, index1, index2, value1, value2, channel, result
+    ):
+        self.s300.version = version
+        self.s300.data5[index2] = value2
+        self.s300.data5[index1] = value1
 
         assert self.s300.analog_input(channel) == result
 
