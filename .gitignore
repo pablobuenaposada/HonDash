@@ -8,3 +8,4 @@ pishrink.sh
 *.img
 node_modules/
 .coverage
+setup.json
