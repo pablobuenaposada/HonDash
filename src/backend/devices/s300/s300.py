@@ -294,4 +294,66 @@ class S300:
         return bool(get_value_from_ecu(self.version, indexes, self.data6) & mask)
 
     def analog_input(self, channel):
-        return 0
+        """
+        Analog inputs
+        return unit: volts
+        """
+        indexes_1 = (
+            {
+                constants.S3003_ID: constants.S3003_AN0_1,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN1_1,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN2_1,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN3_1,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN4_1,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN5_1,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN6_1,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN7_1,
+            },
+        )
+        indexes_2 = (
+            {
+                constants.S3003_ID: constants.S3003_AN0_2,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN1_2,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN2_2,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN3_2,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN4_2,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN5_2,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN6_2,
+            },
+            {
+                constants.S3003_ID: constants.S3003_AN7_2,
+            },
+        )
+
+        return interp(
+            (256 * get_value_from_ecu(self.version, indexes_1[channel], self.data5, 0))
+            + get_value_from_ecu(self.version, indexes_2[channel], self.data5, 0),
+            [0, 4096],
+            [0, 5],
+        )
