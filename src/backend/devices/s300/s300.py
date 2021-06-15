@@ -293,7 +293,6 @@ class S300:
         mask = 0x20
         return bool(get_value_from_ecu(self.version, indexes, self.data6) & mask)
 
-    """
     def analog_input(self, channel):
         """
         Analog inputs
