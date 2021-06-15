@@ -9,3 +9,4 @@ pishrink.sh
 node_modules/
 .coverage
 setup.json
+.vscode/
