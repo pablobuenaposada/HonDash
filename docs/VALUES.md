@@ -28,7 +28,7 @@ SCS | Service connector |:white_check_mark:|:white_check_mark:|:white_check_mark
 FANC | Fan control |:white_check_mark:|:white_check_mark:|:white_check_mark:|:soon:
 MAP | Manifold absolute pressure |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 MIL | Malfunction indicator light |:soon:|:white_check_mark:|:white_check_mark:|:soon:
-AN | Analog inputs | :x: |:white_check_mark:|:white_check_mark:|:soon:
+AN | Analog inputs | :x: |:white_check_mark:|:white_check_mark:|:white_check_mark:
 FIRM | K-Pro firmware version |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 SRL | K-Pro serial number |:soon:|:soon:|:soon:|:white_check_mark:
 ECU | Ecu type |:soon:|:soon:|:soon:|:x:
