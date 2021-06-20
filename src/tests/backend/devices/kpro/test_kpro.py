@@ -565,6 +565,93 @@ class TestKpro:
         assert self.kpro.ign == result
 
     @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (None, 0, None, False),
+            (constants.KPRO23_ID, constants.KPRO23_VTS, 2, True),
+            (constants.KPRO23_ID, constants.KPRO23_VTS, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_VTS, 2, True),
+            (constants.KPRO4_ID, constants.KPRO4_VTS, 0, False),
+        ),
+    )
+    def test_vts(self, version, index, value, result):
+        self.kpro.version = version
+        if version == constants.KPRO23_ID:
+            self.kpro.data0[index] = value
+        elif version == constants.KPRO4_ID:
+            self.kpro.data3[index] = value
+
+        assert self.kpro.vts == result
+
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (None, 0, None, False),
+            (constants.KPRO23_ID, constants.KPRO23_VTP, 1, True),
+            (constants.KPRO23_ID, constants.KPRO23_VTP, 0, False),
+            (constants.KPRO4_ID, constants.KPRO4_VTP, 1, True),
+            (constants.KPRO4_ID, constants.KPRO4_VTP, 0, False),
+        ),
+    )
+    def test_vtp(self, version, index, value, result):
+        self.kpro.version = version
+        if version == constants.KPRO23_ID:
+            self.kpro.data0[index] = value
+        elif version == constants.KPRO4_ID:
+            self.kpro.data3[index] = value
+
+        assert self.kpro.vtp == result
+
+    @pytest.mark.parametrize(
+        "version, vtp_index, vts_index, value, result",
+        (
+            (None, 0, 0, 0, "off"),
+            (constants.KPRO23_ID, constants.KPRO23_VTP, constants.KPRO23_VTS, 3, "on"),
+            (
+                constants.KPRO23_ID,
+                constants.KPRO23_VTP,
+                constants.KPRO23_VTS,
+                2,
+                "malfunction",
+            ),
+            (
+                constants.KPRO23_ID,
+                constants.KPRO23_VTP,
+                constants.KPRO23_VTS,
+                1,
+                "malfunction",
+            ),
+            (constants.KPRO23_ID, constants.KPRO23_VTP, constants.KPRO23_VTS, 0, "off"),
+            (constants.KPRO4_ID, constants.KPRO4_VTP, constants.KPRO4_VTS, 3, "on"),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_VTP,
+                constants.KPRO4_VTS,
+                2,
+                "malfunction",
+            ),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_VTP,
+                constants.KPRO4_VTS,
+                1,
+                "malfunction",
+            ),
+            (constants.KPRO4_ID, constants.KPRO4_VTP, constants.KPRO4_VTS, 0, "off"),
+        ),
+    )
+    def test_vtec(self, version, vtp_index, vts_index, value, result):
+        self.kpro.version = version
+        if version == constants.KPRO23_ID:
+            self.kpro.data0[vtp_index] = value
+            self.kpro.data0[vts_index] = value
+        elif version == constants.KPRO4_ID:
+            self.kpro.data3[vtp_index] = value
+            self.kpro.data3[vts_index] = value
+
+        assert self.kpro.vtec == result
+
+    @pytest.mark.parametrize(
         "version, index1, index2, value1, value2, result",
         (
             (

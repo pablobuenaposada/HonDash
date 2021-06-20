@@ -134,6 +134,18 @@ class Ecu:
         else:
             return "unknown"
 
+    @property
+    def vtp(self):
+        return self._get_value_from_ecu("vtp", False)
+
+    @property
+    def vts(self):
+        return self._get_value_from_ecu("vts", False)
+
+    @property
+    def vtec(self):
+        return self._get_value_from_ecu("vtec", "off")
+
     def analog_input(self, channel):
         result = self._get_value_from_ecu("analog_input")
         if isinstance(result, int):  # if something went wrong we will get a 0

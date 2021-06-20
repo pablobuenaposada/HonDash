@@ -374,6 +374,52 @@ class Kpro:
         return data_from_kpro
 
     @property
+    def vtp(self):
+        """Vtec pressure switch"""
+        mask = 0x01
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_VTP,
+            constants.KPRO4_ID: constants.KPRO4_VTP,
+        }
+        return bool(
+            get_value_from_ecu(
+                self.version,
+                indexes,
+                self.data0 if self.version == constants.KPRO23_ID else self.data3,
+            )
+            & mask
+        )
+
+    @property
+    def vts(self):
+        """Vtec spool valve"""
+        mask = 0x02
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_VTS,
+            constants.KPRO4_ID: constants.KPRO4_VTS,
+        }
+        return bool(
+            get_value_from_ecu(
+                self.version,
+                indexes,
+                self.data0 if self.version == constants.KPRO23_ID else self.data3,
+            )
+            & mask
+        )
+
+    @property
+    def vtec(self):
+        """Vtec, added logic between vtp and vts"""
+        if self.vts and self.vtp:  # vtec enabled and pressure sensed
+            return "on"
+        elif self.vts and not self.vtp:  # vtec enabled but pressure not sensed
+            return "malfunction"
+        elif not self.vts and self.vtp:  # vtec not enabled but pressure sensed
+            return "malfunction"
+        else:  # vtec disabled
+            return "off"
+
+    @property
     def mil(self):
         """Malfunction indicator light also known as check engine light"""
         indexes = {
