@@ -8,6 +8,9 @@ from backend.devices.kpro.kpro import Kpro
 kpro = Kpro()
 with output(output_type="dict", initial_len=1, interval=0) as output_list:
     while True:
+        output_list["VTS"] = str(kpro.vts)
+        output_list["VTP"] = str(kpro.vtp)
+        output_list["VTEC"] = str(kpro.vtec)
         output_list["ETH"] = str(kpro.eth)
         output_list["FLT"] = str(kpro.flt)
         output_list["BAT"] = str(kpro.bat)

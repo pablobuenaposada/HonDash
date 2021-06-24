@@ -306,6 +306,9 @@
     "pathon": "scs_on.png",
     "pathoff": "scs_off.png"
   },
+  "vtec": {
+    "tag": "icon4"
+  },
   "gear": {
     "tag": "gear"
   },

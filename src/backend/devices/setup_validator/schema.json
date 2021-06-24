@@ -788,6 +788,23 @@
                "hidden":true
             }
          },
+         "vtec":{
+            "type":"object",
+            "required":[
+               "tag"
+            ],
+            "properties":{
+               "tag":{
+                  "type":"string",
+                  "enum":[
+                     "icon4"
+                  ]
+               }
+            },
+            "options":{
+               "hidden":true
+            }
+         },
          "gear":{
             "type":"object",
             "required":[
