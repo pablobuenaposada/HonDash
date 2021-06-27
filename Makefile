@@ -160,7 +160,4 @@ sd-image/create:
 	sudo dd bs=1024 if=$(path) of=full_size_image.img
 
 sd-image/shrink:
-	git clone https://github.com/deepeeess/PiShrink.git
-	chmod +x PiShrink/pishrink.sh
-	mv full_size_image.img PiShrink/
-	cd PiShrink; docker-compose run pishrink /pishrink/pishrink.sh /pishrink/full_size_image.img
+	docker run --privileged=true --rm --volume $(shell pwd):/workdir mgomesborges/pishrink pishrink -v full_size_image.img shrinked_image.img
