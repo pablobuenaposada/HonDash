@@ -138,7 +138,7 @@ class S300:
     @property
     def fanc(self):
         """Fan switch"""
-        mask = 0x80
+        mask = 0x01
         indexes = {
             constants.S3003_ID: constants.S3003_FANC,
         }
