@@ -156,7 +156,7 @@ class S300:
     @property
     def scs(self):
         """Service connector"""
-        mask = 0x10
+        mask = 0x20
         indexes = {
             constants.S3003_ID: constants.S3003_SCS,
         }

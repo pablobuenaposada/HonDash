@@ -440,7 +440,7 @@ class TestS300:
         (
             (None, 0, None, False),
             (constants.S3003_ID, constants.S3003_SCS, 0, False),
-            (constants.S3003_ID, constants.S3003_SCS, 16, True),
+            (constants.S3003_ID, constants.S3003_SCS, 32, True),
         ),
     )
     def test_scs(self, version, index, value, result):
