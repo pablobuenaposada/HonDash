@@ -11,6 +11,8 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list["BAT"] = str(s300.bat)
         output_list["TPS"] = str(s300.tps)
         output_list["RPM"] = str(s300.rpm)
+        output_list["SCS"] = str(s300.scs)
+        output_list["MIL"] = str(s300.mil)
         output_list["AN0"] = str(s300.analog_input(0))
         output_list["AN1"] = str(s300.analog_input(1))
         output_list["AN2"] = str(s300.analog_input(2))
