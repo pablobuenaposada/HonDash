@@ -187,7 +187,7 @@ class TestS300:
         "value, result",
         (
             (0, False),
-            (128, True),
+            (1, True),
         ),
     )
     def test_fanc(self, value, result):
