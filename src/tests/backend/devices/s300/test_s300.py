@@ -462,3 +462,62 @@ class TestS300:
         self.s300.data6[index] = value
 
         assert self.s300.bksw == result
+
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (None, 0, None, False),
+            (constants.S3003_ID, constants.S3003_VTP, 0, False),
+            (constants.S3003_ID, constants.S3003_VTP, 1, True),
+        ),
+    )
+    def test_vtp(self, version, index, value, result):
+        self.s300.version = version
+        self.s300.data6[index] = value
+
+        assert self.s300.vtp == result
+
+    @pytest.mark.parametrize(
+        "version, index, value, result",
+        (
+            (None, 0, None, False),
+            (constants.S3003_ID, constants.S3003_VTS, 0, False),
+            (constants.S3003_ID, constants.S3003_VTS, 1, True),
+        ),
+    )
+    def test_vts(self, version, index, value, result):
+        self.s300.version = version
+        self.s300.data6[index] = value
+
+        assert self.s300.vts == result
+
+    @pytest.mark.parametrize(
+        "version, vtp_index, vts_index, vtp_value, vts_value, result",
+        (
+            (None, 0, 0, 0, 0, "off"),
+            (constants.S3003_ID, constants.S3003_VTP, constants.S3003_VTS, 1, 1, "on"),
+            (
+                constants.S3003_ID,
+                constants.S3003_VTP,
+                constants.S3003_VTS,
+                1,
+                0,
+                "malfunction",
+            ),
+            (
+                constants.S3003_ID,
+                constants.S3003_VTP,
+                constants.S3003_VTS,
+                0,
+                1,
+                "malfunction",
+            ),
+            (constants.S3003_ID, constants.S3003_VTP, constants.S3003_VTS, 0, 0, "off"),
+        ),
+    )
+    def test_vtec(self, version, vtp_index, vts_index, vtp_value, vts_value, result):
+        self.s300.version = version
+        self.s300.data6[vtp_index] = vtp_value
+        self.s300.data6[vts_index] = vts_value
+
+        assert self.s300.vtec == result

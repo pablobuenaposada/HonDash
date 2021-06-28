@@ -15,6 +15,8 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list["MIL"] = str(s300.mil)
         output_list["ECT"] = str(s300.ect)
         output_list["FANC"] = str(s300.fanc)
+        output_list["VTP"] = str(s300.vtp)
+        output_list["VTS"] = str(s300.vts)
         output_list["AN0"] = str(s300.analog_input(0))
         output_list["AN1"] = str(s300.analog_input(1))
         output_list["AN2"] = str(s300.analog_input(2))
