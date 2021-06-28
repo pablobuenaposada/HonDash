@@ -9,6 +9,8 @@ O2 | Oxygen sensor |:soon:|:white_check_mark:|:white_check_mark:|:white_check_ma
 TPS | Throttle position |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 VSS | Speed |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 RPM | Revs. per minute |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
+VTS | Vtec spool valve | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
+VTP | Vtec pressure switch | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
 CAM | VTC cam angle |:white_check_mark:|:white_check_mark:|:white_check_mark:|:x:
 CLV | Calculated load value |:soon:|:soon:|:soon:|:x:
 FLT | Fuel temperature |:soon:|:soon:|:soon:|:soon:
@@ -18,13 +20,13 @@ BKSW | Brake switch |:soon:|:soon:|:soon:|:soon:
 ACSW | A/C switch |:soon:|:soon:|:soon:|:soon:
 ACCL | A/C clutch |:soon:|:soon:|:soon:|:soon:
 FLR | Fuel relay |:soon:|:soon:|:white_check_mark:|:soon:
-FANC | Fan control |:soon:|:soon:|:white_check_mark:|:soon:
+FANC | Fan control |:soon:|:soon:|:white_check_mark:|:white_check_mark:
 IGN | Ignition status |:soon:|:soon:|:soon:|:x:
 ECT | Coolant temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 ETH | Ethanol content |:x:|:x:|:white_check_mark:|:soon:
 IAT | Intake air temperature |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 GEAR | Gear |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
-SCS | Service connector |:white_check_mark:|:white_check_mark:|:white_check_mark:|:soon:
+SCS | Service connector |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 FANC | Fan control |:white_check_mark:|:white_check_mark:|:white_check_mark:|:soon:
 MAP | Manifold absolute pressure |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 MIL | Malfunction indicator light |:soon:|:white_check_mark:|:white_check_mark:|:soon:
