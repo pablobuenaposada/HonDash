@@ -24,5 +24,3 @@ services:
       - frontend-volume:/app/src/frontend/
       - node-modules-volume:/app/node_modules/
       - schema-volume:/app/src/backend/devices/setup_validator/
-    devices:
-      - '/dev:/dev'
