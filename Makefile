@@ -118,7 +118,12 @@ docker/pull:
 	docker pull $(DOCKER_IMAGE)
 
 docker/run:
-	docker-compose up -d app nginx
+	PY_FILE=src/backend/main.py docker-compose up -d app nginx
+	@echo Access http://localhost:8080/frontend/ for dashboard
+	@echo Access http://localhost:8080/frontend/setup/ for setup
+
+docker/demo:
+	PY_FILE=src/backend/bench/dummy_backend.py docker-compose up -d app nginx
 	@echo Access http://localhost:8080/frontend/ for dashboard
 	@echo Access http://localhost:8080/frontend/setup/ for setup
 
@@ -139,3 +144,9 @@ sd-image/create:
 
 sd-image/shrink:
 	docker run --privileged=true --rm --volume $(shell pwd):/workdir mgomesborges/pishrink pishrink -v full_size_image.img shrinked_image.img
+
+demo: virtualenv
+	cp -n default_setup.json setup.json || true
+	$(PYTHON) -m http.server &
+	PYTHONPATH=src $(PYTHON) src/backend/bench/dummy_backend.py &
+	open http://localhost:8000/src/frontend/ &

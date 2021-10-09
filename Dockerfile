@@ -6,6 +6,7 @@
 # Or for interactive shell:
 # docker run -it --rm pablobuenaposada/hondash
 FROM ubuntu:18.04
+ENV PY_FILE=src/backend/main.py
 
 # configure locale
 RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
@@ -24,4 +25,4 @@ RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
 COPY . /app
 RUN make virtualenv
 RUN cp -n default_setup.json setup.json
-CMD sudo PYTHONPATH=src venv/bin/python src/backend/main.py
+CMD sudo PYTHONPATH=src venv/bin/python $PY_FILE
