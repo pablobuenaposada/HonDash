@@ -1,3 +1,4 @@
+cython
 black
 coveralls
 pytest

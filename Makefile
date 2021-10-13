@@ -13,8 +13,8 @@ DOCKER_IMAGE=pablobuenaposada/hondash
 SYSTEM_DEPENDENCIES_UBUNTU= \
     $(PYTHON_WITH_VERSION) \
     $(PYTHON_WITH_VERSION)-dev \
+    $(PYTHON_WITH_VERSION)-venv \
     build-essential \
-    git \
     libsnappy-dev \
     libssl1.0-dev \
     libusb-1.0-0 \
@@ -22,14 +22,10 @@ SYSTEM_DEPENDENCIES_UBUNTU= \
     node-gyp \
     nodejs-dev \
     npm \
-    pkg-config \
-    python3-pip \
-    tox \
-    virtualenv
+    python3-pip
 SYSTEM_DEPENDENCIES_RASPBIAN= \
     libatlas-base-dev \
     libsnappy-dev \
-    virtualenv \
     npm
 SYSTEM_DEPENDENCIES_MACOS= \
     snappy \
@@ -53,7 +49,7 @@ npm:
 	npm install
 
 $(VIRTUAL_ENV): npm
-	virtualenv --python=$(PYTHON_WITH_VERSION) $(VIRTUAL_ENV)
+	$(PYTHON_WITH_VERSION) -m venv $(VIRTUAL_ENV)
 	$(PIP) install -r requirements.txt
 
 virtualenv: $(VIRTUAL_ENV)
