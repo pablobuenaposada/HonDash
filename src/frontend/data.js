@@ -51,3 +51,11 @@ ws.onerror = function(e) {
 ws.onclose = function(e) {
   location.reload();
 };
+
+document.addEventListener("keydown", function(event) {
+  if (event.key == "0") {
+    ws.send(JSON.stringify({ action: "toggle_datalog" }));
+  } else if (event.key == "1") {
+    ws.send(JSON.stringify({ action: "toggle_style" }));
+  }
+});

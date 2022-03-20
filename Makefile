@@ -26,7 +26,8 @@ SYSTEM_DEPENDENCIES_UBUNTU= \
 SYSTEM_DEPENDENCIES_RASPBIAN= \
     libatlas-base-dev \
     libsnappy-dev \
-    npm
+    npm \
+    python3-pandas
 SYSTEM_DEPENDENCIES_MACOS= \
     snappy \
     npm
@@ -42,7 +43,6 @@ else ifeq ($(OS), Darwin)
 endif
 
 clean:
-	py3clean .
 	rm -rf $(VIRTUAL_ENV)
 
 npm:
@@ -50,7 +50,8 @@ npm:
 
 $(VIRTUAL_ENV): npm
 	$(PYTHON_WITH_VERSION) -m venv $(VIRTUAL_ENV)
-	$(PIP) install -r requirements.txt
+	$(PYTHON) -m pip install --upgrade pip setuptools wheel
+	$(PYTHON) -m pip install -r requirements.txt
 
 virtualenv: $(VIRTUAL_ENV)
 
@@ -72,7 +73,9 @@ dummy:
 	open -a "Google Chrome" src/frontend/index.html
 
 kill:
-	sudo pkill -f backend || true
+	docker stop hondash_app_1 || true
+	docker stop hondash_nginx_1 || true
+	sudo pkill -f src/backend || true
 	sudo pkill -f http.server || true
 
 test: lint
@@ -108,17 +111,22 @@ coveralls: virtualenv
 	$(COVERALLS)
 
 docker/build:
-	docker build  --no-cache --tag=$(DOCKER_IMAGE) .
+	docker build --no-cache --tag=$(DOCKER_IMAGE) .
+
+docker/pull:
+	docker pull $(DOCKER_IMAGE)
 
 docker/run:
 	PY_FILE=src/backend/main.py docker-compose up -d app nginx
 	@echo Access http://localhost:8080/frontend/ for dashboard
 	@echo Access http://localhost:8080/frontend/setup/ for setup
+	@echo Access http://localhost:8080/frontend/datalogs/ for datalogs
 
 docker/demo:
 	PY_FILE=src/backend/bench/dummy_backend.py docker-compose up -d app nginx
 	@echo Access http://localhost:8080/frontend/ for dashboard
 	@echo Access http://localhost:8080/frontend/setup/ for setup
+	@echo Access http://localhost:8080/frontend/datalogs/ for datalogs
 
 docker/stop:
 	docker-compose down --volume

@@ -1,4 +1,6 @@
+from backend.constants import websocket_data_dict
 from backend.devices.ecu import Ecu
+from backend.devices.logger.logger import Logger
 from backend.devices.odometer import Odometer
 from backend.devices.setup_file import SetupFile
 from backend.devices.setup_validator.setup_validator import SetupValidator
@@ -13,6 +15,7 @@ class Backend:
         self._load_user_preferences()
         self._init_resources()
         self._init_websocket()
+        self.logger = Logger(self.setup_file.json.get("hddlg").get("autostart"))
 
     def stop(self):
         self.websocket.stop()
@@ -86,41 +89,20 @@ class Backend:
         if self.odo.save(self.ecu.vss["kmh"]):
             self.setup_file.update_key("odo", {"value": self.odo.preferred_mileage})
         self.style.update(self.ecu.tps)
-        return {
-            "bat": self.ecu.bat,
-            "gear": self.ecu.gear,
-            "iat": self.ecu.iat[self.iat_unit],
-            "tps": self.ecu.tps,
-            "ect": self.ecu.ect[self.ect_unit],
-            "rpm": self.ecu.rpm,
-            "vss": self.ecu.vss[self.vss_unit],
-            "o2": self.ecu.o2[self.o2_unit],
-            "cam": self.ecu.cam,
-            "mil": self.ecu.mil,
-            "fan": self.ecu.fanc,
-            "bksw": self.ecu.bksw,
-            "flr": self.ecu.flr,
-            "vtp": self.ecu.vtp,
-            "vts": self.ecu.vts,
-            "vtec": self.ecu.vtec,
-            "eth": self.ecu.eth,
-            "scs": self.ecu.scs,
-            "fmw": self.ecu.firmware,
-            "map": self.ecu.map[self.map_unit],
-            "an0": self._call_analog_input(0),
-            "an1": self._call_analog_input(1),
-            "an2": self._call_analog_input(2),
-            "an3": self._call_analog_input(3),
-            "an4": self._call_analog_input(4),
-            "an5": self._call_analog_input(5),
-            "an6": self._call_analog_input(6),
-            "an7": self._call_analog_input(7),
-            "time": self.time.get_time(),
-            "odo": self.odo.preferred_mileage,
-            "style": self.style.status,
-            "name": self.ecu.name,
-            "ver": __version__,
-        }
+        return websocket_data_dict(
+            self.ecu,
+            self.iat_unit,
+            self.ect_unit,
+            self.vss_unit,
+            self.o2_unit,
+            self.map_unit,
+            self._call_analog_input,
+            self.time.get_time(),
+            self.odo.preferred_mileage,
+            self.style.status,
+            __version__,
+            self.logger,
+        )
 
     def setup(self):
         """Return the current setup"""
