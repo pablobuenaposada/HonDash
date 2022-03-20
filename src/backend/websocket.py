@@ -4,6 +4,7 @@ import threading
 
 import websockets
 
+from backend.constants import WEBSOCKET_HOST, WEBSOCKET_PORT
 from backend.devices.setup_validator.setup_validator import SetupValidator
 
 
@@ -13,7 +14,9 @@ class Websocket:
 
     def __init__(self, backend):
         self.backend = backend
-        self.websocket = websockets.serve(self._websocket_handler, "0.0.0.0", 5678)
+        self.websocket = websockets.serve(
+            self._websocket_handler, WEBSOCKET_HOST, WEBSOCKET_PORT
+        )
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(self.websocket)
         threading.Thread(target=self.loop.run_forever).start()

@@ -1,12 +1,16 @@
+import asyncio
 import json
 import os
 from shutil import copyfile
 from unittest import mock
 
 import pytest
+from websockets import connect
 
+from backend.constants import WEBSOCKET_HOST, WEBSOCKET_PORT
 from backend.devices import setup_file
 from backend.devices.formula import Formula
+from backend.devices.kpro.kpro import Kpro
 from backend.devices.setup_validator.setup_validator import SetupValidator
 from backend.main import Backend
 
@@ -18,15 +22,6 @@ class TestMain:
 
     def teardown_method(self):
         os.remove("setup.json")  # delete setup file
-
-    def test_run_backend(self):
-        with mock.patch("usb.core.find"), mock.patch(
-            "threading.Thread.start"
-        ), mock.patch("backend.main.Websocket.__init__") as m_ws___init__:
-            # mocking websocket
-            m_ws___init__.return_value = None
-
-            assert type(Backend()) == Backend
 
     def test_stop(self):
         """
@@ -166,3 +161,66 @@ class TestMain:
             backend = Backend()
 
         assert backend.update() == expected_data
+
+    def test_backend(self):
+        expected_data = json.dumps(
+            {
+                "data": {
+                    "bat": 0.0,
+                    "gear": 0,
+                    "iat": 150,
+                    "tps": 0,
+                    "ect": 150,
+                    "rpm": 0,
+                    "vss": 0,
+                    "o2": 0,
+                    "cam": -20.0,
+                    "mil": False,
+                    "fan": False,
+                    "bksw": False,
+                    "flr": False,
+                    "vtp": False,
+                    "vts": False,
+                    "vtec": "off",
+                    "eth": 0,
+                    "scs": False,
+                    "fmw": "0.00",
+                    "map": 0.0,
+                    "an0": 0.0,
+                    "an1": 0.0,
+                    "an2": 0.0,
+                    "an3": 0.0,
+                    "an4": 0.0,
+                    "an5": 0.0,
+                    "an6": 0.0,
+                    "an7": 0.0,
+                    "time": "00:00:00",
+                    "odo": 0,
+                    "style": "day",
+                    "name": "K-Pro",
+                    "ver": "3.4.0",
+                }
+            }
+        )
+
+        backend = Backend()
+        assert isinstance(backend, Backend)
+        backend.ecu.ecu = Kpro()
+        backend.ecu.ecu.status = True
+        backend.ecu.ecu.version = 4
+        backend.ecu.ecu.data0 = [0 for _ in range(38)]
+        backend.ecu.ecu.data1 = [0 for _ in range(7)]
+        backend.ecu.ecu.data3 = [0 for _ in range(100)]
+        backend.ecu.ecu.data4 = [0 for _ in range(18)]
+        backend.ecu.ecu.data5 = [0 for _ in range(20)]
+
+        async def receive_from_ws(uri):
+            async with connect(uri) as websocket:
+                data = await websocket.recv()
+                return data
+
+        assert (
+            asyncio.run(receive_from_ws(f"ws://{WEBSOCKET_HOST}:{WEBSOCKET_PORT}"))
+            == expected_data
+        )
+        backend.stop()
