@@ -9,7 +9,7 @@ BLACK=$(VIRTUAL_ENV)/bin/black
 PRETTIER=node_modules/.bin/prettier
 PYTHON_VERSION=3.7
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
-DOCKER_IMAGE=pablobuenaposada/hondash
+DOCKER_IMAGE=hondash
 SYSTEM_DEPENDENCIES_UBUNTU= \
     $(PYTHON_WITH_VERSION) \
     $(PYTHON_WITH_VERSION)-dev \
@@ -108,10 +108,7 @@ coveralls: virtualenv
 	$(COVERALLS)
 
 docker/build:
-	docker build --cache-from=$(DOCKER_IMAGE):latest --tag=$(DOCKER_IMAGE) .
-
-docker/pull:
-	docker pull $(DOCKER_IMAGE)
+	docker build  --no-cache --tag=$(DOCKER_IMAGE) .
 
 docker/run:
 	PY_FILE=src/backend/main.py docker-compose up -d app nginx

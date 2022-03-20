@@ -12,7 +12,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build docker image
       run: |
-        make docker/pull
         make docker/build
     - name: Lint, unit tests and coverage
       env:
