@@ -33,3 +33,8 @@ class Style:
         else:
             if self.threshold_lower_limit <= tps <= self.threshold_upper_limit:
                 self.threshold_detected_time = datetime.datetime.now()
+
+    def toggle(self):
+        self.status = AVAILABLE_STATUSES[
+            int(not bool(AVAILABLE_STATUSES.index(self.status)))
+        ]

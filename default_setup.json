@@ -312,6 +312,12 @@
   "gear": {
     "tag": "gear"
   },
+  "hddlg": {
+    "tag": "icon5",
+    "pathon": "hddlg_on.svg",
+    "pathoff": "hddlg_off.svg",
+    "autostart": false
+  },
   "fmw": {
     "tag": "firmware_version"
   },

@@ -27,4 +27,5 @@ while True:
         backend.ecu.ecu.data0[constants.KPRO4_GEAR] = random.choice(range(1, 7))
         backend.ecu.ecu.data3[constants.KPRO4_AN0_1] = 121
         backend.ecu.ecu.data3[constants.KPRO4_AN0_2] = 121
+        # backend.logger.active = bool(random.getrandbits(1))
         sleep(0.1)

@@ -53,6 +53,7 @@ var icon1 = new Icon({ id: "icon1" });
 var icon2 = new Icon({ id: "icon2" });
 var icon3 = new Icon({ id: "icon3" });
 var icon4 = new Vtec({ id: "icon4" });
+var icon5 = new Icon({ id: "icon5" });
 
 // Gauges
 var gauge1 = new Gauge({

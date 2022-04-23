@@ -149,6 +149,7 @@ class TestMain:
             "style": "day",
             "ver": "3.4.0",
             "name": "K-Pro",
+            "hddlg": False,
         }
 
         with mock.patch("usb.core.find"), mock.patch(
@@ -199,6 +200,7 @@ class TestMain:
                     "style": "day",
                     "name": "K-Pro",
                     "ver": "3.4.0",
+                    "hddlg": False,
                 }
             }
         )
