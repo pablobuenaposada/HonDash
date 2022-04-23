@@ -6,6 +6,7 @@ import uuid
 from pathlib import Path
 
 import pandas as pd
+from pandas._libs.parsers import EmptyDataError
 
 from backend.devices.logger.constants import (
     CHUNKSIZE,
@@ -40,15 +41,15 @@ class Logger:
         ]  # remove all not csv files
         files_info = []
         for file in files:
-            df = pd.read_csv(get_file_path(file.name))
             try:
+                df = pd.read_csv(get_file_path(file.name))
                 files_info.append(
                     (
                         file.name,
                         str(datetime.timedelta(seconds=int(df.tail(1)["time"]))),
                     )
                 )
-            except (KeyError, ValueError):
+            except (KeyError, ValueError, EmptyDataError):
                 files_info.append((file.name, "0:00:00"))
         return files_info
 
