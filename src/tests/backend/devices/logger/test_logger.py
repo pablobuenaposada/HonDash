@@ -30,6 +30,7 @@ class TestLogger:
         rpm = 1000
         vss = {"kmh": 120}
         o2 = {"lambda": 1.05}
+        o2_cmd = {"lambda": 1.05}
         cam = -20
         mil = False
         fanc = True
@@ -164,6 +165,7 @@ class TestLogger:
                         ("rpm", str(self.data["rpm"])),
                         ("vss", str(self.data["vss"])),
                         ("o2", str(self.data["o2"])),
+                        ("o2_cmd", str(self.data["o2_cmd"])),
                         ("cam", str(self.data["cam"])),
                         ("mil", str(int(self.data["mil"]))),
                         ("fan", str(int(self.data["fan"]))),

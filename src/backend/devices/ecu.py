@@ -64,6 +64,10 @@ class Ecu:
         return self._get_value_from_ecu("o2", {"afr": 0, "lambda": 0})
 
     @property
+    def o2_cmd(self):
+        return self._get_value_from_ecu("o2_cmd", {"afr": 0, "lambda": 0})
+
+    @property
     def cam(self):
         return self._get_value_from_ecu("cam")
 

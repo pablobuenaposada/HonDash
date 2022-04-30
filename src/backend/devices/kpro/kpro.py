@@ -171,6 +171,27 @@ class Kpro:
         return {"afr": o2_afr, "lambda": o2_lambda}
 
     @property
+    def o2_cmd(self):
+        """Target oxygen sensor"""
+        indexes_1 = {
+            constants.KPRO23_ID: constants.KPRO23_AFR_CMD1,
+            constants.KPRO4_ID: constants.KPRO4_AFR_CMD1,
+        }
+        indexes_2 = {
+            constants.KPRO23_ID: constants.KPRO23_AFR_CMD2,
+            constants.KPRO4_ID: constants.KPRO4_AFR_CMD2,
+        }
+        try:
+            o2_lambda = 32768.0 / (
+                256 * get_value_from_ecu(self.version, indexes_2, self.data0)
+                + get_value_from_ecu(self.version, indexes_1, self.data0)
+            )
+        except ZeroDivisionError:  # something happen collecting the value then return 0
+            return {"afr": 0, "lambda": 0}
+        o2_afr = o2_lambda * 14.7
+        return {"afr": o2_afr, "lambda": o2_lambda}
+
+    @property
     def tps(self):
         """
         Throttle position sensor

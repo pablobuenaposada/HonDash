@@ -16,6 +16,7 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list["BAT"] = str(kpro.bat)
         output_list["CAM"] = str(kpro.cam)
         output_list["O2"] = str(kpro.o2)
+        output_list["O2_CMD"] = str(kpro.o2_cmd)
         output_list["IAT"] = str(kpro.iat)
         output_list["RPM"] = str(kpro.rpm)
         output_list["TPS"] = str(kpro.tps)

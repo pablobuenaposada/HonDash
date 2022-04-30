@@ -296,6 +296,57 @@ class TestKpro:
         assert self.kpro.o2["lambda"] == result_lambda
 
     @pytest.mark.parametrize(
+        "version, index1, index2, value1, value2, result_afr, result_lambda",
+        (
+            (
+                constants.KPRO23_ID,
+                constants.KPRO23_AFR_CMD1,
+                constants.KPRO23_AFR_CMD2,
+                0,
+                128,
+                14.7,
+                1,
+            ),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_AFR_CMD1,
+                constants.KPRO4_AFR_CMD2,
+                0,
+                128,
+                14.7,
+                1,
+            ),
+            (
+                constants.KPRO4_ID,
+                constants.KPRO4_AFR_CMD1,
+                constants.KPRO4_AFR_CMD2,
+                0,
+                0,
+                0,
+                0,
+            ),
+            (
+                None,
+                0,
+                0,
+                666,
+                666,
+                0,
+                0,
+            ),
+        ),
+    )
+    def test_o2_cmd(
+        self, version, index1, index2, value1, value2, result_afr, result_lambda
+    ):
+        self.kpro.version = version
+        self.kpro.data0[index1] = value1
+        self.kpro.data0[index2] = value2
+
+        assert self.kpro.o2_cmd["afr"] == result_afr
+        assert self.kpro.o2_cmd["lambda"] == result_lambda
+
+    @pytest.mark.parametrize(
         "version, index, value, result_kmh, result_mph",
         (
             (None, 0, None, 0, 0),
