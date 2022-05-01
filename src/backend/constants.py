@@ -25,6 +25,7 @@ def websocket_data_dict(
         "rpm": ecu.rpm,
         "vss": ecu.vss[vss_unit],
         "o2": ecu.o2[o2_unit],
+        "o2_cmd": ecu.o2_cmd[o2_unit],
         "cam": ecu.cam,
         "mil": ecu.mil,
         "fan": ecu.fanc,
