@@ -8,13 +8,13 @@ HonDash is an open source instrument cluster developed for Honda engines managed
 
 ## Features
 
-- [Pulls data from the K-Pro USB](https://hondash.com/VALUES.html)
+- [Pulls data from the K-Pro/S300 USB](https://hondash.com/VALUES.html)
 - Minimal wiring involved
-- [K-Pro v3/v4 analog inputs available](https://hondash.com/SENSORS.html)
+- [K-Pro v3/v4 and S300 v3 analog inputs available](https://hondash.com/SENSORS.html)
 - Day and night modes
 - Custom gauge color value depending
 - [Display configuration through Wi-Fi](https://hondash.com/SETUP.html)
-- [Fuel level through K-Pro analog input](https://hondash.com/FUEL.html)
+- [Fuel level through analog input](https://hondash.com/FUEL.html)
 - Adjustable measurement units
 - Odometer
 - Running time
@@ -22,7 +22,7 @@ HonDash is an open source instrument cluster developed for Honda engines managed
 ## Requirements (minimum)
 
 - Hondata K-Pro v2* / v3 / v4 or Hondata S300 v3
-- Raspberry Pi 3 Model B+ / Raspberry Pi 4
+- Raspberry Pi 3 Model B+ / Raspberry Pi 4 Model B
 - HDMI/DSI/composite compatible screen
 
 \* v2 only if it has on board data logging, check [here](https://www.hondata.com/kpro2)

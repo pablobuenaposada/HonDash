@@ -1,8 +1,8 @@
 # Fuel level 
 
-In order to display the fuel level you must hook the fuel level sender of your car to one of the analog inputs of the K-Pro.
+In order to display the fuel level you must hook the fuel level sender of your car to one of the analog inputs of the K-Pro or s300.
 
-Later on you will be able to read this analog input from the K-Pro and translate it to something human readable in HonDash. 
+Later on you will be able to read this analog input from Hondata and translate it to something human readable in HonDash. 
 
 This is necessary because from factory fuel level signal is not sent to the ECU, the signal is just sent directly to the stock car cluster.
 
@@ -23,12 +23,17 @@ MX5 NA | 56Ω 1 watt | N/A | [Available](https://raw.github.com/pablobuenaposada
 
 <br/>
  
-E5 pin is usually empty in the engine harness, to get a wire in there you need an old pigtail from other harness or you can buy them new on-line fairly cheap, the manufacturer is `TE Connectivity` and the reference is `316836-1`.
+In K-series E5 pin is usually empty in the engine harness, to get a wire in there you need an old pigtail from other harness or you can buy them new on-line fairly cheap, the manufacturer is `TE Connectivity` and the reference is `316836-1`.
 
 Check E5 location [here](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/prb.jpeg)
 
-## K-manager setup
-Even though this step is not necessary for HonDash, is always good to setup the fuel level in K-manager too, just for troubleshoot problems in this part it's already worth it.
+In B-series the pin is D19.
+
+Check D19 location [here](https://raw.github.com/pablobuenaposada/HonDash/master/docs/images/p30.png)
+
+
+## K-manager/S-manager setup
+Even though this step is not necessary for HonDash, is always good to setup the fuel level in K or S manager too, just for troubleshoot problems in this part it's already worth it.
 
 Go to `Parameters` -> `Analog Inputs` and fill the chosen analog port like this:
 
@@ -51,7 +56,7 @@ Here is an example for Civic EG:
 <img src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel_analog.png" data-canonical-src="https://raw.github.com/pablobuenaposada/HonDash/master/docs/readme/fuel_analog.png"/>
 
 ## ⚠ Warning
-K-Pro inputs are rate up to 5v max, double check this installation otherwise you will end damaging the K-Pro board and possibly the entire ECU.
+Hondata inputs are rate up to 5v max, double check this installation otherwise you will end damaging the K-Pro or S300 board and possibly the entire ECU.
 
 A common practice for stock clusters in cars is to supply the fuel level unit with 12v from the actual cluster, so in order to run the fuel level in HonDash you will need to be completely sure that non other device is supplying power to the fuel level sender, check you car schematics, **disconnect the fuel level sender from your original cluster plugs** and use a multimeter to verify that the signal sent to K-Pro does not exceed 5v at all.
 
