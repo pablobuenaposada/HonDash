@@ -6,6 +6,7 @@ Acronym | Value | K-Pro v2 | K-Pro v3 | K-Pro v4 | S300 v3
 ------- | ----- | :------: | :------: | :------: | :------:
 BAT | Battery voltage |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 O2 | Oxygen sensor |:soon:|:white_check_mark:|:white_check_mark:|:white_check_mark:
+O2_CMD | Target oxygen sensor |:soon:|:soon:|:soon:|:soon:
 TPS | Throttle position |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 VSS | Speed |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
 RPM | Revs. per minute |:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:
