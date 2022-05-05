@@ -32,7 +32,7 @@ ws.onopen = function(e) {
   ws.send(JSON.stringify({ action: "setup" }));
 };
 
-// in case something blows up or connection gets close, keep trying
+// in case something blows up or connection gets closed, keep trying
 ws.onerror = function(e) {
   location.reload();
 };

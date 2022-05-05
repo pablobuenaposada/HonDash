@@ -44,18 +44,10 @@ ws.onopen = function(e) {
   ws.send(JSON.stringify({ action: "setup" }));
 };
 
-// in case something blows up or connection gets close, keep trying
+// in case something blows up or connection gets closed, keep trying
 ws.onerror = function(e) {
   location.reload();
 };
 ws.onclose = function(e) {
   location.reload();
 };
-
-document.addEventListener("keydown", function(event) {
-  if (event.key == "0") {
-    ws.send(JSON.stringify({ action: "toggle_datalog" }));
-  } else if (event.key == "1") {
-    ws.send(JSON.stringify({ action: "toggle_style" }));
-  }
-});
