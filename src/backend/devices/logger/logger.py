@@ -46,10 +46,12 @@ class Logger:
                 files_info.append(
                     (
                         file.name,
-                        str(datetime.timedelta(seconds=int(df.tail(1)["time"]))),
+                        str(
+                            datetime.timedelta(seconds=int(df.tail(2).iloc[0]["time"]))
+                        ),  # get the second last row because the last one may be null
                     )
                 )
-            except (KeyError, ValueError, EmptyDataError):
+            except (KeyError, IndexError, EmptyDataError):
                 files_info.append((file.name, "0:00:00"))
         return files_info
 
