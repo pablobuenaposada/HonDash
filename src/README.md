@@ -17,7 +17,7 @@ make docker/stop
 ```
 
 ### Without Docker
-Get Raspberry Pi OS (release date 2020-08-20) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
+Get Raspberry Pi OS 64 bit with desktop (release date 2022-04-04) working in your raspberry, more info [here](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
 
 #### SSH
 Enable SSH through:

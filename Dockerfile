@@ -5,24 +5,20 @@
 # docker run pablobuenaposada/hondash /bin/sh -c 'make test'
 # Or for interactive shell:
 # docker run -it --rm pablobuenaposada/hondash
-FROM ubuntu:18.04
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND noninteractive
 ENV PY_FILE=src/backend/main.py
 
-# configure locale
-RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
-    locales && \
-    locale-gen en_US.UTF-8
-ENV LANG="en_US.UTF-8" \
-    LANGUAGE="en_US.UTF-8" \
-    LC_ALL="en_US.UTF-8"
+RUN apt update && apt install software-properties-common -y
+RUN add-apt-repository ppa:deadsnakes/ppa
 
 WORKDIR /app
-COPY Makefile /app
+COPY . /app
 
-RUN apt update -qq > /dev/null && apt install --yes --no-install-recommends \
+RUN apt install --yes --no-install-recommends \
 	lsb-release make sudo && \
 	make system_dependencies
-COPY . /app
+
 RUN make virtualenv
 RUN cp -n default_setup.json setup.json
 CMD sudo PYTHONPATH=src venv/bin/python $PY_FILE

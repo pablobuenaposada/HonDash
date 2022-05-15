@@ -7,7 +7,7 @@ FLAKE8=$(VIRTUAL_ENV)/bin/flake8
 COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 BLACK=$(VIRTUAL_ENV)/bin/black
 PRETTIER=node_modules/.bin/prettier
-PYTHON_VERSION=3.7
+PYTHON_VERSION=3.9
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
 DOCKER_IMAGE=hondash
 SYSTEM_DEPENDENCIES_UBUNTU= \
@@ -16,11 +16,9 @@ SYSTEM_DEPENDENCIES_UBUNTU= \
     $(PYTHON_WITH_VERSION)-venv \
     build-essential \
     libsnappy-dev \
-    libssl1.0-dev \
     libusb-1.0-0 \
     lsb-release \
     node-gyp \
-    nodejs-dev \
     npm \
     python3-pip
 SYSTEM_DEPENDENCIES_RASPBIAN= \
@@ -36,7 +34,7 @@ OS=$(shell lsb_release -si 2>/dev/null || uname)
 system_dependencies:
 ifeq ($(OS), Ubuntu)
 	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_UBUNTU)
-else ifeq ($(OS), Raspbian)
+else ifeq ($(OS), Debian)
 	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_RASPBIAN)
 else ifeq ($(OS), Darwin)
 	brew install $(SYSTEM_DEPENDENCIES_MACOS)
@@ -65,7 +63,7 @@ run_rpi:
 	cp -n default_setup.json setup.json
 	sudo PYTHONPATH=src $(PYTHON) src/backend/main.py &
 	sleep 5
-	chromium-browser --kiosk --check-for-update-interval=604800 --incognito src/frontend/index.html &
+	chromium-browser --use-gl=egl --kiosk --check-for-update-interval=604800 --incognito http://hondash.local/ &
 
 dummy:
 	cp -n default_setup.json setup.json || true
