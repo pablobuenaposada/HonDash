@@ -1,0 +1,46 @@
+<script>
+  function generateTable(table, data) {
+    table.innerHTML = "";
+
+    for (const [key, value] of Object.entries(data)) {
+      let row = table.insertRow();
+      let cell = row.insertCell();
+      let text = document.createTextNode(key);
+      cell.appendChild(text);
+      cell = row.insertCell();
+      text = document.createTextNode(value);
+      cell.appendChild(text);
+    }
+  }
+
+  var ws = new WebSocket(
+    "ws://" + (window.location.hostname || "127.0.0.1") + ":5678/"
+  );
+
+  ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    var keys = Object.keys(data);
+
+    if (keys[0] == "data") {
+      generateTable(document.querySelector("table tbody"), data["data"]);
+    }
+  };
+</script>
+
+<html>
+  <html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="styles.css" />
+      <title>HonDash websocket</title>
+    </head>
+    <body>
+      <h1 id="title">Websocket</h1>
+      <div id="tableDiv">
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <script src="../keys.js"></script>
+    </body>
+  </html>
+</html>

@@ -28,7 +28,8 @@ SYSTEM_DEPENDENCIES_RASPBIAN= \
     python3-pandas
 SYSTEM_DEPENDENCIES_MACOS= \
     snappy \
-    npm
+    npm \
+    libusb
 OS=$(shell lsb_release -si 2>/dev/null || uname)
 
 system_dependencies:

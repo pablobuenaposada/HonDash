@@ -79,6 +79,20 @@ class Websocket:
                 await self._send_all_clients(
                     json.dumps({"action": "alert", "message": "SUCCESS: setup reset!"})
                 )
+            elif data["action"] == "raw":
+                await websocket.send(
+                    json.dumps(
+                        {
+                            "data0": getattr(self.backend.ecu.ecu, "data0", []),
+                            "data1": getattr(self.backend.ecu.ecu, "data1", []),
+                            "data2": getattr(self.backend.ecu.ecu, "data2", []),
+                            "data3": getattr(self.backend.ecu.ecu, "data3", []),
+                            "data4": getattr(self.backend.ecu.ecu, "data4", []),
+                            "data5": getattr(self.backend.ecu.ecu, "data5", []),
+                            "data6": getattr(self.backend.ecu.ecu, "data6", []),
+                        }
+                    )
+                )
 
     async def _producer_handler(self, websocket):
         """Keeps sending updated ecu data forever"""
