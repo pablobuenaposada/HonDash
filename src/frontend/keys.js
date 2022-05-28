@@ -1,12 +1,20 @@
-const SCREENS = ["basic.html", "animalillo.html", "/datalogs/"];
-const DEBUG_SCREENS = ["/debug/websocket.html", "/debug/raw.html"];
+const SCREENS = ["basic.html", "animalillo.html", "datalogs"];
+const DEBUG_SCREENS = ["debug/websocket.html", "debug/raw.html"];
 
 function nextScreen(screens) {
-  let split = window.location.pathname.split(/\/frontend\//);
-  let currentIndex = screens.indexOf(split[1]);
-  currentIndex++;
-  window.location.pathname =
-    split[0] + "/frontend/" + screens[currentIndex % screens.length];
+  let path = window.location.pathname.split("/");
+  path = path.filter(e => e); // remove empty strings
+
+  let indexScreen = screens.findIndex(v => v.includes(path[path.length - 1]));
+  indexScreen++;
+  indexScreen = indexScreen % screens.length;
+
+  let prefix = "/";
+  if (window.location.host != "hondash.local") {
+    prefix = "/src/frontend/";
+  }
+
+  window.location.pathname = prefix + screens[indexScreen];
 }
 
 document.addEventListener("keydown", function(event) {
