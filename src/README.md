@@ -34,6 +34,7 @@ ssh pi@raspberrypi.local
 Let's update:
 ```sh
 sudo apt update
+sudo apt upgrade
 ```
 
 Install vim because reasons:
@@ -43,9 +44,8 @@ sudo apt -y install vim
 
 #### Update firmware
 ```sh
-sudo apt update
-sudo apt upgrade
 sudo apt install rpi-eeprom rpi-eeprom-images
+sudo rpi-eeprom-update -a
 ```
 
 #### Install the project
@@ -117,11 +117,6 @@ sudo /etc/init.d/nginx start
 crontab /home/pi/Desktop/HonDash/config/cron/cron
 ```
 
-#### Remove wizard setup message
-```sh
-sudo rm /etc/xdg/autostart/piwiz.desktop
-```
-
 #### Hide mouse pointer
 ```sh
 sudo apt install unclutter
@@ -138,10 +133,7 @@ env DISPLAY=:0.0 pcmanfm -w /home/pi/Desktop/HonDash/docs/wallpaper/wallpaper.pn
 ```
 
 #### Disable screen saver
-```sh
-sudo apt -y install xscreensaver
-```
-Go to Preferences --> Screensaver --> disable screensaver.
+Go to Preferences --> Raspberry Pi Configuration --> Display --> Screen Blanking off.
 
 #### Disable SSH warning
 ```sh
