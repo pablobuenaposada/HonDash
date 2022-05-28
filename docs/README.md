@@ -8,14 +8,16 @@ HonDash is an open source instrument cluster developed for Honda engines managed
 
 ## Features
 
-- [Pulls data from the K-Pro/S300 USB](https://hondash.com/VALUES.html)
+- [Data from K-Pro/S300 USB](https://hondash.com/VALUES.html)
 - Minimal wiring involved
 - [K-Pro v3/v4 and S300 v3 analog inputs available](https://hondash.com/SENSORS.html)
-- Day and night modes
 - Custom gauge color value depending
 - [Display configuration through Wi-Fi](https://hondash.com/SETUP.html)
 - [Fuel level through analog input](https://hondash.com/FUEL.html)
+- [Data logger](https://hondash.com/DATALOGGER.html)
+- [Keyboard as switch panel](https://hondash.com/KEYBOARD.html)
 - Adjustable measurement units
+- Day and night modes
 - Odometer
 - Running time
 
@@ -41,7 +43,7 @@ Yes, the [software](https://hondash.com/SOFTWARE.html) is open source and the [h
 
 ## Known issues
 
-- With K-Pro v2/v3 data logging should be disabled to run HonDash
+- With K-Pro v2/v3 Hondata data logging (not the HonDash one) should be disabled to run HonDash
 - In K-Pro map sensor would only show up to 1.8 bar
 - Raspberry Pi 4 with old firmware could have WiFi connectivity problems while using the HDMI port, if this is happening to you please update the firmware <https://www.youtube.com/watch?v=FZ2Kfg8xnBw>
 
