@@ -884,7 +884,7 @@
          },
          "version":{
             "type":"string",
-            "const":"3.4.0",
+            "const":"3.5.0",
             "options":{
                "hidden":true
             }
