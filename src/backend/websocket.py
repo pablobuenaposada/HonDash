@@ -83,13 +83,13 @@ class Websocket:
                 await websocket.send(
                     json.dumps(
                         {
-                            "data0": getattr(self.backend.ecu.ecu, "data0", []),
-                            "data1": getattr(self.backend.ecu.ecu, "data1", []),
-                            "data2": getattr(self.backend.ecu.ecu, "data2", []),
-                            "data3": getattr(self.backend.ecu.ecu, "data3", []),
-                            "data4": getattr(self.backend.ecu.ecu, "data4", []),
-                            "data5": getattr(self.backend.ecu.ecu, "data5", []),
-                            "data6": getattr(self.backend.ecu.ecu, "data6", []),
+                            "data0": list(getattr(self.backend.ecu.ecu, "data0", [])),
+                            "data1": list(getattr(self.backend.ecu.ecu, "data1", [])),
+                            "data2": list(getattr(self.backend.ecu.ecu, "data2", [])),
+                            "data3": list(getattr(self.backend.ecu.ecu, "data3", [])),
+                            "data4": list(getattr(self.backend.ecu.ecu, "data4", [])),
+                            "data5": list(getattr(self.backend.ecu.ecu, "data5", [])),
+                            "data6": list(getattr(self.backend.ecu.ecu, "data6", [])),
                         }
                     )
                 )
