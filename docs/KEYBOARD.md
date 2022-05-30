@@ -1,4 +1,4 @@
-# KEYBOARD
+# Keyboard
 
 HonDash offers the possibility to use a USB keyboard as switch panel.
 
