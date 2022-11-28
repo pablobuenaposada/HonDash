@@ -64,6 +64,10 @@ class Ecu:
         return self._get_value_from_ecu("o2", {"afr": 0, "lambda": 0})
 
     @property
+    def o2_cmd(self):
+        return self._get_value_from_ecu("o2_cmd", {"afr": 0, "lambda": 0})
+
+    @property
     def cam(self):
         return self._get_value_from_ecu("cam")
 
@@ -133,6 +137,18 @@ class Ecu:
             return self.ecu.NAME
         else:
             return "unknown"
+
+    @property
+    def vtp(self):
+        return self._get_value_from_ecu("vtp", False)
+
+    @property
+    def vts(self):
+        return self._get_value_from_ecu("vts", False)
+
+    @property
+    def vtec(self):
+        return self._get_value_from_ecu("vtec", "off")
 
     def analog_input(self, channel):
         result = self._get_value_from_ecu("analog_input")

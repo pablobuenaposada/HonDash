@@ -7,54 +7,50 @@ FLAKE8=$(VIRTUAL_ENV)/bin/flake8
 COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
 BLACK=$(VIRTUAL_ENV)/bin/black
 PRETTIER=node_modules/.bin/prettier
-PYTHON_VERSION=3.7
+PYTHON_VERSION=3.9
 PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
-DOCKER_IMAGE=pablobuenaposada/hondash
+DOCKER_IMAGE=hondash
 SYSTEM_DEPENDENCIES_UBUNTU= \
     $(PYTHON_WITH_VERSION) \
     $(PYTHON_WITH_VERSION)-dev \
+    $(PYTHON_WITH_VERSION)-venv \
     build-essential \
-    git \
     libsnappy-dev \
-    libssl1.0-dev \
     libusb-1.0-0 \
     lsb-release \
     node-gyp \
-    nodejs-dev \
     npm \
-    pkg-config \
-    python3-pip \
-    tox \
-    virtualenv
+    python3-pip
 SYSTEM_DEPENDENCIES_RASPBIAN= \
     libatlas-base-dev \
     libsnappy-dev \
-    virtualenv \
-    npm
+    npm \
+    python3-pandas
 SYSTEM_DEPENDENCIES_MACOS= \
     snappy \
-    npm
+    npm \
+    libusb
 OS=$(shell lsb_release -si 2>/dev/null || uname)
 
 system_dependencies:
 ifeq ($(OS), Ubuntu)
 	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_UBUNTU)
-else ifeq ($(OS), Raspbian)
+else ifeq ($(OS), Debian)
 	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_RASPBIAN)
 else ifeq ($(OS), Darwin)
 	brew install $(SYSTEM_DEPENDENCIES_MACOS)
 endif
 
 clean:
-	py3clean .
 	rm -rf $(VIRTUAL_ENV)
 
 npm:
 	npm install
 
 $(VIRTUAL_ENV): npm
-	virtualenv --python=$(PYTHON_WITH_VERSION) $(VIRTUAL_ENV)
-	$(PIP) install -r requirements.txt
+	$(PYTHON_WITH_VERSION) -m venv $(VIRTUAL_ENV)
+	$(PYTHON) -m pip install --upgrade pip setuptools wheel
+	$(PYTHON) -m pip install -r requirements.txt
 
 virtualenv: $(VIRTUAL_ENV)
 
@@ -68,7 +64,7 @@ run_rpi:
 	cp -n default_setup.json setup.json
 	sudo PYTHONPATH=src $(PYTHON) src/backend/main.py &
 	sleep 5
-	chromium-browser --kiosk --check-for-update-interval=604800 --incognito src/frontend/index.html &
+	chromium-browser --use-gl=egl --kiosk --check-for-update-interval=604800 --incognito http://hondash.local/ &
 
 dummy:
 	cp -n default_setup.json setup.json || true
@@ -76,7 +72,10 @@ dummy:
 	open -a "Google Chrome" src/frontend/index.html
 
 kill:
-	sudo pkill -f backend || true
+	docker-compose down -v || true
+	docker stop hondash_app_1 || true
+	docker stop hondash_nginx_1 || true
+	sudo pkill -f src/backend || true
 	sudo pkill -f http.server || true
 
 test: lint
@@ -111,38 +110,23 @@ lint: lint/isort-check lint/flake8 lint/black-check lint/prettier-check
 coveralls: virtualenv
 	$(COVERALLS)
 
-docker/system_dependencies:
-ifeq ($(OS), Darwin)
-	brew install docker-machine
-	docker-machine create --driver virtualbox default
-	docker-machine stop
-	@echo Add the USB device to the VM through VirtualBox GUI then run make docker/run
-endif
-
-docker/pre_run:
-ifeq ($(OS), Darwin)
-# Docker on macOS doesn't really like to map USB devices https://mil.ad/docker/2018/05/06/access-usb-devices-in-container-in-mac.html
-	docker-machine stop || true
-	docker-machine start
-	eval "$(docker-machine env default)"
-endif
-
 docker/build:
-	docker build --cache-from=$(DOCKER_IMAGE):latest --tag=$(DOCKER_IMAGE) .
+	docker build --no-cache --tag=$(DOCKER_IMAGE) .
 
 docker/pull:
 	docker pull $(DOCKER_IMAGE)
 
-docker/run: docker/pre_run
-	docker-compose up -d app nginx
-ifeq ($(OS), Darwin)
-	$(eval CONTAINER_IP=$(shell sh -c "docker-machine ip default"))
-	@echo Access http://$(CONTAINER_IP):8080/frontend/ for dashboard
-	@echo Access http://$(CONTAINER_IP):8080/frontend/setup/ for setup
-else
+docker/run:
+	PY_FILE=src/backend/main.py docker-compose up -d app nginx
 	@echo Access http://localhost:8080/frontend/ for dashboard
 	@echo Access http://localhost:8080/frontend/setup/ for setup
-endif
+	@echo Access http://localhost:8080/frontend/datalogs/ for datalogs
+
+docker/demo:
+	PY_FILE=src/backend/bench/dummy_backend.py docker-compose up -d --build -V --force-recreate app nginx
+	@echo Access http://localhost:8080/frontend/ for dashboard
+	@echo Access http://localhost:8080/frontend/setup/ for setup
+	@echo Access http://localhost:8080/frontend/datalogs/ for datalogs
 
 docker/stop:
 	docker-compose down --volume
@@ -160,7 +144,10 @@ sd-image/create:
 	sudo dd bs=1024 if=$(path) of=full_size_image.img
 
 sd-image/shrink:
-	git clone https://github.com/deepeeess/PiShrink.git
-	chmod +x PiShrink/pishrink.sh
-	mv full_size_image.img PiShrink/
-	cd PiShrink; docker-compose run pishrink /pishrink/pishrink.sh /pishrink/full_size_image.img
+	docker run --privileged=true --rm --volume $(shell pwd):/workdir mgomesborges/pishrink pishrink -v full_size_image.img shrinked_image.img
+
+demo: virtualenv
+	cp -n default_setup.json setup.json || true
+	$(PYTHON) -m http.server &
+	PYTHONPATH=src $(PYTHON) src/backend/bench/dummy_backend.py &
+	open http://localhost:8000/src/frontend/ &

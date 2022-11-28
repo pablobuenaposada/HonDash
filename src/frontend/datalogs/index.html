@@ -1,0 +1,90 @@
+<script>
+  function generateTable(table, data) {
+    table.innerHTML = "";
+    for (let element of data) {
+      let row = table.insertRow();
+      for (key in element) {
+        let cell = row.insertCell();
+        cell.onclick = downloadDatalog;
+        let text = document.createTextNode(element[key]);
+        cell.appendChild(text);
+        if (element[key].includes("csv")) {
+          cell.setAttribute("id", "filename");
+        }
+      }
+      let cell = row.insertCell();
+      cell.onclick = removeDatalog;
+      let text = document.createTextNode("\u{0274c}");
+      cell.appendChild(text);
+      let input = document.createElement("input");
+      input.setAttribute("type", "hidden");
+      input.setAttribute("value", element[0]);
+      cell.appendChild(input);
+    }
+  }
+
+  function downloadDatalog(event) {
+    ws.send(
+      JSON.stringify({ action: "datalog_" + event.srcElement.innerText })
+    );
+  }
+
+  function removeDatalog(event) {
+    ws.send(
+      JSON.stringify({
+        action:
+          "remove_datalog_" +
+          event.target.querySelector("input").getAttribute("value")
+      })
+    );
+  }
+
+  var ws = new WebSocket(
+    "ws://" + (window.location.hostname || "127.0.0.1") + ":5678/"
+  );
+
+  ws.onopen = function(e) {
+    ws.send(JSON.stringify({ action: "datalogs" }));
+  };
+
+  ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    var keys = Object.keys(data);
+
+    if (keys[0] == "datalogs") {
+      generateTable(document.querySelector("table tbody"), data["datalogs"]);
+    } else if (keys[0].includes("datalog_")) {
+      var fileName = keys[0].split("datalog_")[1];
+      var a = document.createElement("a");
+      var blob = new Blob([data["datalog_" + fileName]], { type: "text/csv" });
+      a.href = window.URL.createObjectURL(blob);
+      a.download = fileName;
+      a.click();
+    }
+  };
+</script>
+
+<html>
+  <html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="styles.css" />
+      <title>HonDash datalogs</title>
+    </head>
+    <body>
+      <h1 id="title">Datalogs</h1>
+      <div id="tableDiv">
+        <table id="files">
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Duration</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <script src="../keys.js"></script>
+    </body>
+  </html>
+</html>

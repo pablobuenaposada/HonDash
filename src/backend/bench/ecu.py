@@ -13,6 +13,7 @@ with output(output_type="dict", initial_len=1, interval=0) as output_list:
         output_list["BAT"] = str(ecu.bat)
         output_list["CAM"] = str(ecu.cam)
         output_list["O2"] = str(ecu.o2)
+        output_list["O2_CMD"] = str(ecu.o2_cmd)
         output_list["IAT"] = str(ecu.iat)
         output_list["RPM"] = str(ecu.rpm)
         output_list["TPS"] = str(ecu.tps)

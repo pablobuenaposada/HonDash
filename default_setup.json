@@ -306,8 +306,17 @@
     "pathon": "scs_on.png",
     "pathoff": "scs_off.png"
   },
+  "vtec": {
+    "tag": "icon4"
+  },
   "gear": {
     "tag": "gear"
+  },
+  "hddlg": {
+    "tag": "icon5",
+    "pathon": "hddlg_on.svg",
+    "pathoff": "hddlg_off.svg",
+    "autostart": false
   },
   "fmw": {
     "tag": "firmware_version"
@@ -315,7 +324,7 @@
   "time": {
     "tag": "time"
   },
-  "version": "3.2.0",
+  "version": "3.5.0",
   "name": {
     "tag": "ecu_name"
   },

@@ -1,0 +1,150 @@
+<script>
+  function generateTable(table, data) {
+    table.innerHTML = "";
+
+    for (const [key, value] of Object.entries(data)) {
+      let row = table.insertRow();
+      let cell = row.insertCell();
+      let text = document.createTextNode(key);
+      cell.appendChild(text);
+      cell = row.insertCell();
+      text = document.createTextNode(value);
+      cell.appendChild(text);
+    }
+  }
+
+  var ws = new WebSocket(
+    "ws://" + (window.location.hostname || "127.0.0.1") + ":5678/"
+  );
+
+  ws.onopen = function(e) {
+    ws.send(JSON.stringify({ action: "raw" }));
+  };
+
+  ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    var keys = Object.keys(data);
+
+    if (keys[0] == "data0") {
+      generateTable(
+        document.querySelector("#tableDiv0 table tbody"),
+        data["data0"]
+      );
+      generateTable(
+        document.querySelector("#tableDiv1 table tbody"),
+        data["data1"]
+      );
+      generateTable(
+        document.querySelector("#tableDiv2 table tbody"),
+        data["data2"]
+      );
+      generateTable(
+        document.querySelector("#tableDiv3 table tbody"),
+        data["data3"]
+      );
+      generateTable(
+        document.querySelector("#tableDiv4 table tbody"),
+        data["data4"]
+      );
+      generateTable(
+        document.querySelector("#tableDiv5 table tbody"),
+        data["data5"]
+      );
+      generateTable(
+        document.querySelector("#tableDiv6 table tbody"),
+        data["data6"]
+      );
+      ws.send(JSON.stringify({ action: "raw" }));
+    }
+  };
+</script>
+
+<html>
+  <html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="styles.css" />
+      <title>HonDash raw</title>
+    </head>
+    <body>
+      <h1 id="title">Raw</h1>
+      <div id="tableDiv0">
+        <thead>
+          <tr>
+            <th>DATA0</th>
+            <th></th>
+          </tr>
+        </thead>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="tableDiv1">
+        <thead>
+          <tr>
+            <th>DATA1</th>
+            <th></th>
+          </tr>
+        </thead>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="tableDiv2">
+        <thead>
+          <tr>
+            <th>DATA2</th>
+            <th></th>
+          </tr>
+        </thead>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="tableDiv3">
+        <thead>
+          <tr>
+            <th>DATA3</th>
+            <th></th>
+          </tr>
+        </thead>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="tableDiv4">
+        <thead>
+          <tr>
+            <th>DATA4</th>
+            <th></th>
+          </tr>
+        </thead>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="tableDiv5">
+        <thead>
+          <tr>
+            <th>DATA5</th>
+            <th></th>
+          </tr>
+        </thead>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="tableDiv6">
+        <thead>
+          <tr>
+            <th>DATA6</th>
+            <th></th>
+          </tr>
+        </thead>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
+      <script src="../keys.js"></script>
+    </body>
+  </html>
+</html>

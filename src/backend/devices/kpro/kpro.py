@@ -171,6 +171,27 @@ class Kpro:
         return {"afr": o2_afr, "lambda": o2_lambda}
 
     @property
+    def o2_cmd(self):
+        """Target oxygen sensor"""
+        indexes_1 = {
+            constants.KPRO23_ID: constants.KPRO23_AFR_CMD1,
+            constants.KPRO4_ID: constants.KPRO4_AFR_CMD1,
+        }
+        indexes_2 = {
+            constants.KPRO23_ID: constants.KPRO23_AFR_CMD2,
+            constants.KPRO4_ID: constants.KPRO4_AFR_CMD2,
+        }
+        try:
+            o2_lambda = 32768.0 / (
+                256 * get_value_from_ecu(self.version, indexes_2, self.data0)
+                + get_value_from_ecu(self.version, indexes_1, self.data0)
+            )
+        except ZeroDivisionError:  # something happen collecting the value then return 0
+            return {"afr": 0, "lambda": 0}
+        o2_afr = o2_lambda * 14.7
+        return {"afr": o2_afr, "lambda": o2_lambda}
+
+    @property
     def tps(self):
         """
         Throttle position sensor
@@ -372,6 +393,52 @@ class Kpro:
             map_psi = Formula.bar_to_psi(map_bar)
             return {"bar": map_bar, "mbar": map_mbar, "psi": map_psi}
         return data_from_kpro
+
+    @property
+    def vtp(self):
+        """Vtec pressure switch"""
+        mask = 0x01
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_VTP,
+            constants.KPRO4_ID: constants.KPRO4_VTP,
+        }
+        return bool(
+            get_value_from_ecu(
+                self.version,
+                indexes,
+                self.data0 if self.version == constants.KPRO23_ID else self.data3,
+            )
+            & mask
+        )
+
+    @property
+    def vts(self):
+        """Vtec spool valve"""
+        mask = 0x02
+        indexes = {
+            constants.KPRO23_ID: constants.KPRO23_VTS,
+            constants.KPRO4_ID: constants.KPRO4_VTS,
+        }
+        return bool(
+            get_value_from_ecu(
+                self.version,
+                indexes,
+                self.data0 if self.version == constants.KPRO23_ID else self.data3,
+            )
+            & mask
+        )
+
+    @property
+    def vtec(self):
+        """Vtec, added logic between vtp and vts"""
+        if self.vts and self.vtp:  # vtec enabled and pressure sensed
+            return "on"
+        elif self.vts and not self.vtp:  # vtec enabled but pressure not sensed
+            return "malfunction"
+        elif not self.vts and self.vtp:  # vtec not enabled but pressure sensed
+            return "malfunction"
+        else:  # vtec disabled
+            return "off"
 
     @property
     def mil(self):

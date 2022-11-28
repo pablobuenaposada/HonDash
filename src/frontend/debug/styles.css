@@ -1,0 +1,17 @@
+[id^="tableDiv"] {
+  width: 13%;
+  display: inline-table;
+}
+
+th,
+td {
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background: #ccc;
+}
+
+#title {
+  text-align: center;
+}

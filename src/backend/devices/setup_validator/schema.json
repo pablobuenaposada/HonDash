@@ -791,6 +791,23 @@
                "hidden":true
             }
          },
+         "vtec":{
+            "type":"object",
+            "required":[
+               "tag"
+            ],
+            "properties":{
+               "tag":{
+                  "type":"string",
+                  "enum":[
+                     "icon4"
+                  ]
+               }
+            },
+            "options":{
+               "hidden":true
+            }
+         },
          "gear":{
             "type":"object",
             "required":[
@@ -804,6 +821,38 @@
             },
             "options":{
                "hidden":true
+            }
+         },
+         "hddlg":{
+            "type":"object",
+            "required":[
+               "tag",
+               "pathon",
+               "pathoff",
+               "autostart"
+            ],
+            "options":{
+               "grid_columns":4
+            },
+            "properties":{
+               "tag":{
+                  "type":"string",
+                  "const":"icon5",
+                  "options": { "hidden": true }
+               },
+               "pathon":{
+                  "type":"string",
+                  "const":"hddlg_on.svg",
+                  "options": { "hidden": true }
+               },
+               "pathoff":{
+                  "type":"string",
+                  "const":"hddlg_off.svg",
+                  "options": { "hidden": true }
+               },
+               "autostart":{
+                  "type":"boolean"
+               }
             }
          },
          "fmw":{
@@ -838,7 +887,7 @@
          },
          "version":{
             "type":"string",
-            "const":"3.2.0",
+            "const":"3.5.0",
             "options":{
                "hidden":true
             }

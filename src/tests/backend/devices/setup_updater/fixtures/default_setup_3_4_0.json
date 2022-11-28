@@ -1,0 +1,321 @@
+{
+  "template": "basic",
+  "screen": {
+    "rotate": false
+  },
+  "style": {
+    "tag": "style",
+    "dayBackgroundColor": "#ffffff",
+    "nightBackgroundColor": "#000000",
+    "dayTextColor": "#000000",
+    "nightTextColor": "#ffffff",
+    "dayBackgroundGaugeColor": "#edebeb",
+    "nightBackgroundGaugeColor": "#808080",
+    "tpsLowerThreshold": 20,
+    "tpsUpperThreshold": 30,
+    "elapsedSeconds": 3
+  },
+  "odo": {
+    "tag": "odo",
+    "unit": "km",
+    "value": 0
+  },
+  "rpm": {
+    "tag": "bar1",
+    "max": 9000,
+    "sectors": [
+      {
+        "color": "#d64d8a",
+        "hi": 9000,
+        "lo": 0
+      }
+    ]
+  },
+  "eth": {
+    "tag": "gauge4",
+    "label": "ETH",
+    "suffix": "",
+    "max": 100,
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 100,
+        "color": "#46877f"
+      }
+    ]
+  },
+  "vss": {
+    "tag": "speed",
+    "unit": "kmh"
+  },
+  "cam": {
+    "tag": "gauge7",
+    "label": "CAM",
+    "suffix": "",
+    "max": 100,
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 100,
+        "color": "#46877f"
+      }
+    ]
+  },
+  "bat": {
+    "tag": "gauge6",
+    "decimals": 1,
+    "label": "BATTERY",
+    "suffix": "",
+    "max": 20,
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 12,
+        "color": "#cc2c24"
+      },
+      {
+        "lo": 12,
+        "hi": 20,
+        "color": "#46877f"
+      }
+    ]
+  },
+  "tps": {
+    "tag": "gauge8",
+    "label": "TPS",
+    "suffix": "",
+    "max": 100,
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 100,
+        "color": "#46877f"
+      }
+    ]
+  },
+  "iat": {
+    "tag": "gauge2",
+    "unit": "celsius",
+    "label": "IAT",
+    "suffix": "",
+    "max": 50,
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 70,
+        "color": "#46877f"
+      }
+    ]
+  },
+  "ect": {
+    "tag": "gauge1",
+    "unit": "celsius",
+    "label": "ECT",
+    "suffix": "",
+    "max": 150,
+    "sectors": [
+      {
+        "lo": 94,
+        "hi": 150,
+        "color": "#cc2c24"
+      },
+      {
+        "lo": 0,
+        "hi": 94,
+        "color": "#46877f"
+      }
+    ]
+  },
+  "o2": {
+    "tag": "gauge3",
+    "unit": "afr",
+    "decimals": 1,
+    "label": "AFR",
+    "suffix": "",
+    "max": 30,
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 12,
+        "color": "#cc2c24"
+      },
+      {
+        "lo": 12,
+        "hi": 16,
+        "color": "#46877f"
+      },
+      {
+        "lo": 16,
+        "hi": 30,
+        "color": "#cc2c24"
+      }
+    ]
+  },
+  "map": {
+    "tag": "gauge5",
+    "unit": "bar",
+    "decimals": 1,
+    "label": "MAP",
+    "suffix": "",
+    "max": 3,
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 3,
+        "color": "#46877f"
+      }
+    ]
+  },
+  "an0": {
+    "tag": "bar2",
+    "formula": "custom",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "per cent",
+    "decimals": 0,
+    "label": "",
+    "suffix": "%",
+    "max": 100,
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ]
+  },
+  "an1": {
+    "tag": "not use",
+    "formula": "vdo_323_057",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "celsius",
+    "decimals": 0,
+    "label": "",
+    "suffix": "",
+    "max": 0,
+    "sectors": []
+  },
+  "an2": {
+    "tag": "not use",
+    "formula": "vdo_323_057",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "celsius",
+    "decimals": 0,
+    "label": "",
+    "suffix": "",
+    "max": 0,
+    "sectors": []
+  },
+  "an3": {
+    "tag": "not use",
+    "formula": "vdo_323_057",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "celsius",
+    "decimals": 1,
+    "label": "",
+    "suffix": "",
+    "max": 0,
+    "sectors": []
+  },
+  "an4": {
+    "tag": "not use",
+    "formula": "vdo_323_057",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "celsius",
+    "decimals": 0,
+    "label": "",
+    "suffix": "",
+    "max": 0,
+    "sectors": []
+  },
+  "an5": {
+    "tag": "not use",
+    "formula": "vdo_323_057",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "celsius",
+    "decimals": 0,
+    "label": "",
+    "suffix": "",
+    "max": 0,
+    "sectors": []
+  },
+  "an6": {
+    "tag": "not use",
+    "formula": "vdo_323_057",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "celsius",
+    "decimals": 0,
+    "label": "",
+    "suffix": "",
+    "max": 0,
+    "sectors": []
+  },
+  "an7": {
+    "tag": "not use",
+    "formula": "vdo_323_057",
+    "min_voltage": 0,
+    "max_voltage": 5,
+    "min_value": 0,
+    "max_value": 100,
+    "unit": "celsius",
+    "decimals": 0,
+    "label": "",
+    "suffix": "",
+    "max": 0,
+    "sectors": []
+  },
+  "ver": {
+    "tag": "version"
+  },
+  "fan": {
+    "tag": "icon2",
+    "pathon": "fan_on.svg",
+    "pathoff": "fan_off.svg"
+  },
+  "mil": {
+    "tag": "icon1",
+    "pathon": "check_engine_on.svg",
+    "pathoff": "check_engine_off.svg"
+  },
+  "scs": {
+    "tag": "icon3",
+    "pathon": "scs_on.png",
+    "pathoff": "scs_off.png"
+  },
+  "vtec": {
+    "tag": "icon4"
+  },
+  "gear": {
+    "tag": "gear"
+  },
+  "fmw": {
+    "tag": "firmware_version"
+  },
+  "time": {
+    "tag": "time"
+  },
+  "version": "3.4.0",
+  "name": {
+    "tag": "ecu_name"
+  }
+}

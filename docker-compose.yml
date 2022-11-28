@@ -16,6 +16,8 @@ services:
       - schema-volume:/usr/share/nginx/html/backend/devices/setup_validator/
   app:
     image: pablobuenaposada/hondash
+    environment:
+      - PY_FILE
     build:
       context: .
     ports:
@@ -24,5 +26,3 @@ services:
       - frontend-volume:/app/src/frontend/
       - node-modules-volume:/app/node_modules/
       - schema-volume:/app/src/backend/devices/setup_validator/
-    devices:
-      - '/dev:/dev'

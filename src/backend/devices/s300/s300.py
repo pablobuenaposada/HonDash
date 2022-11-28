@@ -138,7 +138,7 @@ class S300:
     @property
     def fanc(self):
         """Fan switch"""
-        mask = 0x80
+        mask = 0x01
         indexes = {
             constants.S3003_ID: constants.S3003_FANC,
         }
@@ -156,7 +156,7 @@ class S300:
     @property
     def scs(self):
         """Service connector"""
-        mask = 0x10
+        mask = 0x20
         indexes = {
             constants.S3003_ID: constants.S3003_SCS,
         }
@@ -292,6 +292,36 @@ class S300:
         }
         mask = 0x20
         return bool(get_value_from_ecu(self.version, indexes, self.data6) & mask)
+
+    @property
+    def vtp(self):
+        """Vtec pressure switch"""
+        mask = 0x01
+        indexes = {
+            constants.S3003_ID: constants.S3003_VTP,
+        }
+        return bool(get_value_from_ecu(self.version, indexes, self.data6) & mask)
+
+    @property
+    def vts(self):
+        """Vtec spool valve"""
+        mask = 0x01
+        indexes = {
+            constants.S3003_ID: constants.S3003_VTS,
+        }
+        return bool(get_value_from_ecu(self.version, indexes, self.data6) & mask)
+
+    @property
+    def vtec(self):
+        """Vtec, added logic between vtp and vts"""
+        if self.vts and self.vtp:  # vtec enabled and pressure sensed
+            return "on"
+        elif self.vts and not self.vtp:  # vtec enabled but pressure not sensed
+            return "malfunction"
+        elif not self.vts and self.vtp:  # vtec not enabled but pressure sensed
+            return "malfunction"
+        else:  # vtec disabled
+            return "off"
 
     def analog_input(self, channel):
         """

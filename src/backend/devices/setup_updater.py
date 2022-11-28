@@ -25,6 +25,12 @@ class SetupUpdater:
             setup = self._update_to_3_1_0(setup)
         if setup["version"] == "3.1.0":
             setup = self._update_to_3_2_0(setup)
+        if setup["version"] == "3.2.0":
+            setup = self._update_to_3_3_0(setup)
+        if setup["version"] == "3.3.0":
+            setup = self._update_to_3_4_0(setup)
+        if setup["version"] == "3.4.0":
+            setup = self._update_to_3_5_0(setup)
         return setup
 
     @staticmethod
@@ -81,4 +87,33 @@ class SetupUpdater:
     def _update_to_3_2_0(setup):
         """From 3.1.0 to 3.2.0"""
         setup["version"] = "3.2.0"
+        return setup
+
+    @staticmethod
+    def _update_to_3_3_0(setup):
+        """From 3.2.0 to 3.3.0"""
+        setup["version"] = "3.3.0"
+        return setup
+
+    @staticmethod
+    def _update_to_3_4_0(setup):
+        """From 3.3.0 to 3.4.0"""
+        setup["version"] = "3.4.0"
+        setup.update({"vtec": {"tag": "icon4"}})
+        return setup
+
+    @staticmethod
+    def _update_to_3_5_0(setup):
+        """From 3.4.0 to 3.5.0"""
+        setup["version"] = "3.5.0"
+        setup.update(
+            {
+                "hddlg": {
+                    "tag": "icon5",
+                    "pathon": "hddlg_on.svg",
+                    "pathoff": "hddlg_off.svg",
+                    "autostart": False,
+                }
+            }
+        )
         return setup
