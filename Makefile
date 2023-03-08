@@ -72,7 +72,7 @@ dummy:
 	open -a "Google Chrome" src/frontend/index.html
 
 kill:
-	docker-compose down -v || true
+	docker compose down -v || true
 	docker stop hondash_app_1 || true
 	docker stop hondash_nginx_1 || true
 	sudo pkill -f src/backend || true
@@ -117,19 +117,19 @@ docker/pull:
 	docker pull $(DOCKER_IMAGE)
 
 docker/run:
-	PY_FILE=src/backend/main.py docker-compose up -d app nginx
+	PY_FILE=src/backend/main.py docker compose up -d
 	@echo Access http://localhost:8080/frontend/ for dashboard
 	@echo Access http://localhost:8080/frontend/setup/ for setup
 	@echo Access http://localhost:8080/frontend/datalogs/ for datalogs
 
 docker/demo:
-	PY_FILE=src/backend/bench/dummy_backend.py docker-compose up -d --build -V --force-recreate app nginx
+	PY_FILE=src/backend/bench/dummy_backend.py docker compose up -d --build -V --force-recreate app nginx
 	@echo Access http://localhost:8080/frontend/ for dashboard
 	@echo Access http://localhost:8080/frontend/setup/ for setup
 	@echo Access http://localhost:8080/frontend/datalogs/ for datalogs
 
 docker/stop:
-	docker-compose down --volume
+	docker compose down --volume
 
 docker/run/test:
 	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make test'

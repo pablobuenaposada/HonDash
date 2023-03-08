@@ -1,5 +1,4 @@
 class Formula:
-
     # Backup formula method to use when no formula is found
     @staticmethod
     def voltage(value):

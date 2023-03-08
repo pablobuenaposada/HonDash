@@ -9,7 +9,6 @@ from backend.devices.s300.s300 import MAX_CONNECTION_RETRIES, S300
 
 
 class TestS300:
-
     temp_sensor_argvalues = ((51, 69, 156), (40, 80, 175), (31, 91, 195))
 
     def setup_method(self):

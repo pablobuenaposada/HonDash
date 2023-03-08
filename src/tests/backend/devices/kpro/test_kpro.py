@@ -9,7 +9,6 @@ from backend.devices.kpro.kpro import MAX_CONNECTION_RETRIES, Kpro
 
 
 class TestKpro:
-
     temp_sensor_argvalues = ((51, 69, 156), (40, 80, 175), (31, 91, 195))
 
     def setup_method(self):
