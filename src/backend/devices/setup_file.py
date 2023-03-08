@@ -14,7 +14,9 @@ class SetupFile:
         with open(self.file_name) as file:
             try:
                 self.json = json.load(file)
-            except JSONDecodeError:  # if there's a problem within the file let's load the default setup
+            except (
+                JSONDecodeError
+            ):  # if there's a problem within the file let's load the default setup
                 self.reset_setup()
 
     def get_value(self, key):
