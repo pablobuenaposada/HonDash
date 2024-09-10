@@ -1,58 +1,10 @@
-VIRTUAL_ENV ?= venv
-PYTHON=$(VIRTUAL_ENV)/bin/python
-PIP=$(VIRTUAL_ENV)/bin/pip
-PYTEST=$(VIRTUAL_ENV)/bin/pytest
-ISORT=$(VIRTUAL_ENV)/bin/isort
-FLAKE8=$(VIRTUAL_ENV)/bin/flake8
-COVERALLS=$(VIRTUAL_ENV)/bin/coveralls
-BLACK=$(VIRTUAL_ENV)/bin/black
-PRETTIER=node_modules/.bin/prettier
-PYTHON_VERSION=3.9
-PYTHON_WITH_VERSION=python$(PYTHON_VERSION)
 DOCKER_IMAGE=hondash
-SYSTEM_DEPENDENCIES_UBUNTU= \
-    $(PYTHON_WITH_VERSION) \
-    $(PYTHON_WITH_VERSION)-dev \
-    $(PYTHON_WITH_VERSION)-venv \
-    build-essential \
-    libsnappy-dev \
-    libusb-1.0-0 \
-    lsb-release \
-    node-gyp \
-    npm \
-    python3-pip
-SYSTEM_DEPENDENCIES_RASPBIAN= \
-    libatlas-base-dev \
-    libsnappy-dev \
-    npm \
-    python3-pandas
-SYSTEM_DEPENDENCIES_MACOS= \
-    snappy \
-    npm \
-    libusb
-OS=$(shell lsb_release -si 2>/dev/null || uname)
 
-system_dependencies:
-ifeq ($(OS), Ubuntu)
-	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_UBUNTU)
-else ifeq ($(OS), Debian)
-	apt install --yes --no-install-recommends $(SYSTEM_DEPENDENCIES_RASPBIAN)
-else ifeq ($(OS), Darwin)
-	brew install $(SYSTEM_DEPENDENCIES_MACOS)
-endif
+venv:
+	poetry install --without dev
 
-clean:
-	rm -rf $(VIRTUAL_ENV)
-
-npm:
-	npm install
-
-$(VIRTUAL_ENV): npm
-	$(PYTHON_WITH_VERSION) -m venv $(VIRTUAL_ENV)
-	$(PYTHON) -m pip install --upgrade pip setuptools wheel
-	$(PYTHON) -m pip install -r requirements.txt
-
-virtualenv: $(VIRTUAL_ENV)
+venv-dev:
+	poetry install
 
 run: virtualenv
 	cp -n default_setup.json setup.json || true
@@ -78,9 +30,8 @@ kill:
 	sudo pkill -f src/backend || true
 	sudo pkill -f http.server || true
 
-test: lint
-	PYTHONPATH=src $(PYTEST) --cov src/ src/tests
-	@if [ -n "$$COVERALLS_REPO_TOKEN" ] && [ -f $(COVERALLS) ]; then $(COVERALLS); fi \
+test: venv-dev
+	PYTHONPATH=src poetry run pytest src/tests
 
 lint/isort-fix: virtualenv
 	$(ISORT) src
@@ -107,9 +58,6 @@ lint-fix: lint/isort-fix lint/black-fix lint/prettier-fix
 
 lint: lint/isort-check lint/flake8 lint/black-check lint/prettier-check
 
-coveralls: virtualenv
-	$(COVERALLS)
-
 docker/build:
 	docker build --no-cache --tag=$(DOCKER_IMAGE) .
 
@@ -132,7 +80,7 @@ docker/stop:
 	docker compose down --volume
 
 docker/run/test:
-	docker run --env-file docker.env $(DOCKER_IMAGE) /bin/sh -c 'make test'
+	docker run $(DOCKER_IMAGE) /bin/sh -c 'make test'
 
 docker/run/shell:
 	docker run -it --rm $(DOCKER_IMAGE)
