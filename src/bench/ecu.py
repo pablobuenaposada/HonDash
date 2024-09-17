@@ -1,9 +1,8 @@
 # PYTHONPATH=src python src/backend/bench/ecu.py
 from __future__ import print_function
 
-from reprint import output
-
 from backend.devices.ecu import Ecu
+from reprint import output
 
 ecu = Ecu()
 with output(output_type="dict", initial_len=1, interval=0) as output_list:

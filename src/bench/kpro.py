@@ -1,9 +1,8 @@
 # PYTHONPATH=src python src/backend/bench/kpro.py
 from __future__ import print_function
 
-from reprint import output
-
 from backend.devices.kpro.kpro import Kpro
+from reprint import output
 
 kpro = Kpro()
 with output(output_type="dict", initial_len=1, interval=0) as output_list:

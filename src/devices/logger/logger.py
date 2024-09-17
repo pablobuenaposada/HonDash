@@ -109,7 +109,7 @@ class Logger:
         if self.active:
             self.df = pd.concat(
                 [self.df, pd.DataFrame([self._prepare_data(data, self.start_time)])],
-                ignore_index=True
+                ignore_index=True,
             )
             if len(self.df.index) >= CHUNKSIZE:  # if it's time to store in the csv
                 try:

@@ -6,8 +6,8 @@ from devices.setup_file import SetupFile
 from devices.setup_validator.setup_validator import SetupValidator
 from devices.style import Style
 from devices.time import Time
-from websocket import Websocket
 from version import __version__
+from websocket import Websocket
 
 
 class Backend:

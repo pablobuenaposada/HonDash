@@ -16,7 +16,7 @@ backend.ecu.ecu.data4 = [0 for _ in range(18)]
 backend.ecu.ecu.data5 = [0 for _ in range(20)]
 
 while True:
-    numbers = range(random.choice(range(0, 255)), random.choice(range(0, 255)))
+    numbers = range(random.choice(range(255)), random.choice(range(255)))
     numbers = numbers if bool(random.getrandbits(1)) else reversed(numbers)
     for number in numbers:
         backend.ecu.ecu.data0 = [number for _ in range(38)]

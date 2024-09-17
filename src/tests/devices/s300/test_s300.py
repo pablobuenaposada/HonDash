@@ -105,7 +105,7 @@ class TestS300:
         device.read = MagicMock(return_value=[])
         entry_point = MagicMock()
 
-        assert ([], [], []) == self.s300._read_from_device(version, device, entry_point)
+        assert self.s300._read_from_device(version, device, entry_point) == ([], [], [])
         assert device.mock_calls == read_calls
         assert entry_point.mock_calls == write_calls
 

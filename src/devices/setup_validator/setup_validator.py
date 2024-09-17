@@ -1,3 +1,4 @@
+import contextlib
 import json
 
 import jsonschema
@@ -17,7 +18,7 @@ class SetupValidator:
         try:
             jsonschema.validate(instance=setup, schema=self._load_json()["schema"])
         except jsonschema.exceptions.ValidationError as e:
-            raise self.ValidationError(e.message)
+            raise self.ValidationError(e.message) from None
         self._check_tag_uniqueness(setup)
         self._check_formula(setup)
 
@@ -30,10 +31,10 @@ class SetupValidator:
         """tag values should be unique"""
         tags = []
         for value in setup:
-            try:
+            with contextlib.suppress(
+                KeyError, TypeError
+            ):  # if tag is not present it's fine
                 tags.append(setup[value]["tag"])
-            except (KeyError, TypeError):  # if tag is not present it's fine
-                pass
         tags = [
             tag for tag in tags if tag != "not use"
         ]  # delete "not use" tags for this check
@@ -51,7 +52,9 @@ class SetupValidator:
             try:
                 allowed_units = FORMULA_VS_UNITS[formula]
             except KeyError:
-                raise self.ValidationError(f"{setup[value]['formula']} not found")
+                raise self.ValidationError(
+                    f"{setup[value]['formula']} not found"
+                ) from None
             if setup[value]["unit"] not in allowed_units:
                 raise self.ValidationError(
                     f"{setup[value]['unit']} not allowed for {setup[value]['formula']}"
@@ -73,7 +76,7 @@ class SetupValidator:
             ):
                 raise self.ValidationError("setup file should be at least 2.3.2")
         except KeyError:
-            raise self.ValidationError("version tag not found")
+            raise self.ValidationError("version tag not found") from None
 
     class ValidationError(Exception):
         def __init__(self, *args):
