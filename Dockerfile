@@ -10,4 +10,4 @@ RUN make venv
 RUN cp -n default_setup.json setup.json
 
 ENV PYTHONPATH="/app/src"
-CMD ["python", "src/backend/main.py"]
+CMD ["python", "src/main.py"]
