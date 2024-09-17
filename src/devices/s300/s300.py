@@ -316,9 +316,9 @@ class S300:
         """Vtec, added logic between vtp and vts"""
         if self.vts and self.vtp:  # vtec enabled and pressure sensed
             return "on"
-        elif self.vts and not self.vtp:  # vtec enabled but pressure not sensed
-            return "malfunction"
-        elif not self.vts and self.vtp:  # vtec not enabled but pressure sensed
+        elif (
+            self.vts and not self.vtp or not self.vts and self.vtp
+        ):  # vtec enabled but pressure not sensed
             return "malfunction"
         else:  # vtec disabled
             return "off"

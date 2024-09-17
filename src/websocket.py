@@ -1,4 +1,5 @@
 import asyncio
+import contextlib
 import json
 import threading
 
@@ -50,10 +51,8 @@ class Websocket:
                 if log:
                     await websocket.send(json.dumps({f"datalog_{file_name}": log}))
             elif data["action"].startswith("remove_datalog_"):
-                try:
+                with contextlib.suppress(FileNotFoundError):
                     Logger.remove_log(data["action"].split("remove_datalog_")[1])
-                except FileNotFoundError:
-                    pass
                 await websocket.send(json.dumps({"datalogs": Logger.get_logs()}))
             elif data["action"] == "save":
                 try:

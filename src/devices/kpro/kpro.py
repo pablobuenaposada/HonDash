@@ -433,9 +433,9 @@ class Kpro:
         """Vtec, added logic between vtp and vts"""
         if self.vts and self.vtp:  # vtec enabled and pressure sensed
             return "on"
-        elif self.vts and not self.vtp:  # vtec enabled but pressure not sensed
-            return "malfunction"
-        elif not self.vts and self.vtp:  # vtec not enabled but pressure sensed
+        elif (
+            self.vts and not self.vtp or not self.vts and self.vtp
+        ):  # vtec enabled but pressure not sensed
             return "malfunction"
         else:  # vtec disabled
             return "off"
@@ -449,14 +449,10 @@ class Kpro:
         }
         if self.version == constants.KPRO23_ID:
             data_from_kpro = get_value_from_ecu(self.version, indexes, self.data0)
-            if data_from_kpro == 9:
-                return True
-            return False
+            return data_from_kpro == 9
         elif self.version == constants.KPRO4_ID:
             data_from_kpro = get_value_from_ecu(self.version, indexes, self.data3)
-            if data_from_kpro >= 36:
-                return True
-            return False
+            return data_from_kpro >= 36
         return False
 
     @property
@@ -480,9 +476,7 @@ class Kpro:
         }
         data_from_kpro = get_value_from_ecu(self.version, indexes, self.data4, 0)
 
-        if data_from_kpro == 1:
-            return True
-        return False
+        return data_from_kpro == 1
 
     @property
     def serial(self):

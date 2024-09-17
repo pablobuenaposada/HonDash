@@ -1,10 +1,9 @@
 # pip install matplotlib
-import matplotlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
-
 from backend.devices.formula import Formula
 
-matplotlib.use("TkAgg")
+mpl.use("TkAgg")
 temperature = [
     302,
     302,
@@ -264,7 +263,7 @@ temperature = [
     -40,
 ]
 
-x = list(range(0, 200))
+x = list(range(200))
 fahrenheit = [Formula.kpro_temp(z) for z in x]
 y = []
 for result in fahrenheit:

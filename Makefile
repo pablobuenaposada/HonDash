@@ -6,6 +6,14 @@ venv:
 venv-dev:
 	poetry install
 
+format: venv-dev
+	poetry run black src
+	poetry run ruff check src --fix
+
+format/check: venv-dev
+	poetry run black --verbose src --check
+	poetry run ruff check src
+
 test: venv-dev
 	PYTHONPATH=src poetry run pytest src/tests
 
@@ -15,5 +23,5 @@ docker/build:
 docker/run:
 	docker-compose up --build -d
 
-docker/run/test:
+docker/tests:
 	docker run $(DOCKER_IMAGE) /bin/sh -c 'make test'

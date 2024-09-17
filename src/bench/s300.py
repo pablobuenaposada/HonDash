@@ -1,9 +1,8 @@
 # PYTHONPATH=src python src/backend/bench/s300.py
 from __future__ import print_function
 
-from reprint import output
-
 from backend.devices.s300.s300 import S300
+from reprint import output
 
 s300 = S300()
 with output(output_type="dict", initial_len=1, interval=0) as output_list:
