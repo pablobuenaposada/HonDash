@@ -18,7 +18,7 @@ services:
       - "9090:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./src/backend/devices/setup_validator/schema.json:/usr/share/nginx/html/schema.json
+      - ./src/devices/setup_validator/schema.json:/usr/share/nginx/html/schema.json
     networks:
       - main_network
 

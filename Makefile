@@ -1,4 +1,4 @@
-DOCKER_IMAGE=hondash
+DOCKER_IMAGE=hondash-backend
 
 venv:
 	poetry install --without dev

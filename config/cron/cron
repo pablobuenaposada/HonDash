@@ -1,1 +1,0 @@
-@reboot (export DISPLAY=:0 && cd /home/pi/Desktop/HonDash/ && make run_rpi)
