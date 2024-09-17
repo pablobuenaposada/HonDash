@@ -1,27 +1,27 @@
-version: '3.8'
-
-volumes:
-  frontend-volume:
-  node-modules-volume:
-  schema-volume:
+version: '3.9'
 
 services:
-  nginx:
-    image: nginx
-    ports:
-     - "8080:80"
-    volumes:
-      - frontend-volume:/usr/share/nginx/html/frontend/
-      - node-modules-volume:/usr/share/nginx/html/node_modules/
-      - schema-volume:/usr/share/nginx/html/backend/devices/setup_validator/
   app:
-    environment:
-      - PY_FILE
     build:
       context: .
+      dockerfile: Dockerfile
     ports:
       - "5678:5678"
+    environment:
+      - PYTHONPATH=/app/src
+    networks:
+      - main_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "9090:80"
     volumes:
-      - frontend-volume:/app/src/frontend/
-      - node-modules-volume:/app/node_modules/
-      - schema-volume:/app/src/backend/devices/setup_validator/
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./src/backend/devices/setup_validator/schema.json:/usr/share/nginx/html/schema.json
+    networks:
+      - main_network
+
+networks:
+  main_network:
+    driver: bridge
