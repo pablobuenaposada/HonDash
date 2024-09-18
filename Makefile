@@ -24,4 +24,4 @@ docker/run:
 	docker-compose up --build -d
 
 docker/tests:
-	docker run $(DOCKER_IMAGE) /bin/sh -c 'make test'
+	docker run --rm $(DOCKER_IMAGE) /bin/sh -c 'make test'
