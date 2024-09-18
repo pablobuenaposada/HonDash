@@ -21,7 +21,7 @@ docker/build:
 	docker build --no-cache --tag=$(DOCKER_IMAGE) .
 
 docker/run:
-	docker-compose up --build -d
+	docker compose up --build -d
 
 docker/tests:
 	docker run --rm $(DOCKER_IMAGE) /bin/sh -c 'make test'
