@@ -17,9 +17,12 @@ format/check: venv-dev
 test: venv-dev
 	PYTHONPATH=src poetry run pytest src/tests
 
-run: venv
+run_rpi:
 	cp -n default_setup.json setup.json
+	export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
+	export PATH="$HOME/.local/bin:$PATH"
 	PYTHONPATH=src poetry run python src/main.py &
+	docker compose up --build -d nginx
 
 docker/build:
 	docker build --no-cache --tag=$(DOCKER_IMAGE) .
