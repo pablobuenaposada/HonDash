@@ -17,6 +17,10 @@ format/check: venv-dev
 test: venv-dev
 	PYTHONPATH=src poetry run pytest src/tests
 
+run: venv
+	cp -n default_setup.json setup.json
+	PYTHONPATH=src poetry run python src/main.py &
+
 docker/build:
 	docker build --no-cache --tag=$(DOCKER_IMAGE) .
 
