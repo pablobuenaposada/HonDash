@@ -20,8 +20,7 @@ test: venv-dev
 run_rpi:
 	cp -n default_setup.json setup.json
 	export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
-	export PATH="$HOME/.local/bin:$PATH"
-	PYTHONPATH=src poetry run python src/main.py &
+	sudo PYTHONPATH=src /home/pi/.local/bin/poetry run python src/main.py &
 	docker compose up --build -d nginx
 
 docker/build:
