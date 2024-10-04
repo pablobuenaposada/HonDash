@@ -1,0 +1,2 @@
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pi/.local/bin
+@reboot (export DISPLAY=:0 && cd /home/pi/Desktop/HonDash/ && make run_rpi && cd /home/pi/Desktop/HonDash-frontend/ && make run_rpi)
