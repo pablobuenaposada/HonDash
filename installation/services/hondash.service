@@ -1,0 +1,15 @@
+[Unit]
+Description=HonDash Docker Service
+After=local-fs.target
+
+[Service]
+Environment=DISPLAY=:0
+WorkingDirectory=/home/pi/Desktop/HonDash/
+ExecStart=/bin/bash -c 'make run_rpi'
+Restart=always
+User=pi
+StandardOutput=append:/home/pi/Desktop/HonDash/hondash.log
+StandardError=append:/home/pi/Desktop/HonDash/hondash.log
+
+[Install]
+WantedBy=multi-user.target

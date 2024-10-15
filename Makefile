@@ -18,10 +18,8 @@ test: venv-dev
 	PYTHONPATH=src poetry run pytest src/tests
 
 run_rpi:
-	cp -n default_setup.json setup.json
-	export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
-	sudo PYTHONPATH=src /home/pi/.local/bin/poetry run python src/main.py &
-	docker compose up --build -d nginx
+	sudo cp -n default_setup.json setup.json
+	sudo PYTHONPATH=src poetry run python /home/pi/Desktop/HonDash/src/main.py
 
 docker/build:
 	docker build --no-cache --tag=$(DOCKER_IMAGE) .
@@ -31,3 +29,9 @@ docker/run:
 
 docker/tests:
 	docker run --rm $(DOCKER_IMAGE) /bin/sh -c 'make test'
+
+sd-image/create:
+	sudo dd bs=1024 if=$(path) of=full_size_image.img
+
+sd-image/shrink:
+	docker run --privileged=true --rm --volume $(shell pwd):/workdir monsieurborges/pishrink pishrink -v full_size_image.img shrinked_image.img

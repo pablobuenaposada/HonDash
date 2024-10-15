@@ -1,0 +1,14 @@
+[Unit]
+Description=Chromium Kiosk
+After=graphical.target
+
+[Service]
+User=pi
+Group=pi
+Environment=XAUTHORITY=/home/pi/.Xauthority
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/chromium-browser --no-sandbox --disable-gpu --noerrdialogs --disable-infobars --disable-session-crashed-bubble --disable-features=TranslateUI --kiosk --check-for-update-interval=604800 --incognito http://hondash.local
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target
