@@ -18,10 +18,8 @@ test: venv-dev
 	PYTHONPATH=src poetry run pytest src/tests
 
 run_rpi:
-	cp -n default_setup.json setup.json
-	export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
-	sudo PYTHONPATH=src /home/pi/.local/bin/poetry run python src/main.py &
-	docker compose up --build -d nginx
+	sudo cp -n default_setup.json setup.json
+	sudo PYTHONPATH=src /home/pi/.local/bin/poetry run python /home/pi/Desktop/HonDash/src/main.py
 
 docker/build:
 	docker build --no-cache --tag=$(DOCKER_IMAGE) .

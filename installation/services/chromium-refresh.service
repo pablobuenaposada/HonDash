@@ -1,0 +1,13 @@
+[Unit]
+Description=Your Description Here
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /home/pi/Desktop/HonDash/installation/refresh.sh
+Restart=always
+User=pi
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+
+[Install]
+WantedBy=multi-user.target
