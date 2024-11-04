@@ -26,7 +26,7 @@ class S300:
 
     def __init__(self):
         self.data4 = self.data5 = self.data6 = []
-        self.device = self.version = self.entry_point = None
+        self.device = self.version = self.entry_point = self.entry_point_address = None
         self.status = False
 
         self.find_and_connect()
@@ -41,7 +41,9 @@ class S300:
 
             if self.device:  # if s300 device is found
                 try:
-                    self.entry_point = establish_connection(self.device)
+                    self.entry_point, self.entry_point_address = establish_connection(
+                        self.device
+                    )
                 except usb.core.USBError:
                     # if there's an error while connecting to the usb device we just want to try again
                     #  so let's ensure that we keep in the while loop
@@ -52,15 +54,15 @@ class S300:
                     threading.Thread(target=self._update).start()
 
     @staticmethod
-    def _read_from_device(version, device, entry_point):
+    def _read_from_device(version, device, entry_point, entry_point_address):
         entry_point.write(b"\x90")
-        data6 = device.read(0x82, 1000, 1000)
+        data6 = device.read(entry_point_address, 1000, 1000)
 
         entry_point.write(b"\xB0")
-        data5 = device.read(0x82, 128, 1000)
+        data5 = device.read(entry_point_address, 128, 1000)
 
         entry_point.write(b"\x40")
-        data4 = device.read(0x82, 1000)
+        data4 = device.read(entry_point_address, 1000)
 
         return data4, data5, data6
 
@@ -68,7 +70,10 @@ class S300:
         while self.status:
             try:
                 self.data4, self.data5, self.data6 = self._read_from_device(
-                    self.version, self.device, self.entry_point
+                    self.version,
+                    self.device,
+                    self.entry_point,
+                    self.entry_point_address,
                 )
 
             except usb.core.USBError as e:

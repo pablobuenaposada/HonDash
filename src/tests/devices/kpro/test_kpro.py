@@ -1,5 +1,5 @@
 from unittest import mock
-from unittest.mock import MagicMock, call
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 import usb
@@ -84,11 +84,11 @@ class TestKpro:
             (
                 constants.KPRO4_ID,
                 [
-                    call.read(0x82, 1000),
-                    call.read(0x82, 1000),
-                    call.read(0x82, 1000),
-                    call.read(0x82, 1000),
-                    call.read(0x82, 128, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 128, 1000),
                 ],
                 [
                     call.write("\x40"),
@@ -101,11 +101,11 @@ class TestKpro:
             (
                 constants.KPRO23_ID,
                 [
-                    call.read(0x81, 1000),
-                    call.read(0x81, 1000),
-                    call.read(0x81, 1000),
-                    call.read(0x81, 1000),
-                    call.read(0x81, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 1000),
+                    call.read(ANY, 1000),
                 ],
                 [
                     call.write("\x40"),
@@ -117,7 +117,7 @@ class TestKpro:
             ),
             (
                 None,
-                [call.read(0x81, 1000), call.read(0x81, 1000)],
+                [call.read(ANY, 1000), call.read(ANY, 1000)],
                 [
                     call.write("\x40"),
                     call.write("\x60"),
@@ -132,8 +132,11 @@ class TestKpro:
         device = MagicMock()
         device.read = MagicMock(return_value=[])
         entry_point = MagicMock()
+        entry_point_address = MagicMock()
 
-        assert self.kpro._read_from_device(version, device, entry_point) == (
+        assert self.kpro._read_from_device(
+            version, device, entry_point, entry_point_address
+        ) == (
             [],
             [],
             [],
@@ -166,10 +169,12 @@ class TestKpro:
             # "(usb.core.USBError("foo", errno=60), True, False)
         ),
     )
-    def test__update_excption(self, error, status_result, init_called_result):
+    def test__update_exception(self, error, status_result, init_called_result):
         """in case any usb error while fetching the data"""
         self.kpro.status = True
-        self.kpro.version = self.kpro.kpro_device = self.kpro.entry_point = None
+        self.kpro.version = self.kpro.kpro_device = self.kpro.entry_point = (
+            self.kpro.entry_point_address
+        ) = None
         with mock.patch(
             "devices.kpro.kpro.Kpro._read_from_device"
         ) as m__read_from_device, mock.patch(

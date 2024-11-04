@@ -1,5 +1,5 @@
 from unittest import mock
-from unittest.mock import MagicMock, call
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 import usb
@@ -75,9 +75,9 @@ class TestS300:
             (
                 constants.S3003_ID,
                 [
-                    call.read(0x82, 1000, 1000),
-                    call.read(0x82, 128, 1000),
-                    call.read(0x82, 1000),
+                    call.read(ANY, 1000, 1000),
+                    call.read(ANY, 128, 1000),
+                    call.read(ANY, 1000),
                 ],
                 [
                     call.write(b"\x90"),
@@ -88,9 +88,9 @@ class TestS300:
             (
                 None,
                 [
-                    call.read(0x82, 1000, 1000),
-                    call.read(0x82, 128, 1000),
-                    call.read(0x82, 1000),
+                    call.read(ANY, 1000, 1000),
+                    call.read(ANY, 128, 1000),
+                    call.read(ANY, 1000),
                 ],
                 [
                     call.write(b"\x90"),
@@ -104,8 +104,11 @@ class TestS300:
         device = MagicMock()
         device.read = MagicMock(return_value=[])
         entry_point = MagicMock()
+        entry_point_address = MagicMock()
 
-        assert self.s300._read_from_device(version, device, entry_point) == ([], [], [])
+        assert self.s300._read_from_device(
+            version, device, entry_point, entry_point_address
+        ) == ([], [], [])
         assert device.mock_calls == read_calls
         assert entry_point.mock_calls == write_calls
 
@@ -131,10 +134,12 @@ class TestS300:
             # "(usb.core.USBError("foo", errno=60), True, False)
         ),
     )
-    def test__update_excption(self, error, status_result, init_called_result):
+    def test__update_exception(self, error, status_result, init_called_result):
         """in case any usb error while fetching the data"""
         self.s300.status = True
-        self.s300.version = self.s300.device = self.s300.entry_point = None
+        self.s300.version = self.s300.device = self.s300.entry_point = (
+            self.s300.entry_point_address
+        ) = None
         with mock.patch(
             "devices.s300.s300.S300._read_from_device"
         ) as m__read_from_device, mock.patch(

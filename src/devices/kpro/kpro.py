@@ -32,7 +32,9 @@ class Kpro:
 
     def __init__(self):
         self.data0 = self.data1 = self.data2 = self.data3 = self.data4 = self.data5 = []
-        self.kpro_device = self.version = self.entry_point = None
+        self.kpro_device = self.version = self.entry_point = (
+            self.entry_point_address
+        ) = None
         self.status = False
 
         self.find_and_connect()
@@ -47,7 +49,9 @@ class Kpro:
 
             if self.kpro_device:  # if kpro device is found
                 try:
-                    self.entry_point = establish_connection(self.kpro_device)
+                    self.entry_point, self.entry_point_address = establish_connection(
+                        self.kpro_device
+                    )
                 except usb.core.USBError:
                     # if there's an error while connecting to the usb device we just want to try again
                     #  so let's ensure that we keep in the while loop
@@ -58,41 +62,41 @@ class Kpro:
                     threading.Thread(target=self._update).start()
 
     @staticmethod
-    def _read_from_device(version, device, entry_point):
+    def _read_from_device(version, device, entry_point, entry_point_address):
         data0 = data1 = data2 = data3 = data5 = []
 
         if version == constants.KPRO4_ID:
             entry_point.write("\x40")
-            data4 = device.read(0x82, 1000)  # kpro v4
+            data4 = device.read(entry_point_address, 1000)  # kpro v4
         else:
             entry_point.write("\x40")
-            data4 = device.read(0x81, 1000)  # kpro v2 & v3
+            data4 = device.read(entry_point_address, 1000)  # kpro v2 & v3
 
         entry_point.write("\x60")
         if version == constants.KPRO23_ID:
-            data0 = device.read(0x81, 1000)  # kpro v2 & v3
+            data0 = device.read(entry_point_address, 1000)  # kpro v2 & v3
         elif version == constants.KPRO4_ID:
-            data0 = device.read(0x82, 1000)  # kpro v4
+            data0 = device.read(entry_point_address, 1000)  # kpro v4
 
         entry_point.write("\x61")
         # found on kpro2 that sometimes len=44, normally 16
         if version == constants.KPRO23_ID:
-            data1 = device.read(0x81, 1000)  # kpro v2 & v3
+            data1 = device.read(entry_point_address, 1000)  # kpro v2 & v3
         elif version == constants.KPRO4_ID:
-            data1 = device.read(0x82, 1000)  # kpro v4
+            data1 = device.read(entry_point_address, 1000)  # kpro v4
 
         entry_point.write("\x62")
         if version == constants.KPRO23_ID:
-            data2 = device.read(0x81, 1000)  # kpro v2 & v3
+            data2 = device.read(entry_point_address, 1000)  # kpro v2 & v3
         elif version == constants.KPRO4_ID:
-            data2 = device.read(0x82, 1000)  # kpro v4
+            data2 = device.read(entry_point_address, 1000)  # kpro v4
 
         if version == constants.KPRO4_ID:
             entry_point.write("\x65")
-            data3 = device.read(0x82, 128, 1000)  # kpro v4
+            data3 = device.read(entry_point_address, 128, 1000)  # kpro v4
         else:  # for v3 only, v2 will not return anything meaningful
             entry_point.write("\xb0")
-            data5 = device.read(0x81, 1000)
+            data5 = device.read(entry_point_address, 1000)
 
         return data0, data1, data2, data3, data4, data5
 
@@ -107,7 +111,10 @@ class Kpro:
                     self.data4,
                     self.data5,
                 ) = self._read_from_device(
-                    self.version, self.kpro_device, self.entry_point
+                    self.version,
+                    self.kpro_device,
+                    self.entry_point,
+                    self.entry_point_address,
                 )
             except usb.core.USBError as e:
                 # error 60 (operation timed out), just continue to try again

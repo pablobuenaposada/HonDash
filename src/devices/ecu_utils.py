@@ -14,12 +14,14 @@ def establish_connection(device):
     device.set_configuration()
     cfg = device.get_active_configuration()
     intf = cfg[(0, 0)]
-    entry_point = usb.util.find_descriptor(
-        intf,
-        custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress)
-        == usb.util.ENDPOINT_OUT,
+    return (
+        usb.util.find_descriptor(
+            intf,
+            custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress)
+            == usb.util.ENDPOINT_OUT,
+        ),
+        intf[0].bEndpointAddress,
     )
-    return entry_point
 
 
 def get_value_from_ecu(version, indexes, data, default=0):
