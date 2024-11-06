@@ -13,9 +13,9 @@ from websocket import Websocket
 class Backend:
     def __init__(self):
         self._load_user_preferences()
+        self.logger = Logger(self.setup_file.json.get("hddlg").get("autostart"))
         self._init_resources()
         self._init_websocket()
-        self.logger = Logger(self.setup_file.json.get("hddlg").get("autostart"))
 
     def stop(self):
         self.websocket.stop()
