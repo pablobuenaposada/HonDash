@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.0]
+### Changed
+- Upgraded to python 3.11
+- Updated all libraries
+- More docker usage
+- New Raspberry Pi OS base image
+- Linters switch to ruff and black
+- Improve websocket implementation
+- Fix new K-Pro v4 and possible also new S300 v3 connection issue
+
+### Removed
+- Frontend has been migrated to https://github.com/pablobuenaposada/HonDash-frontend
+
 ## [3.5.0] - 2022-05-28
 ### Added
 - Data logger

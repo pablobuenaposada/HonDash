@@ -73,6 +73,7 @@ class SetupValidator:
                 "3.3.0",
                 "3.4.0",
                 "3.5.0",
+                "3.6.0",
             ):
                 raise self.ValidationError("setup file should be at least 2.3.2")
         except KeyError:

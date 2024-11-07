@@ -31,6 +31,8 @@ class SetupUpdater:
             setup = self._update_to_3_4_0(setup)
         if setup["version"] == "3.4.0":
             setup = self._update_to_3_5_0(setup)
+        if setup["version"] == "3.5.0":
+            setup = self._update_to_3_6_0(setup)
         return setup
 
     @staticmethod
@@ -116,4 +118,10 @@ class SetupUpdater:
                 }
             }
         )
+        return setup
+
+    @staticmethod
+    def _update_to_3_6_0(setup):
+        """From 3.5.0 to 3.6.0"""
+        setup["version"] = "3.6.0"
         return setup

@@ -148,7 +148,7 @@ class TestMain:
             "time": "00:00:00",
             "odo": 0,
             "style": "day",
-            "ver": "3.5.0",
+            "ver": "3.6.0",
             "name": "K-Pro",
             "hddlg": False,
         }
@@ -201,7 +201,7 @@ class TestMain:
                     "odo": 0,
                     "style": "day",
                     "name": "K-Pro",
-                    "ver": "3.5.0",
+                    "ver": "3.6.0",
                     "hddlg": False,
                 }
             }
