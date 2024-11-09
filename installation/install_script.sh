@@ -22,8 +22,6 @@ sudo su
 make venv
 su pi
 docker compose up -d nginx
-touch /home/pi/Desktop/HonDash/hondash.log
-sudo chmod 777 /home/pi/Desktop/HonDash/hondash.log
 
 cd /home/pi/Desktop/
 git clone https://github.com/pablobuenaposada/HonDash-frontend.git

@@ -30,7 +30,7 @@ docker/run:
 docker/tests:
 	docker run --rm $(DOCKER_IMAGE) /bin/sh -c 'make test'
 
-sd-image/create:
+sd-image/create: # use diskutil list first, usage make sd-image/create path=/dev/rdisk6
 	sudo dd bs=1024 if=$(path) of=full_size_image.img
 
 sd-image/shrink:

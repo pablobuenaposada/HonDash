@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgraded to python 3.11
 - Updated all libraries
 - More docker usage
-- New Raspberry Pi OS base image
+- 32 bit Raspberry Pi OS base image since 64 bit is slower
 - Linters switch to ruff and black
 - Improve websocket implementation
 - Fix new K-Pro v4 and possible also new S300 v3 connection issue
