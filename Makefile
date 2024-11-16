@@ -27,6 +27,10 @@ docker/build:
 docker/run:
 	docker compose up --build -d
 
+docker/demo:
+	docker compose up --build -d nginx
+	docker compose run -p 5678:5678 --build -d app poetry run python src/bench/demo.py
+
 docker/tests:
 	docker run --rm $(DOCKER_IMAGE) /bin/sh -c 'make test'
 

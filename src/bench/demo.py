@@ -1,9 +1,9 @@
 import random
 from time import sleep
 
-from backend.devices.kpro import constants
-from backend.devices.kpro.kpro import Kpro
-from backend.main import Backend
+from devices.kpro import constants
+from devices.kpro.kpro import Kpro
+from main import Backend
 
 backend = Backend()
 backend.ecu.ecu = Kpro()
