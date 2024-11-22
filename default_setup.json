@@ -91,7 +91,7 @@
     ]
   },
   "tps": {
-    "tag": "gauge8",
+    "tag": "bar3",
     "label": "TPS",
     "suffix": "",
     "max": 100,

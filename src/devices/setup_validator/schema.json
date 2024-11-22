@@ -463,7 +463,13 @@
             },
             "properties":{
                "tag":{
-                  "$ref":"#/definitions/tag"
+                  "type":"string",
+                  "enum":[
+                     "bar3"
+                  ],
+                  "options":{
+                     "grid_columns":12
+                  }
                },
                "label":{
                   "type":"string",
