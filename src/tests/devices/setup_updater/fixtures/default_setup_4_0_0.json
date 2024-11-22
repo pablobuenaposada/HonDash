@@ -25,19 +25,9 @@
     "max": 9000,
     "sectors": [
       {
-        "lo": 8000,
+        "color": "#d64d8a",
         "hi": 9000,
-        "color": "#d9414c"
-      },
-      {
-        "lo": 6000,
-        "hi": 8000,
-        "color": "#ffc81b"
-      },
-      {
-        "lo": 0,
-        "hi": 6000,
-        "color": "#21f973"
+        "lo": 0
       }
     ]
   },
@@ -170,7 +160,7 @@
     ]
   },
   "an0": {
-    "tag": "not use",
+    "tag": "bar2",
     "formula": "custom",
     "min_voltage": 0,
     "max_voltage": 5,
@@ -180,81 +170,87 @@
     "decimals": 0,
     "label": "",
     "suffix": "%",
-    "sectors": []
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ]
   },
   "an1": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an2": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an3": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
-    "decimals": 0,
+    "unit": "celsius",
+    "decimals": 1,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an4": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an5": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an6": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
     "suffix": "",
@@ -262,12 +258,12 @@
   },
   "an7": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
     "suffix": "",

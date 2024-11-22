@@ -166,6 +166,14 @@ class TestSetupUpdater:
         with open(os.path.join(fixtures_dir, "default_setup_3_6_0.json")) as file:
             fixture_3_6_0 = json.load(file)
         assert setup == fixture_3_6_0
+
+    def test__update_to_4_0_0(self, fixtures_dir):
+        with open(os.path.join(fixtures_dir, "default_setup_3_6_0.json")) as file:
+            setup = json.load(file)
+        setup = SetupUpdater._update_to_4_0_0(setup)
+        with open(os.path.join(fixtures_dir, "default_setup_4_0_0.json")) as file:
+            fixture_4_0_0 = json.load(file)
+        assert setup == fixture_4_0_0
         SetupValidator().validate(
             setup
         )  # this only could be applied to the last version update test

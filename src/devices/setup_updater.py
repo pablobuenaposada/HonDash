@@ -125,3 +125,26 @@ class SetupUpdater:
         """From 3.5.0 to 3.6.0"""
         setup["version"] = "3.6.0"
         return setup
+
+    @staticmethod
+    def _update_to_4_0_0(setup):
+        """From 3.6.0 to 4.0.0"""
+        setup["version"] = "4.0.0"
+        setup["tps"]["tag"] = "bar3"
+        setup["template"] = "basic"
+        setup["o2"].pop("max", None)
+        setup["map"].pop("max", None)
+        setup["iat"].pop("max", None)
+        setup["eth"].pop("max", None)
+        setup["ect"].pop("max", None)
+        setup["cam"].pop("max", None)
+        setup["bat"].pop("max", None)
+        setup["an0"].pop("max", None)
+        setup["an1"].pop("max", None)
+        setup["an2"].pop("max", None)
+        setup["an3"].pop("max", None)
+        setup["an4"].pop("max", None)
+        setup["an5"].pop("max", None)
+        setup["an6"].pop("max", None)
+        setup["an7"].pop("max", None)
+        return setup
