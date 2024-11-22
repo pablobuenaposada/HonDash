@@ -145,7 +145,7 @@ class TestSetupFile:
             "max": 100,
             "sectors": [{"color": "#46877f", "hi": 100, "lo": 0}],
             "suffix": "",
-            "tag": "gauge8",
+            "tag": "bar3",
         }
         self.setup.update_key("tps", {"label": "foo"})
         assert self.setup.get_value("tps") == {
@@ -153,7 +153,7 @@ class TestSetupFile:
             "max": 100,
             "sectors": [{"color": "#46877f", "hi": 100, "lo": 0}],
             "suffix": "",
-            "tag": "gauge8",
+            "tag": "bar3",
         }
 
     @pytest.mark.parametrize(

@@ -113,12 +113,6 @@
                      "grid_columns":12
                   }
                },
-               "max":{
-                  "type":"integer",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
                "sectors":{
                   "$ref":"#/definitions/sectors"
                }
@@ -129,8 +123,7 @@
          "template":{
             "type":"string",
             "enum":[
-               "basic",
-               "animalillo"
+               "basic"
             ],
             "options":{
                "grid_columns":4
@@ -335,12 +328,6 @@
                      "grid_columns":12
                   }
                },
-               "max":{
-                  "type":"integer",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
                "sectors":{
                   "$ref":"#/definitions/sectors"
                }
@@ -401,12 +388,6 @@
                      "grid_columns":12
                   }
                },
-               "max":{
-                  "type":"integer",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
                "sectors":{
                   "$ref":"#/definitions/sectors"
                }
@@ -442,12 +423,6 @@
                      "grid_columns":12
                   }
                },
-               "max":{
-                  "type":"integer",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
                "sectors":{
                   "$ref":"#/definitions/sectors"
                }
@@ -463,7 +438,13 @@
             },
             "properties":{
                "tag":{
-                  "$ref":"#/definitions/tag"
+                  "type":"string",
+                  "enum":[
+                     "bar3"
+                  ],
+                  "options":{
+                     "grid_columns":12
+                  }
                },
                "label":{
                   "type":"string",
@@ -523,12 +504,6 @@
                      "grid_columns":12
                   }
                },
-               "max":{
-                  "type":"integer",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
                "sectors":{
                   "$ref":"#/definitions/sectors"
                }
@@ -565,12 +540,6 @@
                },
                "suffix":{
                   "type":"string",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
-               "max":{
-                  "type":"integer",
                   "options":{
                      "grid_columns":12
                   }
@@ -621,12 +590,6 @@
                      "grid_columns":12
                   }
                },
-               "max":{
-                  "type":"integer",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
                "sectors":{
                   "$ref":"#/definitions/sectors"
                }
@@ -669,12 +632,6 @@
                },
                "suffix":{
                   "type":"string",
-                  "options":{
-                     "grid_columns":12
-                  }
-               },
-               "max":{
-                  "type":"integer",
                   "options":{
                      "grid_columns":12
                   }
@@ -884,7 +841,7 @@
          },
          "version":{
             "type":"string",
-            "const":"3.6.0",
+            "const":"4.0.0",
             "options":{
                "hidden":true
             }
