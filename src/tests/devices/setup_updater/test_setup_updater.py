@@ -82,10 +82,21 @@ class TestSetupUpdater:
         assert m__update_to_3_5_0.called is True
 
     def test_update_3_5_0(self):
-        assert SetupUpdater().update({"version": "3.5.0"}) == {"version": "3.6.0"}
+        with mock.patch(
+            "devices.setup_updater.SetupUpdater._update_to_3_6_0"
+        ) as m__update_to_3_6_0:
+            SetupUpdater().update({"version": "3.5.0"})
+        assert m__update_to_3_6_0.called is True
 
     def test_update_3_6_0(self):
-        assert SetupUpdater().update({"version": "3.6.0"}) == {"version": "3.6.0"}
+        with mock.patch(
+            "devices.setup_updater.SetupUpdater._update_to_4_0_0"
+        ) as m__update_to_4_0_0:
+            SetupUpdater().update({"version": "3.6.0"})
+        assert m__update_to_4_0_0.called is True
+
+    def test_update_4_0_0(self):
+        assert SetupUpdater().update({"version": "4.0.0"}) == {"version": "4.0.0"}
 
     def test__update_to_2_4_0(self, fixtures_dir):
         with open(os.path.join(fixtures_dir, "default_setup_2_3_2.json")) as file:

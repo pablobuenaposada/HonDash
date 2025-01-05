@@ -143,7 +143,7 @@ class TestSetupFile:
         assert self.setup.get_value("tps") == {
             "label": "TPS",
             "max": 100,
-            "sectors": [{"color": "#46877f", "hi": 100, "lo": 0}],
+            "sectors": [{"color": "#41748d", "hi": 110, "lo": 0}],
             "suffix": "",
             "tag": "bar3",
         }
@@ -151,7 +151,7 @@ class TestSetupFile:
         assert self.setup.get_value("tps") == {
             "label": "foo",
             "max": 100,
-            "sectors": [{"color": "#46877f", "hi": 100, "lo": 0}],
+            "sectors": [{"color": "#41748d", "hi": 110, "lo": 0}],
             "suffix": "",
             "tag": "bar3",
         }

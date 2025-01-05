@@ -48,8 +48,13 @@
     "sectors": [
       {
         "lo": 0,
-        "hi": 100,
-        "color": "#46877f"
+        "hi": 70,
+        "color": "#cc2c24"
+      },
+      {
+        "lo": 86,
+        "hi": 255,
+        "color": "#cc2c24"
       }
     ]
   },
@@ -61,13 +66,7 @@
     "tag": "gauge7",
     "label": "CAM",
     "suffix": "",
-    "sectors": [
-      {
-        "lo": 0,
-        "hi": 100,
-        "color": "#46877f"
-      }
-    ]
+    "sectors": []
   },
   "bat": {
     "tag": "gauge6",
@@ -77,13 +76,13 @@
     "sectors": [
       {
         "lo": 0,
-        "hi": 12,
+        "hi": 13,
         "color": "#cc2c24"
       },
       {
-        "lo": 12,
-        "hi": 20,
-        "color": "#46877f"
+        "lo": 15,
+        "hi": 26,
+        "color": "#cc2c24"
       }
     ]
   },
@@ -95,8 +94,8 @@
     "sectors": [
       {
         "lo": 0,
-        "hi": 100,
-        "color": "#46877f"
+        "hi": 110,
+        "color": "#41748d"
       }
     ]
   },
@@ -107,9 +106,9 @@
     "suffix": "",
     "sectors": [
       {
-        "lo": 0,
-        "hi": 70,
-        "color": "#46877f"
+        "lo": 60,
+        "hi": 150,
+        "color": "#cc2c24"
       }
     ]
   },
@@ -120,14 +119,14 @@
     "suffix": "",
     "sectors": [
       {
-        "lo": 94,
-        "hi": 150,
-        "color": "#cc2c24"
+        "lo": -40,
+        "hi": 60,
+        "color": "#46877f"
       },
       {
-        "lo": 0,
-        "hi": 94,
-        "color": "#46877f"
+        "lo": 104,
+        "hi": 150,
+        "color": "#cc2c24"
       }
     ]
   },
@@ -140,16 +139,11 @@
     "sectors": [
       {
         "lo": 0,
-        "hi": 12,
+        "hi": 11.6,
         "color": "#cc2c24"
       },
       {
-        "lo": 12,
-        "hi": 16,
-        "color": "#46877f"
-      },
-      {
-        "lo": 16,
+        "lo": 14.71,
         "hi": 30,
         "color": "#cc2c24"
       }
@@ -161,13 +155,7 @@
     "decimals": 1,
     "label": "MAP",
     "suffix": "",
-    "sectors": [
-      {
-        "lo": 0,
-        "hi": 3,
-        "color": "#46877f"
-      }
-    ]
+    "sectors": []
   },
   "an0": {
     "tag": "not use",

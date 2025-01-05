@@ -33,6 +33,9 @@ class SetupUpdater:
             setup = self._update_to_3_5_0(setup)
         if setup["version"] == "3.5.0":
             setup = self._update_to_3_6_0(setup)
+        if setup["version"] == "3.6.0":
+            setup = self._update_to_4_0_0(setup)
+
         return setup
 
     @staticmethod
@@ -130,21 +133,38 @@ class SetupUpdater:
     def _update_to_4_0_0(setup):
         """From 3.6.0 to 4.0.0"""
         setup["version"] = "4.0.0"
-        setup["tps"]["tag"] = "bar3"
+        setup.update()
+        if "tps" in setup:
+            setup["tps"]["tag"] = "bar3"
         setup["template"] = "basic"
-        setup["o2"].pop("max", None)
-        setup["map"].pop("max", None)
-        setup["iat"].pop("max", None)
-        setup["eth"].pop("max", None)
-        setup["ect"].pop("max", None)
-        setup["cam"].pop("max", None)
-        setup["bat"].pop("max", None)
-        setup["an0"].pop("max", None)
-        setup["an1"].pop("max", None)
-        setup["an2"].pop("max", None)
-        setup["an3"].pop("max", None)
-        setup["an4"].pop("max", None)
-        setup["an5"].pop("max", None)
-        setup["an6"].pop("max", None)
-        setup["an7"].pop("max", None)
+        if "o2" in setup:
+            setup["o2"].pop("max", None)
+        if "map" in setup:
+            setup["map"].pop("max", None)
+        if "iat" in setup:
+            setup["iat"].pop("max", None)
+        if "eth" in setup:
+            setup["eth"].pop("max", None)
+        if "ect" in setup:
+            setup["ect"].pop("max", None)
+        if "cam" in setup:
+            setup["cam"].pop("max", None)
+        if "bat" in setup:
+            setup["bat"].pop("max", None)
+        if "an0" in setup:
+            setup["an0"].pop("max", None)
+        if "an1" in setup:
+            setup["an1"].pop("max", None)
+        if "an2" in setup:
+            setup["an2"].pop("max", None)
+        if "an3" in setup:
+            setup["an3"].pop("max", None)
+        if "an4" in setup:
+            setup["an4"].pop("max", None)
+        if "an5" in setup:
+            setup["an5"].pop("max", None)
+        if "an6" in setup:
+            setup["an6"].pop("max", None)
+        if "an7" in setup:
+            setup["an7"].pop("max", None)
         return setup
