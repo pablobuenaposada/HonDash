@@ -1,27 +1,25 @@
-version: '3.9'
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "5678:5678"
     environment:
       - PYTHONPATH=/app/src
+    ports:
+      - "5678:5678"
     networks:
       - main_network
 
   nginx:
     image: nginx:latest
-    restart: always
-    ports:
-      - "9090:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./src/devices/setup_validator/schema.json:/usr/share/nginx/html/schema.json
+    ports:
+      - "9090:80"
     networks:
       - main_network
+    restart: always
 
 networks:
   main_network:

@@ -9,6 +9,7 @@ venv-dev:
 format: venv-dev
 	poetry run black src
 	poetry run ruff check src --fix
+	npx dclint . -r --fix
 
 format/check: venv-dev
 	poetry run black --verbose src --check

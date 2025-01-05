@@ -6,10 +6,21 @@ on:
     branches: [ master ]
 
 jobs:
+  docker-format:
+    name: Run docker compose linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: zavoloklom/dclint:alpine
+          options: -v ${{ github.workspace }}:/mnt
+          run: /bin/dclint /mnt -c /mnt/.dclintrc --max-warnings 0 -r
+
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Build docker image
       run: |
         make docker/build
