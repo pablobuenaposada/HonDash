@@ -3,10 +3,10 @@ FROM python:3.11
 WORKDIR /app
 COPY . /app
 
-RUN apt-get update && apt-get install -y libusb-1.0-0
-RUN pip install poetry
-RUN poetry config virtualenvs.create false # to install dependencies system wide and not in a venv
-RUN make venv
+RUN apt-get update && apt-get install --no-install-recommends -y libusb-1.0-0 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir poetry && poetry config virtualenvs.create false && make venv
 RUN cp -n default_setup.json setup.json
 
 ENV PYTHONPATH="/app/src"

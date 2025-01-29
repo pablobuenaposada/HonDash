@@ -6,7 +6,7 @@ on:
     branches: [ master ]
 
 jobs:
-  docker-format:
+  docker-compose-format:
     name: Run docker compose linter
     runs-on: ubuntu-latest
     steps:
@@ -16,6 +16,15 @@ jobs:
           image: zavoloklom/dclint:alpine
           options: -v ${{ github.workspace }}:/mnt
           run: /bin/dclint /mnt -c /mnt/.dclintrc --max-warnings 0 -r
+
+  dockerfile-format:
+    name: Run dockerfile linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
 
   build:
     runs-on: ubuntu-latest
