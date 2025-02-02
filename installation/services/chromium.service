@@ -1,6 +1,6 @@
 [Unit]
 Description=Chromium Kiosk
-After=graphical.target
+After=multi-user.target
 
 [Service]
 User=pi
