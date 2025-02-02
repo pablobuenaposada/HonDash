@@ -2,11 +2,13 @@
 
 ## Burn SD card
 Download the latest image:
-* [HonDash v. 3.6.0](https://www.dropbox.com/scl/fi/vju25j2w7usqjg1iaspij/HonDash_v3.6.0.img?rlkey=foz7en3eim0f87qzfgg0vkm19&st=rul9ih4l&dl=0)
-  * `MD5: 4ed2c55f7e5344e76f21b3d6ec63eaab`
+* [HonDash v. 4.0.0](https://www.dropbox.com/scl/fi/7hpg8ni5hn9rywf451rm8/HonDash_v4.0.0.img?rlkey=wrh3hacodslnvti1f5keaagic&st=cpszic10&dl=0)
+  * `MD5: b5bc2126482db22460ddb6c608061e13`
 * [Release notes](https://github.com/pablobuenaposada/HonDash/blob/master/CHANGELOG.md)
 
 Old images:
+* [HonDash v. 3.6.0](https://www.dropbox.com/scl/fi/vju25j2w7usqjg1iaspij/HonDash_v3.6.0.img?rlkey=foz7en3eim0f87qzfgg0vkm19&st=rul9ih4l&dl=0)
+  * `MD5: 4ed2c55f7e5344e76f21b3d6ec63eaab`
 * [HonDash v. 3.5.0](https://www.dropbox.com/s/fx0cj8d2r15n4wa/HonDash_v3.5.0.img?dl=0)
   * `MD5: 97faceb19faecc9d0eb60d11513a8353`
 * [HonDash v. 3.4.0](https://www.dropbox.com/s/kkapntsupk343qe/HonDash_v3.4.0.img?dl=0)
