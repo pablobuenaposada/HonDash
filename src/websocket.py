@@ -104,7 +104,17 @@ class Websocket:
     async def _send_all_clients(self, message):
         """Broadcast to all the clients"""
         if self.clients_connected:  # asyncio.wait doesn't accept an empty list
-            await asyncio.wait([user.send(message) for user in self.clients_connected])
+            disconnected_clients = []
+
+            for user in self.clients_connected:
+                try:
+                    await user.send(message)
+                except websockets.exceptions.ConnectionClosed:
+                    disconnected_clients.append(user)
+
+            # remove disconnected clients
+            for user in disconnected_clients:
+                self.clients_connected.remove(user)
 
     async def _register(self, websocket):
         """Appends a new client to the connected clients list"""
