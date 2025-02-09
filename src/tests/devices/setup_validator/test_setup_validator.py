@@ -25,6 +25,7 @@ class TestSetupValidator:
                 {
                     "version": "2.3.2",
                     "vss": {"label": "", "max": "", "sectors": "", "suffix": ""},
+                    "o2": {"target": False},
                 }
             )
         assert str(excinfo.value) == "'tag' is a required property"

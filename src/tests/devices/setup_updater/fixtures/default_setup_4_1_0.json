@@ -25,19 +25,9 @@
     "max": 9000,
     "sectors": [
       {
-        "lo": 8000,
+        "color": "#d64d8a",
         "hi": 9000,
-        "color": "#d9414c"
-      },
-      {
-        "lo": 6000,
-        "hi": 8000,
-        "color": "#ffc81b"
-      },
-      {
-        "lo": 0,
-        "hi": 6000,
-        "color": "#21f973"
+        "lo": 0
       }
     ]
   },
@@ -48,13 +38,8 @@
     "sectors": [
       {
         "lo": 0,
-        "hi": 70,
-        "color": "#cc2c24"
-      },
-      {
-        "lo": 86,
-        "hi": 255,
-        "color": "#cc2c24"
+        "hi": 100,
+        "color": "#46877f"
       }
     ]
   },
@@ -66,7 +51,13 @@
     "tag": "gauge7",
     "label": "CAM",
     "suffix": "",
-    "sectors": []
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 100,
+        "color": "#46877f"
+      }
+    ]
   },
   "bat": {
     "tag": "gauge6",
@@ -76,13 +67,13 @@
     "sectors": [
       {
         "lo": 0,
-        "hi": 13,
+        "hi": 12,
         "color": "#cc2c24"
       },
       {
-        "lo": 15,
-        "hi": 26,
-        "color": "#cc2c24"
+        "lo": 12,
+        "hi": 20,
+        "color": "#46877f"
       }
     ]
   },
@@ -94,8 +85,8 @@
     "sectors": [
       {
         "lo": 0,
-        "hi": 110,
-        "color": "#41748d"
+        "hi": 100,
+        "color": "#46877f"
       }
     ]
   },
@@ -106,9 +97,9 @@
     "suffix": "",
     "sectors": [
       {
-        "lo": 60,
-        "hi": 150,
-        "color": "#cc2c24"
+        "lo": 0,
+        "hi": 70,
+        "color": "#46877f"
       }
     ]
   },
@@ -119,33 +110,38 @@
     "suffix": "",
     "sectors": [
       {
-        "lo": -40,
-        "hi": 60,
-        "color": "#46877f"
-      },
-      {
-        "lo": 104,
+        "lo": 94,
         "hi": 150,
         "color": "#cc2c24"
+      },
+      {
+        "lo": 0,
+        "hi": 94,
+        "color": "#46877f"
       }
     ]
   },
   "o2": {
+    "target": false,
     "tag": "gauge3",
     "unit": "afr",
     "decimals": 1,
     "label": "AFR",
     "suffix": "",
-    "target": true,
     "sectors": [
       {
-        "lo": -100,
-        "hi": -0.4,
+        "lo": 0,
+        "hi": 12,
         "color": "#cc2c24"
       },
       {
-        "lo": 0.4,
-        "hi": 100,
+        "lo": 12,
+        "hi": 16,
+        "color": "#46877f"
+      },
+      {
+        "lo": 16,
+        "hi": 30,
         "color": "#cc2c24"
       }
     ]
@@ -156,10 +152,16 @@
     "decimals": 1,
     "label": "MAP",
     "suffix": "",
-    "sectors": []
+    "sectors": [
+      {
+        "lo": 0,
+        "hi": 3,
+        "color": "#46877f"
+      }
+    ]
   },
   "an0": {
-    "tag": "not use",
+    "tag": "bar2",
     "formula": "custom",
     "min_voltage": 0,
     "max_voltage": 5,
@@ -169,81 +171,87 @@
     "decimals": 0,
     "label": "",
     "suffix": "%",
-    "sectors": []
+    "sectors": [
+      {
+        "color": "#46877f",
+        "hi": 100,
+        "lo": 0
+      }
+    ]
   },
   "an1": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an2": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an3": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
-    "decimals": 0,
+    "unit": "celsius",
+    "decimals": 1,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an4": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an5": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
-    "suffix": "%",
+    "suffix": "",
     "sectors": []
   },
   "an6": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
     "suffix": "",
@@ -251,12 +259,12 @@
   },
   "an7": {
     "tag": "not use",
-    "formula": "custom",
+    "formula": "vdo_323_057",
     "min_voltage": 0,
     "max_voltage": 5,
     "min_value": 0,
     "max_value": 100,
-    "unit": "per cent",
+    "unit": "celsius",
     "decimals": 0,
     "label": "",
     "suffix": "",

@@ -553,7 +553,8 @@
             "type":"object",
             "required":[
                "tag",
-               "unit"
+               "unit",
+               "target"
             ],
             "options":{
                "grid_columns":4
@@ -589,6 +590,9 @@
                   "options":{
                      "grid_columns":12
                   }
+               },
+               "target":{
+                  "type":"boolean"
                },
                "sectors":{
                   "$ref":"#/definitions/sectors"
@@ -841,7 +845,7 @@
          },
          "version":{
             "type":"string",
-            "const":"4.0.0",
+            "const":"4.1.0",
             "options":{
                "hidden":true
             }

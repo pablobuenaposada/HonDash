@@ -35,6 +35,8 @@ class SetupUpdater:
             setup = self._update_to_3_6_0(setup)
         if setup["version"] == "3.6.0":
             setup = self._update_to_4_0_0(setup)
+        if setup["version"] == "4.0.0":
+            setup = self._update_to_4_1_0(setup)
 
         return setup
 
@@ -167,4 +169,11 @@ class SetupUpdater:
             setup["an6"].pop("max", None)
         if "an7" in setup:
             setup["an7"].pop("max", None)
+        return setup
+
+    @staticmethod
+    def _update_to_4_1_0(setup):
+        """From 4.0.0 to 4.1.0"""
+        setup["version"] = "4.1.0"
+        setup["o2"].update({"target": False})
         return setup
