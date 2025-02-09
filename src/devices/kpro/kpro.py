@@ -174,8 +174,7 @@ class Kpro:
             )
         except ZeroDivisionError:  # something happen collecting the value then return 0
             return {"afr": 0, "lambda": 0}
-        o2_afr = o2_lambda * 14.7
-        return {"afr": o2_afr, "lambda": o2_lambda}
+        return {"afr": o2_lambda * 14.7, "lambda": o2_lambda}
 
     @property
     def o2_cmd(self):
@@ -195,8 +194,7 @@ class Kpro:
             )
         except ZeroDivisionError:  # something happen collecting the value then return 0
             return {"afr": 0, "lambda": 0}
-        o2_afr = o2_lambda * 14.7
-        return {"afr": o2_afr, "lambda": o2_lambda}
+        return {"afr": o2_lambda * 14.7, "lambda": o2_lambda}
 
     @property
     def tps(self):

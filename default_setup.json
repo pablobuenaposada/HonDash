@@ -136,15 +136,16 @@
     "decimals": 1,
     "label": "AFR",
     "suffix": "",
+    "target": true,
     "sectors": [
       {
-        "lo": 0,
-        "hi": 11.6,
+        "lo": -100,
+        "hi": -0.4,
         "color": "#cc2c24"
       },
       {
-        "lo": 14.71,
-        "hi": 30,
+        "lo": 0.4,
+        "hi": 100,
         "color": "#cc2c24"
       }
     ]
