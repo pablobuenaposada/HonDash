@@ -16,14 +16,18 @@ class Websocket:
 
     def __init__(self, backend):
         self.backend = backend
-        self.websocket = websockets.serve(
-            self._websocket_handler, WEBSOCKET_HOST, WEBSOCKET_PORT
-        )
-        self.loop = asyncio.get_event_loop()
-        self.loop.run_until_complete(self.websocket)
+        self.loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self.loop)
+        self.websocket = self.loop.run_until_complete(self._serve())
         threading.Thread(target=self.loop.run_forever).start()
 
-    async def _websocket_handler(self, websocket, path):
+    async def _serve(self):
+        """serve() needs a running loop, so it gets built inside one"""
+        return await websockets.serve(
+            self._websocket_handler, WEBSOCKET_HOST, WEBSOCKET_PORT
+        )
+
+    async def _websocket_handler(self, websocket):
         await self._register(websocket)  # register this client to keep tracking of it
         consumer_task = asyncio.ensure_future(self._consumer_handler(websocket))
         producer_task = asyncio.ensure_future(self._producer_handler(websocket))
@@ -121,5 +125,5 @@ class Websocket:
         self.clients_connected.add(websocket)
 
     def stop(self):
-        self.websocket.ws_server.close()
+        self.websocket.close()
         self.loop.call_soon_threadsafe(self.loop.stop)

@@ -1,4 +1,4 @@
-# PYTHONPATH=src poetry run python src/bench/s300.py
+# PYTHONPATH=src uv run python src/bench/s300.py
 from __future__ import print_function
 
 from reprint import output

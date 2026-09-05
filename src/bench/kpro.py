@@ -1,4 +1,4 @@
-# PYTHONPATH=src poetry run python src/bench/kpro.py
+# PYTHONPATH=src uv run python src/bench/kpro.py
 from __future__ import print_function
 
 from reprint import output

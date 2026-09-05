@@ -10,3 +10,4 @@ node_modules/
 .coverage
 setup.json
 .DS_Store
+.venv/

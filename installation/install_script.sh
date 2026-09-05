@@ -5,19 +5,18 @@ sudo usermod -aG docker ${USER}
 sudo systemctl enable docker
 sudo apt update
 sudo apt install -y python3 python3-pip vim xdotool libopenblas-dev
-pip install poetry --break-system-packages
+pip install uv --break-system-packages
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 sudo su
-pip install poetry --break-system-packages
+pip install uv --break-system-packages
 su pi
 
 cd /home/pi/Desktop/
 git clone https://github.com/pablobuenaposada/HonDash.git
 cd HonDash
-export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
-sed -i '1i [[tool.poetry.source]]\nname = "piwheels"\nurl = "https://www.piwheels.org/simple/"\n' pyproject.toml
-poetry lock
+sed -i '1i [[tool.uv.index]]\nname = "piwheels"\nurl = "https://www.piwheels.org/simple/"\n' pyproject.toml
+uv lock
 sudo su
 make venv
 su pi

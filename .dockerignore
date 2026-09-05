@@ -1,0 +1,13 @@
+.venv/
+venv/
+.git/
+.github/
+.idea/
+.cache/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.img
+node_modules/
+.DS_Store
