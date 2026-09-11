@@ -24,9 +24,10 @@ class TestKpro:
         self.kpro.data5 = [None for _ in range(20)]
 
     def test_init(self):
-        with mock.patch("usb.core.find"), mock.patch(
-            "threading.Thread.start"
-        ) as m_start:
+        with (
+            mock.patch("usb.core.find"),
+            mock.patch("threading.Thread.start") as m_start,
+        ):
             self.kpro = Kpro()
 
         assert self.kpro.status is True
@@ -53,9 +54,10 @@ class TestKpro:
             else:
                 return None
 
-        with mock.patch("usb.core.find") as m_find, mock.patch(
-            "threading.Thread.start"
-        ) as m_start:
+        with (
+            mock.patch("usb.core.find") as m_find,
+            mock.patch("threading.Thread.start") as m_start,
+        ):
             m_find.side_effect = found_device
             self.kpro = Kpro()
 
@@ -65,9 +67,10 @@ class TestKpro:
         assert self.kpro.version == kpro_version
 
     def test_init_no_kpro_connected(self):
-        with mock.patch("usb.core.find") as m_find, mock.patch(
-            "threading.Thread.start"
-        ) as m_start:
+        with (
+            mock.patch("usb.core.find") as m_find,
+            mock.patch("threading.Thread.start") as m_start,
+        ):
             m_find.return_value = None
             self.kpro = Kpro()
 
@@ -150,11 +153,13 @@ class TestKpro:
     def test_find_and_connect_exception(self):
         """usb exception should be caught and retry device connection MAX_CONNECTION_RETRIES times"""
         self.kpro.status = False
-        with mock.patch("threading.Thread.start") as m_start, mock.patch(
-            "devices.kpro.kpro.establish_connection"
-        ) as m_establish_connection, mock.patch(
-            "devices.kpro.kpro.find_device"
-        ) as m_find_device:
+        with (
+            mock.patch("threading.Thread.start") as m_start,
+            mock.patch(
+                "devices.kpro.kpro.establish_connection"
+            ) as m_establish_connection,
+            mock.patch("devices.kpro.kpro.find_device") as m_find_device,
+        ):
             m_establish_connection.side_effect = usb.core.USBError("foo")
             m_find_device.return_value = (MagicMock(), None)
             self.kpro.find_and_connect()
@@ -175,11 +180,12 @@ class TestKpro:
         self.kpro.version = self.kpro.kpro_device = self.kpro.entry_point = (
             self.kpro.entry_point_address
         ) = None
-        with mock.patch(
-            "devices.kpro.kpro.Kpro._read_from_device"
-        ) as m__read_from_device, mock.patch(
-            "devices.kpro.kpro.Kpro.__init__"
-        ) as m___init__:
+        with (
+            mock.patch(
+                "devices.kpro.kpro.Kpro._read_from_device"
+            ) as m__read_from_device,
+            mock.patch("devices.kpro.kpro.Kpro.__init__") as m___init__,
+        ):
             m__read_from_device.side_effect = error
             self.kpro._update()
         assert self.kpro.status is status_result

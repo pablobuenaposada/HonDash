@@ -153,10 +153,11 @@ class TestMain:
             "hddlg": False,
         }
 
-        with mock.patch("usb.core.find"), mock.patch(
-            "usb.util.find_descriptor"
-        ), mock.patch("main.Websocket.__init__") as m_ws___init__, mock.patch(
-            "threading.Thread.start"
+        with (
+            mock.patch("usb.core.find"),
+            mock.patch("usb.util.find_descriptor"),
+            mock.patch("main.Websocket.__init__") as m_ws___init__,
+            mock.patch("threading.Thread.start"),
         ):
             # mocking websocket
             m_ws___init__.return_value = None

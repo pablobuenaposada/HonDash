@@ -17,8 +17,9 @@ def establish_connection(device):
     return (
         usb.util.find_descriptor(
             intf,
-            custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress)
-            == usb.util.ENDPOINT_OUT,
+            custom_match=lambda e: (
+                usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT
+            ),
         ),
         intf[0].bEndpointAddress,
     )

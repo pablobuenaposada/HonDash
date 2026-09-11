@@ -15,12 +15,15 @@ def fixtures_dir():
 
 class TestSetupUpdater:
     def test_update_2_3_2(self):
-        with mock.patch(
-            "devices.setup_updater.SetupUpdater._update_to_2_4_0",
-            return_value={"version": "2.4.0"},
-        ) as m__update_to_2_4_0, mock.patch(
-            "devices.setup_updater.SetupUpdater._update_to_2_5_0"
-        ) as m__update_to_2_5_0:
+        with (
+            mock.patch(
+                "devices.setup_updater.SetupUpdater._update_to_2_4_0",
+                return_value={"version": "2.4.0"},
+            ) as m__update_to_2_4_0,
+            mock.patch(
+                "devices.setup_updater.SetupUpdater._update_to_2_5_0"
+            ) as m__update_to_2_5_0,
+        ):
             SetupUpdater().update({"version": "2.3.2"})
         assert m__update_to_2_4_0.called is True
         assert m__update_to_2_5_0.called is True

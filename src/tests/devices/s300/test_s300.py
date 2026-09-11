@@ -22,9 +22,10 @@ class TestS300:
         self.s300.data6 = [None for _ in range(200)]
 
     def test_init(self):
-        with mock.patch("usb.core.find"), mock.patch(
-            "threading.Thread.start"
-        ) as m_start:
+        with (
+            mock.patch("usb.core.find"),
+            mock.patch("threading.Thread.start") as m_start,
+        ):
             self.s300 = S300()
 
         assert self.s300.status is True
@@ -44,9 +45,10 @@ class TestS300:
             else:
                 return None
 
-        with mock.patch("usb.core.find") as m_find, mock.patch(
-            "threading.Thread.start"
-        ) as m_start:
+        with (
+            mock.patch("usb.core.find") as m_find,
+            mock.patch("threading.Thread.start") as m_start,
+        ):
             m_find.side_effect = found_device
             self.s300 = S300()
 
@@ -56,9 +58,10 @@ class TestS300:
         assert self.s300.version == s300_version
 
     def test_init_no_s300_connected(self):
-        with mock.patch("usb.core.find") as m_find, mock.patch(
-            "threading.Thread.start"
-        ) as m_start:
+        with (
+            mock.patch("usb.core.find") as m_find,
+            mock.patch("threading.Thread.start") as m_start,
+        ):
             m_find.return_value = None
             self.s300 = S300()
 
@@ -81,7 +84,7 @@ class TestS300:
                 ],
                 [
                     call.write(b"\x90"),
-                    call.write(b"\xB0"),
+                    call.write(b"\xb0"),
                     call.write(b"\x40"),
                 ],
             ),
@@ -94,7 +97,7 @@ class TestS300:
                 ],
                 [
                     call.write(b"\x90"),
-                    call.write(b"\xB0"),
+                    call.write(b"\xb0"),
                     call.write(b"\x40"),
                 ],
             ),
@@ -115,11 +118,13 @@ class TestS300:
     def test_find_and_connect_exception(self):
         """usb exception should be caught and retry device connection MAX_CONNECTION_RETRIES times"""
         self.s300.status = False
-        with mock.patch("threading.Thread.start") as m_start, mock.patch(
-            "devices.s300.s300.establish_connection"
-        ) as m_establish_connection, mock.patch(
-            "devices.s300.s300.find_device"
-        ) as m_find_device:
+        with (
+            mock.patch("threading.Thread.start") as m_start,
+            mock.patch(
+                "devices.s300.s300.establish_connection"
+            ) as m_establish_connection,
+            mock.patch("devices.s300.s300.find_device") as m_find_device,
+        ):
             m_establish_connection.side_effect = usb.core.USBError("foo")
             m_find_device.return_value = (MagicMock(), None)
             self.s300.find_and_connect()
@@ -140,11 +145,12 @@ class TestS300:
         self.s300.version = self.s300.device = self.s300.entry_point = (
             self.s300.entry_point_address
         ) = None
-        with mock.patch(
-            "devices.s300.s300.S300._read_from_device"
-        ) as m__read_from_device, mock.patch(
-            "devices.s300.s300.S300.__init__"
-        ) as m___init__:
+        with (
+            mock.patch(
+                "devices.s300.s300.S300._read_from_device"
+            ) as m__read_from_device,
+            mock.patch("devices.s300.s300.S300.__init__") as m___init__,
+        ):
             m__read_from_device.side_effect = error
             self.s300._update()
         assert self.s300.status is status_result

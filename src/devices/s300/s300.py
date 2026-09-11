@@ -58,7 +58,7 @@ class S300:
         entry_point.write(b"\x90")
         data6 = device.read(entry_point_address, 1000, 1000)
 
-        entry_point.write(b"\xB0")
+        entry_point.write(b"\xb0")
         data5 = device.read(entry_point_address, 128, 1000)
 
         entry_point.write(b"\x40")

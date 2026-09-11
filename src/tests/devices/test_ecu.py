@@ -43,8 +43,9 @@ class TestEcu:
             else:
                 return None
 
-        with mock.patch("usb.core.find") as m_find, mock.patch(
-            "threading.Thread.start"
+        with (
+            mock.patch("usb.core.find") as m_find,
+            mock.patch("threading.Thread.start"),
         ):
             m_find.side_effect = found_device
             ecu = Ecu()
@@ -72,8 +73,9 @@ class TestEcu:
             else:
                 return None
 
-        with mock.patch("usb.core.find") as m_find, mock.patch(
-            "threading.Thread.start"
+        with (
+            mock.patch("usb.core.find") as m_find,
+            mock.patch("threading.Thread.start"),
         ):
             m_find.side_effect = found_device
             ecu = Ecu()

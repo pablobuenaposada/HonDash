@@ -14,8 +14,9 @@ if dev is not None:
         intf = cfg[(0, 0)]
         ep = usb.util.find_descriptor(
             intf,
-            custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress)
-            == usb.util.ENDPOINT_OUT,
+            custom_match=lambda e: (
+                usb.util.endpoint_direction(e.bEndpointAddress) == usb.util.ENDPOINT_OUT
+            ),
         )
     except Exception:
         pass

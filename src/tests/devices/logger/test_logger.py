@@ -129,10 +129,13 @@ class TestLogger:
         assert len(files_size) == len(os.listdir(DATALOGS_PATH))
 
         _, _, free = shutil.disk_usage(f"{DATALOGS_PATH}/")
-        with mock.patch(
-            "devices.logger.logger.MIN_STORAGE_AVAILABLE",
-            new=free + min_storage_available,
-        ), exception:
+        with (
+            mock.patch(
+                "devices.logger.logger.MIN_STORAGE_AVAILABLE",
+                new=free + min_storage_available,
+            ),
+            exception,
+        ):
             Logger._free_space()
         sorted_files = sorted(
             Path(DATALOGS_PATH).iterdir(), key=os.path.getmtime
