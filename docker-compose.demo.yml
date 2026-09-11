@@ -10,7 +10,7 @@ services:
     command: python src/bench/demo.py
     restart: unless-stopped
 
-  nginx: # serves schema.json, reached only through the frontend proxy
+  nginx:
     image: nginx:latest
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
