@@ -1,0 +1,15 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored.
+
+# DigitalOcean personal access token, Full Access (api:write)
+do_token = "dop_v1_..."
+
+# Name(s) of SSH keys already uploaded to your DigitalOcean account.
+# Terraform looks them up by name, these are not file paths.
+ssh_key_names = ["hondash-demo"]
+
+# region       = "fra1"
+# droplet_size = "s-1vcpu-1gb"
+
+# The demo gets its own DigitalOcean project. Uncomment to rename it.
+# project_name        = "HonDash demo"
+# project_environment = "Production"

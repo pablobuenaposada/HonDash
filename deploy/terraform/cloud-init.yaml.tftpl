@@ -1,0 +1,16 @@
+#cloud-config
+# Kept deliberately small: changing user_data replaces the droplet, so the
+# actual deploy steps live in deploy/deploy.sh inside the repository instead.
+package_update: true
+package_upgrade: false
+
+packages:
+  - git
+  - ca-certificates
+  - curl
+
+runcmd:
+  - curl -fsSL https://get.docker.com | sh
+  - systemctl enable --now docker
+  - git clone --branch ${repo_branch} ${repo_url} /opt/hondash
+  - /opt/hondash/deploy/deploy.sh

@@ -11,3 +11,7 @@ node_modules/
 setup.json
 .DS_Store
 .venv/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars

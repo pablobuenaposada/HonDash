@@ -1,0 +1,61 @@
+name: Deploy demo
+
+# docker-compose.demo.yml runs the published pablobuenaposada/hondash image, so
+# this has to wait for the registry push to finish, otherwise the droplet would
+# pull the previous build.
+on:
+  workflow_run:
+    workflows: ["Push docker image to registry (hub.docker.com)"]
+    types:
+      - completed
+  workflow_dispatch:
+
+concurrency:
+  group: demo-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Deploy over ssh
+        env:
+          DEMO_HOST: ${{ vars.DEMO_HOST }}
+          DEMO_SSH_KEY: ${{ secrets.DEMO_SSH_KEY }}
+        run: |
+          if [ -z "$DEMO_HOST" ]; then
+            echo "DEMO_HOST repository variable is not set, run the demo infrastructure workflow first" >&2
+            exit 1
+          fi
+
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEMO_SSH_KEY" > ~/.ssh/id_demo
+          chmod 600 ~/.ssh/id_demo
+          ssh-keyscan -H "$DEMO_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          # Pull first, then run the deploy script from the checkout, so that
+          # changes to the deploy steps themselves ship like any other change.
+          ssh -i ~/.ssh/id_demo -o IdentitiesOnly=yes "root@$DEMO_HOST" '
+            set -eu
+            cd /opt/hondash
+            git fetch origin master
+            git reset --hard origin/master
+            exec deploy/deploy.sh
+          '
+
+      - name: Smoke test
+        env:
+          DEMO_HOST: ${{ vars.DEMO_HOST }}
+        run: |
+          for i in $(seq 1 12); do
+            if curl -fsS -o /dev/null "http://$DEMO_HOST/"; then
+              echo "frontend is up"
+              curl -fsS -o /dev/null "http://$DEMO_HOST/schema.json" && echo "schema.json is up"
+              echo "Demo: http://$DEMO_HOST/" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "demo did not come back up" >&2
+          exit 1
