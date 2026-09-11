@@ -15,6 +15,7 @@ resource "digitalocean_project" "demo" {
 
   resources = [
     digitalocean_droplet.demo.urn,
+    digitalocean_reserved_ip.demo.urn,
   ]
 }
 
@@ -40,6 +41,20 @@ resource "digitalocean_droplet" "demo" {
     # deliberately not a reason to rebuild the box.
     ignore_changes = [user_data]
   }
+}
+
+# Free while it is attached to a running droplet, and it keeps the public
+# address alive if the droplet is ever rebuilt, so demo.hondash.com does not
+# have to be repointed.
+#
+# The droplet is attached through droplet_id here rather than with a separate
+# digitalocean_reserved_ip_assignment: managing the same address with both
+# makes the provider tear the assignment down and back up whenever the droplet
+# is replaced, which can release the address and fail the apply with
+# "Root resource was present, but now absent".
+resource "digitalocean_reserved_ip" "demo" {
+  region     = var.region
+  droplet_id = digitalocean_droplet.demo.id
 }
 
 resource "digitalocean_firewall" "demo" {

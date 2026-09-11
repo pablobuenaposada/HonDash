@@ -54,7 +54,7 @@ terraform apply
 ```
 
 Terraform creates its own DigitalOcean project, "HonDash demo" by default, and
-puts the droplet and the reserved IP in it rather than leaving them loose in the
+puts the droplet and its reserved IP in it rather than leaving them loose in the
 account default project. Rename it with `project_name` in `terraform.tfvars`.
 Note terraform creates that project itself; if you already made one by hand with
 the same name you will end up with two, since DigitalOcean allows duplicate
@@ -131,11 +131,16 @@ uses 5678 too).
   machine again. Note `user_data` is under `ignore_changes`: editing the
   cloud-init would otherwise replace the droplet, and the deploy steps live in
   `deploy.sh` precisely so that never has to happen.
-- **Destroying it**: `terraform destroy` from `deploy/terraform`. The reserved
-  IP goes too, so `DEMO_HOST` would need updating if you rebuild.
+- **Destroying it**: `terraform destroy` from `deploy/terraform`, which releases
+  the reserved IP too. Deleting the droplet by hand in the console instead
+  leaves the reserved IP orphaned, and an unattached reserved IPv4 costs
+  $5/month, so always destroy through terraform.
 - **Host key checking**: the deploy job uses `ssh-keyscan` and trusts whatever
   it gets back on first contact. Fine for a demo; pin the host key if not.
 - **Cost**: one `s-1vcpu-1gb` droplet, changeable through the `droplet_size`
-  variable. The reserved IP is free while attached to a running droplet.
+  variable. The reserved IP is free while attached. A 512mb droplet would fit
+  the containers, which only use about 100MB, but docker and stock Ubuntu take
+  another 440MB and the droplets have no swap, so it would need a swap file and
+  some services turning off first.
 - **Frontend changes** live in another repository and will not trigger a deploy
   here; they get picked up on the next deploy, or run **Deploy demo** by hand.
