@@ -20,11 +20,11 @@ IDLE_HUNT = 22  # rpm of wander per tick, an idle never sits perfectly still
 IDLE_SETTLE = 0.06  # how hard it is pulled back towards IDLE_RPM
 # each run up the road picks its own shift point and throttle, so no two
 # launches look the same
-SHIFT_UP_RPM = (7000, 8300)
+SHIFT_UP_RPM = (8000, 8900)
 SHIFT_DOWN_RPM = 3200
 PEDAL = (70, 100)  # % throttle held while accelerating
 CRUISE_RPM = 4000  # shifts up while cruising to settle around here
-MAX_RPM = 8600
+MAX_RPM = 9000
 BRAKING = 8.0  # m/s^2
 DRAG = 0.0003  # quadratic; low enough that it can still pull to the shift point
 # how fast it gets before backing off, picked fresh for each run up the road
