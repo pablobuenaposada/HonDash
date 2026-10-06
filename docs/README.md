@@ -6,6 +6,10 @@
 
 HonDash is an open source instrument cluster developed for Honda engines managed through [Hondata](https://www.hondata.com/) ECUs.
 
+## Try it
+
+See it running with simulated data in the [live demo](https://hondash.com/DEMO.html).
+
 ## Features
 
 - [Data from K-Pro/S300 USB](https://hondash.com/VALUES.html)
